@@ -61,7 +61,7 @@ if(isset($_GET['commited'])){
 	echo 'new commit';
 }
 if(isset($_GET['saved'])){
-	echo 'change branch';
+	echo 'branch dev_trimet';
 }
 
 ?>
