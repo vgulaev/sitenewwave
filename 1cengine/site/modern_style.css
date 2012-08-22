@@ -1,0 +1,401 @@
+#itemName{
+	float:left;
+	width:600px;
+	height:25px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
+}
+
+#itemName:focus{
+	float:left;
+	width:600px;
+	height:25px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0 0 5px 2px #ffe06f, 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
+}
+
+#leftTr{
+	width:200px;
+	padding-top:50px;
+	font-size:16px;
+}
+
+#leftTr li{
+	margin-left:50px;
+}
+
+#leftTr a{
+	text-decoration: none;
+	border-bottom: 1px dashed rgb(45, 54, 148);
+}
+#leftTr a:hover{
+	border-bottom: none;
+}
+
+#searchButton{
+	width:100px;
+	height:27px;
+	cursor:pointer;
+	border:1px outset rgb(48, 57, 154);
+	margin-left:10px;
+	text-align:center;
+	float:left;
+	border-radius:40px 10px;
+	background-color: rgb(45, 54, 148);
+	color:white;
+	font-weight:bold;
+	font-size:14px;
+	padding-top:3px;
+}
+
+#qRes{
+	width:750px;
+	margin-top:40px;
+}
+
+#tableRes td{
+	border-bottom:1px dotted gray;
+	border-left:1px dotted gray;
+	padding:2px;
+	padding-right:10px;
+	padding-left:10px;
+}
+
+#tableRes td:first-child{
+	border-left:none;
+}
+
+#tableRes{
+	font-size:14px;
+}
+
+.iHeader{
+	font-size:14px;
+	font-weight:bold;
+	border-top:1px solid black;
+}
+.iHeader td{
+	border-left:none !important;
+	border-right:none;
+}
+.iHeader td:first-child{
+	vertical-align:middle;
+	padding-left:15px !important;
+}
+.price{
+	text-align: right;
+}
+.iHeader td.price{
+	font-size:12px;
+	text-align:center;
+}
+#main2{
+	background:none !important;
+}
+
+#leftTrBottomTd{
+	vertical-align:bottom;
+	font-size:16px;
+}
+#leftTrBottomTd a{
+	border-bottom: 1px dashed rgb(45, 54, 148);
+	text-decoration: none;
+}
+#leftTrBottomTd a:hover{
+	border-bottom:none;
+}
+
+#showAll{
+	text-decoration: none;
+	border-bottom:1px dashed rgb(45, 54, 148);
+	font-size:14px;
+	margin-top:20px;
+	margin-left:20px;
+}
+
+#showBasketSpan{
+	/*float:left;
+	padding-left:15px;*/
+}
+#showBasketSpan a{
+	border-bottom: 1px dashed rgb(45, 54, 148);
+	text-decoration: none;	
+}
+#showPriceSpan{
+	display:none;
+}
+#showPriceSpan a{
+	border-bottom: 1px dashed rgb(45, 54, 148);
+	text-decoration: none;	
+}
+#basketCaption{
+	font-size:16px;
+	font-weight:bold;
+}
+.itemHeader{
+	border-bottom:1px solid black;
+	padding:2px;
+	padding-right:10px;
+	padding-left:10px;
+	font-size:10px;
+}
+
+#lItemTab td{
+	border-bottom:1px dotted gray;
+	border-left:1px dotted gray;
+	padding:2px;
+	padding-right:10px;
+	padding-left:10px;
+}
+#lItemTab td:first-child{
+	border-left:none;
+}
+
+#mainTr{
+	vertical-align:top;
+}
+#searchDiv{
+	/*margin-top:-30px;*/
+	height:30px;
+}
+.activeDiv{
+	float:left;
+	margin-left:5px;
+	margin-right:5px;
+	border-top:1px solid black;
+	border-left:1px solid black;
+	border-right:1px solid black;
+	padding: 0px 5px;
+	border-bottom:1px solid white;
+}
+.inactiveDiv{
+	float:left;
+	margin-left:5px;
+	margin-right:5px;
+	border-top:1px solid black;
+	border-left:1px solid black;
+	border-right:1px solid black;
+	padding: 0px 5px;
+	background-color: #e1e1e1;
+	cursor:pointer;
+}
+#orderDiv{
+	border-top:1px solid black;
+}
+#deliveryDiv{
+	border-top:1px solid black;
+	display:none;
+}
+#notificationDiv{
+	border-top:1px solid black;
+	display:none;
+}
+#switchDiv{
+	height:20px;
+}
+.priceHeader span{
+	width:100%;
+	font-size:10px;
+}
+.buySpan a{
+	color:white;
+	text-decoration: none;
+	font-weight:bold;
+}
+.buySpan a:hover{
+	text-shadow: black 0 0 2px;
+	float:right;
+	color:#ffe06f;
+}
+.item:hover a{
+	text-shadow: black 0 0 2px;
+	float:right;
+	color:#ffe06f;
+}
+#Summary td:last-child{
+	text-align: right;
+	font-weight:bold;
+	white-space: nowrap;
+}
+
+#Summary{
+	margin-top:20px;
+	width:170px;
+	font-size:12px;
+}
+.itemEdIzmTd{
+	width:30px;
+}
+.itemNdsKfTd{
+	width:30px;
+}
+.itemCountTd{
+	width:60px;
+}
+.itemCountInput{
+	margin:0;
+	width:50px;
+}
+.itemPriceTd{
+	width:50px;
+	text-align: right;
+}
+.itemNdsSumTd{
+	text-align: right;
+}
+.itemSumTd{
+	text-align:right;
+}
+#tags li a{
+	color: rgb(45, 54, 148);
+}
+#tags{
+	width:300px;
+	height:300px;
+}
+#tags li{
+	float:left;
+	margin-right:10px;
+	background:none;
+}
+#myCanvasContainer{
+	margin-left:150px;
+}
+#shipment{
+	width:400px;
+	font-size:12px;
+	/*float: left;*/
+	margin:40px;
+	display:block;
+	height:120px;
+	margin-bottom:10px;
+}
+#destination{
+	width:200px;
+}
+#deliveryTab td{
+	padding: 3px;
+}
+#deliveryTab select{
+	width:230px;
+}
+#deliveryTab input{
+	width:225px;
+} 
+#email input{
+	height:14px;
+	width:260px;
+	margin-left:20px;
+	font-size:14px;
+}
+#email{
+	margin:40px;
+	margin-bottom:0px;
+	display:block;
+	font-size: 14px;
+}
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+	width: 200px;
+	background-color: white;
+	text-align:right;
+	cursor:pointer;
+	background: none;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+	height: 100px;
+}
+.ui-autocomplete li:hover{
+	background-color:rgb(45, 54, 148);
+}
+.ui-autocomplete li:hover a{
+	color:white;
+}
+
+#selfCarry{
+	width:25px;
+}
+
+.pUi{
+	width:30px;
+}
+
+.popUpCancel{
+	float:left;
+	margin-left:5px;
+}
+.popUpContinue{
+	float:right;
+	margin-right:5px;
+}
+.popUpTab{
+	margin-bottom:10px;
+	font-size:16px;
+	width:auto;
+	margin-left:100px;
+}
+.popUpTab td:first-child{
+	text-align:right;
+}
+.popUpTab td:last-child{
+	text-align:left;
+	padding-left:10px;
+}
+.popUpInnerSpan{
+	text-align:left;
+	display:block;
+	padding:5px;
+}
+
+/*.ui-slider { position: relative; text-align: left; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+
+.ui-slider-horizontal { height: .8em; }
+.ui-slider-horizontal .ui-slider-handle { top: -.3em; margin-left: -.6em; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+
+.ui-slider-vertical { width: .8em; height: 100px; }
+.ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.ui-slider-vertical .ui-slider-range-max { top: 0; }*/
+
+.ui-slider-range{
+	background-color:white;
+	width:10px;
+	display:block;
+}
+
+.ui-slider-handle{
+	width:13px;
+	height:7px;
+	background-color:white;
+	display:block;
+	border-radius:5px;
+	border: 1px solid gray;
+	margin-left:-2px;
+	box-shadow: 0 0 5px 2px #ffe06f;
+}
+
+#slider-vertical{
+	height:90px;
+	background-color: rgb(45, 54, 148);
+	border:1px dashed gray;
+	border-radius:10px;
+	width:10px;
+	float:left;
+	margin-left:45px;
+}
