@@ -58,7 +58,7 @@ if(strlen($hashArray[0])>6){
 }
 
 if(isset($_GET['commited'])){
-	echo 'commited. again!';
+	echo 'new commit';
 }
 if(isset($_GET['saved'])){
 	echo 'saved from sftp';
