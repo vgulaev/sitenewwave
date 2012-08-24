@@ -337,7 +337,7 @@ function showModalItem(hash, edIzm, prices){
         }
         $(".itemPCharInput").attr("value", ch)
         father = $(this).parent().parent()
-        $(father).find($(".itemPLengthInput")).attr("name", ch)
+        $(father).find(".itemPLengthInput").attr("name", ch)
 
         var nL = this.value.length*10
             nL = nL + "px"
@@ -346,7 +346,7 @@ function showModalItem(hash, edIzm, prices){
 
         //father.find($(".itemPCountInput")).change();
         $( "#slider-vertical" ).slider( "value", ch )
-        father.find($(".itemPLengthInput")).change();
+        $(father).find(".itemPLengthInput").change();
     })
 
     $(".itemPCountInput").change(function() {
@@ -372,20 +372,35 @@ function showModalItem(hash, edIzm, prices){
             //alert(nL)
             $(this).css("width", nL); 
             
-            if(father.find($(".itemPLengthInput")).attr('name')!=0){
-                wN = num * father.find($(".itemPWeightInput")).attr('name') * father.find($(".itemPLengthInput")).attr('name')
-                krN = num * father.find($(".itemPLengthInput")).attr('name')
-                var oldWn =  father.find($(".itemPWeightInput")).attr('value')
-                father.find($(".itemPWeightInput")).attr('value',(wN).toFixed(3))  
-                father.find($(".itemPLengthInput")).attr('value',(krN).toFixed(2))
-                father.find($(".itemSQuareInput")).attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
+            if($(father).find($(".itemPLengthInput")).attr('name')!=0){
+                wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
+                krN = num * $(father).find(".itemPLengthInput").attr('name')
+                var oldWn =  $(father).find(".itemPWeightInput").attr('value')
+                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))  
+                var nL = (wN+'').length*10 + 30
+                nL = nL + "px"
+                //alert('weight ' + nL)
+                $(father).find(".itemPWeightInput").css("width", nL); 
+
+                $(father).find(".itemPLengthInput").attr('value',(krN).toFixed(2))
+                var nL = (krN+'').length*10 + 25
+                nL = nL + "px"
+                //alert('length ' + krN + " " + nL)
+                $(father).find(".itemPLengthInput").css("width", nL); 
+
+                $(father).find(".itemSQuareInput").attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
+                var nL = (krN+'').length*10 + 30
+                nL = nL + "px"
+                //alert(nL)
+                $(father).find(".itemSQuareInput").css("width", nL); 
+
                 setModalWeight()
                 setModalLength()
                 
             } else {
-                father.find($(".itemPCountInput")).attr('value','--')
-                father.find($(".itemPLengthInput")).attr('value','--')
-                father.find($(".itemPWeightInput")).attr('value',(wN).toFixed(3))
+                $(father).find(".itemPCountInput").attr('value','--')
+                $(father).find(".itemPLengthInput").attr('value','--')
+                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))
             
             }
         }
@@ -419,10 +434,7 @@ function showModalItem(hash, edIzm, prices){
     $(".itemPWeightInput").change(function() {
        // wAll = 0
        // sAll = 0
-        var nL = this.value.length*9 + 30
-        nL = nL + "px"
-        //alert(nL)
-        $(this).css("width", nL);
+        
 
         cW = this.value
         cW = cW.replace(/,/, ".")
@@ -430,6 +442,10 @@ function showModalItem(hash, edIzm, prices){
         
         $(this).attr("value", cW)
         
+        var nL = this.value.length*10
+        nL = nL + "px"
+        //alert(nL)
+        $(this).css("width", nL);
    
         var father;
         father = $(this).parent().parent()
@@ -554,6 +570,126 @@ function modern_addItem(hash, edIzm, prices){
         var number = i + 1;
         $(this).find('td:first').text(number);
     });
+
+    var father = $('tbody#lItemTab tr:first');
+
+    wAll = 0
+    wmAll = 0
+    $(".itemCountInput").each( function(){
+        if($(this).attr("name")=="пог. м"){
+            wmAll = (wmAll + (this.value-0))  
+        
+        } else if($(this).attr("name")=="т"){
+            wAll = (wAll + (this.value-0)) 
+        }
+       
+    });
+
+    // alert(wAll + " | " + wmAll)
+
+    km = 0
+    k = 0
+
+    
+    if( wAll<2 ){
+        k = 0
+    } else if( wAll>=2 && wAll <8) {
+        k = 1
+    } else if( wAll>=8 && wAll <15) {
+        k = 2
+    } else if( wAll>=15) {
+        k = 3
+    }
+
+
+    if( wmAll<100 ){
+        km = 0
+    } else if( wmAll>=100 && wmAll <200) {
+        km = 1
+    } else if( wmAll>=200) {
+        km = 2
+    } 
+    
+
+    sAll = 0
+    cAll = 0
+
+    $(".itemPriceTd").each( function(){
+
+        var father = $(this).parent();
+        var count = $(father).find(".itemCountInput").attr("value")
+        var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
+
+        if($(father).find(".itemEdIzmTd").attr("name")=="пог. м"){
+
+
+            // alert(km)
+            $(father).find(".itemPriceTd").html(pricesArray[km]);
+            var sum = ((pricesArray[km]-0)*count).toFixed(2)
+            var nds = (((sum-0)/118)*18).toFixed(2)
+
+
+            hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+            nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+            $(father).find(".itemSumTd").html(hSum)
+            $(father).find(".itemNdsSumTd").html(nds)
+        
+            sAll = (sAll - 0) + (sum - 0)
+
+        } else {
+
+
+            // alert(k)
+            $(father).find(".itemPriceTd").html(pricesArray[k]);
+            var count = $(father).find(".itemCountInput").attr("value")
+            var sum = ((pricesArray[k]-0)*count).toFixed(2)
+            var nds = (((sum-0)/118)*18).toFixed(2)
+
+
+            hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+            nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+            $(father).find(".itemSumTd").html(hSum)
+            $(father).find(".itemNdsSumTd").html(nds)
+        
+            sAll = (sAll - 0) + (sum - 0)
+
+            cAll = (cAll - 0) + (count - 0)
+        }
+        
+        
+        
+
+    })
+    cAll = cAll.toFixed(3)
+    //sAll = sAll.toFixed(2)
+    
+
+    $("#SumAll").attr("name",sAll)
+
+    if($("#selfCarry").is(":checked")){
+        sAll = sAll.toFixed(2)
+    } else {
+        if($("#delivery_cost").html()!=""){
+            sAll = ((sAll-0) + ($("#delivery_cost").html().replace(/\s/g, "") - 0 )).toFixed(2)
+        } else {
+            sAll = sAll.toFixed(2)
+        }
+    }
+    
+    nAll = ((sAll/118)*18).toFixed(2)
+
+    nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
+    sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
+    cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
+    
+    $("#CountAll").empty()
+    $("#CountAll").append(cAll)
+
+    $("#SumAll").empty()
+    $("#SumAll").append(sAll)
+    
+    $("#NDSAll").empty()
+    $("#NDSAll").append(nAll)
 
     $(".itemCountInput").change()
 
