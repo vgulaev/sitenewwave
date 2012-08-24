@@ -162,10 +162,10 @@ function setModalLength(){
     father = $(".itemPLengthInput").parent().parent()
 
     
-
+    //alert($(".TNPrice").attr("name"))
     var pricesArray = $(".TNPrice").attr("name").split('|');
 
-    var wAll = $(".itemPCountInput").attr('value') - 0
+    var wAll = $(".itemPLengthInput").attr('value') - 0
     //var edZim = $(".popUpTab").attr("name")
 
     if( wAll<100 ){
@@ -176,7 +176,6 @@ function setModalLength(){
         k = 2
     } 
     
-
     TN = pricesArray[k]
     $(".TNPrice").html(TN)
     var itemKf = $(".itemPCountInput").attr("name")
@@ -407,8 +406,9 @@ function showModalItem(hash, edIzm, prices){
         father = $(this).parent().parent()
 
         var cLength = ($(this).attr("value")-0) / ($(this).attr("name")-0)
-        father.find($(".itemPCountInput")).attr('value',cLength)
-        father.find($(".itemPCountInput")).change();
+        
+        father.find($(".itemPLengthInput")).attr('value',cLength)
+        father.find($(".itemPLengthInput")).change();
     })
 
     $(".itemPWeightInput").change(function() {
@@ -471,6 +471,7 @@ function showModalItem(hash, edIzm, prices){
             num = cKr/father.find($(".itemPLengthInput")).attr('name')
             father.find($(".itemPCountInput")).attr('value',num)
             father.find($(".itemPCountInput")).change();
+
             setModalLength()
 
         } else {
