@@ -1,0 +1,326 @@
+li.group{
+	font-weight: bold;
+	font-size: 16px;
+	list-style: none;
+	
+}
+
+li.UlName{
+	border-bottom: 1px solid black;
+	cursor:pointer;
+}
+
+li.level0 li.UlName{
+	background-color: #0070cb;
+	/*border-bottom: 1px solid black;*/
+	color: white;
+	width: 100%;
+	text-align: center;
+
+}
+
+li.level1 li.UlName{
+	background-color: #FAEBD7;
+	width: 100%;
+	color: black;
+	text-align: left;
+
+	
+}
+li.item{
+	font-weight: normal;
+	font-size: 14px;
+	list-style: none;
+	list-style: none;
+	border-bottom:1px solid black;
+	/*display:block;*/
+	width:100%;
+	margin: 0;
+	padding: 0;
+	/*height: 23.5px !important;*/
+	
+
+}
+li.item span.itemName{
+	min-width: 300px;
+	width: 800px;
+	white-space:normal;
+	/*display:block;*/
+	margin: 0;
+	padding: 0;
+	/*padding-top: 3.5px;*/
+	/*border-bottom:1px solid black;*/
+	/*height: 23.5px;*/
+	/*border-right: 0px;
+	border-top: 0px;*/
+}
+li.itemGroup li.UlName{
+	background-color: #ffffff;
+	border-bottom: none;
+	color: black;
+	border-bottom:1px solid black;
+	text-align: left;
+	
+}
+li.itemGroup{
+	font-size: 14px;
+	list-style: none;
+
+}
+li.itemGroup span.itemPrice{
+	border-left: 1px solid black;
+	/*border-bottom:1px solid black;*/
+	min-width: 104px;
+	width: 104px;
+	max-width: 104px;
+	text-align: right;
+	padding-right: 5px;
+	white-space:nowrap;
+	/*vertical-align:middle;*/
+	/*height: 23.5px;*/
+	/*padding-top: 3.5px;*/
+	/*border-right: 0px;
+	border-top: 0px;*/
+}
+li.itemGroup div.pr{
+	float: right;
+	margin: 0px;
+	padding: 0px;
+	/*display:inline-block;*/
+	height: 16px;
+	/*height: 23.5px;*/
+	
+}
+
+ul#ПрайсЛист{
+	/*border: 2px solid black;
+	border-bottom:none;*/
+	width: auto;
+	padding: 0px;
+	margin-top: 0px;
+	list-style: none;
+}
+
+ul#ПрайсЛист ul{
+	list-style: none;
+	padding: 0px;
+}
+tr.PHeader{
+	margin-bottom: 0px;
+	/*border-top: 2px solid black !important;
+	border-left: 2px solid black;
+	border-right: 2px solid black;*/
+	width: 936px;
+	background-color: #1D5A8C;
+	/*position: fixed;*/
+	table-layout:fixed;
+
+}
+
+.PHeader span.itemPrice{
+	border-left: 1px solid black;
+	float: right;
+	width: 109px;
+	text-align: center;
+	font-size: 18px;
+	
+	color: white;
+}
+
+.PHeader span.itemPriceH{
+
+	text-align: center;
+	font-size: 18px;
+	
+	color: white;
+}
+
+.PHeader span.itemName{
+	padding-left: 20px;
+	text-align: left;
+	font-size: 18px;
+	color: white;
+	min-width: 150px;
+	white-space:pre;
+}
+td#itemNameTD{
+	width: 800px;
+	min-width: 300px;
+}
+
+td.itemUpper{
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+	text-align: center;
+	min-width: 109px;
+}
+
+td.itemUpperBottom{
+	width: 109px;
+	
+}
+
+td.list{
+	padding: 0px;
+}
+
+table#priceTable{
+	border: 2px solid black;
+	/*margin-top: 200px;*/
+	table-layout:fixed;
+}
+
+td{
+	padding: 0px;
+}
+
+.itemTN{
+	display: table-cell;
+}
+
+.itemPC{
+	display: table-cell;
+}
+
+.itemPM{
+	display: table-cell;
+}
+
+.itemTN_hid{
+	display: none;
+}
+
+.itemPC_hid{
+	display: none;
+}
+
+.itemPM_hid{
+	display: none;
+	
+}
+
+label{
+	margin-right: 20px;
+}
+
+#MyButton{
+	margin-right: 200px;
+}
+
+form.filterform{
+	width: 500px;
+}
+
+div#form{
+	margin: 10px;
+}
+
+td#PHPrices{
+	
+}
+
+input#filterInput{
+	width: 300px;
+}
+
+div#chkbxLabels{
+	margin:10px;
+}
+
+
+/*div#siteHead{
+	position:fixed;
+	overflow: auto;
+	background-color: white;
+}
+*/
+tr.PList{
+	table-layout:fixed;
+}
+
+div#tabDiv{
+	width:auto;
+}
+
+div#scrollable{
+	/*height: 800px;*/
+	overflow:auto;
+	
+}
+
+div#scrollWrapper{
+	
+}
+
+td#scrtd{
+	width:16px;
+	border-left: 1px solid black;
+	min-width:16px;
+}
+
+.p0{
+    
+}
+
+.p0_hid{
+    display:none;
+}
+
+.p1{
+    
+}
+
+.p1_hid{
+    display:none;
+}
+
+.p2{
+    
+}
+
+.p2_hid{
+    display:none;
+}
+
+.p3{
+    
+}
+
+.p3_hid{
+    display:none;
+}
+
+span.hline{
+    width: 1px;
+    /*background-color: black;*/
+    margin-left: 7px;
+    margin-right: 6px;
+    
+    display:inline-block;
+    overflow:auto;
+}
+
+div#chkbxLabels{
+    display:none;
+
+}
+
+div#chkbxText{
+    background-color: #afafaf;
+    height: 45px;
+    width: 70%;
+    display: block;
+    padding-top: 20px;
+    text-align: center;
+    margin-left: 20px;
+    cursor: pointer;
+    font-weight:bold;
+}
+
+a#chkbxLabelsHide:link, a#chkbxLabelsHide:hover, a#chkbxLabelsHide:visited {
+    margin-left: 40px;
+
+    color:black; 
+    text-decoration: none;
+    font-weight:bold;
+}
