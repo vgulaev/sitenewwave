@@ -1,7 +1,7 @@
 <?php
 
 function my_dbConnect(){
-    mysql_connect('localhost','root','I08bn64a') OR DIE("Не могу создать соединение ");
+    mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
 
     mysql_select_db('trimetru_goods') or die(mysql_error());
     mysql_query('SET NAMES utf8');
