@@ -345,6 +345,7 @@ function showModalItem(hash, edIzm, prices){
             $(this).css("width", nL);
 
         //father.find($(".itemPCountInput")).change();
+        $( "#slider-vertical" ).slider( "value", ch )
         father.find($(".itemPLengthInput")).change();
     })
 
@@ -391,16 +392,20 @@ function showModalItem(hash, edIzm, prices){
     })
 
     $(".itemSQuareInput").change(function(){
-        var nL = this.value.length*9 + 30
-        nL = nL + "px"
-        //alert(nL)
-        $(this).css("width", nL);
+        
 
         sQ = this.value
         sQ = sQ.replace(/,/,".")
         sQ = sQ.match(/\d+\.\d{0,3}|\d+/)
 
         $(this).attr("value", sQ)
+
+        var nL = this.value.length*10
+        nL = nL + "px"
+        //alert(nL)
+        $(this).css("width", nL);
+
+       
 
         var father;
         father = $(this).parent().parent()
@@ -450,14 +455,17 @@ function showModalItem(hash, edIzm, prices){
     $(".itemPLengthInput").change(function() {
        // wAll = 0
        // sAll = 0
-        var nL = this.value.length*9 + 20
-        nL = nL + "px"
-            //alert(nL)
-        $(this).css("width", nL);
-
+        
         cKr = this.value
         cKr = cKr.replace(/,/, ".")
         cKr = cKr.match(/\d+\.\d{0,2}|\d+/)
+
+        $(this).attr("value", cKr)
+
+        var nL = this.value.length*10
+        nL = nL + "px"
+            //alert(nL)
+        $(this).css("width", nL);
         
         
          
@@ -502,18 +510,32 @@ function showModalItem(hash, edIzm, prices){
             //alert(nL)
             $(this).css("width", nL);
     })
+    $(".itemSQuareInput").keyup( function(){
+        var nL = this.value.length*10
+            nL = nL + "px"
+            //alert(nL)
+            $(this).css("width", nL);
+    })
 
 }
 
 function modern_addItem(hash, edIzm, prices){
     weight = $(".itemPWeightInput").attr("value")
+    char=''
+    if(weight==undefined){
+        weight = $(".itemPLengthInput").attr("value")
+        char = $(".itemPCharInput").attr("value")
+    }
     $.unblockUI()
 
     var cell = "<tr class='itemTr' name='"+hash+"'><td></td>";
     $('tr[id="'+hash+'"]').each(function(){
+        if(char==''){
+            char = $(this).find(".itemChar").attr("name")
+        }
         cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name")+"</td>";
-        cell += "<td class='itemCharTd'>"+$(this).find(".itemChar").attr("name")+"</td>";
-        cell += "<td class='itemCountTd'><input class='itemCountInput' type='textarea' value='"+weight+"' /></td>";
+        cell += "<td class='itemCharTd'>"+char+"</td>";
+        cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
         cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
         cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
         cell += "<td class='itemNdsKfTd'>18%</td>";
@@ -540,54 +562,90 @@ function modern_addItem(hash, edIzm, prices){
         var father =  $(this).parent().parent();
 
         wAll = 0
+        wmAll = 0
         $(".itemCountInput").each( function(){
-            if($(this).parent().parent().find('td.itemEdIzmTd').attr('name')=='т'){
-                wAll = (wAll + (this.value-0))
-            }   
-        
+            if($(this).attr("name")=="пог. м"){
+                wmAll = (wmAll + (this.value-0))  
+            
+            } else if($(this).attr("name")=="т"){
+                wAll = (wAll + (this.value-0)) 
+            }
+           
         });
 
-        if(edIzm=='т'){
-            if( wAll<2 ){
-                k = 0
-            } else if( wAll>=2 && wAll <8) {
-                k = 1
-            } else if( wAll>=8 && wAll <15) {
-                k = 2
-            } else if( wAll>=15) {
-                k = 3
-            }
-        } else {
-            if( wAll<100 ){
-                k = 0
-            } else if( wAll>=100 && wAll <200) {
-                k = 1
-            } else if( wAll>=200) {
-                k = 2
-            } 
+        // alert(wAll + " | " + wmAll)
+
+        km = 0
+        k = 0
+
+        
+        if( wAll<2 ){
+            k = 0
+        } else if( wAll>=2 && wAll <8) {
+            k = 1
+        } else if( wAll>=8 && wAll <15) {
+            k = 2
+        } else if( wAll>=15) {
+            k = 3
         }
+    
+    
+        if( wmAll<100 ){
+            km = 0
+        } else if( wmAll>=100 && wmAll <200) {
+            km = 1
+        } else if( wmAll>=200) {
+            km = 2
+        } 
+        
 
         sAll = 0
         cAll = 0
 
         $(".itemPriceTd").each( function(){
+
             var father = $(this).parent();
-            var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
             var count = $(father).find(".itemCountInput").attr("value")
+            var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
 
-            $(father).find(".itemPriceTd").html(pricesArray[k]);
+            if($(father).find(".itemEdIzmTd").attr("name")=="пог. м"){
 
-            var sum = ((pricesArray[k]-0)*count).toFixed(2)
-            var nds = ((sum/118)*18).toFixed(2)
 
-            hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
-            nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
-            $(father).find(".itemSumTd").html(hSum)
-            $(father).find(".itemNdsSumTd").html(nds)
-        
-            sAll = (sAll - 0) + (sum - 0)
+                // alert(km)
+                $(father).find(".itemPriceTd").html(pricesArray[km]);
+                var sum = ((pricesArray[km]-0)*count).toFixed(2)
+                var nds = (((sum-0)/118)*18).toFixed(2)
 
-            cAll = (cAll - 0) + (count - 0)
+
+                hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+                nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+                $(father).find(".itemSumTd").html(hSum)
+                $(father).find(".itemNdsSumTd").html(nds)
+            
+                sAll = (sAll - 0) + (sum - 0)
+
+            } else {
+
+
+                // alert(k)
+                $(father).find(".itemPriceTd").html(pricesArray[k]);
+                var count = $(father).find(".itemCountInput").attr("value")
+                var sum = ((pricesArray[k]-0)*count).toFixed(2)
+                var nds = (((sum-0)/118)*18).toFixed(2)
+
+
+                hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+                nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+                $(father).find(".itemSumTd").html(hSum)
+                $(father).find(".itemNdsSumTd").html(nds)
+            
+                sAll = (sAll - 0) + (sum - 0)
+
+                cAll = (cAll - 0) + (count - 0)
+            }
+            
+            
+            
 
         })
         cAll = cAll.toFixed(3)
