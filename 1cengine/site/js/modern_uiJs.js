@@ -337,7 +337,7 @@ function showModalItem(hash, edIzm, prices){
         }
         $(".itemPCharInput").attr("value", ch)
         father = $(this).parent().parent()
-        $(father).find($(".itemPLengthInput")).attr("name", ch)
+        $(father).find(".itemPLengthInput").attr("name", ch)
 
         var nL = this.value.length*10
             nL = nL + "px"
@@ -346,7 +346,7 @@ function showModalItem(hash, edIzm, prices){
 
         //father.find($(".itemPCountInput")).change();
         $( "#slider-vertical" ).slider( "value", ch )
-        father.find($(".itemPLengthInput")).change();
+        $(father).find(".itemPLengthInput").change();
     })
 
     $(".itemPCountInput").change(function() {
@@ -372,20 +372,35 @@ function showModalItem(hash, edIzm, prices){
             //alert(nL)
             $(this).css("width", nL); 
             
-            if(father.find($(".itemPLengthInput")).attr('name')!=0){
-                wN = num * father.find($(".itemPWeightInput")).attr('name') * father.find($(".itemPLengthInput")).attr('name')
-                krN = num * father.find($(".itemPLengthInput")).attr('name')
-                var oldWn =  father.find($(".itemPWeightInput")).attr('value')
-                father.find($(".itemPWeightInput")).attr('value',(wN).toFixed(3))  
-                father.find($(".itemPLengthInput")).attr('value',(krN).toFixed(2))
-                father.find($(".itemSQuareInput")).attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
+            if($(father).find($(".itemPLengthInput")).attr('name')!=0){
+                wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
+                krN = num * $(father).find(".itemPLengthInput").attr('name')
+                var oldWn =  $(father).find(".itemPWeightInput").attr('value')
+                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))  
+                var nL = (wN+'').length*10 + 30
+                nL = nL + "px"
+                //alert('weight ' + nL)
+                $(father).find(".itemPWeightInput").css("width", nL); 
+
+                $(father).find(".itemPLengthInput").attr('value',(krN).toFixed(2))
+                var nL = (krN+'').length*10 + 25
+                nL = nL + "px"
+                //alert('length ' + krN + " " + nL)
+                $(father).find(".itemPLengthInput").css("width", nL); 
+
+                $(father).find(".itemSQuareInput").attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
+                var nL = (krN+'').length*10 + 30
+                nL = nL + "px"
+                //alert(nL)
+                $(father).find(".itemSQuareInput").css("width", nL); 
+
                 setModalWeight()
                 setModalLength()
                 
             } else {
-                father.find($(".itemPCountInput")).attr('value','--')
-                father.find($(".itemPLengthInput")).attr('value','--')
-                father.find($(".itemPWeightInput")).attr('value',(wN).toFixed(3))
+                $(father).find(".itemPCountInput").attr('value','--')
+                $(father).find(".itemPLengthInput").attr('value','--')
+                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))
             
             }
         }
@@ -419,10 +434,7 @@ function showModalItem(hash, edIzm, prices){
     $(".itemPWeightInput").change(function() {
        // wAll = 0
        // sAll = 0
-        var nL = this.value.length*9 + 30
-        nL = nL + "px"
-        //alert(nL)
-        $(this).css("width", nL);
+        
 
         cW = this.value
         cW = cW.replace(/,/, ".")
@@ -430,6 +442,10 @@ function showModalItem(hash, edIzm, prices){
         
         $(this).attr("value", cW)
         
+        var nL = this.value.length*10
+        nL = nL + "px"
+        //alert(nL)
+        $(this).css("width", nL);
    
         var father;
         father = $(this).parent().parent()
