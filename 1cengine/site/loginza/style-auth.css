@@ -1,0 +1,24 @@
+div#loginContent{
+	margin-left:300px;
+}
+
+div#loginDiv{
+	width:400px;
+}
+input#enterButton{
+	width:70px;
+}
+ input#regButton{
+ 	width:130px;
+ }
+
+ #regDiv{
+ 	margin-left:300px;
+ 	width:400px;
+ }
+ #passwdv{
+ 	display:none;
+ }
+ #showPasswd{
+ 	width:10px;
+ }
