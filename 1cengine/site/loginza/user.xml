@@ -1,0 +1,16 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Header/>
+	<soap:Body> <m:GetUserResponse xmlns:m="http://www.trimet.ru/Schema1C/PrivetOffice">
+	<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<m:Nickname>elf607@gmail.com</m:Nickname>
+		<m:Fullname/>
+		<m:Email/>
+		<m:YandexID/>
+		<m:GoogleID>https://www.google.com/accounts/o8/id?id=AItOawlhc</m:GoogleID>
+		<m:VkontakteID/>
+		<m:FacebookID/>
+		<m:MailruID/>
+	</m:return>
+</m:GetUserResponse></soap:Body>
+</soap:Envelope>
