@@ -571,6 +571,126 @@ function modern_addItem(hash, edIzm, prices){
         $(this).find('td:first').text(number);
     });
 
+    var father = $('tbody#lItemTab tr:first');
+
+    wAll = 0
+    wmAll = 0
+    $(".itemCountInput").each( function(){
+        if($(this).attr("name")=="пог. м"){
+            wmAll = (wmAll + (this.value-0))  
+        
+        } else if($(this).attr("name")=="т"){
+            wAll = (wAll + (this.value-0)) 
+        }
+       
+    });
+
+    // alert(wAll + " | " + wmAll)
+
+    km = 0
+    k = 0
+
+    
+    if( wAll<2 ){
+        k = 0
+    } else if( wAll>=2 && wAll <8) {
+        k = 1
+    } else if( wAll>=8 && wAll <15) {
+        k = 2
+    } else if( wAll>=15) {
+        k = 3
+    }
+
+
+    if( wmAll<100 ){
+        km = 0
+    } else if( wmAll>=100 && wmAll <200) {
+        km = 1
+    } else if( wmAll>=200) {
+        km = 2
+    } 
+    
+
+    sAll = 0
+    cAll = 0
+
+    $(".itemPriceTd").each( function(){
+
+        var father = $(this).parent();
+        var count = $(father).find(".itemCountInput").attr("value")
+        var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
+
+        if($(father).find(".itemEdIzmTd").attr("name")=="пог. м"){
+
+
+            // alert(km)
+            $(father).find(".itemPriceTd").html(pricesArray[km]);
+            var sum = ((pricesArray[km]-0)*count).toFixed(2)
+            var nds = (((sum-0)/118)*18).toFixed(2)
+
+
+            hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+            nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+            $(father).find(".itemSumTd").html(hSum)
+            $(father).find(".itemNdsSumTd").html(nds)
+        
+            sAll = (sAll - 0) + (sum - 0)
+
+        } else {
+
+
+            // alert(k)
+            $(father).find(".itemPriceTd").html(pricesArray[k]);
+            var count = $(father).find(".itemCountInput").attr("value")
+            var sum = ((pricesArray[k]-0)*count).toFixed(2)
+            var nds = (((sum-0)/118)*18).toFixed(2)
+
+
+            hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+            nds = nds.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nds.split('.')[1]
+            $(father).find(".itemSumTd").html(hSum)
+            $(father).find(".itemNdsSumTd").html(nds)
+        
+            sAll = (sAll - 0) + (sum - 0)
+
+            cAll = (cAll - 0) + (count - 0)
+        }
+        
+        
+        
+
+    })
+    cAll = cAll.toFixed(3)
+    //sAll = sAll.toFixed(2)
+    
+
+    $("#SumAll").attr("name",sAll)
+
+    if($("#selfCarry").is(":checked")){
+        sAll = sAll.toFixed(2)
+    } else {
+        if($("#delivery_cost").html()!=""){
+            sAll = ((sAll-0) + ($("#delivery_cost").html().replace(/\s/g, "") - 0 )).toFixed(2)
+        } else {
+            sAll = sAll.toFixed(2)
+        }
+    }
+    
+    nAll = ((sAll/118)*18).toFixed(2)
+
+    nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
+    sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
+    cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
+    
+    $("#CountAll").empty()
+    $("#CountAll").append(cAll)
+
+    $("#SumAll").empty()
+    $("#SumAll").append(sAll)
+    
+    $("#NDSAll").empty()
+    $("#NDSAll").append(nAll)
+
     $(".itemCountInput").change()
 
     $(".itemCountInput").change(function() {
