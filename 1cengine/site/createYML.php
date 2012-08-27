@@ -168,6 +168,13 @@ function createPriceItem($group, $costArray, $groupName, $itemHashN, $nid){
         $itemLength = $item['_c']['m:Кратность']['_v'];
         $itemKf = $item['_c']['m:Коэффициент']['_v'];
         $itemHash = $item['_c']['m:ХарактеристикаСсылка']['_v'];
+        $itemStock = $item['_c']['m:ЕстьВНаличии']['_v'];
+
+        if($itemStock!='0'){
+            $inStock = 'true';
+        } else {
+            $inStock = 'false';
+        }
 
         $ik = 0;
         // foreach($costArray as $costs){
@@ -185,7 +192,7 @@ function createPriceItem($group, $costArray, $groupName, $itemHashN, $nid){
             <price>'.$itemPrice.'</price>
             <currencyId>RUR</currencyId>
             <categoryId>'.$nid.'</categoryId>
-            <store>true</store>
+            <store>'.$inStock.'</store>
             <pickup>true</pickup>
             <delivery>false</delivery>
             <name>'.$groupName.' '.$itemName.'</name>
