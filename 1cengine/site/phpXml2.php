@@ -1,4 +1,5 @@
 <?php
+print "Content-type: text/html\n\n"; 
 
 setlocale(LC_ALL, "ru_RU");
 
@@ -56,12 +57,12 @@ function _del_p(&$ary) {
     }
 }
 
-function qr($iName, $pHash, $cName, $weight, $length, $kf, $iHash, $edIzm, $price, $priceType, $groupSecondName, $itemHashN){
+function qr($iName, $pHash, $cName, $weight, $length, $kf, $iHash, $edIzm, $price, $priceType, $groupSecondName, $itemHashN, $inStock){
 
     $dbCon = my_dbConnect();
 
-    $query2 = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`)
-VALUES ('null','".mysql_escape_string($groupSecondName)." ".mysql_escape_string($cName)." ','".$iHash."','".$pHash."','".mysql_escape_string($iName)."','".mysql_escape_string($cName)."','".$weight."','".$length."','".$kf."','".$edIzm."','".mysql_escape_string($price)."','".mysql_escape_string($priceType)."','".$itemHashN."');";
+    $query2 = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`)
+VALUES ('null','".mysql_escape_string($groupSecondName)." ".mysql_escape_string($cName)." ','".$iHash."','".$pHash."','".mysql_escape_string($iName)."','".mysql_escape_string($cName)."','".$weight."','".$length."','".$kf."','".$edIzm."','".mysql_escape_string($price)."','".mysql_escape_string($priceType)."','".$itemHashN."', '".$inStock."');";
     $result2 = mysql_query($query2, $dbCon);
     print_r($iName.' '.$cName.'<br />');
     //echo 'done<br />';
@@ -167,8 +168,10 @@ function createPriceItemHollow($group, $groupName,$pHash, $groupSecondName){
 
     }
 
+    $inStock = 1;
+
     //insertItem($iName, $pHash, $cName, $weight, $length, $kf, $iHash, $edIzm, $price)
-    qr($groupName, $pHash, $itemName, $itemWeight, $itemLength, $itemKf, "0", $itemEd, $priceDB, $priceType, $groupSecondName, $itemHash);
+    qr($groupName, $pHash, $itemName, $itemWeight, $itemLength, $itemKf, "0", $itemEd, $priceDB, $priceType, $groupSecondName, $itemHash, $inStock);
 
 }
 
@@ -190,6 +193,7 @@ function createPriceItem($group, $groupName, $pHash, $groupSecondName, $itemHash
         $itemKf = $item['_c']['m:Коэффициент']['_v'];
         $itemHash = $item['_c']['m:ХарактеристикаСсылка']['_v'];
         $itemEd = $item['_c']['m:ЕдИзмерения']['_v'];
+        $itemStock = $item['_c']['m:ЕстьВНаличии']['_v'];
         //$itemPrice = $item['_c']['m:']
         
         $ik = 0;
@@ -207,8 +211,13 @@ function createPriceItem($group, $groupName, $pHash, $groupSecondName, $itemHash
             $ik++;
         }
         
+        if($itemStock!='0'){
+            $inStock = 1;
+        } else {
+            $inStock = 0;
+        }
 
-        qr($groupName, $pHash, $itemName, $itemWeight, $itemLength, $itemKf, $itemHash, $itemEd, $priceDB, $priceType, $groupSecondName, $itemHashN);
+        qr($groupName, $pHash, $itemName, $itemWeight, $itemLength, $itemKf, $itemHash, $itemEd, $priceDB, $priceType, $groupSecondName, $itemHashN, $inStock);
 
     }
 }
