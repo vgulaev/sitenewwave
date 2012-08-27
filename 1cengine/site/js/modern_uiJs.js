@@ -199,7 +199,7 @@ function setModalLength(){
     $(".pPCPrice").html(PC)
 }
 
-function showModalItem(hash, edIzm, prices){
+function showModalItem(hash, edIzm, prices, stock){
     var mesDiv = '';
     $('tr[id="'+hash+'"]').each(function(){
 
@@ -238,6 +238,9 @@ function showModalItem(hash, edIzm, prices){
             SM = Math.round((TN-0)/(smK-0)*100)/100
             //alert(SM)
             mesDiv += '<div><p>'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'</p>';
+            if(stock=='0'){
+                mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px;">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
+            }
             mesDiv += '<div id="slider-vertical"></div>';
             mesDiv += '<img src="profnastilSample.gif" />'
             mesDiv += '<div style="margin-left:30px;">'+dL+'</div>'
@@ -271,6 +274,9 @@ function showModalItem(hash, edIzm, prices){
 
         } else {
             mesDiv += '<div><p>'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'</p>';
+            if(stock=='0'){
+                mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
+            }
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td></tr>';
             mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td></tr>';
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td></tr></table>';

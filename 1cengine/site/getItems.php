@@ -46,12 +46,12 @@ function getItems($req){
 
     if(isset($_GET["show_all"])){
         $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
-                `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`
-                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash`");
+                `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
+                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` ORDER BY `offers`.`stock` DESC");
     } else {
         $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
-                `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`
-                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` LIMIT 20");
+                `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
+                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` ORDER BY `offers`.`stock` DESC LIMIT 20");
     }
     
     
@@ -83,10 +83,16 @@ function getItems($req){
             $rt = '<tr class="item" id="'.$row[5].':'.$row[7].'" itemscope itemtype="http://schema.org/Product">
                 <td name="'.$row[0].'" class="itemName" itemprop="name">
                     '.$row[0].'
-                    <span class="buySpan">
-                        <a href="Добавить в корзину" onClick="showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\'); return false">купить</a>
-                    </span></td>
-                <td name="'.$row[1].'" class="itemChar" itemprop="model">'.$row[1].'</td>';
+                    <span class="buySpan">';
+            if($row[8]!=0){
+                $rt .= '<a class="bItem" href="Добавить в корзину" onClick="showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
+                    </span></td>'; 
+            } else {
+                $rt .= '<a class="oItem" href="Добавить в корзину" onClick="showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'0\'); return false">заказать</a>
+                    </span></td>';
+            }
+            
+            $rt .= '<td name="'.$row[1].'" class="itemChar" itemprop="model">'.$row[1].'</td>';
             $paLength = count($priceArray)-2;
             $j=0;
             foreach($priceArray as $price){

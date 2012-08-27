@@ -204,15 +204,25 @@
 	text-decoration: none;
 	font-weight:bold;
 }
-.buySpan a:hover{
+.buySpan a.bItem:hover{
 	text-shadow: black 0 0 2px;
 	float:right;
 	color:#ffe06f;
 }
-.item:hover a{
+.buySpan a.oItem:hover{
+	text-shadow: black 0 0 2px;
+	float:right;
+	color:#ff5959;
+}
+.item:hover a.bItem{
 	text-shadow: black 0 0 2px;
 	float:right;
 	color:#ffe06f;
+}
+.item:hover a.oItem{
+	text-shadow: black 0 0 2px;
+	float:right;
+	color:#ff5959;
 }
 #Summary td:last-child{
 	text-align: right;
