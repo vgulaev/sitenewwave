@@ -30,7 +30,7 @@ function getItems($req){
             }
             $ij++;
         }
-        echo $cond;
+        //echo $cond;
     } else {
         
         foreach($reqArray as $rA){
