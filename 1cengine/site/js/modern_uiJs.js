@@ -385,6 +385,7 @@ function showModalItem(hash, edIzm, prices, stock){
         //father.find($(".itemPCountInput")).change();
         $( "#slider-vertical" ).slider( "value", ch )
         $(father).find(".itemPLengthInput").change();
+        $(father).find(".itemSQuareInput").change()
     })
 
     $(".itemPCountInput").change(function() {
@@ -415,19 +416,19 @@ function showModalItem(hash, edIzm, prices, stock){
                 krN = num * $(father).find(".itemPLengthInput").attr('name')
                 var oldWn =  $(father).find(".itemPWeightInput").attr('value')
                 $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))  
-                var nL = (wN+'').length*10 + 30
+                var nL = (wN.toFixed(3)+'').length*10
                 nL = nL + "px"
                 //alert('weight ' + nL)
                 $(father).find(".itemPWeightInput").css("width", nL); 
 
                 $(father).find(".itemPLengthInput").attr('value',(krN).toFixed(2))
-                var nL = (krN+'').length*10 + 25
+                var nL = (krN.toFixed(2)+'').length*10
                 nL = nL + "px"
                 //alert('length ' + krN + " " + nL)
                 $(father).find(".itemPLengthInput").css("width", nL); 
 
                 $(father).find(".itemSQuareInput").attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
-                var nL = (krN+'').length*10 + 30
+                var nL = (krN.toFixed(3)+'').length*10
                 nL = nL + "px"
                 //alert(nL)
                 $(father).find(".itemSQuareInput").css("width", nL); 
@@ -453,9 +454,11 @@ function showModalItem(hash, edIzm, prices, stock){
 
         $(this).attr("value", sQ)
 
-        var nL = this.value.length*10
+         var nL = this.value - 0
+        nL = nL.toFixed(2) + ""
+        nL = nL.length*10
         nL = nL + "px"
-        //alert(nL)
+            //alert(nL)
         $(this).css("width", nL);
 
        
@@ -516,7 +519,9 @@ function showModalItem(hash, edIzm, prices, stock){
 
         $(this).attr("value", cKr)
 
-        var nL = this.value.length*10
+        var nL = this.value - 0
+        nL = nL.toFixed(2) + ""
+        nL = nL.length*10
         nL = nL + "px"
             //alert(nL)
         $(this).css("width", nL);

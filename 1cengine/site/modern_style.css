@@ -401,7 +401,7 @@
 	/*margin-top:-2px;*/
 	box-shadow: 0 0 5px 2px #ffe06f;
 	position: absolute; z-index: 2; cursor: default;
-	top: -.3em; margin-left: -.6em;
+	top: -.3em;
 }
 
 #slider-vertical{
