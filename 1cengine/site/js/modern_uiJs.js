@@ -241,9 +241,23 @@ function showModalItem(hash, edIzm, prices, stock){
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px;">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
-            mesDiv += '<div id="slider-vertical"></div>';
-            mesDiv += '<img src="profnastilSample.gif" />'
-            mesDiv += '<div style="margin-left:30px;">'+dL+'</div>'
+           
+
+            //mesDiv += '<img src="profnastilSample.gif" />'
+
+            mesDiv += '<div style="width:370px;height:150px">'
+            mesDiv += '<div style="margin-top:50px;float:left;margin-left:10px">'+dL+'</div>'
+            mesDiv += '<div class="profnastilImageBase"></div>'
+            mesDiv += '<div class="profnastilImageAdd2" style="display:block;"></div>'
+            mesDiv += '<div class="profnastilImageAdd3"></div>'
+            mesDiv += '<div class="profnastilImageAdd4"></div>'
+            mesDiv += '<div class="profnastilImageAdd5"></div>'
+            mesDiv += '<div class="profnastilImageAdd6"></div>'
+            mesDiv += '</div>'
+
+             mesDiv += '<div id="slider-vertical"></div>';
+
+            
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td></tr>';
             mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td></tr>';
             mesDiv += '<tr><td>за штуку:</td><td class="pPCPrice">'+TN+'</td></tr>';
@@ -268,7 +282,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '400px'
-            $.blockUI.defaults.css.height = '320px'
+            $.blockUI.defaults.css.height = '370px'
             $.blockUI.defaults.css.paddingTop = '10px'
 
 
@@ -312,8 +326,7 @@ function showModalItem(hash, edIzm, prices, stock){
 
     $(function() {
         $( "#slider-vertical" ).slider({
-            orientation: "vertical",
-            range: "max",
+            range: "min",
             min: 0.2,
             max: 6,
             value: 2,
@@ -341,6 +354,25 @@ function showModalItem(hash, edIzm, prices, stock){
         } else {
             ch = ch
         }
+
+        if((ch-0)<2){
+            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
+        } else if((ch-0)>=2 && (ch-0)<3){
+            $(".profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
+            $(".profnastilImageAdd2").show()
+        } else if((ch-0)>=3 && (ch-0)<4){
+            $(".profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
+            $(".profnastilImageAdd2, .profnastilImageAdd3").show()
+        } else if((ch-0)>=4 && (ch-0)<5){
+            $(".profnastilImageAdd5, .profnastilImageAdd6").hide()
+            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4").show()
+        } else if((ch-0)>=5 && (ch-0)<6){
+            $(".profnastilImageAdd6").hide()
+            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5").show()
+        } else if((ch-0)==6){
+            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").show()
+        }
+
         $(".itemPCharInput").attr("value", ch)
         father = $(this).parent().parent()
         $(father).find(".itemPLengthInput").attr("name", ch)
