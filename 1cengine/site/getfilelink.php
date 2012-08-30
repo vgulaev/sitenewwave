@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $srv = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws'));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/price1c.1cws');
 
@@ -30,6 +30,8 @@ if($params['Type']!=''){
 
 	if($response=='Well'){
 		echo 'http://195.239.221.58:30080/download/'.$params['UID'].'.'.$params['Type'];
+	} else {
+		echo 'Нет возможности создать ';
 	}
 } else {
 	$typeArray = array('xlsx', 'ods', 'html', 'pdf');
