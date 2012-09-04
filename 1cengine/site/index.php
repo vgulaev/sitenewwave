@@ -76,7 +76,7 @@ $APPLICATION->IncludeFile(
             </span>
             <span id='showPriceSpan'>
                 <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Вернуться в прайс</a></p>
-                <p><a href='javascript:createOrder()' title='Сохранить заказ'>Отправить заказ</a></p>
+                <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
                     <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
                     <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
@@ -140,7 +140,7 @@ $APPLICATION->IncludeFile(
                 <div id="switchDiv">
                     <div class="activeDiv" id="switchOrderDiv">Товары</div>
                     <div class="inactiveDiv" id="switchDeliveryDiv">Доставка</div>
-                    <div class="inactiveDiv" id="switchNotificationDiv">Уведомления</div>
+                    <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
                 </div>
                 <div id="orderDiv">
                     <table id='basketTab' cellspacing='0' cellpadding='0'>
