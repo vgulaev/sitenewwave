@@ -47,7 +47,7 @@ function getItems($req){
     if(isset($_GET["show_all"])){
         $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
                 `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
-                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` ORDER BY `offers`.`stock` DESC");
+                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash`");
     } else {
         $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
                 `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
