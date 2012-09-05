@@ -129,7 +129,7 @@ $APPLICATION->IncludeFile(
 
                 <div id="myCanvasContainer">
                     <canvas width="300" height="300" id="myCanvas">
-                        <p>Anything in here will be replaced on browsers that support the canvas element</p>
+                        <!-- <p>Anything in here will be replaced on browsers that support the canvas element</p> -->
                     </canvas>
                 </div>
 
@@ -278,7 +278,41 @@ $APPLICATION->IncludeFile(
                     
                 </div>
                 <div id="notificationDiv">
-                    <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span>
+
+                    <table class="orderFormTable">
+                        <tr>
+                            <td>Фамилия</td>
+                            <td>
+                                <input type="textarea" class="orderFormInput" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Имя и Отчество</td>
+                            <td>
+                                <input type="textarea" class="orderFormInput" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Электронная почта</td>
+                            <td>
+                                <input type="textarea" class="orderFormInput" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Телефон для связи</td>
+                            <td>
+                                <input type="textarea" class="orderFormInput" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Дополнительный телефон для связи</td>
+                            <td>
+                                <input type="textarea" class="orderFormInput" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
             </div>
 		</td>
