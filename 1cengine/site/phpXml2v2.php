@@ -121,7 +121,7 @@ function webi_xml($file)
             if($GLOBALS["name_register"]=="Синоним"){
                 $reg_data = str_replace(" ", "", $data);
                 $reg_data = str_replace("\n", "", $reg_data);
-                $pattern = "/[\w\.\,\(\\\\\\/\"\)\d\-F\А-Яа-я]*/u";
+                $pattern = "/[\w\.\,\(\\\\\\/\*\'\"\)\d\-А-Яа-я]*/u";
                 $reg_data = preg_replace($pattern, "", $reg_data);
                 // echo " > ".strlen($reg_data)." | ".$data." | ".$reg_data." < ";
                 if(strlen($reg_data)==0){
@@ -335,7 +335,7 @@ $query = "TRUNCATE TABLE `offers`";
 mysql_query($query);
 
 $query = "TRUNCATE TABLE `groups`";
-mysql_query($query);\
+mysql_query($query);
 
 webi_xml('price.xml');
 
