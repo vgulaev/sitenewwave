@@ -18,7 +18,7 @@ function qr($iName, $pHash, $cName, $weight, $length, $kf, $iHash, $edIzm, $pric
     $query2 = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`)
 VALUES ('null','".mysql_escape_string($groupSecondName)." ".mysql_escape_string($cName)." ','".$iHash."','".$pHash."','".mysql_escape_string($iName)."','".mysql_escape_string($cName)."','".$weight."','".$length."','".$kf."','".$edIzm."','".mysql_escape_string($price)."','".mysql_escape_string($priceType)."','".$itemHashN."', '".$inStock."');";
     $result2 = mysql_query($query2, $dbCon);
-    print_r($iName.' '.$cName.'<br />');
+    print_r($iName.' '.$cName.' : '.$result2.'<br />');
     //echo 'done<br />';
     //return mysql_insert_id();
 }
@@ -119,7 +119,14 @@ function webi_xml($file)
                 $GLOBALS["in_stock"][] = $data;
             }
             if($GLOBALS["name_register"]=="Синоним"){
-                $GLOBALS["second_name"][] = $data;
+                $reg_data = str_replace(" ", "", $data);
+                $reg_data = str_replace("\n", "", $reg_data);
+                $pattern = "/[\w\.\,\(\\\\\\/\"\)\d\-F\А-Яа-я]*/u";
+                $reg_data = preg_replace($pattern, "", $reg_data);
+                // echo " > ".strlen($reg_data)." | ".$data." | ".$reg_data." < ";
+                if(strlen($reg_data)==0){
+                    $GLOBALS["second_name"][] = $data;
+                }
             }
         }
         
@@ -178,15 +185,17 @@ function webi_xml($file)
     ### функция создания предмета типа профнастила
     function createPriceItemHollow(){
         
-
+        $groupName = $GLOBALS["item_name_register"];
         $itemName = 'кастом';
         $itemWeight = $GLOBALS["itemWeight"][0];
         $itemLength = $GLOBALS["itemLength"][0];
         $itemKf = $GLOBALS["itemKf"][0];
         $itemEd = $GLOBALS["itemEd"][0];
+
         $groupSecondName = $GLOBALS["second_name"][0];
+        
         $itemEd = $GLOBALS["itemEd"][0];
-        $groupName = $GLOBALS["item_name_register"];
+        
         $itemHash = $GLOBALS["item_hash_register"];
         $itemHashN = $GLOBALS["item_hash_register"];
         $pHash = $GLOBALS["item_p_hash"];
