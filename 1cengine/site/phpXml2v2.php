@@ -331,6 +331,12 @@ function webi_xml($file)
 
 my_dbConnect();
 
+$query = "TRUNCATE TABLE `offers`";
+mysql_query($query);
+
+$query = "TRUNCATE TABLE `groups`";
+mysql_query($query);\
+
 webi_xml('price.xml');
 
 
