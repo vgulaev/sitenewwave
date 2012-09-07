@@ -283,34 +283,36 @@ $APPLICATION->IncludeFile(
                         <tr>
                             <td>Фамилия</td>
                             <td>
-                                <input type="textarea" class="orderFormInput" />
+                                <input type="textarea" class="orderFormInput" id="lastNameInput" />
                             </td>
                         </tr>
                         <tr>
                             <td>Имя и Отчество</td>
                             <td>
-                                <input type="textarea" class="orderFormInput" />
+                                <input type="textarea" class="orderFormInput" id="nameSurnameInput" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Электронная почта</td>
+                            <td>*Электронная почта</td>
                             <td>
-                                <input type="textarea" class="orderFormInput" />
+                                <input type="textarea" id='emailInput' class="orderFormInput" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Телефон для связи</td>
+                            <td>*Телефон для связи</td>
                             <td>
-                                <input type="textarea" class="orderFormInput" />
+                                <input type="textarea" class="orderFormInput" id="mainPhoneInput" />
                             </td>
                         </tr>
                         <tr>
                             <td>Дополнительный телефон для связи</td>
                             <td>
-                                <input type="textarea" class="orderFormInput" />
+                                <input type="textarea" class="orderFormInput" id="otherPhoneInput" />
                             </td>
                         </tr>
                     </table>
+
+                    <p>*Обязательны для заполнения</p>
 
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
