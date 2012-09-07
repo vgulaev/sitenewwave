@@ -286,7 +286,7 @@ $APPLICATION->IncludeFile(
 	<tr>
 		<td id="leftTrBottomTd">
 			<p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
-			<p><a href="http://trimet.ru/1cengine/site/howitcreating.php">P.S.: Как это создается...</a></p>
+			<p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
 		</td>
 	</tr>
 </table>
