@@ -34,7 +34,7 @@ if($_SESSION['1cusername']!=''){
 
 $dt = date('d.m.Y');
 
-$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', carry: '.$_POST["carry"].', destination: '.$_POST["destination"].', delivery cost: '.$_POST["delivery_cost"].', mail: '.$_POST['email'];
+$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', carry: '.$_POST["carry"].', destination: '.$_POST["destination"].', delivery cost: '.$_POST["delivery_cost"].', mail: '.$_POST['email'].', phone: '.$_POST["main_phone"].', other phone: '.$_POST["other_phone"].', name: '.$_POST["name_surname"].' '.$_POST["last_name"];
 $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
