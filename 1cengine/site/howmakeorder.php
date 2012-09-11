@@ -15,6 +15,10 @@ $APPLICATION->IncludeFile(
 #main2{
 	background:none !important;
 }
+#forText{
+	font-size:16px;
+	padding-top:50px;
+}
 </style>
 
 <link rel="stylesheet" type="text/css" href="modern_style.css" />
@@ -25,7 +29,7 @@ $APPLICATION->IncludeFile(
 
             <span id='showBasketSpan'>
                 <p><a href='/1cengine/site/' title='Вернуться в прайс'>Вернуться в прайс</a></p>
-                <p><a href="/1cengine/site/fullprice.php" title="Перейти на страницу с полным прайс-листом">Полный прайс</a></p>
+                <!--p><a href="/1cengine/site/fullprice.php" title="Перейти на страницу с полным прайс-листом">Полный прайс</a></p-->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
                 <p>Скачать прайс:
                     <li><a href="/download/files/price.xlsx" title="Скачать прайс в формате xls">xls</a></li>
@@ -37,14 +41,14 @@ $APPLICATION->IncludeFile(
         </td>
         <td>
             <div id="forText">
-                Если Вы хотите выписать счет то можете воспользоваться <a href="http://trimet.ru/1cengine/site/fullprice.php">предыдущей версией подбора</a> товара. Сейчас идет интенсивная разработка новой версии выписки счета. Обещаем что она будет красийвой и удобной. Так же мы рады учесть все Ваши пожелания. <a href="http://trimet.ru/1cengine/site/howitcreating.php">Есть пожелания?</a>
+                Сейчас у нас на сайте можно выписать счет. Возможно это не очевидно и не понятно. Помогите нам. Оставьте свое мнение <a href="http://trimet.ru/1cengine/site/howitcreating.php">тут</a>. Все пожелания контролируются директором и будут обязательно реализованы. Спасибо за участие в проекте!!!
             </div>
         </td>
     </tr>
     <tr>
         <td id="leftTrBottomTd">
             <p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
-            <p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
+            <p><a href="http://trimet.ru/1cengine/site/howitcreating.php">P.S.: Как это создается...</a></p>
         </td>
     </tr>
 </table>
