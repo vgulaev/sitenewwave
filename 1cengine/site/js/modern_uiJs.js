@@ -71,6 +71,10 @@ $(function(){
                 
 });
 
+$("#sendOrderButtom").click( function(){
+    createOrder()
+})
+
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")

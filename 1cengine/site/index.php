@@ -314,6 +314,8 @@ $APPLICATION->IncludeFile(
 
                     <p>*Обязательны для заполнения</p>
 
+                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить заказ</div></a>
+
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
             </div>
