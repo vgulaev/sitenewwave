@@ -18,7 +18,8 @@ function qr($iName, $pHash, $cName, $weight, $length, $kf, $iHash, $edIzm, $pric
     $query2 = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`)
 VALUES ('null','".mysql_escape_string($groupSecondName)." ".mysql_escape_string($cName)." ','".$iHash."','".$pHash."','".mysql_escape_string($iName)."','".mysql_escape_string($cName)."','".$weight."','".$length."','".$kf."','".$edIzm."','".mysql_escape_string($price)."','".mysql_escape_string($priceType)."','".$itemHashN."', '".$inStock."');";
     $result2 = mysql_query($query2, $dbCon);
-    print_r($iName.' '.$cName.' : '.$result2.'<br />');
+    print_r("|| ".$iName.", ".$pHash.", ".$cName.", ".$weight.", ".$length.", ".$kf.", ".$iHash.", ".$edIzm.", ".$price.", ".$priceType.", ".$groupSecondName.", ".$itemHashN.", ".$inStock."<br />");
+    print_r($iName.' '.$cName.' : '.$result2.'||<br />');
     //echo 'done<br />';
     //return mysql_insert_id();
 }
@@ -121,9 +122,9 @@ function webi_xml($file)
             if($GLOBALS["name_register"]=="Синоним"){
                 $reg_data = str_replace(" ", "", $data);
                 $reg_data = str_replace("\n", "", $reg_data);
-                $pattern = "/[\w\.\,\(\\\\\\/\"\)\d\-F\А-Яа-я]*/u";
+                $pattern = "/[\w\.\,\(\\\\\\/\*\'\"\)\d\-А-Яа-я]*/u";
                 $reg_data = preg_replace($pattern, "", $reg_data);
-                // echo " > ".strlen($reg_data)." | ".$data." | ".$reg_data." < ";
+                echo " > ".strlen($reg_data)." | ".$data." | ".$reg_data." < ";
                 if(strlen($reg_data)==0){
                     $GLOBALS["second_name"][] = $data;
                 }
@@ -257,7 +258,7 @@ function webi_xml($file)
             createPriceItem();
 
 
-            $GLOBALS["groupName"] = array();
+            // $GLOBALS["groupName"] = array();
             $GLOBALS["itemHashN"] = array();
             $GLOBALS["itemName"] = array();
             $GLOBALS["itemWeight"] = array();
@@ -267,7 +268,7 @@ function webi_xml($file)
             $GLOBALS["itemEd"] = array();
             $GLOBALS["price_name_array"] = array();
             $GLOBALS["price_array"] = array();
-            $GLOBALS["second_name"] = array();
+            // $GLOBALS["second_name"] = array();
             $GLOBALS["in_stock"] = array();
 
             // echo '</table>';
@@ -330,6 +331,12 @@ function webi_xml($file)
 }
 
 my_dbConnect();
+
+$query = "TRUNCATE TABLE `offers`";
+mysql_query($query);
+
+$query = "TRUNCATE TABLE `groups`";
+mysql_query($query);
 
 webi_xml('price.xml');
 

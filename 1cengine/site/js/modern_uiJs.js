@@ -71,6 +71,10 @@ $(function(){
                 
 });
 
+$("#sendOrderButtom").click( function(){
+    createOrder()
+})
+
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -883,18 +887,24 @@ function sendOrder(orderString){
     
 
     email = $('input#emailInput').attr('value')
-        if(email!=''){
-            if(isValidEmail(email)==false){
-                alert('Проверьте правильность адреса электронной почты')
-                return null
-            }
-        }      
+    if(email!=''){
+        if(isValidEmail(email)==false){
+            alert('Проверьте правильность адреса электронной почты')
+            return null
+        }
+    }      
+    main_phone = $('#mainPhoneInput').attr('value')
+     
+    last_name = $('#lastNameInput').attr('value')
+    name_surname = $('#nameSurnameInput').attr('value')
+    other_phone = $('#otherPhoneInput').attr('value')
+
     ret = ''
     $.ajax({
         type: "POST",
         url: "createOrder.php",
         async: false,
-        data: "orderString="+orderString+"&carry="+carry+"&destination="+destination+"&email="+email+"&delivery_cost="+delivery_cost,
+        data: "orderString="+orderString+"&carry="+carry+"&destination="+destination+"&email="+email+"&delivery_cost="+delivery_cost+"&main_phone="+main_phone+"&other_phone="+other_phone+"&name_surname="+name_surname+"&last_name="+last_name,
         success: function(html){
             //var success = 'true';
             ret = 'номер '+html
@@ -909,6 +919,9 @@ function createOrder(){
     if($("#emailInput").attr("value")==""){
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
+    } else if($("#mainPhoneInput").attr("value")==""){
+        $("#switchNotificationDiv").click()
+        $("#phoneMainInput").focus()
     } else {
         var sendRow = '';
         $('tr.itemTr').each( function(){
