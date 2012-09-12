@@ -71,10 +71,6 @@ $(function(){
                 
 });
 
-$("#sendOrderButtom").click( function(){
-    createOrder()
-})
-
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -866,6 +862,7 @@ function modern_addItem(hash, edIzm, prices){
 }
 
 function sendOrder(orderString){
+    
     if($('#selfCarry').is(':checked')==false){
         if($('#destination').attr('value')!="--"){   
             destination = $('input#destination').attr('value')
@@ -889,6 +886,7 @@ function sendOrder(orderString){
     email = $('input#emailInput').attr('value')
     if(email!=''){
         if(isValidEmail(email)==false){
+            $.unblockUI()
             alert('Проверьте правильность адреса электронной почты')
             return null
         }
@@ -900,6 +898,7 @@ function sendOrder(orderString){
     other_phone = $('#otherPhoneInput').attr('value')
 
     ret = ''
+    
     $.ajax({
         type: "POST",
         url: "createOrder.php",
@@ -917,9 +916,11 @@ function sendOrder(orderString){
 
 function createOrder(){
     if($("#emailInput").attr("value")==""){
+        $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
     } else if($("#mainPhoneInput").attr("value")==""){
+        $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#phoneMainInput").focus()
     } else {
@@ -938,8 +939,10 @@ function createOrder(){
 
         var oA = order.split(",")
         $("#basketCaption").append("Заказ "+oA[0])
-
+        
         $("#switchOrderDiv").click()
+
+        $.unblockUI()
 
     }
     
@@ -980,6 +983,11 @@ function getOrderFomat(format){
 
 
 $(document).ready( function(){
+
+    // $(document).ajaxStart().ajaxStop($.unblockUI);
+    $("#sendOrderButton").click( function(){
+        $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
+    })
 
     if( ! $('#myCanvas').tagcanvas({
         textColour : '#242491',
