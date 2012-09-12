@@ -46,7 +46,7 @@ if (mysql_num_rows($r1)>0){
     }
 }
 
-fwrite($handle, '</categories>');
+fwrite($handle, '</categories><offers>');
 
 $r = mysql_query("SELECT `groups`.`name`, `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `groups`.`id` FROM `offers`, `groups` WHERE `offers`.`parent_hash`=`groups`.`hash` ");
 
@@ -74,7 +74,7 @@ if (mysql_num_rows($r)>0){
 
 
 
-fwrite($handle, '</urlset>');
+fwrite($handle, '</offers></shop></yml_catalog>');
 
 fclose($handle);
 
