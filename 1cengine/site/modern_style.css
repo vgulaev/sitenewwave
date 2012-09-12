@@ -279,21 +279,51 @@
 	/*float: left;*/
 	margin:40px;
 	display:block;
-	height:120px;
+	/*height:120px;*/
 	margin-bottom:10px;
 }
 #destination{
 	width:200px;
 }
+#deliveryTab{
+	width:550px;
+	margin-top:15px;
+	font-size:16px;
+}
 #deliveryTab td{
 	padding: 3px;
+	font-size:16px;
+}
+#deliveryTab td:first-child{
+	text-align:right;
+	vertical-align:middle;
+	font-size:16px;
 }
 #deliveryTab select{
-	width:230px;
+	margin:5px;
+	width:252px;
+	height:28px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
+	vertical-align:bottom;
 }
 #deliveryTab input{
-	width:225px;
+	margin:5px;
+	width:250px;
+	height:25px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
 } 
+#delivery_cost{
+	margin:5px;
+	font-size:16px;
+}
+#sCP{
+	font-size:16px;
+	margin-left:50px;
+}
 #email input{
 	height:14px;
 	width:260px;
@@ -351,14 +381,13 @@
 }
 .popUpTab{
 	margin-bottom:10px;
-	font-size:16px;
-	width:auto;
-	margin-left:100px;
+	font-size:18px;
+	margin-left:10px;
 }
 .popUpTab td:first-child{
 	text-align:right;
 }
-.popUpTab td:last-child{
+.popUpTab td{
 	text-align:left;
 	padding-left:10px;
 }
@@ -366,6 +395,8 @@
 	text-align:left;
 	display:block;
 	padding:5px;
+	/*font-size:18px;*/
+	/*margin-left:10px;*/
 }
 
 /*.ui-slider { position: relative; text-align: left; }
