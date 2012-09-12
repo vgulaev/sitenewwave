@@ -152,6 +152,9 @@ function setModalWeight(){
         }
         $(".PCPrice").html(PC)
         $(".PMPrice").html(PM)
+        sum = (cW*TN).toFixed(2)
+        hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+        $("#popUpSpanItog").html(hSum)
     }
 }
 
@@ -269,7 +272,7 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += 'штук по <input class="pUi itemPCharInput" id="amount" value="2"> метра ';
             mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
 
-            mesDiv += '<div><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
+            mesDiv += '<div margin-top="20px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
             mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
             mesDiv += '</div>';
 
@@ -282,7 +285,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '400px'
-            $.blockUI.defaults.css.height = '370px'
+            $.blockUI.defaults.css.height = '400px'
             $.blockUI.defaults.css.paddingTop = '10px'
 
 
@@ -291,17 +294,31 @@ function showModalItem(hash, edIzm, prices, stock){
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td></tr>';
-            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td></tr>';
-            mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td></tr></table>';
-            mesDiv += '<span class="popUpInnerSpan"><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн это ';
-            mesDiv += '<input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> ';
+
+            // mesDiv += '<table><tr><td>'
+
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
+            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
+            mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
+
+            mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
 
 
-            mesDiv += 'штук по '+$(this).find(".itemChar").attr("name")+' метра, общей длинной ';
-            mesDiv += '<input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра</span>';
+            // mesDiv += '</td><td>'
+            // mesDiv += '<span class="popUpInnerSpan"><table class="popUpTabR">'
+            // mesDiv += '<tr><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
+            // mesDiv += '<tr><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
+            // mesDiv += '<tr><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </tr></td>';
+            // mesDiv += '</span></table>';
+            
+            // mesDiv += '</td></tr></table>';
 
-            mesDiv += '<div><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
+            // mesDiv += '<span class="popUpInnerSpan"><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн это ';
+            // mesDiv += '<input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> ';
+            // mesDiv += 'штук по '+$(this).find(".itemChar").attr("name")+' метра, общей длинной ';
+            // mesDiv += '<input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра</span>';
+
+            mesDiv += '<div style="margin-top:30px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
             mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
             mesDiv += '</div>';
 
@@ -313,7 +330,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.cursor = 'defaults'
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
-            $.blockUI.defaults.css.width = '400px'
+            $.blockUI.defaults.css.width = '450px'
             $.blockUI.defaults.css.height = '220px'
             $.blockUI.defaults.css.paddingTop = '10px'
         }
@@ -374,7 +391,7 @@ function showModalItem(hash, edIzm, prices, stock){
         }
 
         $(".itemPCharInput").attr("value", ch)
-        father = $(this).parent().parent()
+        father = $(this).parent().parent().parent()
         $(father).find(".itemPLengthInput").attr("name", ch)
 
         var nL = this.value.length*10
@@ -391,7 +408,7 @@ function showModalItem(hash, edIzm, prices, stock){
     $(".itemPCountInput").change(function() {
         num = this.value
         //num = num.match(/\d+/)
-        father = $(this).parent().parent()
+        father = $(this).parent().parent().parent()
         if(num != '--'){
             var div = num%1
             if (div!=0){
@@ -464,7 +481,7 @@ function showModalItem(hash, edIzm, prices, stock){
        
 
         var father;
-        father = $(this).parent().parent()
+        father = $(this).parent().parent().parent()
 
         var cLength = ($(this).attr("value")-0) / ($(this).attr("name")-0)
         
@@ -489,7 +506,7 @@ function showModalItem(hash, edIzm, prices, stock){
         $(this).css("width", nL);
    
         var father;
-        father = $(this).parent().parent()
+        father = $(this).parent().parent().parent()
         
         weightName = father.find($(".itemPWeightInput")).attr('name')
         
@@ -530,7 +547,7 @@ function showModalItem(hash, edIzm, prices, stock){
          
         
         var father;
-        father = $(this).parent().parent()
+        father = $(this).parent().parent().parent()
         
         weightName = father.find($(".itemPLengthInput")).attr('name')
         
