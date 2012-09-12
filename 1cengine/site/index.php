@@ -219,7 +219,7 @@ $APPLICATION->IncludeFile(
                         <!-- <form id='shipmentForm'> -->
                             <table id='deliveryTab'>
                                 <tr>
-                                    <td>Выберете город:</td>
+                                    <td>Выберете город</td>
                                     <td>
                                         <select id='townSelect'>
                                             <option value='' selected disabled>--</option>
@@ -252,13 +252,13 @@ $APPLICATION->IncludeFile(
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Введите адрес:</td>
+                                    <td>Введите адрес</td>
                                     <td>
                                         <input type='textarea' name='destination' id='destination' value='' placeholder='Введите здесь адрес' /> 
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Выберете транспорт:</td>
+                                    <td>Выберете транспорт</td>
                                     <td>
                                         <select id='carry' name='carry'>
                                             <option disabled selected>--</option>
@@ -268,13 +268,17 @@ $APPLICATION->IncludeFile(
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Стоимость доставки: </td>
+                                    <td>Стоимость доставки</td>
                                     <td><span id="delivery_cost"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="selfCarry"> Самовывоз</label></td>
+                                    <td><input type="checkbox" id="selfCarry" /></td>
                                 </tr>
                             </table>
                         <!-- </form> -->
                     </div>
-                    <p style="margin-left:40px;"><input type="checkbox" id="selfCarry" /><label for="selfCarry"> Самовывоз</label></p>
+                    <!-- <p id="sCP"></p> -->
                     
                 </div>
                 <div id="notificationDiv">
