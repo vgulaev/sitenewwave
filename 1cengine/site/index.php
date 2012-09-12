@@ -91,7 +91,8 @@ $APPLICATION->IncludeFile(
     			<div id="searchDiv">
                     <input id="itemName" placeholder="Введите здесь интересующий вас товар" />
                     <div id="searchButton">Найти</div>
-    			</div>
+    			</div><br />
+                <span id="hollowResult"></span>
                 <div id="qRes">
     				<table id="tableRes">
                         <?php

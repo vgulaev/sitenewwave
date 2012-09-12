@@ -1066,13 +1066,17 @@ $(document).ready( function(){
                 if($(".item").length>=1){
                     $("#myCanvasContainer").hide();
                     $("#tags").hide();
+                    $('#hollowResult').empty()
                 } else {
+                    $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
                     $('#myCanvasContainer').show();
                 }
 				if($(".item").length==20){
 					$("#showAll").show();
+                    // $('#hollowResult').empty()
 				} else {
 					$("#showAll").hide();
+                    // $('#hollowResult').empty()
 				}
 				
 			}
