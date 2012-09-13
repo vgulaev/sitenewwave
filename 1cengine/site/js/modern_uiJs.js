@@ -277,7 +277,7 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
 
             mesDiv += '<div margin-top="20px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
+            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onAddLinkPressed\', \''+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'\'); modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -323,7 +323,7 @@ function showModalItem(hash, edIzm, prices, stock){
             // mesDiv += '<input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра</span>';
 
             mesDiv += '<div style="margin-top:30px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
+            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onAddLinkPressed\', \''+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'\'); modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу

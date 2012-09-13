@@ -112,19 +112,19 @@ $APPLICATION->IncludeFile(
 
                 <div id="tags">
                     <ul>
-                        <li><a href="javascript:showGroup2('Арматура')"><strong>Арматура</strong></a></li>
-                        <li><a href="javascript:showGroup2('Балка')"><strong>Балка</strong></a></li>
-                        <li><a href="javascript:showGroup2('Квадрат')"><strong>Квадрат</strong></a></li>
-                        <li><a href="javascript:showGroup2('Круг')"><strong>Круг</strong></a></li>
-                        <li><a href="javascript:showGroup2('Лист')"><strong>Лист</strong></a></li>
-                        <li><a href="javascript:showGroup2('Труба')"><strong>Труба</strong></a></li>
-                        <li><a href="javascript:showGroup2('Швеллер')"><strong>Швеллер</strong></a></li>
-                        <li><a href="javascript:showGroup2('Профнастил')"><strong>Профнастил</strong></a></li>
-                        <li><a href="javascript:showGroup2('Штрипс')"><strong>Штрипс</strong></a></li>
-                        <li><a href="javascript:showGroup2('Проволока')"><strong>Проволока</strong></a></li>
-                        <li><a href="javascript:showGroup2('Металлосайдинг')"><strong>Металлосайдинг</strong></a></li>
-                        <li><a href="javascript:showGroup2('Металлочерепица')"><strong>Металлочерепица</strong></a></li>
-                        <li><a href="javascript:showGroup2('Угол')"><strong>Угол</strong></a></li>
+                        <li><a href="javascript:showGroup2('Арматура')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); return true;"><strong>Арматура</strong></a></li>
+                        <li><a href="javascript:showGroup2('Балка')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); return true;"><strong>Балка</strong></a></li>
+                        <li><a href="javascript:showGroup2('Квадрат')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); return true;"><strong>Квадрат</strong></a></li>
+                        <li><a href="javascript:showGroup2('Круг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); return true;"><strong>Круг</strong></a></li>
+                        <li><a href="javascript:showGroup2('Лист')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); return true;"><strong>Лист</strong></a></li>
+                        <li><a href="javascript:showGroup2('Труба')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); return true;"><strong>Труба</strong></a></li>
+                        <li><a href="javascript:showGroup2('Швеллер')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); return true;"><strong>Швеллер</strong></a></li>
+                        <li><a href="javascript:showGroup2('Профнастил')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); return true;"><strong>Профнастил</strong></a></li>
+                        <li><a href="javascript:showGroup2('Штрипс')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); return true;"><strong>Штрипс</strong></a></li>
+                        <li><a href="javascript:showGroup2('Проволока')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); return true;"><strong>Проволока</strong></a></li>
+                        <li><a href="javascript:showGroup2('Металлосайдинг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); return true;"><strong>Металлосайдинг</strong></a></li>
+                        <li><a href="javascript:showGroup2('Металлочерепица')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); return true;"><strong>Металлочерепица</strong></a></li>
+                        <li><a href="javascript:showGroup2('Угол')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); return true;"><strong>Угол</strong></a></li>
                     </ul>
                 </div>
 

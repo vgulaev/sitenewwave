@@ -92,10 +92,10 @@ function getItems($req){
                     '.$row[0].'
                     <span class="buySpan">';
             if($row[8]!=0){
-                $rt .= '<a class="bItem" href="Добавить в корзину" onClick="showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
+                $rt .= '<a class="bItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'купить\'); showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
                     </span></td>'; 
             } else {
-                $rt .= '<a class="oItem" href="Добавить в корзину" onClick="showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'0\'); return false">заказать</a>
+                $rt .= '<a class="oItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'заказать\'); showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'0\'); return false">заказать</a>
                     </span></td>';
             }
             
