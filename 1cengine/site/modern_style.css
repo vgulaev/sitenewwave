@@ -139,7 +139,7 @@
 	padding:2px;
 	padding-right:10px;
 	padding-left:10px;
-	font-size:10px;
+	font-size:12px;
 }
 
 #lItemTab td{
@@ -148,6 +148,7 @@
 	padding:2px;
 	padding-right:10px;
 	padding-left:10px;
+	font-size:12px;
 }
 #lItemTab td:first-child{
 	border-left:none;
@@ -167,7 +168,7 @@
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-right:1px solid black;
-	padding: 0px 5px;
+	padding: 0px 10px;
 	border-bottom:1px solid white;
 }
 .inactiveDiv{
@@ -177,7 +178,7 @@
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-right:1px solid black;
-	padding: 0px 5px;
+	padding: 0px 10px;
 	background-color: #e1e1e1;
 	cursor:pointer;
 }
@@ -193,7 +194,8 @@
 	display:none;
 }
 #switchDiv{
-	height:20px;
+	height:25px;
+	font-size:14px;
 }
 .priceHeader span{
 	width:100%;
@@ -232,8 +234,8 @@
 
 #Summary{
 	margin-top:20px;
-	width:170px;
-	font-size:12px;
+	width:250px;
+	font-size:16px;
 }
 .itemEdIzmTd{
 	width:30px;
@@ -273,57 +275,7 @@
 #myCanvasContainer{
 	margin-left:150px;
 }
-#shipment{
-	width:400px;
-	font-size:12px;
-	/*float: left;*/
-	margin:40px;
-	display:block;
-	/*height:120px;*/
-	margin-bottom:10px;
-}
-#destination{
-	width:200px;
-}
-#deliveryTab{
-	width:550px;
-	margin-top:15px;
-	font-size:16px;
-}
-#deliveryTab td{
-	padding: 3px;
-	font-size:16px;
-}
-#deliveryTab td:first-child{
-	text-align:right;
-	vertical-align:middle;
-	font-size:16px;
-}
-#deliveryTab select{
-	margin:5px;
-	width:252px;
-	height:28px;
-	border:1px solid #a1a1a1;
-	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
-	font-size:16px;
-	vertical-align:bottom;
-}
-#deliveryTab input{
-	margin:5px;
-	width:250px;
-	height:25px;
-	border:1px solid #a1a1a1;
-	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
-	font-size:16px;
-} 
-#delivery_cost{
-	margin:5px;
-	font-size:16px;
-}
-#sCP{
-	font-size:16px;
-	margin-left:50px;
-}
+
 #email input{
 	height:14px;
 	width:260px;
@@ -502,4 +454,72 @@
 	font-weight:bold;
 	font-size:14px;
 	padding-top:3px;
+}
+
+#shipment{
+	width:400px;
+	font-size:12px;
+	/*float: left;*/
+	margin:40px;
+	display:block;
+	/*height:120px;*/
+	margin-bottom:10px;
+}
+#destination{
+	width:200px;
+}
+#deliveryTab{
+	width:550px;
+	margin-top:15px;
+	font-size:16px;
+	margin-left:80px;
+}
+#deliveryTab td{
+	padding: 3px;
+	font-size:16px;
+	text-align:left;
+}
+#deliveryTab td:first-child{
+	text-align:right;
+	vertical-align:middle;
+	font-size:16px;
+}
+#deliveryTab select{
+	margin:5px;
+	width:252px;
+	height:28px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
+	vertical-align:bottom;
+}
+#deliveryTab input{
+	margin:5px;
+	width:250px;
+	height:25px;
+	border:1px solid #a1a1a1;
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+	font-size:16px;
+} 
+#delivery_cost{
+	margin:5px;
+	font-size:16px;
+}
+#sCP{
+	font-size:16px;
+	margin-left:50px;
+}
+
+#showNDSlabel{
+	width:150px;
+	float:right;
+}
+
+.NDSHeader, .itemNdsSumTd, .itemNdsKfTd{
+	display:none;
+}
+
+#showNds{
+	margin-right:5px;
+	width:10px;
 }
