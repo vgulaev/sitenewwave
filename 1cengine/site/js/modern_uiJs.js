@@ -1031,7 +1031,7 @@ function parseOrder(order){
         }
         sAll = sAll + ( $(this).find('.itemSumTd').html().replace(/\s/g, '') - 0 )
         nAll = nAll + ( $(this).find('.itemNdsTd').html().replace(/\s/g, '') - 0 )
-        alert($(this).find('.itemSumTd').html())
+        // alert($(this).find('.itemSumTd').html())
     })
 
     sAll = sAll.toFixed(2)
