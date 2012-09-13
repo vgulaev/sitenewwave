@@ -1043,6 +1043,15 @@ $(document).ready( function(){
         
     	});
 	})
+
+    $("#showNds").change( function(){
+        // alert($("#showNds").attr("checked"))
+        if($("#showNds").attr("checked")=="checked"){
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").show()
+        } else {
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").hide()
+        }
+    })
 	
 		
 	tmOutId = 0
