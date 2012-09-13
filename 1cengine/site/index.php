@@ -51,10 +51,10 @@ $APPLICATION->IncludeFile(
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
-<!--<script type="text/javascript" src='/1cengine/site/js/uiJS.js'> </script>-->
+<!--<script type="text/javascript" src='/1cengine/site/js/uiJS.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/uiBasket.js'> </script>
 
-<script type="text/javascript" src='js/uiOrders.js'> </script>
+<script type="text/javascript" src='js/uiOrders.js'> </script>-->
 
 <link rel="stylesheet" type="text/css" href="modern_style.css" />
 
@@ -141,6 +141,7 @@ $APPLICATION->IncludeFile(
                     <div class="activeDiv" id="switchOrderDiv">Товары</div>
                     <div class="inactiveDiv" id="switchDeliveryDiv">Доставка</div>
                     <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
+                    <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
                 </div>
                 <div id="orderDiv">
                     <table id='basketTab' cellspacing='0' cellpadding='0'>
@@ -170,11 +171,11 @@ $APPLICATION->IncludeFile(
                                 Цена
                             </th>
                             
-                            <th class='itemHeader'>
+                            <th class='itemHeader NDSHeader'>
                                 Ставка НДС
                             </th>
 
-                            <th class='itemHeader'>
+                            <th class='itemHeader NDSHeader'>
                                 Сумма НДС
                             </th>
                             
@@ -184,17 +185,7 @@ $APPLICATION->IncludeFile(
                          </tr>
                       </thead>
                       <tbody id='lItemTab'>
-                        <!--<tr>
-                            <td class='itemNum'><a href='Добавить в заказ' class='addItem' onClick="$('#closeBasket').click(); return false" >Добавить</a> </td>
-                            <td class='itemName'></td>
-                            <td class='itemChar'></td>
-                            <td class='itemCount'></td>
-                            <td class='itemType'></td>
-                            <td class='itemPrice'></td>
-                            <td class='itemNDS'></td>
-                            <td class='itemNDSSumn'></td>
-                            <td class='itemSum'></td>
-                        </tr>-->       
+  
                       </tbody>
                     </table>
                     <div id='Summary'>
@@ -215,7 +206,7 @@ $APPLICATION->IncludeFile(
                     </div>
                 </div>
                 <div id="deliveryDiv">
-                    <div id='shipment'>
+                    <!-- <div id='shipment'> -->
                         <!-- <form id='shipmentForm'> -->
                             <table id='deliveryTab'>
                                 <tr>
@@ -277,7 +268,7 @@ $APPLICATION->IncludeFile(
                                 </tr>
                             </table>
                         <!-- </form> -->
-                    </div>
+                    <!-- </div> -->
                     <!-- <p id="sCP"></p> -->
                     
                 </div>
