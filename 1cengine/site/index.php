@@ -51,10 +51,10 @@ $APPLICATION->IncludeFile(
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
-<!--<script type="text/javascript" src='/1cengine/site/js/uiJS.js'> </script>-->
+<!--<script type="text/javascript" src='/1cengine/site/js/uiJS.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/uiBasket.js'> </script>
 
-<script type="text/javascript" src='js/uiOrders.js'> </script>
+<script type="text/javascript" src='js/uiOrders.js'> </script>-->
 
 <link rel="stylesheet" type="text/css" href="modern_style.css" />
 
@@ -215,7 +215,7 @@ $APPLICATION->IncludeFile(
                     </div>
                 </div>
                 <div id="deliveryDiv">
-                    <div id='shipment'>
+                    <!-- <div id='shipment'> -->
                         <!-- <form id='shipmentForm'> -->
                             <table id='deliveryTab'>
                                 <tr>
@@ -277,7 +277,7 @@ $APPLICATION->IncludeFile(
                                 </tr>
                             </table>
                         <!-- </form> -->
-                    </div>
+                    <!-- </div> -->
                     <!-- <p id="sCP"></p> -->
                     
                 </div>
