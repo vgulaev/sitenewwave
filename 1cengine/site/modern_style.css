@@ -477,6 +477,7 @@
 #deliveryTab td{
 	padding: 3px;
 	font-size:16px;
+	text-align:left;
 }
 #deliveryTab td:first-child{
 	text-align:right;
