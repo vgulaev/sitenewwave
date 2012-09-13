@@ -1021,6 +1021,32 @@ function parseOrder(order){
     }
 
     $("#lItemTab").html(rows);
+
+    wAll = 0
+    sAll = 0
+    nAll = 0
+    $(".itemTr").each( function(){
+        if($(this).find('.itemEdIzmTd').html()=="т"){
+            wAll = wAll + ( $(this).find('.itemCountTd').html() - 0 )
+        }
+        sAll = sAll + ( $(this).find('.itemSumTd').html().replace(/\s/g, '') - 0 )
+        nAll = nAll + ( $(this).find('.itemNdsTd').html().replace(/\s/g, '') - 0 )
+        alert($(this).find('.itemSumTd').html())
+    })
+
+    sAll = sAll.toFixed(2)
+    nAll = nAll.toFixed(2)
+
+    sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
+    nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
+
+    $("#CountAll").html(wAll)
+    $("#SumAll").html(sAll)
+    $("#NDSAll").html(nAll)
+
+    $(".basketCount").html(j-1)
+
+    $("#tabBasket").click()
 }
 
 function openLink(linkUID,type){
