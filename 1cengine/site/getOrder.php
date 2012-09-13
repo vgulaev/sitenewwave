@@ -1,5 +1,12 @@
 <?php
 
+function my_dbConnect(){
+    mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
+
+    mysql_select_db('trimetru_goods') or die(mysql_error());
+    mysql_query('SET NAMES utf8');
+}
+
 function xml2ary(&$string) {
     $parser = xml_parser_create();
     xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
@@ -51,9 +58,9 @@ $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTri
 $server->decode_utf8 = false;
 $server->soap_defencoding = 'UTF-8';
 
-$params['UID'] = 'bf6f2a6e-c2cf-11df-9787-00155dc20a16';
+// $params['UID'] = 'bf6f2a6e-c2cf-11df-9787-00155dc20a16';
 $params['UIDOrder'] = '';
-//$params['UID'] = $_POST['uid'];
+$params['UID'] = $_POST['uid'];
 
 
 
@@ -71,6 +78,8 @@ $orderEdit = $xml['soap:Envelope']['_c']['soap:Body']['_c']['m:GetOrdersResponse
 
 $goodsRow = $orderNum.'||'.$orderEdit.'||';
 
+my_dbConnect();
+
 foreach($goodsArrays as $goods){
 	$char = $goods['_c']['m:ХарактеристикаСсылка']['_v'];
 	$count = $goods['_c']['m:КоличествоШтук']['_v'];
@@ -80,7 +89,15 @@ foreach($goodsArrays as $goods){
     //$length = $goods['_c']['m:']['_v'];
     //$edIzm = $goods['_c']['m:']['_v'];
 
-	$goodsRow .= $nomen.':'.$char.':'.$count.':'.$weight.':'.$price.';';
+    $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`edIzm`
+                FROM `offers` WHERE `offers`.`father_hash`='".$nomen."' AND `offers`.`hash`='".$char."' OR `offers`.`father_hash`='".$nomen."' AND `offers`.`hash`='0' LIMIT 1");
+    if (mysql_num_rows($r)>0){
+        while($row = mysql_fetch_array($r, MYSQL_NUM)){
+            $goodsRow .= $nomen.':'.$char.':'.$count.':'.$weight.':'.$price.':'.$row[0].':'.$row[1].':'.$row[2].';';
+        }
+    }
+
+	
 }
 
 echo $goodsRow;
