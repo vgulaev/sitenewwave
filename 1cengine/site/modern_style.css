@@ -423,6 +423,7 @@
 	text-align:right;
 	vertical-align:middle;
 	font-size:16px;
+	width:290px;
 }
 .orderFormInput{
 	margin:5px;
@@ -472,7 +473,7 @@
 	width:550px;
 	margin-top:15px;
 	font-size:16px;
-	margin-left:80px;
+	/*margin-left:80px;*/
 }
 #deliveryTab td{
 	padding: 3px;
@@ -483,6 +484,7 @@
 	text-align:right;
 	vertical-align:middle;
 	font-size:16px;
+	width:290px;
 }
 #deliveryTab select{
 	margin:5px;
