@@ -46,35 +46,45 @@ if (mysql_num_rows($r1)>0){
     }
 }
 
-fwrite($handle, '</categories>');
+fwrite($handle, '</categories><offers>');
 
-$r = mysql_query("SELECT `groups`.`name`, `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `groups`.`id` FROM `offers`, `groups` WHERE `offers`.`parent_hash`=`groups`.`hash` ");
+$r = mysql_query("SELECT `groups`.`name`, `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `groups`.`id`, `offers`.`stock` FROM `offers`, `groups` WHERE `offers`.`parent_hash`=`groups`.`hash` ");
 
 
 if (mysql_num_rows($r)>0){
 	$num = 0;
     while($row = mysql_fetch_array($r, MYSQL_NUM)){
         $price = explode('|', $row[3]);
-        $addRow = '<offer id="99'.$num.'" available="true">
-        <url>http://www.trimet.ru/1cengine/site/index.php?ref='.rawurlencode($row[1]).' '.rawurlencode($row[2]).'</url>
-        <price>'.$price[0].'</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>'.$row[4].'</categoryId>
-        <store>true</store>
-        <pickup>true</pickup>
-        <delivery>false</delivery>
-        <name>'.$row[0].'</name>           
-    </offer>';
+        if($row[5]!=0){
+            $inStock = 'true';
+        } else {
+            $inStock = 'false';
+        }
 
-        fwrite($handle, $addRow);
-        $num++;
+        if($row[2]!='<'){
+            $addRow = '<offer id="99'.$num.'" available="true">
+            <url>http://www.trimet.ru/1cengine/site/index.php?ref='.rawurlencode($row[1]).' '.rawurlencode($row[2]).'</url>
+            <price>'.$price[0].'</price>
+            <currencyId>RUR</currencyId>
+            <categoryId>'.$row[4].'</categoryId>
+            <store>'.$inStock.'</store>
+            <pickup>true</pickup>
+            <delivery>false</delivery>
+            <name>'.$row[1].' '.htmlspecialchars($row[2]).'</name>           
+        </offer>';
+
+            fwrite($handle, $addRow);
+            $num++;
+        }
+
+        
     }
 }
 
 
 
 
-fwrite($handle, '</urlset>');
+fwrite($handle, '</offers></shop></yml_catalog>');
 
 fclose($handle);
 
