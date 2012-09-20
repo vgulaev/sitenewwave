@@ -595,44 +595,7 @@ function showModalItem(hash, edIzm, prices, stock){
 
 }
 
-function modern_addItem(hash, edIzm, prices){
-    weight = $(".itemPWeightInput").attr("value")
-    char=''
-    if(weight==undefined){
-        weight = $(".itemPLengthInput").attr("value")
-        char = $(".itemPCharInput").attr("value")
-    }
-    $.unblockUI()
-
-    var cell = "<tr class='itemTr' name='"+hash+"'><td></td>";
-    $('tr[id="'+hash+'"]').each(function(){
-        if(char==''){
-            char = $(this).find(".itemChar").attr("name")
-        }
-        cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name")+"</td>";
-        cell += "<td class='itemCharTd'>"+char+"</td>";
-        cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
-        cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
-        cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
-        cell += "<td class='itemNdsKfTd'>18%</td>";
-        cell += "<td class='itemNdsSumTd'></td>";
-        cell += "<td class='itemSumTd'></td>";
-    })
-    newRow = cell+'</tr>';
-
-    var bCount = $('span.basketCount').html();
-    bCount = (bCount - 0)+1;
-    $('span.basketCount').html(bCount);  
-
-    $('tbody#lItemTab').prepend(newRow);
-
-    $('tbody#lItemTab tr').each(function(i) {
-        var number = i + 1;
-        $(this).find('td:first').text(number);
-    });
-
-    var father = $('tbody#lItemTab tr:first');
-
+function setOverallPrices(){
     wAll = 0
     wmAll = 0
     $(".itemCountInput").each( function(){
@@ -877,6 +840,77 @@ function modern_addItem(hash, edIzm, prices){
 
     })
 }
+
+function modern_addItem(hash, edIzm, prices){
+    weight = $(".itemPWeightInput").attr("value")
+    char=''
+    if(weight==undefined){
+        weight = $(".itemPLengthInput").attr("value")
+        char = $(".itemPCharInput").attr("value")
+    }
+    $.unblockUI()
+
+    var cell = "<tr class='itemTr' name='"+hash+"'><td></td>";
+    $('tr[id="'+hash+'"]').each(function(){
+        if(char==''){
+            char = $(this).find(".itemChar").attr("name")
+        }
+        cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
+        cell += '<span class="buySpan">';
+        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModalItem(\''+hash+'\'); return false">X</a></span></td>';
+        cell += "<td class='itemCharTd'>"+char+"</td>";
+        cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
+        cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
+        cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
+        cell += "<td class='itemNdsKfTd'>18%</td>";
+        cell += "<td class='itemNdsSumTd'></td>";
+        cell += "<td class='itemSumTd'></td>";
+    })
+    newRow = cell+'</tr>';
+
+    var bCount = $('span.basketCount').html();
+    bCount = (bCount - 0)+1;
+    $('span.basketCount').html(bCount);  
+
+    $('tbody#lItemTab').prepend(newRow);
+
+    $('tbody#lItemTab tr').each(function(i) {
+        var number = i + 1;
+        $(this).find('td:first').text(number);
+    });
+
+    setOverallPrices()
+
+    
+}
+
+function delModalItem(hash){
+    delElement = document.getElementById(hash)
+    tab = document.createElement("tbody")
+
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            $(this).remove()
+        }
+        
+        
+        
+    })
+
+    $('tbody#lItemTab tr').each(function(i) {
+        var number = i + 1;
+        $(this).find('td:first').text(number);
+    });
+
+    var bCount = $('span.basketCount').html();
+    bCount = (bCount - 0)-1;
+    
+    setOverallPrices()
+
+}
+
+
 
 function sendOrder(orderString){
     

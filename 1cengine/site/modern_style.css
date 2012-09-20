@@ -205,27 +205,20 @@
 	color:white;
 	text-decoration: none;
 	font-weight:bold;
+	float:right;
 }
-.buySpan a.bItem:hover{
+
+.item:hover a.bItem, .buySpan a.bItem:hover{
 	text-shadow: black 0 0 2px;
 	float:right;
 	color:#ffe06f;
 }
-.buySpan a.oItem:hover{
+.item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
 	text-shadow: black 0 0 2px;
 	float:right;
 	color:#ff5959;
 }
-.item:hover a.bItem{
-	text-shadow: black 0 0 2px;
-	float:right;
-	color:#ffe06f;
-}
-.item:hover a.oItem{
-	text-shadow: black 0 0 2px;
-	float:right;
-	color:#ff5959;
-}
+
 #Summary td:last-child{
 	text-align: right;
 	font-weight:bold;
@@ -239,6 +232,7 @@
 }
 .itemEdIzmTd{
 	width:30px;
+	white-space: nowrap;
 }
 .itemNdsKfTd{
 	width:30px;
@@ -253,12 +247,15 @@
 .itemPriceTd{
 	width:50px;
 	text-align: right;
+	white-space: nowrap;
 }
 .itemNdsSumTd{
 	text-align: right;
+	white-space: nowrap;
 }
 .itemSumTd{
 	text-align:right;
+	white-space: nowrap;
 }
 #tags li a{
 	color: rgb(45, 54, 148);
