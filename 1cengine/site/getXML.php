@@ -14,12 +14,22 @@ $server->soap_defencoding = 'UTF-8';
 $result=$server->GetPrice("");
 $content = $server->__getLastResponse();
 
-$filename = 'price.xml';
-$handle = fopen($filename, 'w+');
-fwrite($handle, $content);
-fclose($handle);
+$fileout = 'price.xml';
+$handle = fopen($fileout, 'w+');
 
-print_r($result->GetPriceResponse);
+$filein = 'http://195.239.221.58:30080/download/price.xml';
+
+$file = fopen($filein, "r"); //Открываем файл
+$contents = '';
+while (!feof($file)) {
+  $contents .= fread($file, 8192);
+}
+
+fwrite($handle, $contents);
+fclose($handle);
+fclose($file);
+
+// print_r($result->GetPriceResponse);
 
 
 ?>

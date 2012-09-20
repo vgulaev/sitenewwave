@@ -66,7 +66,7 @@ $APPLICATION->IncludeFile(
 
 			<span id='showBasketSpan'>
                 <p><a href='Показать заказ' title='Заказ' id='tabBasket' onClick='return false'>Показать заказ (<span class='basketCount'>0</span>)</a></p>
-                <p><a href="/1cengine/site/fullprice.php" title="Перейти на страницу с полным прайс-листом">Полный прайс</a></p>
+                <!-- <p><a href="/1cengine/site/fullprice.php" title="Перейти на страницу с полным прайс-листом">Полный прайс</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
                 <p>Скачать прайс:
                     <li><a href="/download/files/price.xlsx" title="Скачать прайс в формате xls">xls</a></li>
@@ -319,7 +319,7 @@ $APPLICATION->IncludeFile(
 	<tr>
 		<td id="leftTrBottomTd">
 			<p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
-			<p><a href="http://trimet.ru/1cengine/site/howitcreating.php">P.S.: Как это создается...</a></p>
+			<p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
 		</td>
 	</tr>
 </table>

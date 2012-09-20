@@ -119,7 +119,7 @@ $from = "admin@trimet.ru"; //От кого
 $subject = '=?utf-8?B?'.base64_encode('On-line shop trimet.ru').'?=';
 $mess =  'Добрый день, '. "\r\n";
 $mess .= 'Номер вашего заказа: '.$r1[0]."\r\n";
-$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
+//$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
 $mess .= 'Контактный телефон: +7 (3452) 520-670'."\r\n";
 $mess .= 'С уважением, компания Тримет';
 $boundary = "---"; //Разделитель

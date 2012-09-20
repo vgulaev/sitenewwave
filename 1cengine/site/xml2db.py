@@ -16,19 +16,9 @@ pricefile.close()
 xmlList = []
 
 def display(data):
-    # import pprint
-    # pp = pprint.PrettyPrinter(depth=10)
-    # pp.pprint(data)
-
-    # testfile = open('testfile', 'w')
-    # testfile.write(data)
 
     xmlList.append(data) 
 
-    # print data[0][u'Характеристика']
-
-    # for x in data[u'Предмет']:
-    #     print x[u'Характеристика']
 
 class Element:
     def setData(self, key, value):
@@ -101,92 +91,54 @@ class ObjBuilder(sax.ContentHandler):
             del self.obj[-1]
             self.__buffer = ''
 
-def insertGroup(gName, gHash, pHash):
 
-#     $query = "INSERT INTO `trimetru_goods`.`groups` (`name`, `hash`, `parent_hash`) \
-# VALUES ('".$gName."','".$gHash."','".$pHash."');";
+def insertGroup(gName, gHash, pHash):
 
     cursor.execute(""" INSERT INTO `trimetru_goods`.`groups` (`name`,`hash`,`parent_hash`) VALUES ( %s,%s,%s ) """, (gName, gHash, pHash) )
     row = cursor.fetchone()
     conn.commit()
 
-    # $result = mysql_query($query);
 
-    # //echo $result.'<br />';
-    # //return mysql_insert_id();
-
-    
-
-def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock):
-    
+def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock): 
 
     print iName + ' ' + cName
     if type(groupSecondName) == type(dict()):
         groupSecondName = iName
-    # query = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ('null','"+mysql_escape_string(groupSecondName)+" "+mysql_escape_string(cName)+" ','"+iHash+"','"+pHash+"','"+mysql_escape_string(iName)+"','"+mysql_escape_string(cName)+"','"+weight+"','"+length+"','"+kf+"','"+edIzm+"','"+mysql_escape_string(price)+"','"+mysql_escape_string(priceType)+"','"+itemHashN+"', '"+inStock+"');"
-    
+
     cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, ('',(groupSecondName+' '+cName).encode("utf-8"), iHash, pHash, iName, cName, weight, length, kf, edIzm, price, priceType, itemHashN, inStock))
     row = cursor.fetchone()
     conn.commit()
-    # print row
-    
 
 
 def groupEater(group):
-    # print '\/\/\/\/\/\/\/\/\/\/\/\/'
     
     if u'Предмет' in group:
-        # print group[u'НаименованиеГруппы']
-        # print group[u'НоменклатураСсылка']
-        # print group[u'Синоним']
+
         insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+
         if type(group[u'Предмет'])==type(list()):
             for itemChar in group[u'Предмет']:
             
-                # print itemChar[u'Характеристика']
-                # print itemChar[u'Вес']
-                # print itemChar[u'Кратность']
-                # print itemChar[u'Коэффициент']
-                # print itemChar[u'ХарактеристикаСсылка']
-                # print itemChar[u'ЕдИзмерения']
                 priceDB = []
                 priceType = []
                 for price in itemChar[u'Цена']:
                     priceDB.append(price[u'Цена'])
                     priceType.append(price[u'НазваниеЦены'])
-                    # print price[u'НазваниеЦены'] +' '+ price[u'Цена']
-                # print itemChar[u'ЕстьВНаличии']
-
-                # print '||'+group[u'НаименованиеГруппы']+', '+pHash+', '+itemChar[u'Характеристика']+', '+itemChar[u'Вес']+', '+itemChar[u'Кратность']+', \
-            # '+itemChar[u'Коэффициент']+', '+itemChar[u'ХарактеристикаСсылка']+', '+itemChar[u'ЕдИзмерения']+', '+"|".join(priceDB)+', '+"|".join(priceType)+', \
-            # '+group[u'Синоним']+', '+group[u'НоменклатураСсылка']+', '+itemChar[u'ЕстьВНаличии']
 
                 insertItem(group[u'НаименованиеГруппы'], pHash, itemChar[u'Характеристика'], itemChar[u'Вес'], itemChar[u'Кратность'], itemChar[u'Коэффициент'], itemChar[u'ХарактеристикаСсылка'], itemChar[u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], itemChar[u'ЕстьВНаличии'])
 
-                # print '-----------------------------------------------'
         elif type(group[u'Предмет']==type(dict)):
-            # print group[u'Предмет'][u'Характеристика']
-            # print group[u'Предмет'][u'Вес']
-            # print group[u'Предмет'][u'Кратность']
-            # print group[u'Предмет'][u'ХарактеристикаСсылка']
-            # print group[u'Предмет'][u'ЕдИзмерения']
+
             priceDB = []
             priceType = []
             for price in group[u'Предмет'][u'Цена']:
                 priceDB.append(price[u'Цена'])
                 priceType.append(price[u'НазваниеЦены'])
-            #     print price[u'НазваниеЦены'] +' '+ price[u'Цена']
-            # print group[u'Предмет'][u'ЕстьВНаличии']
-            # print '||'+group[u'НаименованиеГруппы']+', '+pHash+', '+group[u'Предмет'][u'Характеристика']+', '+group[u'Предмет'][u'Вес']+', '+group[u'Предмет'][u'Кратность']+', \
-            # '+group[u'Предмет'][u'Коэффициент']+', '+group[u'Предмет'][u'ХарактеристикаСсылка']+', '+group[u'Предмет'][u'ЕдИзмерения']+', '+"|".join(priceDB)+', '+"|".join(priceType)+', \
-            # '+group[u'Синоним']+', '+group[u'НоменклатураСсылка']+', '+group[u'Предмет'][u'ЕстьВНаличии']
 
             insertItem(group[u'НаименованиеГруппы'], pHash, group[u'Предмет'][u'Характеристика'], group[u'Предмет'][u'Вес'], group[u'Предмет'][u'Кратность'], group[u'Предмет'][u'Коэффициент'], group[u'Предмет'][u'ХарактеристикаСсылка'], group[u'Предмет'][u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], group[u'Предмет'][u'ЕстьВНаличии'])
 
-            # print '-----------------------------------------------'
-
     if u'Цена' in group:
-        # print group[u'ЕдИзмерения']
+
         priceDB = []
         priceType = []
         insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
@@ -194,11 +146,11 @@ def groupEater(group):
             for price in group[u'Цена']:
                 priceDB.append(price[u'Цена'])
                 priceType.append(price[u'НазваниеЦены'])
-                # print price[u'НазваниеЦены'] +' '+ price[u'Цена']
+
         elif type(group[u'Цена'])==type(dict()):
             priceDB.append(group[u'Цена'][u'Цена'])
             priceType.append(group[u'Цена'][u'НазваниеЦены'])
-            # print group[u'Цена'][u'НазваниеЦены'] +' '+ group[u'Цена'][u'Цена']
+
 
         if(priceDB.__len__()==1):
             pDB = priceDB[0]
@@ -207,22 +159,16 @@ def groupEater(group):
             pDB = "|".join(priceDB)
             pT =  "|".join(priceType)
             
-        # print pHash
         insertItem(group[u'НаименованиеГруппы'], pHash, u'кастом', 0, 0, 0, group[u'НоменклатураСсылка'], group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
-        # print '-----------------------------------------------'
+
+
 
 
 
     if u'Группа' in group:
-        # print 1
-        # try:
-        # print group[u'НаименованиеГруппы']
-        # except:
-        #     print group[u'Группа']
-            # print group
-        # print group[u'НоменклатураСсылка']
 
         insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+
 
         if type(group[u'Группа'])==type(list()):
             for subgroup in group[u'Группа']:
@@ -253,12 +199,11 @@ if __name__ == '__main__':
     cursor.execute(""" TRUNCATE `groups` """)
 
     for group in xmlList[0][u'Группа']:
-        # print group[u'НаименованиеГруппы']
-        # print group[u'НоменклатураСсылка']
 
         pHash = group[u'НоменклатураСсылка']
 
         insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+
 
         if u'Группа' in group:
             if type(group[u'Группа'])==type(dict()):
@@ -267,9 +212,8 @@ if __name__ == '__main__':
                 for subgroup in group[u'Группа']:
                     groupEater(subgroup)
 
-        # print '######################################'
-
     cursor.close ()
     conn.close ()
+
 
     

@@ -19,6 +19,10 @@ function htmlspecialchars_decode(string, quote_style) {
     return string;  
 }  
 
+function isValidEmail(str) {
+   return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
+}
+
 $(function(){
 
     $("#closeBasket").click( function () {
