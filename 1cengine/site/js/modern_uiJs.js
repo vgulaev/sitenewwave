@@ -905,6 +905,8 @@ function delModalItem(hash){
 
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)-1;
+
+    $('span.basketCount').html(bCount); 
     
     setOverallPrices()
 
