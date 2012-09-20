@@ -521,3 +521,10 @@
 	width:10px;
 }
 
+.scrollTop{  
+    background:url("arrows2.png") 0 0 no-repeat;  
+    display:block; width:50px; height:50px;  
+    position:fixed; top:30%; left:30%;  
+    z-index:2000;  
+}  
+.scrollTop:hover{ background-position:0 -58px; } 
