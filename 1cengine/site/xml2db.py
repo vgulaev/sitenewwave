@@ -101,21 +101,37 @@ class ObjBuilder(sax.ContentHandler):
             del self.obj[-1]
             self.__buffer = ''
 
-def insertQuery(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock):
-    import MySQLdb
 
-    conn = MySQLdb.connect (host = "localhost",
-                           user = "trimetru_goods",
-                           passwd = "&rUI24*(^o",
-                           db = "trimetru_goods")
-    cursor = conn.cursor()
+def insertGroup(gName, gHash, pHash):
+
+#     $query = "INSERT INTO `trimetru_goods`.`groups` (`name`, `hash`, `parent_hash`) \
+# VALUES ('".$gName."','".$gHash."','".$pHash."');";
+
+    cursor.execute(""" INSERT INTO `trimetru_goods`.`groups` (`name`,`hash`,`parent_hash`) VALUES ( %s,%s,%s ) """, (gName, gHash, pHash) )
+    row = cursor.fetchone()
+    conn.commit()
+
+    # $result = mysql_query($query);
+
+    # //echo $result.'<br />';
+    # //return mysql_insert_id();
+
+    
+
+def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock):
+    
+
+    print iName + ' ' + cName
+    if type(groupSecondName) == type(dict()):
+        groupSecondName = iName
     # query = "INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ('null','"+mysql_escape_string(groupSecondName)+" "+mysql_escape_string(cName)+" ','"+iHash+"','"+pHash+"','"+mysql_escape_string(iName)+"','"+mysql_escape_string(cName)+"','"+weight+"','"+length+"','"+kf+"','"+edIzm+"','"+mysql_escape_string(price)+"','"+mysql_escape_string(priceType)+"','"+itemHashN+"', '"+inStock+"');"
     
-    cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s ) """, ('null',iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock))
-    row = cursor.fetchone ()
-    print row[0]
-    cursor.close ()
-    conn.close ()
+    cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, ('',(groupSecondName+' '+cName).encode("utf-8"), iHash, pHash, iName, cName, weight, length, kf, edIzm, price, priceType, itemHashN, inStock))
+    row = cursor.fetchone()
+    conn.commit()
+    # print row
+    
+>>>>>>> FETCH_HEAD
 
 
 def groupEater(group):
@@ -125,6 +141,10 @@ def groupEater(group):
         # print group[u'НаименованиеГруппы']
         # print group[u'НоменклатураСсылка']
         # print group[u'Синоним']
+<<<<<<< HEAD
+=======
+        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+>>>>>>> FETCH_HEAD
         if type(group[u'Предмет'])==type(list()):
             for itemChar in group[u'Предмет']:
             
@@ -146,9 +166,10 @@ def groupEater(group):
             # '+itemChar[u'Коэффициент']+', '+itemChar[u'ХарактеристикаСсылка']+', '+itemChar[u'ЕдИзмерения']+', '+"|".join(priceDB)+', '+"|".join(priceType)+', \
             # '+group[u'Синоним']+', '+group[u'НоменклатураСсылка']+', '+itemChar[u'ЕстьВНаличии']
 
-                insertQuery(group[u'НаименованиеГруппы'], pHash, itemChar[u'Характеристика'], itemChar[u'Вес'], itemChar[u'Кратность'], itemChar[u'Коэффициент'], itemChar[u'ХарактеристикаСсылка'], itemChar[u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], itemChar[u'ЕстьВНаличии'])
+                insertItem(group[u'НаименованиеГруппы'], pHash, itemChar[u'Характеристика'], itemChar[u'Вес'], itemChar[u'Кратность'], itemChar[u'Коэффициент'], itemChar[u'ХарактеристикаСсылка'], itemChar[u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], itemChar[u'ЕстьВНаличии'])
 
-                print '-----------------------------------------------'
+                # print '-----------------------------------------------'
+>>>>>>> FETCH_HEAD
         elif type(group[u'Предмет']==type(dict)):
             # print group[u'Предмет'][u'Характеристика']
             # print group[u'Предмет'][u'Вес']
@@ -166,30 +187,52 @@ def groupEater(group):
             # '+group[u'Предмет'][u'Коэффициент']+', '+group[u'Предмет'][u'ХарактеристикаСсылка']+', '+group[u'Предмет'][u'ЕдИзмерения']+', '+"|".join(priceDB)+', '+"|".join(priceType)+', \
             # '+group[u'Синоним']+', '+group[u'НоменклатураСсылка']+', '+group[u'Предмет'][u'ЕстьВНаличии']
 
-            insertQuery(group[u'НаименованиеГруппы'], pHash, group[u'Предмет'][u'Характеристика'], group[u'Предмет'][u'Вес'], group[u'Предмет'][u'Кратность'], group[u'Предмет'][u'Коэффициент'], group[u'Предмет'][u'ХарактеристикаСсылка'], group[u'Предмет'][u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], group[u'Предмет'][u'ЕстьВНаличии'])
+            insertItem(group[u'НаименованиеГруппы'], pHash, group[u'Предмет'][u'Характеристика'], group[u'Предмет'][u'Вес'], group[u'Предмет'][u'Кратность'], group[u'Предмет'][u'Коэффициент'], group[u'Предмет'][u'ХарактеристикаСсылка'], group[u'Предмет'][u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], group[u'Предмет'][u'ЕстьВНаличии'])
 
-            print '-----------------------------------------------'
+            # print '-----------------------------------------------'
 
     if u'Цена' in group:
-        print group[u'ЕдИзмерения']
+        # print group[u'ЕдИзмерения']
+        priceDB = []
+        priceType = []
+        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
         if type(group[u'Цена'])==type(list()):
             for price in group[u'Цена']:
-                    print price[u'НазваниеЦены'] +' '+ price[u'Цена']
+                priceDB.append(price[u'Цена'])
+                priceType.append(price[u'НазваниеЦены'])
+                # print price[u'НазваниеЦены'] +' '+ price[u'Цена']
         elif type(group[u'Цена'])==type(dict()):
-            print group[u'Цена'][u'НазваниеЦены'] +' '+ group[u'Цена'][u'Цена']
-            print pHash
-        print '-----------------------------------------------'
+            priceDB.append(group[u'Цена'][u'Цена'])
+            priceType.append(group[u'Цена'][u'НазваниеЦены'])
+            # print group[u'Цена'][u'НазваниеЦены'] +' '+ group[u'Цена'][u'Цена']
+
+        if(priceDB.__len__()==1):
+            pDB = priceDB[0]
+            pT =  priceType[0]
+        else:
+            pDB = "|".join(priceDB)
+            pT =  "|".join(priceType)
+            
+        # print pHash
+        insertItem(group[u'НаименованиеГруппы'], pHash, u'кастом', 0, 0, 0, group[u'НоменклатураСсылка'], group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
+        # print '-----------------------------------------------'
+>>>>>>> FETCH_HEAD
 
 
 
     if u'Группа' in group:
-        print 1
+
+        # print 1
         # try:
-        print group[u'НаименованиеГруппы']
+        # print group[u'НаименованиеГруппы']
         # except:
         #     print group[u'Группа']
             # print group
-        print group[u'НоменклатураСсылка']
+        # print group[u'НоменклатураСсылка']
+
+        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+
+>>>>>>> FETCH_HEAD
         if type(group[u'Группа'])==type(list()):
             for subgroup in group[u'Группа']:
                 groupEater(subgroup)
@@ -205,13 +248,28 @@ if __name__ == '__main__':
     inpsrc.setByteStream(StringIO(xml_string))
     parser.parse(inpsrc)
 
+    import MySQLdb
+
+    conn = MySQLdb.connect (host = "localhost",
+                           user = "trimetru_goods",
+                           passwd = "&rUI24*(^o",
+                           db = "trimetru_goods")
+    conn.set_character_set('utf8')
+    cursor = conn.cursor()
+    cursor.execute('SET NAMES utf8;')
+
+    cursor.execute(""" TRUNCATE `offers` """)
+    cursor.execute(""" TRUNCATE `groups` """)
 
     for group in xmlList[0][u'Группа']:
-        print group[u'НаименованиеГруппы']
-        print group[u'НоменклатураСсылка']
+        # print group[u'НаименованиеГруппы']
+        # print group[u'НоменклатураСсылка']
 
         pHash = group[u'НоменклатураСсылка']
 
+        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+
+>>>>>>> FETCH_HEAD
         if u'Группа' in group:
             if type(group[u'Группа'])==type(dict()):
                 groupEater(group[u'Группа'])
@@ -219,7 +277,10 @@ if __name__ == '__main__':
                 for subgroup in group[u'Группа']:
                     groupEater(subgroup)
 
-        print '######################################'
+        # print '######################################'
 
+    cursor.close ()
+    conn.close ()
+>>>>>>> FETCH_HEAD
 
     
