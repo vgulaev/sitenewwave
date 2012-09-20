@@ -406,10 +406,10 @@ $APPLICATION->IncludeFile(
 <!-- /Yandex.Metrika counter --> 
             </div>
 
-            <div id="autor">
+            <!-- <div id="autor">
                 <p>Создание сайта</p>
                 <a href="http://russianmultimedia.ru/contacts.php#feedback" title="Создание сложных мультимедийных продуктов: сайтов публичных компаний, 3d-видео и стерео роликов, мультимедийных инсталляций" target="_blank">Russian multimedia company</a>
-            </div>
+            </div> -->
         </div>
 
 <?php $APPLICATION->IncludeComponent(
