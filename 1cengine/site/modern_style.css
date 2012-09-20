@@ -523,3 +523,9 @@
 	margin-right:5px;
 	width:10px;
 }
+
+#groupDiv li{
+	float:left;
+	background-image: none;
+	font-size:13px;
+}

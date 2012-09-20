@@ -75,6 +75,30 @@ $(function(){
                 
 });
 
+function showGroups(){
+    $("#itemName").attr("value", "")
+    $("#tableRes").empty()
+    $("#myCanvasContainer").hide()
+    $('#tags').hide();
+    $("#showAll").hide();
+
+    // if($("#groupDiv").find("li")==undefined){
+        $.ajax({
+            type: "POST",
+            url: "getGroups.php",
+            async: true,
+            data: "",
+            success: function(html){
+                $("#groupDiv").html(html)
+                $("#groupDiv").show()
+            }
+        });
+    // } else {
+    //     $("#groupDiv").show()
+    // }
+    
+}
+
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -1145,7 +1169,7 @@ $(document).ready( function(){
 	tmOutId = 0
 
 	$("#itemName").change(function () {
-
+        $("#groupDiv").hide()
 		value = $("#itemName").attr("value");
 		$.ajax({
 	        type: "GET",
