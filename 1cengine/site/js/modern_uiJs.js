@@ -861,7 +861,7 @@ function modern_addItem(hash, edIzm, prices){
         }
         cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
         cell += '<span class="buySpan">';
-        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModalItem(\''+hash+'\'); return false">X</a></span></td>';
+        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
         cell += "<td class='itemCharTd'>"+char+"</td>";
         cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
         cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
@@ -888,7 +888,7 @@ function modern_addItem(hash, edIzm, prices){
     
 }
 
-function delModalItem(hash){
+function delModernItem(hash){
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
 
@@ -916,7 +916,32 @@ function delModalItem(hash){
 
 }
 
+function setModernItem(hash, char, count){
 
+    $.ajax({
+        type: "POST",
+        url: "getItems.php",
+        async: false,
+        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"",
+        success: function(html){
+            
+            $("#lItemTab").html(html)
+
+            i = 0
+            $('tbody#lItemTab tr').each(function(i) {
+                var number = i + 1;
+                $(this).find('td:first').text(number);
+            });
+
+            // var bCount = $('span.basketCount').html();
+            bCount = (i - 0);
+
+            $('span.basketCount').html(bCount); 
+
+            setOverallPrices()
+        }
+    });
+}
 
 function sendOrder(orderString){
     
