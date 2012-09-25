@@ -3,6 +3,7 @@
 header('Content-Type: text/html; charset=utf-8');
 $req = $_GET['term'];
 
+
 function my_dbConnect(){
     mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
 
@@ -23,8 +24,9 @@ function getItems($req){
     if($_GET["strict"]=="yes"){
         $ij=0;
         foreach($reqArray as $rA){
+            // print_r($rA." | ");
             if($ij==$c-1){
-                $cond .= "`offers`.`name` LIKE '%".$rA." %' AND ";
+                $cond .= "`offers`.`char_name` = '".$rA."' AND ";
             } else {
                 $cond .= "`offers`.`name` LIKE '%".$rA." %' AND ";
             }
@@ -52,7 +54,7 @@ function getItems($req){
         if($_GET["strict"]=="yes"){
             $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
                 `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
-                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` ORDER BY `offers`.`stock` DESC LIMIT 1");
+                FROM `offers`, `groups` ".$cond." `offers`.`parent_hash`=`groups`.`hash` LIMIT 1");
         } else {
             $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
                 `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
@@ -61,11 +63,14 @@ function getItems($req){
         
     }
     
+    // print_r(mysql_num_rows($r));
+
     
     if (mysql_num_rows($r)>0){
         while($row = mysql_fetch_array($r, MYSQL_NUM)){
             
             //echo $row[2];
+
 
             if(!isset($pArray[$row[4]])){
                 $pArray[$row[4]] = array();
