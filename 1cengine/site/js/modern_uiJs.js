@@ -842,6 +842,24 @@ function setOverallPrices(){
         $("#NDSAll").empty()
         $("#NDSAll").append(nAll)
 
+        basket = ""
+
+        $('tbody#lItemTab tr').each(function(i) {
+            
+            var ihash = $(this).attr("name")
+            if(ihash.split(":")[0]=="0"){
+                var char = $(this).find(".itemCharTd").html()
+            } else {
+                var char = ''
+            }
+            
+            var count = $(this).find(".itemCountInput").attr("value")
+            basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        });
+
+        $.cookie("basket", basket)
+
+
     })
 }
 
@@ -872,18 +890,34 @@ function modern_addItem(hash, edIzm, prices){
     })
     newRow = cell+'</tr>';
 
-    $.cookie("basket", "setModernItem('"+hash+"','"+char+"','"+weight+"')")
+
+    
 
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)+1;
     $('span.basketCount').html(bCount);  
 
     $('tbody#lItemTab').prepend(newRow);
+// 
+    basket = ""
 
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
         $(this).find('td:first').text(number);
+
+
+        // var ihash = $(this).attr("name")
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+        
+        // var count = $(this).find(".itemCountInput").attr("value")
+        // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
     });
+
+    // $.cookie("basket", basket)
 
     setOverallPrices()
 
@@ -891,19 +925,34 @@ function modern_addItem(hash, edIzm, prices){
 }
 
 function delModernItem(hash){
-    $.cookie("basket", null)
+    
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
+
+    // var basket = ""
 
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
+
             $(this).remove()
+        } else {
+            // var ihash = $(this).attr("name")
+            // if(ihash.split(":")[0]=="0"){
+            //     var char = $(this).find(".itemCharTd").html()
+            // } else {
+            //     var char = ''
+            // }
+            
+            // var count = $(this).find(".itemCountInput").attr("value")
+            // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
         }
         
         
         
     })
+
+    // $.cookie("basket", basket)
 
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
@@ -928,7 +977,7 @@ function setModernItem(hash, char, count){
         data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"",
         success: function(html){
             
-            $("#lItemTab").html(html)
+            $("#lItemTab").append(html)
 
             i = 0
             $('tbody#lItemTab tr').each(function(i) {
@@ -937,7 +986,7 @@ function setModernItem(hash, char, count){
             });
 
             // var bCount = $('span.basketCount').html();
-            bCount = $('tbody#lItemTab tr').length()
+            bCount = $('tbody#lItemTab tr').length
 
             $('span.basketCount').html(bCount); 
 
@@ -1157,6 +1206,7 @@ $(document).ready( function(){
         eval($.cookie("basket"))
     }
 
+    $.cookie("basket", null)
     // $(document).ajaxStart().ajaxStop($.unblockUI);
     $("#sendOrderButton").click( function(){
         $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
