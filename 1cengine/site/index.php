@@ -323,7 +323,7 @@ $APPLICATION->IncludeFile(
 		</td>
 	</tr>
 </table>
-
+    <a class='scrollTop' href='#header' style='display:none;'></a>  
 <?php 
 
 $APPLICATION->IncludeFile(
