@@ -46,8 +46,8 @@ $APPLICATION->IncludeFile(
 <script type="text/javascript" src='/1cengine/site/js/jquery.chromatable.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery-ui-1.8.23.custom.min.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery.tagcanvas.min.js'> </script>
-<script type="text/javascript" src='/1cengine/site/js/jquery.elastic.source.js'> </script>
-
+<!-- <script type="text/javascript" src='/1cengine/site/js/jquery.elastic.source.js'> </script>
+-->
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
@@ -324,7 +324,7 @@ $APPLICATION->IncludeFile(
 		</td>
 	</tr>
 </table>
-
+    <a class='scrollTop' href='#header' style='display:none;'></a>  
 <?php 
 
 $APPLICATION->IncludeFile(

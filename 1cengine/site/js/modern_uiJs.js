@@ -1,3 +1,20 @@
+$(function(){  
+    var e = $(".scrollTop");  
+    var speed = 500;  
+
+    e.click(function(){  
+        $("html:not(:animated)" +( !$.browser.opera ? ",body:not(:animated)" : "")).animate({ scrollTop: 0}, 500 );  
+        return false; //важно!  
+    });  
+    //появление  
+    function show_scrollTop(){  
+        ( $(window).scrollTop()>300 ) ? e.fadeIn(600) : e.hide();  
+    }  
+    $(window).scroll( function(){show_scrollTop()} ); show_scrollTop();  
+});  
+  
+
+
 function htmlspecialchars_decode(string, quote_style) {  
 
     string = string.toString();  
@@ -842,6 +859,24 @@ function setOverallPrices(){
         $("#NDSAll").empty()
         $("#NDSAll").append(nAll)
 
+        basket = ""
+
+        $('tbody#lItemTab tr').each(function(i) {
+            
+            var ihash = $(this).attr("name")
+            if(ihash.split(":")[0]=="0"){
+                var char = $(this).find(".itemCharTd").html()
+            } else {
+                var char = ''
+            }
+            
+            var count = $(this).find(".itemCountInput").attr("value")
+            basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        });
+
+        $.cookie("basket", basket)
+
+
     })
 }
 
@@ -861,7 +896,7 @@ function modern_addItem(hash, edIzm, prices){
         }
         cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
         cell += '<span class="buySpan">';
-        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModalItem(\''+hash+'\'); return false">X</a></span></td>';
+        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
         cell += "<td class='itemCharTd'>"+char+"</td>";
         cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
         cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
@@ -872,35 +907,69 @@ function modern_addItem(hash, edIzm, prices){
     })
     newRow = cell+'</tr>';
 
+
+    
+
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)+1;
     $('span.basketCount').html(bCount);  
 
     $('tbody#lItemTab').prepend(newRow);
+// 
+    basket = ""
 
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
         $(this).find('td:first').text(number);
+
+
+        // var ihash = $(this).attr("name")
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+        
+        // var count = $(this).find(".itemCountInput").attr("value")
+        // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
     });
+
+    // $.cookie("basket", basket)
 
     setOverallPrices()
 
     
 }
 
-function delModalItem(hash){
+function delModernItem(hash){
+    
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
+
+    // var basket = ""
 
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
+
             $(this).remove()
+        } else {
+            // var ihash = $(this).attr("name")
+            // if(ihash.split(":")[0]=="0"){
+            //     var char = $(this).find(".itemCharTd").html()
+            // } else {
+            //     var char = ''
+            // }
+            
+            // var count = $(this).find(".itemCountInput").attr("value")
+            // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
         }
         
         
         
     })
+
+    // $.cookie("basket", basket)
 
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
@@ -916,7 +985,32 @@ function delModalItem(hash){
 
 }
 
+function setModernItem(hash, char, count){
 
+    $.ajax({
+        type: "POST",
+        url: "getItems.php",
+        async: false,
+        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"",
+        success: function(html){
+            
+            $("#lItemTab").append(html)
+
+            i = 0
+            $('tbody#lItemTab tr').each(function(i) {
+                var number = i + 1;
+                $(this).find('td:first').text(number);
+            });
+
+            // var bCount = $('span.basketCount').html();
+            bCount = $('tbody#lItemTab tr').length
+
+            $('span.basketCount').html(bCount); 
+
+            setOverallPrices()
+        }
+    });
+}
 
 function sendOrder(orderString){
     
@@ -1125,6 +1219,11 @@ function getOrderFomat(format){
 
 $(document).ready( function(){
 
+    if($.cookie("basket")!=undefined){
+        eval($.cookie("basket"))
+    }
+
+    $.cookie("basket", null)
     // $(document).ajaxStart().ajaxStop($.unblockUI);
     $("#sendOrderButton").click( function(){
         $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})

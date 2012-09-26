@@ -143,6 +143,47 @@ function getItems($req){
     return $ret;
 }
 
+function getItemsFromHash($hash, $char, $count){
+
+    $hashArray = explode(":", $hash);
+
+    $itemHash = $hashArray[0];
+    $pHash = $hashArray[1];
+    $newRow = "";
+
+    // echo $itemHash." | ".$pHash;
+
+    $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `offers`.`edIzm` FROM `offers` WHERE `offers`.`hash`='".$itemHash."' AND `offers`.`father_hash`='".$pHash."' ");
+    if (mysql_num_rows($r)>0){
+        while($row = mysql_fetch_array($r, MYSQL_NUM)){
+                
+            $cell = "<tr class='itemTr' name='".$hash."'><td></td>";
+            
+            if($char==''){
+                $char = $row[1];
+            } else {
+                $char = $char;
+            }
+            $cell .= "<td class='itemNameTd'>".$row[0];
+            $cell .= '<span class="buySpan">';
+            $cell .= '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a></span></td>';
+            $cell .= "<td class='itemCharTd'>".$char."</td>";
+            $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' /></td>";
+            $cell .= "<td class='itemEdIzmTd' name='".$row[3]."'>".$row[3]."</td>";
+            $cell .= "<td class='itemPriceTd' name='".$row[2]."'></td>";
+            $cell .= "<td class='itemNdsKfTd'>18%</td>";
+            $cell .= "<td class='itemNdsSumTd'></td>";
+            $cell .= "<td class='itemSumTd'></td>";
+
+            $newRow .= $cell.'</tr>';
+        
+        }
+
+    }
+
+    echo $newRow;
+}
+
 $cdate = date('d.m.y H:i:s');
 
 $content = $cdate.';'.$_GET['term']."\n";
@@ -154,12 +195,22 @@ fclose($handle);
 
 my_dbConnect();
 //print_r(getStreets($town,$req));
-$res = getItems($req);
 
-if($_GET["strict"]=="yes"){
-    if(!isset($res[0])){
-        echo "<tr><td>Извините, данный товар в настоящее время отсутствует на складе</td></tr>";
+if($_POST["from_hash"]=="true"){
+    $hash = $_POST["hash"];
+    $char = $_POST["char"];
+    $count = $_POST["count"];
+    getItemsFromHash($hash, $char, $count);
+} else {
+    $res = getItems($req);
+
+    if($_GET["strict"]=="yes"){
+        if(!isset($res[0])){
+            echo "<tr><td>Извините, данный товар в настоящее время отсутствует на складе</td></tr>";
+        }
     }
 }
+
+
 
 ?>
