@@ -140,13 +140,15 @@ function getItems($req){
 
 function getItemsFromHash($hash, $char, $count){
 
-    $itemHash = explode(":", $hash)[1];
-    $pHash = explode(":", $hash)[0];
+    $hashArray = explode(":", $hash);
+
+    $itemHash = $hashArray[0];
+    $pHash = $hashArray[1];
     $newRow = "";
 
-    $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
-                `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
-                FROM `offers`, `groups` WHERE `hash`='".$itemHash."' AND `parent_hash`='".$pHash."' ");
+    // echo $itemHash." | ".$pHash;
+
+    $r = mysql_query("SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `offers`.`edIzm` FROM `offers` WHERE `offers`.`hash`='".$itemHash."' AND `offers`.`father_hash`='".$pHash."' ");
     if (mysql_num_rows($r)>0){
         while($row = mysql_fetch_array($r, MYSQL_NUM)){
                 
@@ -157,7 +159,7 @@ function getItemsFromHash($hash, $char, $count){
             } else {
                 $char = $char;
             }
-            $cell .= "<td class='itemNameTd'>"+$row[0];
+            $cell .= "<td class='itemNameTd'>".$row[0];
             $cell .= '<span class="buySpan">';
             $cell .= '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a></span></td>';
             $cell .= "<td class='itemCharTd'>".$char."</td>";
@@ -168,7 +170,7 @@ function getItemsFromHash($hash, $char, $count){
             $cell .= "<td class='itemNdsSumTd'></td>";
             $cell .= "<td class='itemSumTd'></td>";
 
-            $newRow = $cell+'</tr>';
+            $newRow .= $cell.'</tr>';
         
         }
 
@@ -189,7 +191,7 @@ fclose($handle);
 my_dbConnect();
 //print_r(getStreets($town,$req));
 
-if(isset($_POST["from_hash"])){
+if($_POST["from_hash"]=="true"){
     $hash = $_POST["hash"];
     $char = $_POST["char"];
     $count = $_POST["count"];

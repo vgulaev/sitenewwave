@@ -872,6 +872,8 @@ function modern_addItem(hash, edIzm, prices){
     })
     newRow = cell+'</tr>';
 
+    $.cookie("basket", "setModernItem('"+hash+"','"+char+"','"+weight+"')")
+
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)+1;
     $('span.basketCount').html(bCount);  
@@ -889,6 +891,7 @@ function modern_addItem(hash, edIzm, prices){
 }
 
 function delModernItem(hash){
+    $.cookie("basket", null)
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
 
@@ -934,7 +937,7 @@ function setModernItem(hash, char, count){
             });
 
             // var bCount = $('span.basketCount').html();
-            bCount = (i - 0);
+            bCount = $('tbody#lItemTab tr').length()
 
             $('span.basketCount').html(bCount); 
 
@@ -1149,6 +1152,10 @@ function getOrderFomat(format){
 
 
 $(document).ready( function(){
+
+    if($.cookie("basket")!=undefined){
+        eval($.cookie("basket"))
+    }
 
     // $(document).ajaxStart().ajaxStop($.unblockUI);
     $("#sendOrderButton").click( function(){
