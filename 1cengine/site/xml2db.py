@@ -101,7 +101,7 @@ def insertGroup(gName, gHash, pHash):
 
 def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock): 
 
-    print iName + ' ' + cName
+    print iName.encode("utf-8") + ' ' + cName.encode("utf-8")
     if type(groupSecondName) == type(dict()):
         groupSecondName = iName
 
