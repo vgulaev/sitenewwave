@@ -46,8 +46,8 @@ $APPLICATION->IncludeFile(
 <script type="text/javascript" src='/1cengine/site/js/jquery.chromatable.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery-ui-1.8.23.custom.min.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery.tagcanvas.min.js'> </script>
-<script type="text/javascript" src='/1cengine/site/js/jquery.elastic.source.js'> </script>
-
+<!-- <script type="text/javascript" src='/1cengine/site/js/jquery.elastic.source.js'> </script>
+-->
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
@@ -326,7 +326,7 @@ $APPLICATION->IncludeFile(
 		</td>
 	</tr>
 </table>
-
+    <a class='scrollTop' href='#header' style='display:none;'></a>  
 <?php 
 
 $APPLICATION->IncludeFile(
@@ -408,10 +408,10 @@ $APPLICATION->IncludeFile(
 <!-- /Yandex.Metrika counter --> 
             </div>
 
-            <div id="autor">
+            <!-- <div id="autor">
                 <p>Создание сайта</p>
                 <a href="http://russianmultimedia.ru/contacts.php#feedback" title="Создание сложных мультимедийных продуктов: сайтов публичных компаний, 3d-видео и стерео роликов, мультимедийных инсталляций" target="_blank">Russian multimedia company</a>
-            </div>
+            </div> -->
         </div>
 
 <?php $APPLICATION->IncludeComponent(
