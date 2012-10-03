@@ -242,6 +242,10 @@ function setModalLength(){
     if(itemSM!=undefined){
         var SM = Math.round(TN/itemSM*100)/100;
         $(".SMPrice").html( SM )
+
+        sum = (cKr*TN).toFixed(2)
+        hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
+        $("#popUpSpanItog").html(hSum)
     }
 
     $(".pPCPrice").html(PC)
@@ -303,21 +307,26 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += '<div class="profnastilImageAdd6"></div>'
             mesDiv += '</div>'
 
-             mesDiv += '<div id="slider-vertical"></div>';
+            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px">6</span></div>';
 
+            mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
             
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td></tr>';
-            mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td></tr>';
-            mesDiv += '<tr><td>за штуку:</td><td class="pPCPrice">'+TN+'</td></tr>';
+
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" /> пог. метр</td></tr>';
+            mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td><td><input class="pUi itemSQuareInput" name="'+smK+'" /> кв. метр</td></tr>';
+            mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">'+TN+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> листов</td></tr>';
             mesDiv += '</table>';
-            mesDiv += '<span class="popUpInnerSpan"><input class="pUi itemPLengthInput" value="0" name="2" /> погонный метр это ';
-            mesDiv += '<input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> ';
+
+            mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
+
+            // mesDiv += '<span class="popUpInnerSpan"><input class="pUi itemPLengthInput" value="0" name="2" /> погонный метр это ';
+            // mesDiv += '<input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> ';
 
 
-            mesDiv += 'штук по <input class="pUi itemPCharInput" id="amount" value="2"> метра ';
-            mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
+            // mesDiv += 'штук по <input class="pUi itemPCharInput" id="amount" value="2"> метра ';
+            // mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
 
-            mesDiv += '<div margin-top="20px">';
+            mesDiv += '<div style="margin-top:10px">';
             mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
             mesDiv += '</div>';
 
@@ -330,7 +339,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '400px'
-            $.blockUI.defaults.css.height = '400px'
+            $.blockUI.defaults.css.height = '420px'
             $.blockUI.defaults.css.paddingTop = '10px'
 
 
