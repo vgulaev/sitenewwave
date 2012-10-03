@@ -861,18 +861,24 @@ function setOverallPrices(){
 
         basket = ""
 
-        $('tbody#lItemTab tr').each(function(i) {
+        
+            $('tbody#lItemTab tr').each(function(i) {
             
-            var ihash = $(this).attr("name")
-            if(ihash.split(":")[0]=="0"){
-                var char = $(this).find(".itemCharTd").html()
-            } else {
-                var char = ''
-            }
-            
-            var count = $(this).find(".itemCountInput").attr("value")
-            basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
-        });
+                var ihash = $(this).attr("name")
+                if(ihash.split(":")[0]=="0"){
+                    var char = $(this).find(".itemCharTd").html()
+                } else {
+                    var char = ''
+                }
+                
+                var count = $(this).find(".itemCountInput").attr("value")
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+                
+            });
+        
+        
+
+        
 
         $.cookie("basket", basket)
 
@@ -923,18 +929,18 @@ function modern_addItem(hash, edIzm, prices){
         $(this).find('td:first').text(number);
 
 
-        // var ihash = $(this).attr("name")
-        // if(ihash.split(":")[0]=="0"){
-        //     var char = $(this).find(".itemCharTd").html()
-        // } else {
-        //     var char = ''
-        // }
+        var ihash = $(this).attr("name")
+        if(ihash.split(":")[0]=="0"){
+            var char = $(this).find(".itemCharTd").html()
+        } else {
+            var char = ''
+        }
         
-        // var count = $(this).find(".itemCountInput").attr("value")
-        // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        var count = $(this).find(".itemCountInput").attr("value")
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
     });
 
-    // $.cookie("basket", basket)
+    $.cookie("basket", basket)
 
     setOverallPrices()
 
@@ -986,7 +992,7 @@ function delModernItem(hash){
 }
 
 function setModernItem(hash, char, count){
-
+    // alert(1);
     $.ajax({
         type: "POST",
         url: "getItems.php",
