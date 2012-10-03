@@ -38,7 +38,7 @@ function getItems($req){
         foreach($reqArray as $rA){
             if (strlen($rA) > 1){
                 $cond .= "`offers`.`name` LIKE '%".$rA."%' AND ";
-            } else {
+            } elseif (strlen($rA) = 1) {
                 $cond .= "`offers`.`name` LIKE '% ".$rA." %' AND ";
             }
         }
