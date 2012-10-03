@@ -92,6 +92,30 @@ $(function(){
                 
 });
 
+function showGroups(){
+    $("#itemName").attr("value", "")
+    $("#tableRes").empty()
+    $("#myCanvasContainer").hide()
+    $('#tags').hide();
+    $("#showAll").hide();
+
+    // if($("#groupDiv").find("li")==undefined){
+        $.ajax({
+            type: "POST",
+            url: "getGroups.php",
+            async: true,
+            data: "",
+            success: function(html){
+                $("#groupDiv").html(html)
+                $("#groupDiv").show()
+            }
+        });
+    // } else {
+    //     $("#groupDiv").show()
+    // }
+    
+}
+
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -261,7 +285,7 @@ function showModalItem(hash, edIzm, prices, stock){
             //alert(smK)
             SM = Math.round((TN-0)/(smK-0)*100)/100
             //alert(SM)
-            mesDiv += '<div><p>'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'</p>';
+            mesDiv += '<div><p style="font-weight:bold">'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'<a href="Выбрать другой товар" onClick="$.unblockUI(); return false" class="popUpCancelA">x</a></p>';
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px;">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
@@ -293,8 +317,10 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += 'штук по <input class="pUi itemPCharInput" id="amount" value="2"> метра ';
             mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
 
-            mesDiv += '<div margin-top="20px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onAddLinkPressed\', \''+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'\'); modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
+
+            mesDiv += '<div margin-top="20px">';
+            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -311,7 +337,7 @@ function showModalItem(hash, edIzm, prices, stock){
 
 
         } else {
-            mesDiv += '<div><p>'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'</p>';
+            mesDiv += '<div><p style="font-weight:bold">'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'<a href="Выбрать другой товар" onClick="$.unblockUI(); return false" class="popUpCancelA">x</a></p>';
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
@@ -339,8 +365,9 @@ function showModalItem(hash, edIzm, prices, stock){
             // mesDiv += 'штук по '+$(this).find(".itemChar").attr("name")+' метра, общей длинной ';
             // mesDiv += '<input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра</span>';
 
-            mesDiv += '<div style="margin-top:30px"><span class="popUpCancel"><a href="Выбрать другой товар" onClick="$.unblockUI(); return false">Отменить</a></span>';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onAddLinkPressed\', \''+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'\'); modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">Добавить</a></span></div>';
+            mesDiv += '<div style="margin-top:30px">';
+            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -1286,7 +1313,7 @@ $(document).ready( function(){
 	tmOutId = 0
 
 	$("#itemName").change(function () {
-
+        $("#groupDiv").hide()
 		value = $("#itemName").attr("value");
 		$.ajax({
 	        type: "GET",
