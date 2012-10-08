@@ -159,7 +159,7 @@ def groupEater(group):
             pDB = "|".join(priceDB)
             pT =  "|".join(priceType)
             
-        insertItem(group[u'НаименованиеГруппы'], pHash, u'кастом', 0, 0, 0, group[u'НоменклатураСсылка'], group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
+        insertItem(group[u'НаименованиеГруппы'], pHash, u'кастом', 0, 0, 0, 0, group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
 
 
 
