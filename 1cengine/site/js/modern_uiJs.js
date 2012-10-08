@@ -473,13 +473,19 @@ function showModalItem(hash, edIzm, prices, stock){
         if((ch-0)<0.2){
             //alert(1)
             ch = 0.2
-            $("#slicePrice").html("20")
+
         } else if((ch-0)>itChar){
             //alert(2)
             ch = itChar
-            $("#slicePrice").html("")
+            
         } else {
             ch = ch
+            
+        }
+
+        if(ch==itChar){
+            $("#slicePrice").html("")
+        } else {
             $("#slicePrice").html("20")
         }
 
