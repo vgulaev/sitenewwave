@@ -348,7 +348,36 @@ function showModalItem(hash, edIzm, prices, stock){
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
+            var itChar = $(this).find(".itemChar").attr("name")
+            itChar = itChar.replace(/,/,".")
+            itChar = itChar - 0
+            var itName = $(this).find(".itemName").attr("name")
+            // alert(itName.indexOf("Арматура"))
+            if(itName.indexOf("Арматура")!=-1){
+                // alert(1)
+                mesDiv += "<div class='armaImages'>"
+                mesDiv += "<div class='armaImage1'></div>"
+                mesDiv += "<div class='armaImage2'></div>"
+                mesDiv += "<div class='armaImage3'></div>"
+                mesDiv += "<div class='armaImage4'></div>"
+                mesDiv += "<div class='armaImage5'></div>"
+                mesDiv += "<div class='armaImage6'></div>"
+                mesDiv += "<div class='armaImage7'></div>"
+                mesDiv += "<div class='armaImage8'></div>"
+                mesDiv += "<div class='armaImage9'></div>"
+                mesDiv += "<div class='armaImage10'></div>"
+                mesDiv += "<div class='armaImage11'></div>"
+                mesDiv += "<div class='armaImage12'></div>"
+                mesDiv += "<div class='armaImage13'></div>"
+                mesDiv += "<div class='armaImage14'></div>"
+                mesDiv += "<div class='armaImage15'></div>"
+                mesDiv += "<div class='armaImage16'></div>"
+                mesDiv += "</div>"
 
+                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
+
+                mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
+            }
             // mesDiv += '<table><tr><td>'
 
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
@@ -356,6 +385,8 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
+
+            mesDiv += '<div>Стоимость резки: <span id="slicePrice"></span> руб.</div>'
 
 
             // mesDiv += '</td><td>'
@@ -385,7 +416,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '450px'
-            $.blockUI.defaults.css.height = '220px'
+            $.blockUI.defaults.css.height = '420px'
             $.blockUI.defaults.css.paddingTop = '10px'
         }
 
@@ -394,6 +425,10 @@ function showModalItem(hash, edIzm, prices, stock){
     
 
     $.blockUI({ message: mesDiv});
+
+    var itChar = $(".itemPLengthInput").attr("name") 
+    itChar = itChar.replace(/,/,".")
+    itChar = itChar - 0
 
     $(function() {
         $( "#slider-vertical" ).slider({
@@ -411,6 +446,45 @@ function showModalItem(hash, edIzm, prices, stock){
         
     });
 
+    $(function() {
+        $( "#slider-vertical-arma" ).slider({
+            range: "min",
+            min: 0.2,
+            max: itChar,
+            value: itChar,
+            step: 0.1,
+            slide: function( event, ui ) {
+                $( "#amountArma" ).val( ui.value );
+                $("#amountArma").change()
+            }
+        });
+        $( "#amountArma" ).val( $( "#slider-vertical-arma" ).slider( "value" ) );
+        
+    });
+
+    $(".itemArmaCharInput").change( function(){
+        ch = this.value
+        ch = ch.replace(/,/, ".")
+        ch = ch.match(/\d+\.\d{0,2}|\d+/)
+        if((ch-0)<0.2){
+            //alert(1)
+            ch = 0.2
+            $("#slicePrice").html("20")
+        } else if((ch-0)>itChar){
+            //alert(2)
+            ch = itChar
+            $("#slicePrice").html("")
+        } else {
+            ch = ch
+            $("#slicePrice").html("20")
+        }
+
+
+
+        $(".itemArmaCharInput").attr("value", ch)
+
+        $( "#slider-vertical-arma" ).slider( "value", ch )
+    })
 
     $(".itemPCharInput").change(function(){
         ch = this.value
