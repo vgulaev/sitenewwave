@@ -239,10 +239,10 @@ function setModalLength(){
 
     var itemSM = $(".SMPrice").attr("name") - 0
 
-    if(itemSM!=undefined){
+    if($(".SMPrice").attr("name")!=undefined){
         var SM = Math.round(TN/itemSM*100)/100;
         $(".SMPrice").html( SM )
-
+        // alert($(".SMPrice").attr("name"))
         sum = (cKr*TN).toFixed(2)
         hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
         $("#popUpSpanItog").html(hSum)
