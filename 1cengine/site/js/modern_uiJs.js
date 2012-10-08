@@ -326,8 +326,11 @@ function showModalItem(hash, edIzm, prices, stock){
             // mesDiv += 'штук по <input class="pUi itemPCharInput" id="amount" value="2"> метра ';
             // mesDiv += 'общей площадью <input class="pUi itemSQuareInput" name="'+smK+'" /> квадратных метров.';
 
+
             mesDiv += '<div style="margin-top:10px">';
+
             mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -405,6 +408,7 @@ function showModalItem(hash, edIzm, prices, stock){
 
             mesDiv += '<div style="margin-top:30px">';
             mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+
             mesDiv += '</div>';
 
             $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -968,18 +972,24 @@ function setOverallPrices(){
 
         basket = ""
 
-        $('tbody#lItemTab tr').each(function(i) {
+        
+            $('tbody#lItemTab tr').each(function(i) {
             
-            var ihash = $(this).attr("name")
-            if(ihash.split(":")[0]=="0"){
-                var char = $(this).find(".itemCharTd").html()
-            } else {
-                var char = ''
-            }
-            
-            var count = $(this).find(".itemCountInput").attr("value")
-            basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
-        });
+                var ihash = $(this).attr("name")
+                if(ihash.split(":")[0]=="0"){
+                    var char = $(this).find(".itemCharTd").html()
+                } else {
+                    var char = ''
+                }
+                
+                var count = $(this).find(".itemCountInput").attr("value")
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+                
+            });
+        
+        
+
+        
 
         $.cookie("basket", basket)
 
@@ -1030,18 +1040,18 @@ function modern_addItem(hash, edIzm, prices){
         $(this).find('td:first').text(number);
 
 
-        // var ihash = $(this).attr("name")
-        // if(ihash.split(":")[0]=="0"){
-        //     var char = $(this).find(".itemCharTd").html()
-        // } else {
-        //     var char = ''
-        // }
+        var ihash = $(this).attr("name")
+        if(ihash.split(":")[0]=="0"){
+            var char = $(this).find(".itemCharTd").html()
+        } else {
+            var char = ''
+        }
         
-        // var count = $(this).find(".itemCountInput").attr("value")
-        // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        var count = $(this).find(".itemCountInput").attr("value")
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
     });
 
-    // $.cookie("basket", basket)
+    $.cookie("basket", basket)
 
     setOverallPrices()
 
@@ -1093,7 +1103,7 @@ function delModernItem(hash){
 }
 
 function setModernItem(hash, char, count){
-
+    // alert(1);
     $.ajax({
         type: "POST",
         url: "getItems.php",
@@ -1401,13 +1411,17 @@ $(document).ready( function(){
                 if($(".item").length>=1){
                     $("#myCanvasContainer").hide();
                     $("#tags").hide();
+                    $('#hollowResult').empty()
                 } else {
+                    $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
                     $('#myCanvasContainer').show();
                 }
 				if($(".item").length==20){
 					$("#showAll").show();
+                    // $('#hollowResult').empty()
 				} else {
 					$("#showAll").hide();
+                    // $('#hollowResult').empty()
 				}
 				
 			}
