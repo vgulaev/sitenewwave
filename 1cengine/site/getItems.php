@@ -71,10 +71,19 @@ function getItems($req){
             
             //echo $row[2];
 
+            $ral = explode('RAL ', $row[0]);
+            if(isset($ral[1])){
+                $rkey = explode(' ',$ral[1]);
+                $ralColor = getRAL($rkey[0]);
+                // $ralColor = '<div style="width:60px;height:15px;background-color:'.getRAL($rkey).';border:1px solid black;float:right">'.' '.'</div>';
+            } else {
+                $ralColor = '';
+            }
+
 
             if(!isset($pArray[$row[4]])){
                 $pArray[$row[4]] = array();
-                echo '<tr class="iHeader"><td><strong>'.$row[4].'</strong></td><td></td>';
+                echo '<tr class="iHeader"><td><strong>'.$row[4].'</strong></td><td>Размер</td>';
                 $priceTypeArray = explode("|", $row[3]);
                 $i=0;
                 foreach($priceTypeArray as $priceType){
@@ -104,7 +113,12 @@ function getItems($req){
                     </span></td>';
             }
             
-            $rt .= '<td name="'.$row[1].'" class="itemChar" itemprop="model">'.$row[1].'</td>';
+            if($ralColor!=""){
+                $rt .= '<td name="'.$row[1].'" class="itemChar" itemprop="model" style="background-color:'.$ralColor.';"><span style="color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;">'.$row[1].'</span></td>';
+            } else {
+                $rt .= '<td name="'.$row[1].'" class="itemChar" itemprop="model">'.$row[1].'</td>';
+            }
+            
             $paLength = count($priceArray)-2;
             $j=0;
             foreach($priceArray as $price){
@@ -182,6 +196,19 @@ function getItemsFromHash($hash, $char, $count){
     }
 
     echo $newRow;
+}
+
+function getRAL($rkey){
+    $ralArray = array('1014'=>'#DFCEA1','3003'=>'#870A24','3005'=>'#581E29','3011'=>'#791F24','5002'=>'#162E7B','5005'=>'#004389',
+                '5021'=>'#00747D','6002'=>'#276230','6005'=>'#0E4438','6029'=>'#006F43','7004'=>'#999A9F','8017'=>'#45302B',
+                '9002'=>'#DADBD5','9003'=>'#F8F9FB');
+
+    foreach ($ralArray as $key => $value) {
+        if($rkey==$key){
+            return $value;
+        }
+    }
+    return $rkey;
 }
 
 $cdate = date('d.m.y H:i:s');
