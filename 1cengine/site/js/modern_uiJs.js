@@ -239,10 +239,10 @@ function setModalLength(){
 
     var itemSM = $(".SMPrice").attr("name") - 0
 
-    if(itemSM!=undefined){
+    if($(".SMPrice").attr("name")!=undefined){
         var SM = Math.round(TN/itemSM*100)/100;
         $(".SMPrice").html( SM )
-
+        // alert($(".SMPrice").attr("name"))
         sum = (cKr*TN).toFixed(2)
         hSum = sum.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sum.split('.')[1]
         $("#popUpSpanItog").html(hSum)
@@ -1032,6 +1032,7 @@ function setOverallPrices(){
 }
 
 function modern_addItem(hash, edIzm, prices){
+    yaCounter15882208.reachGoal('onAddLinkPressed'); 
     weight = $(".itemPWeightInput").attr("value")
     char=''
     if(weight==undefined){
@@ -1041,21 +1042,27 @@ function modern_addItem(hash, edIzm, prices){
     $.unblockUI()
 
     var cell = "<tr class='itemTr' name='"+hash+"'><td></td>";
-    $('tr[id="'+hash+'"]').each(function(){
-        if(char==''){
-            char = $(this).find(".itemChar").attr("name")
+
+    $('tr[id="'+hash+'"]').each(function(index){
+        // alert(index)
+        if(index==0){
+            if(char==''){
+                char = $(this).find(".itemChar").attr("name")
+            }
+            cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
+            cell += '<span class="buySpan">';
+            cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
+            cell += "<td class='itemCharTd'>"+char+"</td>";
+            cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
+            cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
+            cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
+            cell += "<td class='itemNdsKfTd'>18%</td>";
+            cell += "<td class='itemNdsSumTd'></td>";
+            cell += "<td class='itemSumTd'></td>";
         }
-        cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
-        cell += '<span class="buySpan">';
-        cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
-        cell += "<td class='itemCharTd'>"+char+"</td>";
-        cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
-        cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
-        cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
-        cell += "<td class='itemNdsKfTd'>18%</td>";
-        cell += "<td class='itemNdsSumTd'></td>";
-        cell += "<td class='itemSumTd'></td>";
+        
     })
+
     newRow = cell+'</tr>';
 
 

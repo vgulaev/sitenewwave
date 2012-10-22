@@ -93,8 +93,8 @@ function getItems($req){
             $priceArray = explode("|", $row[2]);
 
             $rt = '<tr class="item" id="'.$row[5].':'.$row[7].'" itemscope itemtype="http://schema.org/Product">
-                <td name="'.$row[0].'" class="itemName" itemprop="name">
-                    '.$row[0].'
+                <td name="'.$row[0].'" class="itemName" >
+                <span itemprop="name">'.$row[0].'</span>   
                     <span class="buySpan">';
             if($row[8]!=0){
                 $rt .= '<a class="bItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'купить\'); showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
