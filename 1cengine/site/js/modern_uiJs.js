@@ -359,22 +359,22 @@ function showModalItem(hash, edIzm, prices, stock){
             if(itName.indexOf("Арматура")!=-1){
                 // alert(1)
                 mesDiv += "<div class='armaImages'>"
-                mesDiv += "<div class='armaImage1'></div>"
-                mesDiv += "<div class='armaImage2'></div>"
-                mesDiv += "<div class='armaImage3'></div>"
-                mesDiv += "<div class='armaImage4'></div>"
-                mesDiv += "<div class='armaImage5'></div>"
-                mesDiv += "<div class='armaImage6'></div>"
-                mesDiv += "<div class='armaImage7'></div>"
-                mesDiv += "<div class='armaImage8'></div>"
-                mesDiv += "<div class='armaImage9'></div>"
-                mesDiv += "<div class='armaImage10'></div>"
-                mesDiv += "<div class='armaImage11'></div>"
-                mesDiv += "<div class='armaImage12'></div>"
-                mesDiv += "<div class='armaImage13'></div>"
-                mesDiv += "<div class='armaImage14'></div>"
-                mesDiv += "<div class='armaImage15'></div>"
-                mesDiv += "<div class='armaImage16'></div>"
+                mesDiv += "<div class='armaImage im1'></div>"
+                mesDiv += "<div class='armaImage im2'></div>"
+                mesDiv += "<div class='armaImage im3'></div>"
+                mesDiv += "<div class='armaImage im4'></div>"
+                mesDiv += "<div class='armaImage im5'></div>"
+                mesDiv += "<div class='armaImage im6'></div>"
+                mesDiv += "<div class='armaImage im7'></div>"
+                mesDiv += "<div class='armaImage im8'></div>"
+                mesDiv += "<div class='armaImage im9'></div>"
+                mesDiv += "<div class='armaImage im10'></div>"
+                mesDiv += "<div class='armaImage im11'></div>"
+                mesDiv += "<div class='armaImage im12'></div>"
+                mesDiv += "<div class='armaImage im13'></div>"
+                mesDiv += "<div class='armaImage im14'></div>"
+                mesDiv += "<div class='armaImage im15'></div>"
+                mesDiv += "<div class='armaImage im16'></div>"
                 mesDiv += "</div>"
 
                 mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
@@ -482,6 +482,34 @@ function showModalItem(hash, edIzm, prices, stock){
             ch = ch
             
         }
+
+        var step = itChar / 8
+
+        if((ch-0)<step*2){
+            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+        } else if((ch-0)>=step*2 && (ch-0)<step*3){
+            $(".im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)>=step*3 && (ch-0)<step*4){
+            $(".im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4, .im5, .im6").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)>=step*4 && (ch-0)<step*5){
+            $(".im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4, .im5, .im6, .im7, .im8").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)>=step*5 && (ch-0)<step*6){
+            $(".im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)>=step*6 && (ch-0)<step*7){
+            $(".im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)>=step*7 && (ch-0)<step*8){
+            $(".im15, .im16").removeClass("armaImage").addClass("armaImageU")
+            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14").removeClass("armaImageU").addClass("armaImage")
+        } else if((ch-0)==step*8){
+            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImageU").addClass("armaImage")
+        }
+
+
 
         if(ch==itChar){
             $("#slicePrice").html("")

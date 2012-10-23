@@ -584,7 +584,7 @@
 	margin-left:30px;
 	height:100px;
 }
-.armaImage1, .armaImage2, .armaImage3, .armaImage4, .armaImage5, .armaImage6, .armaImage7, .armaImage8, .armaImage9, .armaImage10, .armaImage11, .armaImage12, .armaImage13, .armaImage14, .armaImage15, .armaImage16{
+.armaImage{
 	height:55px;
 	width:35px;
 	background-image: url('armatura.gif');
@@ -592,7 +592,7 @@
 	float:left;
 	margin-left:-15px;
 }
-.armaImage1u, .armaImage2u, .armaImage3u, .armaImage4u, .armaImage5u, .armaImage6u, .armaImage7u, .armaImage8u, .armaImage9u, .armaImage10u, .armaImage11u, .armaImage12u, .armaImage13u, .armaImage14u, .armaImage15u, .armaImage16u{
+.armaImageU{
 	height:55px;
 	width:35px;
 	background-image: url('armatura-u.gif');
