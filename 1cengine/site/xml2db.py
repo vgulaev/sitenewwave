@@ -8,7 +8,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-pricefile = open('/web/trimetru/site/www/1cengine/site/price.xml', 'r')
+pricefile = open('/var/www/trimetru/www/1cengine/site/price.xml', 'r')
 xml_string = pricefile.read()
 pricefile.close()
 # print xml_string
@@ -159,9 +159,8 @@ def groupEater(group):
             pDB = "|".join(priceDB)
             pT =  "|".join(priceType)
             
-        insertItem(group[u'НаименованиеГруппы'], pHash, u'до 6ти метров', 0, 0, 0, 0, group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
 
-
+        insertItem(group[u'НаименованиеГруппы'], pHash, u'до 6 м', 0, 0, 0, 0, group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
 
 
 

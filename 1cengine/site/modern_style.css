@@ -209,14 +209,30 @@
 }
 
 .item:hover a.bItem, .buySpan a.bItem:hover{
-	text-shadow: black 0 0 2px;
+	/*text-shadow: black 0 0 2px;*/
 	float:right;
-	color:#ffe06f;
+	color:white;
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	background-color: #5da130;
+	width:50px;
+	padding-left:10px;
+}
+.item:hover{
+	font-weight:bold;
 }
 .item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
-	text-shadow: black 0 0 2px;
+	/*text-shadow: black 0 0 2px;*/
 	float:right;
-	color:#ff5959;
+	/*color:#ff5959;*/
+	color:white;
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	/*background-color: rgb(255,187,028);*/
+	background-color: #daa520;
+	
+	width:60px;
+	padding-left:7px;
 }
 
 #Summary td:last-child{
