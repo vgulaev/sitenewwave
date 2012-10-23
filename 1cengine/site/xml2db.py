@@ -8,7 +8,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-pricefile = open('/var/www/trimetru/www/1cengine/site/price.xml', 'r')
+pricefile = open('/web/trimetru/site/www/1cengine/site/price.xml', 'r')
 xml_string = pricefile.read()
 pricefile.close()
 # print xml_string
