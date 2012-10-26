@@ -71,6 +71,7 @@ $(function(){
         $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#showNDSlabel").show()
     })
     $("#switchDeliveryDiv").click( function(){
         $("#deliveryDiv").show()
@@ -79,6 +80,7 @@ $(function(){
         $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#showNDSlabel").hide()
     })
     $("#switchNotificationDiv").click( function(){
         $("#notificationDiv").show()
@@ -87,6 +89,7 @@ $(function(){
         $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#showNDSlabel").hide()
     })
 
                 
@@ -189,8 +192,10 @@ function setModalWeight(){
         var itemWeight =  $(".itemPWeightInput").attr("name")
         if(itemLength!=0){
             //alert(itemWeight*itemLength)
+            
             var PC = Math.round((TN/1000)*Math.round(itemWeight*itemLength*1000)*itemKf*100)/100;
             var PM = Math.round((PC/(itemLength))*itemKf*100)/100;
+
         } else {
             var PC = '--'
             var PM = '--'
@@ -268,6 +273,9 @@ function showModalItem(hash, edIzm, prices, stock){
         if(itemLength!=0){
             //alert(itemWeight*itemLength)
             var PC = Math.round((TN/1000)*Math.round(itemWeight*itemLength*1000)*itemKf*100)/100;
+
+
+
             var PM = Math.round((PC/(itemLength))*itemKf*100)/100;
         } else {
             
@@ -522,6 +530,9 @@ function showModalItem(hash, edIzm, prices, stock){
         $(".itemArmaCharInput").attr("value", ch)
 
         $( "#slider-vertical-arma" ).slider( "value", ch )
+
+        $(".itemPLengthInput").attr("name", ch)
+        $(".itemPCountInput").change()
     })
 
     $(".itemPCharInput").change(function(){
@@ -1038,6 +1049,9 @@ function modern_addItem(hash, edIzm, prices){
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
         char = $(".itemPCharInput").attr("value")
+    }
+    if($(".itemArmaCharInput").attr("value")!=undefined){
+        char = $(".itemArmaCharInput").attr("value")
     }
     $.unblockUI()
 
