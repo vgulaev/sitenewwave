@@ -76,7 +76,7 @@ $APPLICATION->IncludeFile(
                 </p>
             </span>
             <span id='showPriceSpan'>
-                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Вернуться в прайс</a></p>
+                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Добавить товар</a></p>
                 <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
                     <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
@@ -313,7 +313,9 @@ $APPLICATION->IncludeFile(
 
                     <p>*Обязательны для заполнения</p>
 
-                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить заказ</div></a>
+                    <a href="javascript:$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
+
+                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить</div></a>
 
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
