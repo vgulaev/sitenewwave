@@ -71,6 +71,8 @@ $(function(){
         $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#sp2").show()
+        $("#sp1").hide()
     })
     $("#switchDeliveryDiv").click( function(){
         $("#deliveryDiv").show()
@@ -79,6 +81,8 @@ $(function(){
         $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#sp1").show()
+        $("#sp2").hide()
     })
     $("#switchNotificationDiv").click( function(){
         $("#notificationDiv").show()
@@ -87,6 +91,8 @@ $(function(){
         $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#sp1").show()
+        $("#sp2").hide()
     })
 
                 
