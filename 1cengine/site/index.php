@@ -76,7 +76,7 @@ $APPLICATION->IncludeFile(
                 </p>
             </span>
             <span id='showPriceSpan'>
-                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'><span id='sp1' style='display:none'>Вернуться в прайс</span><span id='sp2'>Добавить товар</span></a></p>
+                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Добавить товар</a></p>
                 <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
                     <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
