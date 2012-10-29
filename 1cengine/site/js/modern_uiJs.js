@@ -73,6 +73,7 @@ $(function(){
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#sp2").show()
         $("#sp1").hide()
+        $("#showNDSlabel").show()
     })
     $("#switchDeliveryDiv").click( function(){
         $("#deliveryDiv").show()
@@ -83,6 +84,7 @@ $(function(){
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#sp1").show()
         $("#sp2").hide()
+        $("#showNDSlabel").hide()
     })
     $("#switchNotificationDiv").click( function(){
         $("#notificationDiv").show()
@@ -93,6 +95,7 @@ $(function(){
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#sp1").show()
         $("#sp2").hide()
+        $("#showNDSlabel").hide()
     })
 
                 
