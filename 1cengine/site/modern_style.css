@@ -218,7 +218,7 @@
 	width:50px;
 	padding-left:10px;
 }
-.item:hover{
+.item:hover, .itemTr:hover{
 	font-weight:bold;
 }
 .item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
