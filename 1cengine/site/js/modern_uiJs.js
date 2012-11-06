@@ -1022,27 +1022,6 @@ $(document).ready( function(){
     	});
 	})
 
-    $("#toSC").click( function(){
-        // alert(2)
-        if($(this).attr("class")=="toSelfCarry"){
-            $(this).removeClass("toSelfCarry").addClass("toSelfCarryPressed")
-            $(".toDeliverPressed").removeClass("toDeliverPressed").addClass("toDeliver")
-        }
-        
-    })
-
-    $("#toD").click( function(){
-        // alert(1)
-        if($(this).attr("class")=="toDeliver"){
-            $(this).removeClass("toDeliver").addClass("toDeliverPressed")
-            $(".toSelfCarryPressed").removeClass("toSelfCarryPressed").addClass("toSelfCarry")
-        }
-        
-    })
-
-
-
-	
 		
 	tmOutId = 0
 
@@ -1196,8 +1175,10 @@ $(document).ready( function(){
         }
     })
     $("#selfCarry").change( function(){
+        // alert(1)
         var d_price = $("#delivery_cost").html().replace(/\s/g, "")
         if($("#selfCarry").is(":checked")){
+            // alert(1)
             var totalCost = $("#SumAll").attr("name")
             totalCost = (totalCost-0).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)
@@ -1206,6 +1187,13 @@ $(document).ready( function(){
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
         } else {
+            
+        }
+    })
+    $("#toDeliver").change( function(){
+        var d_price = $("#delivery_cost").html().replace(/\s/g, "")
+        if($("#toDeliver").is(":checked")){
+            // alert(2)
             var totalCost = $("#SumAll").attr("name")
             totalCost = ((totalCost-0)+(d_price-0)).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)

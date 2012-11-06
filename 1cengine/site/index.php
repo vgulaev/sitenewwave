@@ -218,9 +218,6 @@ $APPLICATION->IncludeFile(
                     <!-- <div id='shipment'> -->
                         <!-- <form id='shipmentForm'> -->
 
-                            <div id="toD" class="toDeliverPressed">Доставка</div>
-                            <div id="toSC" class="toSelfCarry">Самовывоз</div>
-
                             <table id='deliveryTab'>
                                 <tr>
                                     <td>Выберете город</td>
@@ -277,7 +274,11 @@ $APPLICATION->IncludeFile(
                                 </tr>
                                 <tr>
                                     <td><label for="selfCarry"> Самовывоз</label></td>
-                                    <td><input type="checkbox" id="selfCarry" /></td>
+                                    <td><input type="radio" id="selfCarry" name="deliver_selfCarry" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="toDeliver"> Доставка</label></td>
+                                    <td><input type="radio" id="toDeliver" name="deliver_selfCarry" checked /></td>
                                 </tr>
                             </table>
                         <!-- </form> -->
