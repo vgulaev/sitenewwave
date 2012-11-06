@@ -71,6 +71,7 @@ $(function(){
         $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+
         $("#showNDSlabel").show()
     })
     $("#switchDeliveryDiv").click( function(){
@@ -80,6 +81,7 @@ $(function(){
         $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+
         $("#showNDSlabel").hide()
     })
     $("#switchNotificationDiv").click( function(){
@@ -89,11 +91,13 @@ $(function(){
         $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
+
         $("#showNDSlabel").hide()
     })
 
                 
 });
+
 
 function showGroups(){
     $("#itemName").attr("value", "")
@@ -118,6 +122,14 @@ function showGroups(){
     // }
     
 }
+
+
+
+
+$("#sendOrderButtom").click( function(){
+    createOrder()
+})
+
 
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
@@ -359,36 +371,7 @@ function showModalItem(hash, edIzm, prices, stock){
             if(stock=='0'){
                 mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
             }
-            var itChar = $(this).find(".itemChar").attr("name")
-            itChar = itChar.replace(/,/,".")
-            itChar = itChar - 0
-            var itName = $(this).find(".itemName").attr("name")
-            // alert(itName.indexOf("Арматура"))
-            if(itName.indexOf("Арматура")!=-1){
-                // alert(1)
-                mesDiv += "<div class='armaImages'>"
-                mesDiv += "<div class='armaImage im1'></div>"
-                mesDiv += "<div class='armaImage im2'></div>"
-                mesDiv += "<div class='armaImage im3'></div>"
-                mesDiv += "<div class='armaImage im4'></div>"
-                mesDiv += "<div class='armaImage im5'></div>"
-                mesDiv += "<div class='armaImage im6'></div>"
-                mesDiv += "<div class='armaImage im7'></div>"
-                mesDiv += "<div class='armaImage im8'></div>"
-                mesDiv += "<div class='armaImage im9'></div>"
-                mesDiv += "<div class='armaImage im10'></div>"
-                mesDiv += "<div class='armaImage im11'></div>"
-                mesDiv += "<div class='armaImage im12'></div>"
-                mesDiv += "<div class='armaImage im13'></div>"
-                mesDiv += "<div class='armaImage im14'></div>"
-                mesDiv += "<div class='armaImage im15'></div>"
-                mesDiv += "<div class='armaImage im16'></div>"
-                mesDiv += "</div>"
 
-                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
-
-                mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
-            }
             // mesDiv += '<table><tr><td>'
 
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
@@ -396,8 +379,6 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
-
-            mesDiv += '<div>Стоимость резки: <span id="slicePrice"></span> руб.</div>'
 
 
             // mesDiv += '</td><td>'
@@ -428,7 +409,7 @@ function showModalItem(hash, edIzm, prices, stock){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '450px'
-            $.blockUI.defaults.css.height = '420px'
+            $.blockUI.defaults.css.height = '220px'
             $.blockUI.defaults.css.paddingTop = '10px'
         }
 
@@ -437,10 +418,6 @@ function showModalItem(hash, edIzm, prices, stock){
     
 
     $.blockUI({ message: mesDiv});
-
-    var itChar = $(".itemPLengthInput").attr("name") 
-    itChar = itChar.replace(/,/,".")
-    itChar = itChar - 0
 
     $(function() {
         $( "#slider-vertical" ).slider({
@@ -457,6 +434,7 @@ function showModalItem(hash, edIzm, prices, stock){
         $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
         
     });
+
 
     $(function() {
         $( "#slider-vertical-arma" ).slider({
@@ -534,6 +512,7 @@ function showModalItem(hash, edIzm, prices, stock){
         $(".itemPLengthInput").attr("name", ch)
         $(".itemPCountInput").change()
     })
+
 
     $(".itemPCharInput").change(function(){
         ch = this.value
@@ -863,8 +842,11 @@ function setOverallPrices(){
     cAll = cAll.toFixed(3)
     //sAll = sAll.toFixed(2)
     
-
+    
     $("#SumAll").attr("name",sAll)
+
+
+    gAll = $("#SumAll").attr("name")
 
     if($("#selfCarry").is(":checked")){
         sAll = sAll.toFixed(2)
@@ -881,12 +863,21 @@ function setOverallPrices(){
     nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
     sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
     cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
+    gAll = gAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+gAll.split('.')[1]
     
     $("#CountAll").empty()
     $("#CountAll").append(cAll)
 
     $("#SumAll").empty()
     $("#SumAll").append(sAll)
+
+    $("#SumGoods").empty()
+    $("#SumGoods").append(gAll)
+
+    $("#SumDelivery").empty()
+    if($("#delivery_cost").html()!=""){  
+        $("#SumDelivery").append($("#delivery_cost").html())
+    }
     
     $("#NDSAll").empty()
     $("#NDSAll").append(nAll)
@@ -1439,12 +1430,13 @@ $(document).ready( function(){
     	});
 	})
 
+
     $("#showNds").change( function(){
         // alert($("#showNds").attr("checked"))
         if($("#showNds").attr("checked")=="checked"){
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").show()
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
         } else {
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").hide()
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
         }
     })
 	
@@ -1560,10 +1552,12 @@ $(document).ready( function(){
                 totalCost = totalCost.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+totalCost.split('.')[1]
                 $("#SumAll").empty()
                 $("#SumAll").append(totalCost)
+
             }
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
 
         } else if ($("#townSelect :selected").val()=="72000001") {
             $("#carry").removeAttr("disabled")
@@ -1584,6 +1578,7 @@ $(document).ready( function(){
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
 
              
         }
@@ -1605,11 +1600,14 @@ $(document).ready( function(){
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
         }
     })
     $("#selfCarry").change( function(){
+        // alert(1)
         var d_price = $("#delivery_cost").html().replace(/\s/g, "")
         if($("#selfCarry").is(":checked")){
+            // alert(1)
             var totalCost = $("#SumAll").attr("name")
             totalCost = (totalCost-0).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)
@@ -1617,7 +1615,13 @@ $(document).ready( function(){
             totalCost = totalCost.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+totalCost.split('.')[1]
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
-        } else {
+            $("#SumDelivery").empty()
+        } 
+    })
+    $("#toDeliver").change( function(){
+        var d_price = $("#delivery_cost").html().replace(/\s/g, "")
+        if($("#toDeliver").is(":checked")){
+            // alert(2)
             var totalCost = $("#SumAll").attr("name")
             totalCost = ((totalCost-0)+(d_price-0)).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)
@@ -1626,6 +1630,10 @@ $(document).ready( function(){
             
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
+            d_price = (d_price-0).toFixed(2)
+            d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
+            // $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
         }
     })
 

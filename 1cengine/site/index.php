@@ -76,7 +76,7 @@ $APPLICATION->IncludeFile(
                 </p>
             </span>
             <span id='showPriceSpan'>
-                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Вернуться в прайс</a></p>
+                <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Добавить товар</a></p>
                 <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
                     <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
@@ -199,10 +199,22 @@ $APPLICATION->IncludeFile(
                                 <td id='CountAll'></td>
                             </tr>
                             <tr>
-                                <td>Всего (руб) с учётом стоимости доставки:</td>
-                                <td name='0' id='SumAll'></td>
+                                <td>Стоимость товара:</td>
+                                <td id='SumGoods'></td>
                             </tr>
                             <tr>
+                                <td>Стоимость доставки:</td>
+                                <td id='SumDelivery'></td>
+                            </tr>
+                            <tr>
+                                <td>Стоимость доп. услуг:</td>
+                                <td id='SumRezka'></td>
+                            </tr>
+                            <tr>
+                                <td>Общая стоимость:</td>
+                                <td name='0' id='SumAll'></td>
+                            </tr>
+                            <tr class="ndsAllsum" style="display:none">
                                 <td>НДС (в т. ч.):</td>
                                 <td id='NDSAll'></td>
                             </tr>
@@ -212,6 +224,14 @@ $APPLICATION->IncludeFile(
                 <div id="deliveryDiv">
                     <!-- <div id='shipment'> -->
                         <!-- <form id='shipmentForm'> -->
+
+                            <div id="deliver_choise">
+                                <label for="selfCarry"> Самовывоз</label>
+                                <input type="radio" id="selfCarry" name="deliver_selfCarry" />
+                                <label for="toDeliver" class="tDC"> Доставка</label>
+                                <input type="radio" id="toDeliver" name="deliver_selfCarry" checked />
+                            </div>
+
                             <table id='deliveryTab'>
                                 <tr>
                                     <td>Выберете город</td>
@@ -266,10 +286,7 @@ $APPLICATION->IncludeFile(
                                     <td>Стоимость доставки</td>
                                     <td><span id="delivery_cost"></span></td>
                                 </tr>
-                                <tr>
-                                    <td><label for="selfCarry"> Самовывоз</label></td>
-                                    <td><input type="checkbox" id="selfCarry" /></td>
-                                </tr>
+                                
                             </table>
                         <!-- </form> -->
                     <!-- </div> -->
@@ -313,7 +330,9 @@ $APPLICATION->IncludeFile(
 
                     <p>*Обязательны для заполнения</p>
 
-                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить заказ</div></a>
+                    <a href="javascript:$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
+
+                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить</div></a>
 
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
