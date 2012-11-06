@@ -750,8 +750,11 @@ function setOverallPrices(){
     cAll = cAll.toFixed(3)
     //sAll = sAll.toFixed(2)
     
-
+    
     $("#SumAll").attr("name",sAll)
+
+
+    gAll = $("#SumAll").attr("name")
 
     if($("#selfCarry").is(":checked")){
         sAll = sAll.toFixed(2)
@@ -768,12 +771,21 @@ function setOverallPrices(){
     nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
     sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
     cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
+    gAll = gAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+gAll.split('.')[1]
     
     $("#CountAll").empty()
     $("#CountAll").append(cAll)
 
     $("#SumAll").empty()
     $("#SumAll").append(sAll)
+
+    $("#SumGoods").empty()
+    $("#SumGoods").append(gAll)
+
+    $("#SumDelivery").empty()
+    if($("#delivery_cost").html()!=""){  
+        $("#SumDelivery").append($("#delivery_cost").html())
+    }
     
     $("#NDSAll").empty()
     $("#NDSAll").append(nAll)
@@ -1326,9 +1338,9 @@ $(document).ready( function(){
     $("#showNds").change( function(){
         // alert($("#showNds").attr("checked"))
         if($("#showNds").attr("checked")=="checked"){
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").show()
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
         } else {
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd").hide()
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
         }
     })
 	
@@ -1444,10 +1456,12 @@ $(document).ready( function(){
                 totalCost = totalCost.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+totalCost.split('.')[1]
                 $("#SumAll").empty()
                 $("#SumAll").append(totalCost)
+
             }
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
 
         } else if ($("#townSelect :selected").val()=="72000001") {
             $("#carry").removeAttr("disabled")
@@ -1468,6 +1482,7 @@ $(document).ready( function(){
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
 
              
         }
@@ -1489,6 +1504,7 @@ $(document).ready( function(){
             d_price = (d_price-0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
             $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
         }
     })
     $("#selfCarry").change( function(){
@@ -1501,6 +1517,7 @@ $(document).ready( function(){
             totalCost = totalCost.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+totalCost.split('.')[1]
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
+            $("#SumDelivery").empty()
         } else {
             var totalCost = $("#SumAll").attr("name")
             totalCost = ((totalCost-0)+(d_price-0)).toFixed(2)
@@ -1510,6 +1527,10 @@ $(document).ready( function(){
             
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
+            d_price = (d_price-0).toFixed(2)
+            d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+d_price.split('.')[1]
+            // $("#delivery_cost").append(d_price)
+            $("#SumDelivery").html(d_price)
         }
     })
 
