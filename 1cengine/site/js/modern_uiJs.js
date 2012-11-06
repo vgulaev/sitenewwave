@@ -98,6 +98,7 @@ $(function(){
                 
 });
 
+<<<<<<< HEAD
 function showGroups(){
     $("#itemName").attr("value", "")
     $("#tableRes").empty()
@@ -121,6 +122,14 @@ function showGroups(){
     // }
     
 }
+=======
+
+
+
+$("#sendOrderButtom").click( function(){
+    createOrder()
+})
+>>>>>>> dev_trimet_delivery_form
 
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
@@ -1335,6 +1344,7 @@ $(document).ready( function(){
     	});
 	})
 
+
     $("#showNds").change( function(){
         // alert($("#showNds").attr("checked"))
         if($("#showNds").attr("checked")=="checked"){
@@ -1508,8 +1518,10 @@ $(document).ready( function(){
         }
     })
     $("#selfCarry").change( function(){
+        // alert(1)
         var d_price = $("#delivery_cost").html().replace(/\s/g, "")
         if($("#selfCarry").is(":checked")){
+            // alert(1)
             var totalCost = $("#SumAll").attr("name")
             totalCost = (totalCost-0).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)
@@ -1518,7 +1530,12 @@ $(document).ready( function(){
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
             $("#SumDelivery").empty()
-        } else {
+        } 
+    })
+    $("#toDeliver").change( function(){
+        var d_price = $("#delivery_cost").html().replace(/\s/g, "")
+        if($("#toDeliver").is(":checked")){
+            // alert(2)
             var totalCost = $("#SumAll").attr("name")
             totalCost = ((totalCost-0)+(d_price-0)).toFixed(2)
             nAll = ((totalCost/118)*18).toFixed(2)
