@@ -217,6 +217,10 @@ $APPLICATION->IncludeFile(
                 <div id="deliveryDiv">
                     <!-- <div id='shipment'> -->
                         <!-- <form id='shipmentForm'> -->
+
+                            <div id="toD" class="toDeliverPressed">Доставка</div>
+                            <div id="toSC" class="toSelfCarry">Самовывоз</div>
+
                             <table id='deliveryTab'>
                                 <tr>
                                     <td>Выберете город</td>

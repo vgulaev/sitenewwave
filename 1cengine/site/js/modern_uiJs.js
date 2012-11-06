@@ -71,6 +71,9 @@ $(function(){
                 
 });
 
+
+
+
 $("#sendOrderButtom").click( function(){
     createOrder()
 })
@@ -1018,6 +1021,27 @@ $(document).ready( function(){
         
     	});
 	})
+
+    $("#toSC").click( function(){
+        // alert(2)
+        if($(this).attr("class")=="toSelfCarry"){
+            $(this).removeClass("toSelfCarry").addClass("toSelfCarryPressed")
+            $(".toDeliverPressed").removeClass("toDeliverPressed").addClass("toDeliver")
+        }
+        
+    })
+
+    $("#toD").click( function(){
+        // alert(1)
+        if($(this).attr("class")=="toDeliver"){
+            $(this).removeClass("toDeliver").addClass("toDeliverPressed")
+            $(".toSelfCarryPressed").removeClass("toSelfCarryPressed").addClass("toSelfCarry")
+        }
+        
+    })
+
+
+
 	
 		
 	tmOutId = 0
