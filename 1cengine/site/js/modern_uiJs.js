@@ -429,6 +429,10 @@ function showModalItem(hash, edIzm, prices, stock){
 
     $.blockUI({ message: mesDiv});
 
+    var itChar = $(".itemPLengthInput").attr("name") 
+    itChar = itChar.replace(/,/,".")
+    itChar = itChar - 0
+
     $(function() {
         $( "#slider-vertical" ).slider({
             range: "min",
@@ -444,7 +448,6 @@ function showModalItem(hash, edIzm, prices, stock){
         $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
         
     });
-
 
     $(function() {
         $( "#slider-vertical-arma" ).slider({
