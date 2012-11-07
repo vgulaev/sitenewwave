@@ -603,3 +603,8 @@
 #tabPrice{
 	color:#5da130;
 }
+
+#popUpOrderClose{
+	/*margin-top:170px;*/
+	font-size:16px;
+}

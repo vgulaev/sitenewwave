@@ -137,20 +137,6 @@ function showGroup2(groupName){
     $("#itemName").change()
 }
 
-function openLink(linkUID,type){
-    $.ajax({
-        type: "POST",
-        url: "getfilelink.php",
-        async: false,
-        data: "linkUID="+linkUID+"&type="+type+"",
-        success: function(html){
-            //var success = 'true';
-            window.location.href = html
-            // alert(html)
-        }
-    });
-}
-
 function getItemChar(hash){
     ret = ''
     $.ajax({
@@ -1093,7 +1079,7 @@ function sendOrder(orderString){
     email = $('input#emailInput').attr('value')
     if(email!=''){
         if(isValidEmail(email)==false){
-            $.unblockUI()
+            // $.unblockUI()
             alert('Проверьте правильность адреса электронной почты')
             return null
         }
@@ -1109,12 +1095,26 @@ function sendOrder(orderString){
     $.ajax({
         type: "POST",
         url: "createOrder.php",
-        async: false,
+        async: true,
         data: "orderString="+orderString+"&carry="+carry+"&destination="+destination+"&email="+email+"&delivery_cost="+delivery_cost+"&main_phone="+main_phone+"&other_phone="+other_phone+"&name_surname="+name_surname+"&last_name="+last_name,
         success: function(html){
             //var success = 'true';
             ret = 'номер '+html
+            $("#popUpOrderClose").show()
+            $(".oInProcess").hide()
+            $(".oProcessed").show()
+
+            $("#basketCaption").empty()
+
+            order = ret
+
+            var oA = order.split(",")
+            $("#basketCaption").append("Заказ "+oA[0])
+            
+            $("#switchOrderDiv").click()
+
             return ret
+            
         }
     });
     //alert(ret)
@@ -1123,14 +1123,26 @@ function sendOrder(orderString){
 
 function createOrder(){
     if($("#emailInput").attr("value")==""){
-        $.unblockUI()
+        // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
     } else if($("#mainPhoneInput").attr("value")==""){
-        $.unblockUI()
+        // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#phoneMainInput").focus()
     } else {
+        $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+        $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
+        $.blockUI.defaults.fadeOut = 100; //и исчезновение
+        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = 'white'
+        $.blockUI.defaults.css.cursor = 'defaults'
+        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+        $.blockUI.defaults.css.fontSize = '14px'
+        $.blockUI.defaults.css.width = '450px'
+        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.paddingTop = '10px'
+        $.blockUI({message:"<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span><span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш запрос обработан</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"})
         var sendRow = '';
         $('tr.itemTr').each( function(){
 
@@ -1142,14 +1154,16 @@ function createOrder(){
       
         })
         var order = sendOrder(sendRow);
-        $("#basketCaption").empty()
-
-        var oA = order.split(",")
-        $("#basketCaption").append("Заказ "+oA[0])
         
-        $("#switchOrderDiv").click()
+        // $("#basketCaption").empty()
 
-        $.unblockUI()
+        // var oA = order.split(",")
+        // $("#basketCaption").append("Заказ "+oA[0])
+        
+        // $("#switchOrderDiv").click()
+
+        
+        // $.unblockUI()
 
     }
     
@@ -1280,10 +1294,15 @@ $(document).ready( function(){
     }
 
     $.cookie("basket", null)
-    // $(document).ajaxStart().ajaxStop($.unblockUI);
-    $("#sendOrderButton").click( function(){
-        $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
+
+    $("#popUpOrderClose").click( function(){
+        $.unblockUI()
     })
+
+    // $(document).ajaxStart().ajaxStop($.unblockUI);
+    // $("#sendOrderButton").click( function(){
+    //     $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
+    // })
 
     if( ! $('#myCanvas').tagcanvas({
         textColour : '#242491',
