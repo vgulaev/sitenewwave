@@ -511,9 +511,13 @@ function showModalItem(hash, edIzm, prices, stock){
 
 
         if(ch==itChar){
-            $("#slicePrice").html("")
+            $("#slicePrice").empty()
+            $("#slicePrice").attr("name", "0")
         } else {
-            $("#slicePrice").html("20")
+            
+            $("#slicePrice").attr("name", "20")
+            var rezka = ($(".itemPCountInput").attr("value")-0)*20
+            $("#slicePrice").html(rezka)
         }
 
 
@@ -596,6 +600,15 @@ function showModalItem(hash, edIzm, prices, stock){
             nL = nL + "px"
             //alert(nL)
             $(this).css("width", nL); 
+
+            if($("#slicePrice").attr("name")!=undefined){
+                if($("#slicePrice").attr("name")=="20"){
+                    // alert($("#itemPCountInput").attr("value"))
+                    var rezka = ($(".itemPCountInput").attr("value")-0)*20
+                    $("#slicePrice").html(rezka)
+                }
+                
+            }
             
             if($(father).find($(".itemPLengthInput")).attr('name')!=0){
                 wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
@@ -1049,6 +1062,11 @@ function setOverallPrices(){
 function modern_addItem(hash, edIzm, prices){
     yaCounter15882208.reachGoal('onAddLinkPressed'); 
     weight = $(".itemPWeightInput").attr("value")
+    if($("#slicePrice").attr("name")!=undefined){
+        rezka = $("#SumRezka").html()
+        rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
+        $("#SumRezka").html(rezka)
+    }
     char=''
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
