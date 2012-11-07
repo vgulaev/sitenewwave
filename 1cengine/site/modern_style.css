@@ -612,3 +612,35 @@
 .tDC{
 	margin-left:35px;
 }
+#slider-vertical-arma{
+	width:250px;
+	background-color:white;
+	border:1px dashed gray;
+	border-radius:10px;
+	height:10px;
+	/*float:left;*/
+	margin-left:90px;
+	position: relative; text-align: left;
+}
+.armaImages{
+	padding-left:30px;
+	width:450px;
+	margin-left:30px;
+	height:100px;
+}
+.armaImage{
+	height:55px;
+	width:35px;
+	background-image: url('armatura.gif');
+	background-repeat: no-repeat;
+	float:left;
+	margin-left:-15px;
+}
+.armaImageU{
+	height:55px;
+	width:35px;
+	background-image: url('armatura-u.gif');
+	background-repeat: no-repeat;
+	float:left;
+	margin-left:-15px;
+}
