@@ -1089,7 +1089,7 @@ function modern_addItem(hash, edIzm, prices){
             cell += '<span class="delEdSpan">';
             cell += '<a class="" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''+hash+'\'); return false">edit</a></span></td>';
             cell += "<td class='itemCharTd'>"+char+"</td>";
-            cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
+            cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' disabled /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
             cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
             cell += "<td class='itemNdsKfTd'>18%</td>";
