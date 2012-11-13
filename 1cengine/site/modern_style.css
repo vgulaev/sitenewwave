@@ -218,7 +218,7 @@
 	width:50px;
 	padding-left:10px;
 }
-.item:hover{
+.item:hover, .itemTr:hover{
 	font-weight:bold;
 }
 .item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
@@ -604,6 +604,7 @@
 	color:#5da130;
 }
 
+
 #popUpOrderClose{
 	/*margin-top:170px;*/
 	font-size:16px;
@@ -634,4 +635,14 @@
 	line-height: 21px;
 	font-size: 18px;
 	margin-top: 5px;
+}
+
+#deliver_choise{
+	font-size:16px;
+	margin-top:15px;
+	margin-left:300px;
+}
+.tDC{
+	margin-left:35px;
+
 }
