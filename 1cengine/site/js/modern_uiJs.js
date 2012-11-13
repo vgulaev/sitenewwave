@@ -327,7 +327,7 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += '<div class="profnastilImageAdd6"></div>'
             mesDiv += '</div>'
 
-            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px">6</span></div>';
+            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px�>6</span></div>';
 
             mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
             
@@ -390,7 +390,7 @@ function showModalItem(hash, edIzm, prices, stock){
                 mesDiv += "<div class='armaImage im16'></div>"
                 mesDiv += "</div>"
 
-                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
+                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px�>'+$(this).find(".itemChar").attr("name")+'</span></div>';
 
                 mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
             }
@@ -1086,8 +1086,8 @@ function modern_addItem(hash, edIzm, prices){
                 char = $(this).find(".itemChar").attr("name")
             }
             cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
-            cell += '<span class="buySpan">';
-            cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
+            cell += '<span class="delEdSpan">';
+            cell += '<a class="" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''+hash+'\'); return false">edit</a></span></td>';
             cell += "<td class='itemCharTd'>"+char+"</td>";
             cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
@@ -1132,6 +1132,10 @@ function modern_addItem(hash, edIzm, prices){
 
     setOverallPrices()
 
+    
+}
+
+function modern_editItem(hash){
     
 }
 
