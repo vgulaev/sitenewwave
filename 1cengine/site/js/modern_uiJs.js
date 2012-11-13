@@ -1299,29 +1299,19 @@ $(document).ready( function(){
         $.unblockUI()
     })
 
-    // $(document).ajaxStart().ajaxStop($.unblockUI);
-    // $("#sendOrderButton").click( function(){
-    //     $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
-    // })
 
-    if( ! $('#myCanvas').tagcanvas({
-        textColour : '#242491',
-        outlineColour : '#242491',
-        outlineThickness : 1,
-        maxSpeed : 0.03,
-        depth : 0.75
-    },'tags')) {
-         // TagCanvas failed to load
-        $('#myCanvasContainer').hide();
-        $('#tags').hide();
-    }
+    // if( ! $('#myCanvas').tagcanvas({
+    //     textColour : '#242491',
+    //     outlineColour : '#242491',
+    //     outlineThickness : 1,
+    //     maxSpeed : 0.03,
+    //     depth : 0.75
+    // },'tags')) {
+    //      // TagCanvas failed to load
+    //     $('#myCanvasContainer').hide();
+    //     $('#tags').hide();
+    // }
 
-	// $("#itemName").focusin( function(){
-	// 	$("#itemName").css("box-shadow", "0 0 5px 2px #ffe06f, 0px 1px 1px rgb(207, 207, 207) inset")
-	// })
-	// $("#itemName").focusout( function(){
-	// 	$("#itemName").css("box-shadow", "0px 1px 1px rgb(207, 207, 207) inset")
-	// })
 
 	$("#itemName").focus();
 
@@ -1372,7 +1362,8 @@ $(document).ready( function(){
                     $('#hollowResult').empty()
                 } else {
                     $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
-                    $('#myCanvasContainer').show();
+                    // $('#myCanvasContainer').show();
+                    $('#tags').show();
                 }
 				if($(".item").length==20){
 					$("#showAll").show();

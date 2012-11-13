@@ -608,3 +608,30 @@
 	/*margin-top:170px;*/
 	font-size:16px;
 }
+
+.tagTab{
+	/*font-size:18px;*/
+	/*font-weight:normal;*/
+	width:600px;
+}
+
+.tagTab td{
+	/*padding:10px;
+	padding-left:30px;*/
+	width: 200px;
+	height:70px;
+}
+
+.tagTab td img{
+	float:left;
+}
+
+.tagTab td a{
+	font-weight: lighter;
+	float:left;
+	margin-left:10px;
+	font-family:Arial,Helvetica,sans-serif;
+	line-height: 21px;
+	font-size: 18px;
+	margin-top: 5px;
+}

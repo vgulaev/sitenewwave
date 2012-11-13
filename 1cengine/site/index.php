@@ -112,7 +112,33 @@ $APPLICATION->IncludeFile(
     			</p>
 
                 <div id="tags">
-                    <ul>
+                    <table class="tagTab" style="font-size:16px">
+                        <tr>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Арматура')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); return true;"><strong>Арматура</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Лист')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); return true;"><strong>Лист</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Швеллер')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); return true;"><strong>Швеллер</strong></a></td>
+                        </tr>
+                        <tr>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Балка')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); return true;"><strong>Балка</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Труба')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); return true;"><strong>Труба</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Профнастил')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); return true;"><strong>Профнастил</strong></a></td>
+                        </tr>
+                        <tr>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Квадрат')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); return true;"><strong>Квадрат</strong></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Проволока')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); return true;"><strong>Проволока</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Угол')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); return true;"><strong>Угол</strong></a></td>
+                        </tr>
+                        <tr>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Круг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); return true;"><strong>Круг</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Металлосайдинг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); return true;"><strong>Металлосайдинг</strong></a></td>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Штрипс')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); return true;"><strong>Штрипс</strong></a></td>
+                        </tr>
+                        <tr>
+                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="javascript:showGroup2('Металлочерепица')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); return true;"><strong>Металлочерепица</strong></a></td>
+                        </tr>
+                        
+                    </table>
+                    <!-- <ul>
                         <li><a href="javascript:showGroup2('Арматура')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); return true;"><strong>Арматура</strong></a></li>
                         <li><a href="javascript:showGroup2('Балка')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); return true;"><strong>Балка</strong></a></li>
                         <li><a href="javascript:showGroup2('Квадрат')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); return true;"><strong>Квадрат</strong></a></li>
@@ -126,14 +152,14 @@ $APPLICATION->IncludeFile(
                         <li><a href="javascript:showGroup2('Металлосайдинг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); return true;"><strong>Металлосайдинг</strong></a></li>
                         <li><a href="javascript:showGroup2('Металлочерепица')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); return true;"><strong>Металлочерепица</strong></a></li>
                         <li><a href="javascript:showGroup2('Угол')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); return true;"><strong>Угол</strong></a></li>
-                    </ul>
+                    </ul> -->
                 </div>
 
-                <div id="myCanvasContainer">
+                <!-- <div id="myCanvasContainer">
                     <canvas width="300" height="300" id="myCanvas">
-                        <!-- <p>Anything in here will be replaced on browsers that support the canvas element</p> -->
+                        <p>Anything in here will be replaced on browsers that support the canvas element</p>
                     </canvas>
-                </div>
+                </div> -->
 
                 <div id="groupDiv"></div>
 
