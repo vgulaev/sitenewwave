@@ -232,10 +232,10 @@ $APPLICATION->IncludeFile(
                                 <td>Стоимость доставки:</td>
                                 <td id='SumDelivery'></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>Стоимость доп. услуг:</td>
                                 <td id='SumRezka'></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>Общая стоимость:</td>
                                 <td name='0' id='SumAll'></td>
