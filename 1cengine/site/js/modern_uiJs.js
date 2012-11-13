@@ -98,7 +98,6 @@ $(function(){
                 
 });
 
-<<<<<<< HEAD
 function showGroups(){
     $("#itemName").attr("value", "")
     $("#tableRes").empty()
@@ -122,14 +121,12 @@ function showGroups(){
     // }
     
 }
-=======
 
 
 
 $("#sendOrderButtom").click( function(){
     createOrder()
 })
->>>>>>> dev_trimet_delivery_form
 
 function searchItem2(item){
     var squery = item.replace(/%2F/g, "/")
