@@ -208,6 +208,41 @@
 	float:right;
 }
 
+.delEdSpan{
+	/*color:white;
+	*/
+	float:right;
+	/*color:#ff5959;*/
+	color:white;
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	/*background-color: rgb(255,187,028);*/
+	background-color: #daa520;
+	text-decoration: none;
+	font-weight:bold;
+	width:60px;
+	display:none;
+	padding-left:7px;
+}
+
+.delEdSpan a{
+	color:white;
+	text-decoration: none;
+}
+
+.itemTr:hover span.delEdSpan{
+	color:white;
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	/*background-color: rgb(255,187,028);*/
+	background-color: #daa520;
+	text-decoration: none;
+	font-weight:bold;
+	width:60px;
+	padding-left:14px;
+	display:block;
+}
+
 .item:hover a.bItem, .buySpan a.bItem:hover{
 	/*text-shadow: black 0 0 2px;*/
 	float:right;
@@ -221,7 +256,7 @@
 .item:hover, .itemTr:hover{
 	font-weight:bold;
 }
-.item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
+.item:hover a.oItem, .buySpan a.oItem:hover{
 	/*text-shadow: black 0 0 2px;*/
 	float:right;
 	/*color:#ff5959;*/
