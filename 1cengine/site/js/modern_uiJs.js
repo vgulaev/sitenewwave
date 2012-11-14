@@ -268,7 +268,11 @@ function setModalLength(){
     $(".pPCPrice").html(PC)
 }
 
-function showModalItem(hash, edIzm, prices, stock){
+
+function showModalItem(hash, edIzm, prices, stock, c){
+    if(c==undefined){
+        c="n"
+    }
     var mesDiv = '';
     $('tr[id="'+hash+'"]').each(function(){
 
@@ -327,7 +331,7 @@ function showModalItem(hash, edIzm, prices, stock){
             mesDiv += '<div class="profnastilImageAdd6"></div>'
             mesDiv += '</div>'
 
-            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px�>6</span></div>';
+            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px">6</span></div>';
 
             mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
             
@@ -342,7 +346,11 @@ function showModalItem(hash, edIzm, prices, stock){
 
             mesDiv += '<div style="margin-top:10px">';
 
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            if(c=="c"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+            } else if(c=="n"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            }
 
             mesDiv += '</div>';
 
@@ -390,7 +398,7 @@ function showModalItem(hash, edIzm, prices, stock){
                 mesDiv += "<div class='armaImage im16'></div>"
                 mesDiv += "</div>"
 
-                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px�>'+$(this).find(".itemChar").attr("name")+'</span></div>';
+                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
 
                 mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
             }
@@ -406,7 +414,12 @@ function showModalItem(hash, edIzm, prices, stock){
 
 
             mesDiv += '<div style="margin-top:30px">';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            
+            if(c=="c"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+            } else if(c=="n"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            }
 
             mesDiv += '</div>';
 
@@ -1109,7 +1122,7 @@ function modern_addItem(hash, edIzm, prices){
     $('span.basketCount').html(bCount);  
 
     $('tbody#lItemTab').prepend(newRow);
-// 
+
     basket = ""
 
     $('tbody#lItemTab tr').each(function(i) {
@@ -1139,517 +1152,29 @@ function modern_editItem(hash){
     edIzm = $('tr[name="'+hash+'"]').find(".itemEdIzmTd").attr("name")
     prices = $('tr[name="'+hash+'"]').find(".itemPriceTd").attr("name")
     stock = "1"
-    var mesDiv = '';
-    $('tr[id="'+hash+'"]').each(function(){
 
-        var iC = getItemChar(hash)
-        var iCArray = iC.split("|")
-        var itemLength = iCArray[0]
-        var itemWeight = iCArray[1] / 1000
-        var itemKf = iCArray[2]
-
-        var pricesArray = prices.split('|');
-
-        TN = pricesArray[0]
-
-        if(itemLength!=0){
-            //alert(itemWeight*itemLength)
-            var PC = Math.round((TN/1000)*Math.round(itemWeight*itemLength*1000)*itemKf*100)/100;
-
-
-
-            var PM = Math.round((PC/(itemLength))*itemKf*100)/100;
-        } else {
-            
-            var PC = '--'
-            var PM = '--'
-
-        }
-        
-        
-
-        if(hash.split(':')[0]=='0'){
-
-            dL = $(this).find(".itemName").attr("name")
-            dL = dL.match(/\(.+\)/) + ""
-            dL = dL.replace(/\(/, "")
-            dL = dL.replace(/\)/, "")
-            smK = dL.replace(/,/,".")
-            dL = dL + " м"
-            //alert(smK)
-            SM = Math.round((TN-0)/(smK-0)*100)/100
-            //alert(SM)
-            mesDiv += '<div><p style="font-weight:bold">'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'<a href="Выбрать другой товар" onClick="$.unblockUI(); return false" class="popUpCancelA">x</a></p>';
-            if(stock=='0'){
-                mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px;">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
-            }
-           
-
-            //mesDiv += '<img src="profnastilSample.gif" />'
-
-            mesDiv += '<div style="width:370px;height:150px">'
-            mesDiv += '<div style="margin-top:50px;float:left;margin-left:10px">'+dL+'</div>'
-            mesDiv += '<div class="profnastilImageBase"></div>'
-            mesDiv += '<div class="profnastilImageAdd2" style="display:block;"></div>'
-            mesDiv += '<div class="profnastilImageAdd3"></div>'
-            mesDiv += '<div class="profnastilImageAdd4"></div>'
-            mesDiv += '<div class="profnastilImageAdd5"></div>'
-            mesDiv += '<div class="profnastilImageAdd6"></div>'
-            mesDiv += '</div>'
-
-            mesDiv += '<div style="height:15px;width:370px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical"></div> <span style="float:right;margin-top:-16px�>6</span></div>';
-
-            mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
-            
-
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" /> пог. метр</td></tr>';
-            mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td><td><input class="pUi itemSQuareInput" name="'+smK+'" /> кв. метр</td></tr>';
-            mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">'+TN+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> листов</td></tr>';
-            mesDiv += '</table>';
-
-            mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
-
-
-            mesDiv += '<div style="margin-top:10px">';
-
-            mesDiv += '<span class="popUpContinue"><a href="Изменить товар" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
-
-            mesDiv += '</div>';
-
-            $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
-            $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
-            $.blockUI.defaults.fadeOut = 100; //и исчезновение
-            //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
-            $.blockUI.defaults.css.backgroundColor = 'white'
-            $.blockUI.defaults.css.cursor = 'defaults'
-            $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-            $.blockUI.defaults.css.fontSize = '14px'
-            $.blockUI.defaults.css.width = '400px'
-            $.blockUI.defaults.css.height = '420px'
-            $.blockUI.defaults.css.paddingTop = '10px'
-
-
-        } else {
-            mesDiv += '<div><p style="font-weight:bold">'+$(this).find(".itemName").attr("name")+' '+$(this).find(".itemChar").attr("name")+'<a href="Выбрать другой товар" onClick="$.unblockUI(); return false" class="popUpCancelA">x</a></p>';
-            if(stock=='0'){
-                mesDiv += '<div style="font-size:10px;color:red;margin-top:-5px">*Товара нет в наличие, о сроках заказа уточняйте у оператора</div>'
-            }
-            var itChar = $(this).find(".itemChar").attr("name")
-            itChar = itChar.replace(/,/,".")
-            itChar = itChar - 0
-            var itName = $(this).find(".itemName").attr("name")
-            // alert(itName.indexOf("Арматура"))
-            if(itName.indexOf("Арматура")!=-1){
-                // alert(1)
-                mesDiv += "<div class='armaImages'>"
-                mesDiv += "<div class='armaImage im1'></div>"
-                mesDiv += "<div class='armaImage im2'></div>"
-                mesDiv += "<div class='armaImage im3'></div>"
-                mesDiv += "<div class='armaImage im4'></div>"
-                mesDiv += "<div class='armaImage im5'></div>"
-                mesDiv += "<div class='armaImage im6'></div>"
-                mesDiv += "<div class='armaImage im7'></div>"
-                mesDiv += "<div class='armaImage im8'></div>"
-                mesDiv += "<div class='armaImage im9'></div>"
-                mesDiv += "<div class='armaImage im10'></div>"
-                mesDiv += "<div class='armaImage im11'></div>"
-                mesDiv += "<div class='armaImage im12'></div>"
-                mesDiv += "<div class='armaImage im13'></div>"
-                mesDiv += "<div class='armaImage im14'></div>"
-                mesDiv += "<div class='armaImage im15'></div>"
-                mesDiv += "<div class='armaImage im16'></div>"
-                mesDiv += "</div>"
-
-                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px�>'+$(this).find(".itemChar").attr("name")+'</span></div>';
-
-                mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
-            }
-            // mesDiv += '<table><tr><td>'
-
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
-            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
-            mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
-
-            mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
-
-            mesDiv += '<div>Стоимость резки: <span id="slicePrice" name="0"></span> руб.</div>'
-
-
-            mesDiv += '<div style="margin-top:30px">';
-            mesDiv += '<span class="popUpContinue"><a href="Изменить товар" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
-
-            mesDiv += '</div>';
-
-            $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
-            $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
-            $.blockUI.defaults.fadeOut = 100; //и исчезновение
-            //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
-            $.blockUI.defaults.css.backgroundColor = 'white'
-            $.blockUI.defaults.css.cursor = 'defaults'
-            $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-            $.blockUI.defaults.css.fontSize = '14px'
-            $.blockUI.defaults.css.width = '450px'
-            $.blockUI.defaults.css.height = '420px'
-            $.blockUI.defaults.css.paddingTop = '10px'
-        }
-
-    })
-
+    showModalItem(hash, edIzm, prices, stock, "c")
     
 
-    $.blockUI({ message: mesDiv});
-
-    var itChar = $(".itemPLengthInput").attr("name") 
-    itChar = itChar.replace(/,/,".")
-    itChar = itChar - 0
-
     
-
-    $(function() {
-        $( "#slider-vertical" ).slider({
-            range: "min",
-            min: 0.2,
-            max: 6,
-            value: 2,
-            step: 0.1,
-            slide: function( event, ui ) {
-                $( "#amount" ).val( ui.value );
-                $("#amount").change()
-            }
-        });
-        $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
-        
-    });
-
-    $(function() {
-        $( "#slider-vertical-arma" ).slider({
-            range: "min",
-            min: 0.2,
-            max: itChar,
-            value: itChar,
-            step: 0.1,
-            slide: function( event, ui ) {
-                $( "#amountArma" ).val( ui.value );
-                $("#amountArma").change()
-            }
-        });
-        $( "#amountArma" ).val( $( "#slider-vertical-arma" ).slider( "value" ) );
-        
-    });
-
-    $(".itemArmaCharInput").change( function(){
-        ch = this.value
-        ch = ch.replace(/,/, ".")
-        ch = ch.match(/\d+\.\d{0,2}|\d+/)
-        if((ch-0)<0.2){
-            //alert(1)
-            ch = 0.2
-
-        } else if((ch-0)>itChar){
-            //alert(2)
-            ch = itChar
-            
-        } else {
-            ch = ch
-            
-        }
-
-        var step = itChar / 8
-
-        if((ch-0)<step*2){
-            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-        } else if((ch-0)>=step*2 && (ch-0)<step*3){
-            $(".im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)>=step*3 && (ch-0)<step*4){
-            $(".im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4, .im5, .im6").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)>=step*4 && (ch-0)<step*5){
-            $(".im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4, .im5, .im6, .im7, .im8").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)>=step*5 && (ch-0)<step*6){
-            $(".im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)>=step*6 && (ch-0)<step*7){
-            $(".im13, .im14, .im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)>=step*7 && (ch-0)<step*8){
-            $(".im15, .im16").removeClass("armaImage").addClass("armaImageU")
-            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14").removeClass("armaImageU").addClass("armaImage")
-        } else if((ch-0)==step*8){
-            $(".im3, .im4, .im5, .im6, .im7, .im8, .im9, .im10, .im11, .im12, .im13, .im14, .im15, .im16").removeClass("armaImageU").addClass("armaImage")
-        }
-
-
-
-        if(ch==itChar){
-            $("#slicePrice").empty()
-            $("#slicePrice").attr("name", "0")
-        } else {
-            
-            $("#slicePrice").attr("name", "20")
-            var rezka = ($(".itemPCountInput").attr("value")-0)*20
-            $("#slicePrice").html(rezka)
-        }
-
-
-
-        $(".itemArmaCharInput").attr("value", ch)
-
-        $( "#slider-vertical-arma" ).slider( "value", ch )
-
-        $(".itemPLengthInput").attr("name", ch)
-        $(".itemPCountInput").change()
-    })
-
-
-    $(".itemPCharInput").change(function(){
-        ch = this.value
-        ch = ch.replace(/,/, ".")
-        ch = ch.match(/\d+\.\d{0,2}|\d+/)
-        if((ch-0)<0.2){
-            //alert(1)
-            ch = 0.2
-        } else if((ch-0)>6){
-            //alert(2)
-            ch = 6
-        } else {
-            ch = ch
-        }
-
-        if((ch-0)<2){
-            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
-        } else if((ch-0)>=2 && (ch-0)<3){
-            $(".profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
-            $(".profnastilImageAdd2").show()
-        } else if((ch-0)>=3 && (ch-0)<4){
-            $(".profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").hide()
-            $(".profnastilImageAdd2, .profnastilImageAdd3").show()
-        } else if((ch-0)>=4 && (ch-0)<5){
-            $(".profnastilImageAdd5, .profnastilImageAdd6").hide()
-            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4").show()
-        } else if((ch-0)>=5 && (ch-0)<6){
-            $(".profnastilImageAdd6").hide()
-            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5").show()
-        } else if((ch-0)==6){
-            $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").show()
-        }
-
-        $(".itemPCharInput").attr("value", ch)
-        father = $(this).parent().parent().parent()
-        $(father).find(".itemPLengthInput").attr("name", ch)
-
-        var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL);
-
-        //father.find($(".itemPCountInput")).change();
-        $( "#slider-vertical" ).slider( "value", ch )
-        $(father).find(".itemPLengthInput").change();
-        $(father).find(".itemSQuareInput").change()
-    })
-
-    $(".itemPCountInput").change(function() {
-        num = this.value
-        //num = num.match(/\d+/)
-        father = $(this).parent().parent().parent()
-        if(num != '--'){
-            var div = num%1
-            if (div!=0){
-                num = ((num-num%1)+1)
-            } else {
-                num = num
-            }            
-            //var father; 
-            var wN;
-            var krN;
-
-            $('.itemPCountInput').attr('value',num)
-            //alert(this.value.length + " | " + this.size + " | " + $(this).css("width").replace(/px/, "")-0)
-            
-            var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL); 
-
-            if($("#slicePrice").attr("name")!=undefined){
-                if($("#slicePrice").attr("name")=="20"){
-                    // alert($("#itemPCountInput").attr("value"))
-                    var rezka = ($(".itemPCountInput").attr("value")-0)*20
-                    $("#slicePrice").html(rezka)
-                }
-                
-            }
-            
-            if($(father).find($(".itemPLengthInput")).attr('name')!=0){
-                wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
-                krN = num * $(father).find(".itemPLengthInput").attr('name')
-                var oldWn =  $(father).find(".itemPWeightInput").attr('value')
-                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))  
-                var nL = (wN.toFixed(3)+'').length*10
-                nL = nL + "px"
-                //alert('weight ' + nL)
-                $(father).find(".itemPWeightInput").css("width", nL); 
-
-                $(father).find(".itemPLengthInput").attr('value',(krN).toFixed(2))
-                var nL = (krN.toFixed(2)+'').length*10
-                nL = nL + "px"
-                //alert('length ' + krN + " " + nL)
-                $(father).find(".itemPLengthInput").css("width", nL); 
-
-                $(father).find(".itemSQuareInput").attr('value',((krN).toFixed(2)*($(".itemSQuareInput").attr('name')-0)).toFixed(3))
-                var nL = (krN.toFixed(3)+'').length*10
-                nL = nL + "px"
-                //alert(nL)
-                $(father).find(".itemSQuareInput").css("width", nL); 
-
-                setModalWeight()
-                setModalLength()
-                
-            } else {
-                $(father).find(".itemPCountInput").attr('value','--')
-                $(father).find(".itemPLengthInput").attr('value','--')
-                $(father).find(".itemPWeightInput").attr('value',(wN).toFixed(3))
-            
-            }
-        }
-    })
-
-    $(".itemSQuareInput").change(function(){
-        
-
-        sQ = this.value
-        sQ = sQ.replace(/,/,".")
-        sQ = sQ.match(/\d+\.\d{0,3}|\d+/)
-
-        $(this).attr("value", sQ)
-
-         var nL = this.value - 0
-        nL = nL.toFixed(2) + ""
-        nL = nL.length*10
-        nL = nL + "px"
-            //alert(nL)
-        $(this).css("width", nL);
-
-       
-
-        var father;
-        father = $(this).parent().parent().parent()
-
-        var cLength = ($(this).attr("value")-0) / ($(this).attr("name")-0)
-        
-        father.find($(".itemPLengthInput")).attr('value',cLength)
-        father.find($(".itemPLengthInput")).change();
-    })
-
-    $(".itemPWeightInput").change(function() {
-       // wAll = 0
-       // sAll = 0
-        
-
-        cW = this.value
-        cW = cW.replace(/,/, ".")
-        cW = cW.match(/\d+\.\d{0,3}|\d+/)
-        
-        $(this).attr("value", cW)
-        
-        var nL = this.value.length*10
-        nL = nL + "px"
-        //alert(nL)
-        $(this).css("width", nL);
-   
-        var father;
-        father = $(this).parent().parent().parent()
-        
-        weightName = father.find($(".itemPWeightInput")).attr('name')
-        
-        if(weightName!=0){
-            num = cW/(father.find($(".itemPWeightInput")).attr('name') * father.find($(".itemPLengthInput")).attr('name'))
-            father.find($(".itemPCountInput")).attr('value',num)
-            father.find($(".itemPCountInput")).change();
-            setModalWeight()
-            
-        } else {
-            father.find($(".itemPCountInput")).attr('value','--')
-            father.find($(".itemPLengthInput")).attr('value','--')
-            father.find($(".itemPCountInput")).change();
-        
-        }
-        
-        
-    })
-    
-    $(".itemPLengthInput").change(function() {
-       // wAll = 0
-       // sAll = 0
-        
-        cKr = this.value
-        cKr = cKr.replace(/,/, ".")
-        cKr = cKr.match(/\d+\.\d{0,2}|\d+/)
-
-        $(this).attr("value", cKr)
-
-        var nL = this.value - 0
-        nL = nL.toFixed(2) + ""
-        nL = nL.length*10
-        nL = nL + "px"
-            //alert(nL)
-        $(this).css("width", nL);
-        
-        
-         
-        
-        var father;
-        father = $(this).parent().parent().parent()
-        
-        weightName = father.find($(".itemPLengthInput")).attr('name')
-        
-        if(weightName!=0){
-            num = cKr/father.find($(".itemPLengthInput")).attr('name')
-            father.find($(".itemPCountInput")).attr('value',num)
-            father.find($(".itemPCountInput")).change();
-
-            setModalLength()
-
-        } else {
-            father.find($(".itemPCountInput")).attr('value','--')
-            father.find($(".itemPLengthInput")).attr('value','--')
-            father.find($(".itemPCountInput")).change();
-        }
-        
-    })
-
-    $(".itemPCountInput").keyup( function(){
-        var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL);
-    })
-
-    $(".itemPWeightInput").keyup( function(){
-        var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL);
-    })
-
-    $(".itemPLengthInput").keyup( function(){
-        var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL);
-    })
-    $(".itemSQuareInput").keyup( function(){
-        var nL = this.value.length*10
-            nL = nL + "px"
-            //alert(nL)
-            $(this).css("width", nL);
-    })
-
     var countT = $('tr[name="'+hash+'"]').find(".itemCountInput").attr("value") - 0
-    $(".itemPWeightInput").attr("value", countT)
-    $(".itemPWeightInput").change()
+    var charT = $('tr[name="'+hash+'"]').find(".itemCharTd").html()
+    if($(".itemPCharInput").attr("value")!=undefined){
+        $(".itemPCharInput").attr("value", charT)
+        $(".itemPCharInput").change()
+    } 
+    if($(".itemArmaCharInput").attr("value")!=undefined){
+        $(".itemArmaCharInput").attr("value", charT)
+        $(".itemArmaCharInput").change()
+    }
+    if($(".itemPWeightInput").attr("value")!=undefined){
+        $(".itemPWeightInput").attr("value", countT)
+        $(".itemPWeightInput").change()
+    } else if($(".itemPLengthInput").attr("value")!=undefined){
+        $(".itemPLengthInput").attr("value", countT)
+        $(".itemPLengthInput").change()
+    }
+    
 
 }
 
@@ -1664,9 +1189,11 @@ function changeItem(hash){
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
         char = $(".itemPCharInput").attr("value")
+        $(".itemCharTd").html(char)
     }
     if($(".itemArmaCharInput").attr("value")!=undefined){
         char = $(".itemArmaCharInput").attr("value")
+        $(".itemCharTd").html(char)
     }
     $.unblockUI()
     $('tr[class="itemTr"]').each(function(){
