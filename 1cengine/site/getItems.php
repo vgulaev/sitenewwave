@@ -179,7 +179,7 @@ function getItemsFromHash($hash, $char, $count,$rezka){
                 $char = $char;
             }
             $cell .= "<td class='itemNameTd'>".$row[0];
-            $cell .= '<span class="buySpan">';
+            $cell .= '<span class="delEdSpan">';
             $cell .= '<a class="" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''.$hash.'\'); return false">edit</a></span></td>';
             $cell .= "<td class='itemCharTd'>".$char."</td>";
             $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' disabled /></td>";
@@ -188,7 +188,7 @@ function getItemsFromHash($hash, $char, $count,$rezka){
             $cell .= "<td class='itemNdsKfTd'>18%</td>";
             $cell .= "<td class='itemNdsSumTd'></td>";
             $cell .= "<td class='itemSumTd'></td>";
-            $cell .= "<td class='itemRezlaTd'>".$rezka."</td>";
+            $cell .= "<td class='itemRezlaTd' style='display:none'>".$rezka."</td>";
 
             $newRow .= $cell.'</tr>';
         

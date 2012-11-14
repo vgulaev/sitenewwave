@@ -981,6 +981,7 @@ function setOverallPrices(){
 
         sAll = 0
         cAll = 0
+        rAll = 0
 
         $(".itemPriceTd").each( function(){
 
@@ -1077,14 +1078,18 @@ function setOverallPrices(){
             $('tbody#lItemTab tr').each(function(i) {
             
                 var ihash = $(this).attr("name")
-                if(ihash.split(":")[0]=="0"){
-                    var char = $(this).find(".itemCharTd").html()
-                } else {
-                    var char = ''
-                }
+                // if(ihash.split(":")[0]=="0"){
+                //     var char = $(this).find(".itemCharTd").html()
+                // } else {
+                //     var char = ''
+                // }
+
+                var char = $(this).find(".itemCharTd").html()
+                var rezka = $(this).find(".itemRezkaTd").html()
+                
                 
                 var count = $(this).find(".itemCountInput").attr("value")
-                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
                 
             });
         
@@ -1107,6 +1112,7 @@ function modern_addItem(hash, edIzm, prices){
     //     $("#SumRezka").html(rezka)
     // }
     char=''
+    rezkaCount = ""
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
         char = $(".itemPCharInput").attr("value")
@@ -1114,7 +1120,7 @@ function modern_addItem(hash, edIzm, prices){
     if($(".itemArmaCharInput").attr("value")!=undefined){
         char = $(".itemArmaCharInput").attr("value")
         if($("#slicePrice").html()!=""){
-            rezkaCount = $(".itemPCountInput").attr("value")
+            rezkaCount = $(".itemPCountInput").attr("value") - 0
         } else {
             rezkaCount = ""
         }
