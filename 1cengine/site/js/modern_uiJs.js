@@ -347,7 +347,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<div style="margin-top:10px">';
 
             if(c=="c"){
-                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
             } else if(c=="n"){
                 mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
             }
@@ -416,7 +416,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<div style="margin-top:30px">';
             
             if(c=="c"){
-                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
             } else if(c=="n"){
                 mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
             }
@@ -1028,8 +1028,16 @@ function setOverallPrices(){
             
 
         })
+
+        $(".itemRezkaTd").each( function(){
+            if($(this).html()!=""){
+                rAll = (rAll - 0) + (($(this).html() * 20 ) - 0)
+            }
+        })
+
         cAll = cAll.toFixed(3)
         //sAll = sAll.toFixed(2)
+        rAll = rAll.toFixed(2)
         
 
         $("#SumAll").attr("name",sAll)
@@ -1048,8 +1056,9 @@ function setOverallPrices(){
 
         nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
         sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
-        cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
-        
+        cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]       
+        rAll = rAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+rAll.split('.')[1]
+
         $("#CountAll").empty()
         $("#CountAll").append(cAll)
 
@@ -1058,6 +1067,9 @@ function setOverallPrices(){
         
         $("#NDSAll").empty()
         $("#NDSAll").append(nAll)
+
+        $("#SumRezka").empty()
+        $("#SumRezka").append(rAll)
 
         basket = ""
 
@@ -1151,14 +1163,16 @@ function modern_addItem(hash, edIzm, prices){
 
 
         var ihash = $(this).attr("name")
-        if(ihash.split(":")[0]=="0"){
-            var char = $(this).find(".itemCharTd").html()
-        } else {
-            var char = ''
-        }
-        
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+
+        var char = $(this).find(".itemCharTd").html()
+        var rezka = $(this).find(".itemRezkaTd").html()
         var count = $(this).find(".itemCountInput").attr("value")
-        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
     });
 
     $.cookie("basket", basket)
@@ -1225,10 +1239,11 @@ function changeItem(hash){
         if($(this).attr("name")==hash){
             $(this).find(".itemCountInput").attr("value", weight)
             $(this).find(".itemCharTd").html(char)
-            
+            $(this).find(".itemRezkaTd").html(rezkaCount)
             $(this).find(".itemCountInput").change()
         }
     })
+    setOverallPrices()
 }
 
 function delModernItem(hash){
@@ -1254,22 +1269,39 @@ function delModernItem(hash){
             // var count = $(this).find(".itemCountInput").attr("value")
             // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
         }
-        
-        
-        
+
     })
 
     // $.cookie("basket", basket)
 
+    basket = ""
+
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
         $(this).find('td:first').text(number);
+
+        var ihash = $(this).attr("name")
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+
+        var char = $(this).find(".itemCharTd").html()
+        var rezka = $(this).find(".itemRezkaTd").html()
+        var count = $(this).find(".itemCountInput").attr("value")
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
     });
 
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)-1;
 
     $('span.basketCount').html(bCount); 
+
+    
+
+    $.cookie("basket", null)
+    $.cookie("basket", basket)
     
     setOverallPrices()
 
@@ -1285,13 +1317,27 @@ function setModernItem(hash, char, count){
         success: function(html){
             
             $("#lItemTab").append(html)
-
+            basket = ""
             i = 0
             $('tbody#lItemTab tr').each(function(i) {
                 var number = i + 1;
                 $(this).find('td:first').text(number);
+
+                var ihash = $(this).attr("name")
+                // if(ihash.split(":")[0]=="0"){
+                //     var char = $(this).find(".itemCharTd").html()
+                // } else {
+                //     var char = ''
+                // }
+
+                var char = $(this).find(".itemCharTd").html()
+                var rezka = $(this).find(".itemRezkaTd").html()
+                var count = $(this).find(".itemCountInput").attr("value")
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
             });
 
+            $.cookie("basket", null)
+            $.cookie("basket", basket)
             // var bCount = $('span.basketCount').html();
             bCount = $('tbody#lItemTab tr').length
 

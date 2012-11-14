@@ -157,7 +157,7 @@ function getItems($req){
     return $ret;
 }
 
-function getItemsFromHash($hash, $char, $count){
+function getItemsFromHash($hash, $char, $count,$rezka){
 
     $hashArray = explode(":", $hash);
 
@@ -180,14 +180,15 @@ function getItemsFromHash($hash, $char, $count){
             }
             $cell .= "<td class='itemNameTd'>".$row[0];
             $cell .= '<span class="buySpan">';
-            $cell .= '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a></span></td>';
+            $cell .= '<a class="" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''.$hash.'\'); return false">edit</a></span></td>';
             $cell .= "<td class='itemCharTd'>".$char."</td>";
-            $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' /></td>";
+            $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' disabled /></td>";
             $cell .= "<td class='itemEdIzmTd' name='".$row[3]."'>".$row[3]."</td>";
             $cell .= "<td class='itemPriceTd' name='".$row[2]."'></td>";
             $cell .= "<td class='itemNdsKfTd'>18%</td>";
             $cell .= "<td class='itemNdsSumTd'></td>";
             $cell .= "<td class='itemSumTd'></td>";
+            $cell .= "<td class='itemRezlaTd'>".$rezka."</td>";
 
             $newRow .= $cell.'</tr>';
         
