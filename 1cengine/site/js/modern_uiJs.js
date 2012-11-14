@@ -134,7 +134,7 @@ function searchItem2(item){
     var squery = squery.replace(/%2C/g, ",")
     var squery = squery.replace(/\.com/, '')
     $("#itemName").attr('value', squery)
-    $(".buySpan").find("a").attr("style", "text-shadow: black 0 0 2px;float:right;color:#ffe06f;")
+    $(".buySpan").find("a").attr("style", "float:right;color:white;border:1px outset rgb(48, 57, 154);border-radius:40px 10px;background-color: #5da130;width:50px;padding-left:10px;")
     //$("#itemName").change()
 }
 
