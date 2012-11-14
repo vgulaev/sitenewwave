@@ -831,6 +831,7 @@ function setOverallPrices(){
 
     sAll = 0
     cAll = 0
+    rAll = 0
 
     $(".itemPriceTd").each( function(){
 
@@ -878,6 +879,15 @@ function setOverallPrices(){
         
 
     })
+
+    $(".itemRezkaTd").each( function(){
+        if($(this).html()!=""){
+            rAll = (rAll - 0) + (($(this).html() * 20 ) - 0)
+        }
+    })
+
+
+    rAll = rAll.toFixed(2)
     cAll = cAll.toFixed(3)
     //sAll = sAll.toFixed(2)
     
@@ -903,6 +913,7 @@ function setOverallPrices(){
     sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
     cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
     gAll = gAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+gAll.split('.')[1]
+    rAll = rAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+rAll.split('.')[1]
     
     $("#CountAll").empty()
     $("#CountAll").append(cAll)
@@ -920,6 +931,9 @@ function setOverallPrices(){
     
     $("#NDSAll").empty()
     $("#NDSAll").append(nAll)
+
+    $("#SumRezka").empty()
+    $("#SumRezka").append(rAll)
 
     $(".itemCountInput").change()
 
@@ -1075,11 +1089,11 @@ function setOverallPrices(){
 function modern_addItem(hash, edIzm, prices){
     yaCounter15882208.reachGoal('onAddLinkPressed'); 
     weight = $(".itemPWeightInput").attr("value")
-    if($("#slicePrice").attr("name")!=undefined){
-        rezka = $("#SumRezka").html()
-        rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
-        $("#SumRezka").html(rezka)
-    }
+    // if($("#slicePrice").attr("name")!=undefined){
+    //     rezka = $("#SumRezka").html()
+    //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
+    //     $("#SumRezka").html(rezka)
+    // }
     char=''
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
@@ -1087,6 +1101,11 @@ function modern_addItem(hash, edIzm, prices){
     }
     if($(".itemArmaCharInput").attr("value")!=undefined){
         char = $(".itemArmaCharInput").attr("value")
+        if($("#slicePrice").html()!=""){
+            rezkaCount = $(".itemPCountInput").attr("value")
+        } else {
+            rezkaCount = ""
+        }
     }
     $.unblockUI()
 
@@ -1108,6 +1127,7 @@ function modern_addItem(hash, edIzm, prices){
             cell += "<td class='itemNdsKfTd'>18%</td>";
             cell += "<td class='itemNdsSumTd'></td>";
             cell += "<td class='itemSumTd'></td>";
+            cell += "<td class='itemRezkaTd' style='display:none'>"+rezkaCount+"</td>";
         }
         
     })
@@ -1180,26 +1200,32 @@ function modern_editItem(hash){
 
 function changeItem(hash){
     weight = $(".itemPWeightInput").attr("value")
-    if($("#slicePrice").attr("name")!=undefined){
-        rezka = $("#SumRezka").html()
-        rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
-        $("#SumRezka").html(rezka)
-    }
+    // if($("#slicePrice").attr("name")!=undefined){
+    //     rezka = $("#SumRezka").html()
+    //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
+    //     $("#SumRezka").html(rezka)
+    // }
     char=''
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
         char = $(".itemPCharInput").attr("value")
-        $(".itemCharTd").html(char)
     }
     if($(".itemArmaCharInput").attr("value")!=undefined){
         char = $(".itemArmaCharInput").attr("value")
-        $(".itemCharTd").html(char)
+        if($("#slicePrice").html()!=""){
+                rezkaCount = $(".itemPCountInput").attr("value")
+            } else {
+                rezkaCount = ""
+            }
+        
     }
     $.unblockUI()
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
             $(this).find(".itemCountInput").attr("value", weight)
+            $(this).find(".itemCharTd").html(char)
+            
             $(this).find(".itemCountInput").change()
         }
     })
