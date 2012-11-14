@@ -228,7 +228,8 @@ if($_POST["from_hash"]=="true"){
     $hash = $_POST["hash"];
     $char = $_POST["char"];
     $count = $_POST["count"];
-    getItemsFromHash($hash, $char, $count);
+    $rezka = $_POST["rezka"];
+    getItemsFromHash($hash, $char, $count,$rezka);
 } else {
     $res = getItems($req);
 

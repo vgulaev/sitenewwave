@@ -1313,13 +1313,13 @@ function delModernItem(hash){
 
 }
 
-function setModernItem(hash, char, count){
+function setModernItem(hash, char, count, rezka){
     // alert(1);
     $.ajax({
         type: "POST",
         url: "getItems.php",
         async: false,
-        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"",
+        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"&rezka="+rezka+"",
         success: function(html){
             
             $("#lItemTab").append(html)
