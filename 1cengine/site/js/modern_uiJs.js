@@ -1137,7 +1137,8 @@ function modern_addItem(hash, edIzm, prices){
             }
             cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
             cell += '<span class="delEdSpan">';
-            cell += '<a class="" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''+hash+'\'); return false">edit</a></span></td>';
+            cell += '<a href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a>';
+            cell += '<a href="#" onClick="modern_editItem(\''+hash+'\'); return false"><img src="edit.png" /></a></span></td>';
             cell += "<td class='itemCharTd'>"+char+"</td>";
             cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' disabled /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";

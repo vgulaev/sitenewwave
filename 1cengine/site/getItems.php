@@ -180,7 +180,10 @@ function getItemsFromHash($hash, $char, $count,$rezka){
             }
             $cell .= "<td class='itemNameTd'>".$row[0];
             $cell .= '<span class="delEdSpan">';
-            $cell .= '<a class="" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a> | <a href="#" onClick="modern_editItem(\''.$hash.'\'); return false">edit</a></span></td>';
+            
+            $cell .= '<a href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a>';
+            $cell .= '<a href="#" onClick="modern_editItem(\''.$hash.'\'); return false"><img src="edit.png" /></a></span></td>';
+
             $cell .= "<td class='itemCharTd'>".$char."</td>";
             $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' disabled /></td>";
             $cell .= "<td class='itemEdIzmTd' name='".$row[3]."'>".$row[3]."</td>";

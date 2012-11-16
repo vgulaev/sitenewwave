@@ -209,20 +209,17 @@
 }
 
 .delEdSpan{
-	/*color:white;
-	*/
 	float:right;
-	/*color:#ff5959;*/
 	color:white;
-	border:1px outset rgb(48, 57, 154);
-	border-radius:40px 10px;
+	/*border:1px outset rgb(48, 57, 154);*/
+	/*border-radius:40px 10px;*/
 	/*background-color: rgb(255,187,028);*/
-	background-color: #daa520;
+	/*background-color: #daa520;*/
 	text-decoration: none;
 	font-weight:bold;
-	width:60px;
+	width:80px;
+	/*padding-left:14px;*/
 	display:none;
-	padding-left:7px;
 }
 
 .delEdSpan a{
@@ -232,15 +229,33 @@
 
 .itemTr:hover span.delEdSpan{
 	color:white;
-	border:1px outset rgb(48, 57, 154);
-	border-radius:40px 10px;
+	/*border:1px outset rgb(48, 57, 154);*/
+	/*border-radius:40px 10px;*/
 	/*background-color: rgb(255,187,028);*/
-	background-color: #daa520;
+	/*background-color: #daa520;*/
 	text-decoration: none;
 	font-weight:bold;
-	width:60px;
-	padding-left:14px;
+	width:80px;
+	/*padding-left:14px;*/
 	display:block;
+}
+
+.itemTr:hover span.delEdSpan a:first-child{
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	float:left;
+	background-color:#daa520;
+	width:20px;
+	padding-left: 10px;
+}
+
+.itemTr:hover span.delEdSpan a:last-child{
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	float:right;
+	background-color: #5da130;
+	width:30px;
+	padding-left: 7px;
 }
 
 .item:hover a.bItem, .buySpan a.bItem:hover{
