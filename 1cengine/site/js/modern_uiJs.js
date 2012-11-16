@@ -268,8 +268,24 @@ function setModalLength(){
     $(".pPCPrice").html(PC)
 }
 
+function openItem(hash, edIzm, prices, stock, c){
+    i = 0
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            modern_editItem(hash)
+            i = 1
+            return 0
+        }
+    })
+    if(i!=1){
+        showModalItem(hash, edIzm, prices, stock, c)
+    }
+    
+}
 
 function showModalItem(hash, edIzm, prices, stock, c){
+    
     if(c==undefined){
         c="n"
     }
@@ -347,7 +363,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<div style="margin-top:10px">';
 
             if(c=="c"){
-                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
             } else if(c=="n"){
                 mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
             }
@@ -416,7 +432,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<div style="margin-top:30px">';
             
             if(c=="c"){
-                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">В корзину</a></span></div>';
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
             } else if(c=="n"){
                 mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
             }
@@ -1245,7 +1261,9 @@ function changeItem(hash){
 
         if($(this).attr("name")==hash){
             $(this).find(".itemCountInput").attr("value", weight)
-            $(this).find(".itemCharTd").html(char)
+            if(char!=''){
+                $(this).find(".itemCharTd").html(char)
+            }
             $(this).find(".itemRezkaTd").html(rezkaCount)
             $(this).find(".itemCountInput").change()
         }
