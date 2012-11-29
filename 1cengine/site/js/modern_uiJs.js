@@ -273,7 +273,7 @@ function openItem(hash, edIzm, prices, stock, c){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-            if($(this).find(".itemRezkaTd").html()==""){
+            if($(this).find(".itemCharTd").html()==$(this).find(".itemCharTd").attr("name")){
                 modern_editItem(hash)
             } else {
                 showModalItem(hash, edIzm, prices, stock, c)
@@ -290,7 +290,7 @@ function openItem(hash, edIzm, prices, stock, c){
 }
 
 function showModalItem(hash, edIzm, prices, stock, c){
-    
+    // alert(2)
     if(c==undefined){
         c="n"
     }
@@ -357,7 +357,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
             
 
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" /> пог. метр</td></tr>';
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" oname="2" /> пог. метр</td></tr>';
             mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td><td><input class="pUi itemSQuareInput" name="'+smK+'" /> кв. метр</td></tr>';
             mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">'+TN+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> листов</td></tr>';
             mesDiv += '</table>';
@@ -425,7 +425,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             }
             // mesDiv += '<table><tr><td>'
 
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" oname="'+itemWeight+'" /> тонн </td></tr>';
             mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
 
@@ -1136,6 +1136,7 @@ function modern_addItem(hash, edIzm, prices){
     //     $("#SumRezka").html(rezka)
     // }
     char=''
+    ochar = $(".itemPLengthInput").attr("oname")
     rezkaCount = ""
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
@@ -1163,7 +1164,7 @@ function modern_addItem(hash, edIzm, prices){
             cell += '<span class="delEdSpan">';
             cell += '<a href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a>';
             cell += '<a href="#" onClick="modern_editItem(\''+hash+'\'); return false"><img src="edit.png" /></a></span></td>';
-            cell += "<td class='itemCharTd'>"+char+"</td>";
+            cell += "<td class='itemCharTd' name='"+ochar+"'>"+char+"</td>";
             cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' disabled /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
             cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
@@ -1229,9 +1230,9 @@ function modern_editItem(hash){
     edIzm = $('tr[name="'+hash+'"]').find(".itemEdIzmTd").attr("name")
     prices = $('tr[name="'+hash+'"]').find(".itemPriceTd").attr("name")
     stock = "1"
-
+    // alert(1)
     showModalItem(hash, edIzm, prices, stock, "c")
-    
+    // alert(3)
 
     
     var countT = $('tr[name="'+hash+'"]').find(".itemCountInput").attr("value") - 0
