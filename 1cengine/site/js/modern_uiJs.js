@@ -1312,8 +1312,11 @@ function delModernItem(hash, char){
                     itt = 1
                 }
             } else {
-                $(this).remove()
-                itt = 1
+                if(itt==0){
+                    $(this).remove()
+                    itt = 1
+                }
+                
             }
             
         } else {
