@@ -273,7 +273,12 @@ function openItem(hash, edIzm, prices, stock, c){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-            modern_editItem(hash)
+            if($(this).find(".itemRezkaTd").html()==""){
+                modern_editItem(hash)
+            } else {
+                showModalItem(hash, edIzm, prices, stock, c)
+            }
+            
             i = 1
             return 0
         }
@@ -458,9 +463,12 @@ function showModalItem(hash, edIzm, prices, stock, c){
 
     $.blockUI({ message: mesDiv});
 
-    var itChar = $(".itemPLengthInput").attr("name") 
-    itChar = itChar.replace(/,/,".")
-    itChar = itChar - 0
+    if($(".itemPLengthInput").attr("name")!=undefined){
+        var itChar = $(".itemPLengthInput").attr("name") 
+        itChar = itChar.replace(/,/,".")
+        itChar = itChar - 0
+    }
+    
 
     $(function() {
         $( "#slider-vertical" ).slider({
@@ -1176,7 +1184,19 @@ function modern_addItem(hash, edIzm, prices){
     bCount = (bCount - 0)+1;
     $('span.basketCount').html(bCount);  
 
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            if($(this).find(".itemCharTd").html()==char){
+                delModernItem(hash, char)
+            }
+            
+
+        }
+
+    })
     $('tbody#lItemTab').prepend(newRow);
+    
 
     basket = ""
 
@@ -1271,8 +1291,13 @@ function changeItem(hash){
     setOverallPrices()
 }
 
-function delModernItem(hash){
+function delModernItem(hash, char){
     
+    if (char==undefined) {
+        char = ''
+    };
+    itt = 0
+
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
 
@@ -1281,8 +1306,16 @@ function delModernItem(hash){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-
-            $(this).remove()
+            if(char!=''){
+                if($(this).find(".itemCharTd").html()==char){
+                    $(this).remove()
+                    itt = 1
+                }
+            } else {
+                $(this).remove()
+                itt = 1
+            }
+            
         } else {
             // var ihash = $(this).attr("name")
             // if(ihash.split(":")[0]=="0"){
