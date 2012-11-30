@@ -426,13 +426,13 @@ function showModalItem(hash, edIzm, prices, stock, c){
             // mesDiv += '<table><tr><td>'
 
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" oname="'+itemWeight+'" /> тонн </td></tr>';
-            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
+            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по <span class="itemCharSpan">'+$(this).find(".itemChar").attr("name")+'</span> метра </td></tr>';
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
 
             mesDiv += '<div>Стоимость резки: <span id="slicePrice" name="0"></span> руб.</div>'
-
+            mesDiv += '<div>Остаток: <span id="sliceLeft"></span> м.</div>'
 
             mesDiv += '<div style="margin-top:30px">';
             
@@ -549,9 +549,12 @@ function showModalItem(hash, edIzm, prices, stock, c){
 
         if(ch==itChar){
             $("#slicePrice").empty()
+            $("#sliceLeft").empty()
+            $("#sliceLeft").attr("name", "0")
             $("#slicePrice").attr("name", "0")
         } else {
-            
+            var lCh = (itChar-0) - (ch-0)
+            $("#sliceLeft").attr("name", lCh)
             $("#slicePrice").attr("name", "20")
             var rezka = ($(".itemPCountInput").attr("value")-0)*20
             $("#slicePrice").html(rezka)
@@ -562,7 +565,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
         $(".itemArmaCharInput").attr("value", ch)
 
         $( "#slider-vertical-arma" ).slider( "value", ch )
-
+        $(".itemCharSpan").html(""+ch+"")
         $(".itemPLengthInput").attr("name", ch)
         $(".itemPCountInput").change()
     })
@@ -642,7 +645,9 @@ function showModalItem(hash, edIzm, prices, stock, c){
                 if($("#slicePrice").attr("name")=="20"){
                     // alert($("#itemPCountInput").attr("value"))
                     var rezka = ($(".itemPCountInput").attr("value")-0)*20
+                    var rezkaLeft = ($(".itemPCountInput").attr("value")-0)*($("#sliceLeft").attr("name")-0)
                     $("#slicePrice").html(rezka)
+                    $("#sliceLeft").html(rezkaLeft)
                 }
                 
             }
