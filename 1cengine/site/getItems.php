@@ -26,7 +26,7 @@ function getItems($req){
         foreach($reqArray as $rA){
             // print_r($rA." | ");
             if($ij==$c-1){
-                $cond .= "`offers`.`char_name` = '".$rA."' AND ";
+                $cond .= "`offers`.`char_name` LIKE '% ".$rA."' AND ";
             } else {
                 $cond .= "`offers`.`name` LIKE '%".$rA." %' AND ";
             }

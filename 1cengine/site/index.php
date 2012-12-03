@@ -37,6 +37,13 @@ $APPLICATION->IncludeFile(
         $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
     }
 
+    if(isset($_GET["ref"])){
+        if(strstr($_GET["ref"], "кастом")!=false){
+
+            header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
+        }
+    }
+
 ?>
 
 <script type="text/javascript" src='/1cengine/site/js/jquery.js'> </script>
