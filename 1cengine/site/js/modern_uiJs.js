@@ -1879,6 +1879,8 @@ $(document).ready( function(){
         // alert(1)
         var d_price = $("#delivery_cost").html().replace(/\s/g, "")
         if($("#selfCarry").is(":checked")){
+            $(".withDelivery").hide()
+            $(".withoutDelivery").show()
             // alert(1)
             var totalCost = $("#SumAll").attr("name")
             totalCost = (totalCost-0).toFixed(2)
@@ -1893,6 +1895,8 @@ $(document).ready( function(){
     $("#toDeliver").change( function(){
         var d_price = $("#delivery_cost").html().replace(/\s/g, "")
         if($("#toDeliver").is(":checked")){
+            $(".withDelivery").show()
+            $(".withoutDelivery").hide()
             // alert(2)
             var totalCost = $("#SumAll").attr("name")
             totalCost = ((totalCost-0)+(d_price-0)).toFixed(2)

@@ -239,7 +239,7 @@ $APPLICATION->IncludeFile(
                                 <td id='SumGoods'></td>
                             </tr>
                             <tr>
-                                <td>Стоимость доставки:</td>
+                                <td><span class='withDelivery' style='display:none'>Стоимость доставки:</span><span class='withoutDelivery'>Без доставки</span></td>
                                 <td id='SumDelivery'></td>
                             </tr>
                             <!-- <tr>
@@ -263,9 +263,9 @@ $APPLICATION->IncludeFile(
 
                             <div id="deliver_choise">
                                 <label for="selfCarry"> Самовывоз</label>
-                                <input type="radio" id="selfCarry" name="deliver_selfCarry" />
+                                <input type="radio" id="selfCarry" name="deliver_selfCarry" checked />
                                 <label for="toDeliver" class="tDC"> Доставка</label>
-                                <input type="radio" id="toDeliver" name="deliver_selfCarry" checked />
+                                <input type="radio" id="toDeliver" name="deliver_selfCarry" />
                             </div>
 
                             <table id='deliveryTab'>
