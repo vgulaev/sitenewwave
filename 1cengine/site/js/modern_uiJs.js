@@ -274,7 +274,9 @@ function openItem(hash, edIzm, prices, stock, c){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-            if($(this).find(".itemRezkaTd").html()==""){
+
+            if($(this).find(".itemCharTd").html()==$(this).find(".itemCharTd").attr("name")){
+
                 modern_editItem(hash)
             } else {
                 showModalItem(hash, edIzm, prices, stock, c)
@@ -291,7 +293,7 @@ function openItem(hash, edIzm, prices, stock, c){
 }
 
 function showModalItem(hash, edIzm, prices, stock, c){
-    
+
     if(c==undefined){
         c="n"
     }
@@ -358,7 +360,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             mesDiv += '<p>Длина листа <input class="pUi itemPCharInput" id="amount" value="2"> метра</p>'
             
 
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" /> пог. метр</td></tr>';
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPLengthInput" value="0" name="2" oname="2" /> пог. метр</td></tr>';
             mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="'+smK+'">'+SM+'</td><td><input class="pUi itemSQuareInput" name="'+smK+'" /> кв. метр</td></tr>';
             mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">'+TN+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> листов</td></tr>';
             mesDiv += '</table>';
@@ -426,13 +428,15 @@ function showModalItem(hash, edIzm, prices, stock, c){
             // }
             // mesDiv += '<table><tr><td>'
 
-            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
-            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по '+$(this).find(".itemChar").attr("name")+' метра </td></tr>';
+            mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" oname="'+itemWeight+'" /> тонн </td></tr>';
+            mesDiv += '<tr><td>за штуку:</td><td class="PCPrice">'+PC+'</td><td><input class="pUi itemPCountInput" name="'+itemKf+'" value="0" /> штук по <span class="itemCharSpan">'+$(this).find(".itemChar").attr("name")+'</span> метра </td></tr>';
             mesDiv += '<tr><td>за метр:</td><td class="PMPrice">'+PM+'</td><td><input class="pUi itemPLengthInput" value="0" name="'+itemLength+'" /> метра </td></tr></table>';
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
 
+
             // mesDiv += '<div>Стоимость резки: <span id="slicePrice" name="0"></span> руб.</div>'
+            // mesDiv += '<div>Остаток: <span id="sliceLeft"></span> м.</div>'
 
 
             mesDiv += '<div style="margin-top:30px">';
@@ -465,9 +469,13 @@ function showModalItem(hash, edIzm, prices, stock, c){
 
     $.blockUI({ message: mesDiv});
 
-    var itChar = $(".itemPLengthInput").attr("name") 
-    itChar = itChar.replace(/,/,".")
-    itChar = itChar - 0
+
+    if($(".itemPLengthInput").attr("name")!=undefined){
+        var itChar = $(".itemPLengthInput").attr("name") 
+        itChar = itChar.replace(/,/,".")
+        itChar = itChar - 0
+    }
+    
 
     $(function() {
         $( "#slider-vertical" ).slider({
@@ -548,9 +556,14 @@ function showModalItem(hash, edIzm, prices, stock, c){
 
         if(ch==itChar){
             $("#slicePrice").empty()
+
+            $("#sliceLeft").empty()
+            $("#sliceLeft").attr("name", "0")
             $("#slicePrice").attr("name", "0")
         } else {
-            
+            var lCh = (itChar-0) - (ch-0)
+            $("#sliceLeft").attr("name", lCh)
+
             $("#slicePrice").attr("name", "20")
             var rezka = ($(".itemPCountInput").attr("value")-0)*20
             $("#slicePrice").html(rezka)
@@ -561,7 +574,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
         $(".itemArmaCharInput").attr("value", ch)
 
         $( "#slider-vertical-arma" ).slider( "value", ch )
-
+        $(".itemCharSpan").html(""+ch+"")
         $(".itemPLengthInput").attr("name", ch)
         $(".itemPCountInput").change()
     })
@@ -641,7 +654,11 @@ function showModalItem(hash, edIzm, prices, stock, c){
                 if($("#slicePrice").attr("name")=="20"){
                     // alert($("#itemPCountInput").attr("value"))
                     var rezka = ($(".itemPCountInput").attr("value")-0)*20
+
+                    var rezkaLeft = ($(".itemPCountInput").attr("value")-0)*($("#sliceLeft").attr("name")-0)
                     $("#slicePrice").html(rezka)
+                    $("#sliceLeft").html(rezkaLeft)
+
                 }
                 
             }
@@ -1135,6 +1152,9 @@ function modern_addItem(hash, edIzm, prices){
     //     $("#SumRezka").html(rezka)
     // }
     char=''
+
+    ochar = $(".itemPLengthInput").attr("oname")
+
     rezkaCount = ""
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
@@ -1162,7 +1182,9 @@ function modern_addItem(hash, edIzm, prices){
             cell += '<span class="delEdSpan">';
             cell += '<a href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a>';
             cell += '<a href="#" onClick="modern_editItem(\''+hash+'\'); return false"><img src="edit.png" /></a></span></td>';
-            cell += "<td class='itemCharTd'>"+char+"</td>";
+
+            cell += "<td class='itemCharTd' name='"+ochar+"'>"+char+"</td>";
+
             cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' disabled /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
             cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
@@ -1186,7 +1208,9 @@ function modern_addItem(hash, edIzm, prices){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-            if(($this).find(".itemCharTd").html()==char){
+
+            if($(this).find(".itemCharTd").html()==char){
+
                 delModernItem(hash, char)
             }
             
@@ -1229,10 +1253,11 @@ function modern_editItem(hash){
     prices = $('tr[name="'+hash+'"]').find(".itemPriceTd").attr("name")
     stock = "1"
 
+    // alert(1)
     showModalItem(hash, edIzm, prices, stock, "c")
-    
+    // alert(3)
 
-    
+
     var countT = $('tr[name="'+hash+'"]').find(".itemCountInput").attr("value") - 0
     var charT = $('tr[name="'+hash+'"]').find(".itemCharTd").html()
     if($(".itemPCharInput").attr("value")!=undefined){
@@ -1311,8 +1336,12 @@ function delModernItem(hash, char){
                     itt = 1
                 }
             } else {
-                $(this).remove()
-                itt = 1
+
+                if(itt==0){
+                    $(this).remove()
+                    itt = 1
+                }
+
             }
             
         } else {
