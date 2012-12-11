@@ -138,27 +138,13 @@ function searchItem2(item){
     var squery = squery.replace(/%2C/g, ",")
     var squery = squery.replace(/\.com/, '')
     $("#itemName").attr('value', squery)
-    $(".buySpan").find("a").attr("style", "text-shadow: black 0 0 2px;float:right;color:#ffe06f;")
+    $(".buySpan").find("a").attr("style", "float:right;color:white;border:1px outset rgb(48, 57, 154);border-radius:40px 10px;background-color: #5da130;width:50px;padding-left:10px;")
     //$("#itemName").change()
 }
 
 function showGroup2(groupName){
     $("#itemName").attr('value', groupName)
     $("#itemName").change()
-}
-
-function openLink(linkUID,type){
-    $.ajax({
-        type: "POST",
-        url: "getfilelink.php",
-        async: false,
-        data: "linkUID="+linkUID+"&type="+type+"",
-        success: function(html){
-            //var success = 'true';
-            window.location.href = html
-            // alert(html)
-        }
-    });
 }
 
 function getItemChar(hash){
@@ -1459,7 +1445,7 @@ function sendOrder(orderString){
     email = $('input#emailInput').attr('value')
     if(email!=''){
         if(isValidEmail(email)==false){
-            $.unblockUI()
+            // $.unblockUI()
             alert('Проверьте правильность адреса электронной почты')
             return null
         }
@@ -1475,12 +1461,26 @@ function sendOrder(orderString){
     $.ajax({
         type: "POST",
         url: "createOrder.php",
-        async: false,
+        async: true,
         data: "orderString="+orderString+"&carry="+carry+"&destination="+destination+"&email="+email+"&delivery_cost="+delivery_cost+"&main_phone="+main_phone+"&other_phone="+other_phone+"&name_surname="+name_surname+"&last_name="+last_name,
         success: function(html){
             //var success = 'true';
             ret = 'номер '+html
+            $("#popUpOrderClose").show()
+            $(".oInProcess").hide()
+            $(".oProcessed").show()
+
+            $("#basketCaption").empty()
+
+            order = ret
+
+            var oA = order.split(",")
+            $("#basketCaption").append("Заказ "+oA[0])
+            
+            $("#switchOrderDiv").click()
+
             return ret
+            
         }
     });
     //alert(ret)
@@ -1489,14 +1489,26 @@ function sendOrder(orderString){
 
 function createOrder(){
     if($("#emailInput").attr("value")==""){
-        $.unblockUI()
+        // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
     } else if($("#mainPhoneInput").attr("value")==""){
-        $.unblockUI()
+        // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#phoneMainInput").focus()
     } else {
+        $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+        $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
+        $.blockUI.defaults.fadeOut = 100; //и исчезновение
+        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = 'white'
+        $.blockUI.defaults.css.cursor = 'defaults'
+        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+        $.blockUI.defaults.css.fontSize = '14px'
+        $.blockUI.defaults.css.width = '450px'
+        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.paddingTop = '10px'
+        $.blockUI({message:"<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span><span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш запрос обработан</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"})
         var sendRow = '';
         $('tr.itemTr').each( function(){
 
@@ -1508,14 +1520,16 @@ function createOrder(){
       
         })
         var order = sendOrder(sendRow);
-        $("#basketCaption").empty()
-
-        var oA = order.split(",")
-        $("#basketCaption").append("Заказ "+oA[0])
         
-        $("#switchOrderDiv").click()
+        // $("#basketCaption").empty()
 
-        $.unblockUI()
+        // var oA = order.split(",")
+        // $("#basketCaption").append("Заказ "+oA[0])
+        
+        // $("#switchOrderDiv").click()
+
+        
+        // $.unblockUI()
 
     }
     
@@ -1646,29 +1660,24 @@ $(document).ready( function(){
     }
 
     $.cookie("basket", null)
-    // $(document).ajaxStart().ajaxStop($.unblockUI);
-    $("#sendOrderButton").click( function(){
-        $.blockUI({message:"<span style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"})
+
+    $("#popUpOrderClose").click( function(){
+        $.unblockUI()
     })
 
-    if( ! $('#myCanvas').tagcanvas({
-        textColour : '#242491',
-        outlineColour : '#242491',
-        outlineThickness : 1,
-        maxSpeed : 0.03,
-        depth : 0.75
-    },'tags')) {
-         // TagCanvas failed to load
-        $('#myCanvasContainer').hide();
-        $('#tags').hide();
-    }
 
-	// $("#itemName").focusin( function(){
-	// 	$("#itemName").css("box-shadow", "0 0 5px 2px #ffe06f, 0px 1px 1px rgb(207, 207, 207) inset")
-	// })
-	// $("#itemName").focusout( function(){
-	// 	$("#itemName").css("box-shadow", "0px 1px 1px rgb(207, 207, 207) inset")
-	// })
+    // if( ! $('#myCanvas').tagcanvas({
+    //     textColour : '#242491',
+    //     outlineColour : '#242491',
+    //     outlineThickness : 1,
+    //     maxSpeed : 0.03,
+    //     depth : 0.75
+    // },'tags')) {
+    //      // TagCanvas failed to load
+    //     $('#myCanvasContainer').hide();
+    //     $('#tags').hide();
+    // }
+
 
 	$("#itemName").focus();
 
@@ -1720,7 +1729,8 @@ $(document).ready( function(){
                     $('#hollowResult').empty()
                 } else {
                     $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
-                    $('#myCanvasContainer').show();
+                    // $('#myCanvasContainer').show();
+                    $('#tags').show();
                 }
 				if($(".item").length==20){
 					$("#showAll").show();
