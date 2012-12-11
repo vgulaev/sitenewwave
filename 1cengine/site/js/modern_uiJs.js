@@ -858,6 +858,7 @@ function setOverallPrices(){
     sAll = 0
     cAll = 0
     rAll = 0
+    gAll = 0
 
     $(".itemPriceTd").each( function(){
 
@@ -880,6 +881,7 @@ function setOverallPrices(){
             $(father).find(".itemNdsSumTd").html(nds)
         
             sAll = (sAll - 0) + (sum - 0)
+            gAll = (gAll - 0) + (sum - 0)
 
         } else {
 
@@ -897,6 +899,7 @@ function setOverallPrices(){
             $(father).find(".itemNdsSumTd").html(nds)
         
             sAll = (sAll - 0) + (sum - 0)
+            gAll = (gAll - 0) + (sum - 0)
 
             cAll = (cAll - 0) + (count - 0)
         }
@@ -921,8 +924,8 @@ function setOverallPrices(){
     $("#SumAll").attr("name",sAll)
 
 
-    gAll = $("#SumAll").attr("name")
-
+    // gAll = $("#SumAll").attr("name")
+    gAll = gAll.toFixed(2)
     if($("#selfCarry").is(":checked")){
         sAll = sAll.toFixed(2)
     } else {
