@@ -73,6 +73,7 @@ $(function(){
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").show()
+        return false
     })
     $("#switchDeliveryDiv").click( function(){
         $("#deliveryDiv").show()

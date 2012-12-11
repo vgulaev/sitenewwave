@@ -333,7 +333,7 @@ $APPLICATION->IncludeFile(
 
                     <p>*Обязательны для заполнения</p>
 
-                    <a href="javascript:$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
+                    <a href="Посмотреть заказ" onClick="$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
 
                     <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить</div></a>
 
