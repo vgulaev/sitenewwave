@@ -208,6 +208,56 @@
 	float:right;
 }
 
+.delEdSpan{
+	float:right;
+	color:white;
+	/*border:1px outset rgb(48, 57, 154);*/
+	/*border-radius:40px 10px;*/
+	/*background-color: rgb(255,187,028);*/
+	/*background-color: #daa520;*/
+	text-decoration: none;
+	font-weight:bold;
+	width:80px;
+	/*padding-left:14px;*/
+	display:none;
+}
+
+.delEdSpan a{
+	color:white;
+	text-decoration: none;
+}
+
+.itemTr:hover span.delEdSpan{
+	color:white;
+	/*border:1px outset rgb(48, 57, 154);*/
+	/*border-radius:40px 10px;*/
+	/*background-color: rgb(255,187,028);*/
+	/*background-color: #daa520;*/
+	text-decoration: none;
+	font-weight:bold;
+	width:80px;
+	/*padding-left:14px;*/
+	display:block;
+}
+
+.itemTr:hover span.delEdSpan a:first-child{
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	float:left;
+	background-color:#daa520;
+	width:20px;
+	padding-left: 10px;
+}
+
+.itemTr:hover span.delEdSpan a:last-child{
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
+	float:right;
+	background-color: #5da130;
+	width:30px;
+	padding-left: 7px;
+}
+
 .item:hover a.bItem, .buySpan a.bItem:hover{
 	/*text-shadow: black 0 0 2px;*/
 	float:right;
@@ -221,7 +271,7 @@
 .item:hover, .itemTr:hover{
 	font-weight:bold;
 }
-.item:hover a.oItem, .itemTr:hover a.oItem, .buySpan a.oItem:hover{
+.item:hover a.oItem, .buySpan a.oItem:hover{
 	/*text-shadow: black 0 0 2px;*/
 	float:right;
 	/*color:#ff5959;*/
@@ -611,4 +661,36 @@
 }
 .tDC{
 	margin-left:35px;
+}
+#slider-vertical-arma{
+	width:250px;
+	background-color:white;
+	border:1px dashed gray;
+	border-radius:10px;
+	height:10px;
+	/*float:left;*/
+	margin-left:90px;
+	position: relative; text-align: left;
+}
+.armaImages{
+	padding-left:30px;
+	width:450px;
+	margin-left:30px;
+	height:100px;
+}
+.armaImage{
+	height:55px;
+	width:35px;
+	background-image: url('armatura.gif');
+	background-repeat: no-repeat;
+	float:left;
+	margin-left:-15px;
+}
+.armaImageU{
+	height:55px;
+	width:35px;
+	background-image: url('armatura-u.gif');
+	background-repeat: no-repeat;
+	float:left;
+	margin-left:-15px;
 }

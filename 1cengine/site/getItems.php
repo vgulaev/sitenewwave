@@ -106,10 +106,10 @@ function getItems($req){
                 <span itemprop="name">'.$row[0].'</span>   
                     <span class="buySpan">';
             if($row[8]!=0){
-                $rt .= '<a class="bItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'купить\'); showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
+                $rt .= '<a class="bItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'купить\'); openItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'1\'); return false">купить</a>
                     </span></td>'; 
             } else {
-                $rt .= '<a class="oItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'заказать\'); showModalItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'0\'); return false">заказать</a>
+                $rt .= '<a class="oItem" href="Добавить в корзину" onClick="yaCounter15882208.reachGoal(\'onBuyLinkPressed\', \'заказать\'); openItem(\''.$row[5].':'.$row[7].'\', \''.$row[6].'\', \''.$row[2].'\',\'0\'); return false">заказать</a>
                     </span></td>';
             }
             
@@ -157,7 +157,7 @@ function getItems($req){
     return $ret;
 }
 
-function getItemsFromHash($hash, $char, $count){
+function getItemsFromHash($hash, $char, $count,$rezka){
 
     $hashArray = explode(":", $hash);
 
@@ -179,15 +179,19 @@ function getItemsFromHash($hash, $char, $count){
                 $char = $char;
             }
             $cell .= "<td class='itemNameTd'>".$row[0];
-            $cell .= '<span class="buySpan">';
-            $cell .= '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a></span></td>';
+            $cell .= '<span class="delEdSpan">';
+            
+            $cell .= '<a href="Убрать из корзины" onClick="delModernItem(\''.$hash.'\'); return false">X</a>';
+            $cell .= '<a href="#" onClick="modern_editItem(\''.$hash.'\'); return false"><img src="edit.png" /></a></span></td>';
+
             $cell .= "<td class='itemCharTd'>".$char."</td>";
-            $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' /></td>";
+            $cell .= "<td class='itemCountTd'><input class='itemCountInput' name='".$row[3]."' type='textarea' value='".$count."' disabled /></td>";
             $cell .= "<td class='itemEdIzmTd' name='".$row[3]."'>".$row[3]."</td>";
             $cell .= "<td class='itemPriceTd' name='".$row[2]."'></td>";
             $cell .= "<td class='itemNdsKfTd'>18%</td>";
             $cell .= "<td class='itemNdsSumTd'></td>";
             $cell .= "<td class='itemSumTd'></td>";
+            $cell .= "<td class='itemRezlaTd' style='display:none'>".$rezka."</td>";
 
             $newRow .= $cell.'</tr>';
         
@@ -227,7 +231,8 @@ if($_POST["from_hash"]=="true"){
     $hash = $_POST["hash"];
     $char = $_POST["char"];
     $count = $_POST["count"];
-    getItemsFromHash($hash, $char, $count);
+    $rezka = $_POST["rezka"];
+    getItemsFromHash($hash, $char, $count,$rezka);
 } else {
     $res = getItems($req);
 

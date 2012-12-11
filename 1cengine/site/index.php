@@ -186,6 +186,9 @@ $APPLICATION->IncludeFile(
                             <th class='itemHeader'>
                                 Сумма
                             </th>
+
+                            <th style='display:none'>
+                            </th>
                          </tr>
                       </thead>
                       <tbody id='lItemTab'>

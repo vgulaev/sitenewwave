@@ -268,7 +268,32 @@ function setModalLength(){
     $(".pPCPrice").html(PC)
 }
 
-function showModalItem(hash, edIzm, prices, stock){
+function openItem(hash, edIzm, prices, stock, c){
+    i = 0
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            if($(this).find(".itemRezkaTd").html()==""){
+                modern_editItem(hash)
+            } else {
+                showModalItem(hash, edIzm, prices, stock, c)
+            }
+            
+            i = 1
+            return 0
+        }
+    })
+    if(i!=1){
+        showModalItem(hash, edIzm, prices, stock, c)
+    }
+    
+}
+
+function showModalItem(hash, edIzm, prices, stock, c){
+    
+    if(c==undefined){
+        c="n"
+    }
     var mesDiv = '';
     $('tr[id="'+hash+'"]').each(function(){
 
@@ -342,7 +367,11 @@ function showModalItem(hash, edIzm, prices, stock){
 
             mesDiv += '<div style="margin-top:10px">';
 
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            if(c=="c"){
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
+            } else if(c=="n"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            }
 
             mesDiv += '</div>';
 
@@ -406,7 +435,12 @@ function showModalItem(hash, edIzm, prices, stock){
 
 
             mesDiv += '<div style="margin-top:30px">';
-            mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            
+            if(c=="c"){
+                mesDiv += '<span class="popUpContinue"><a href="Изменить" onClick="changeItem(\''+hash+'\'); return false">Изменить</a></span></div>';
+            } else if(c=="n"){
+                mesDiv += '<span class="popUpContinue"><a href="Добавить в корзину" onClick="modern_addItem(\''+hash+'\',\''+edIzm+'\',\''+prices+'\'); return false">В корзину</a></span></div>';
+            }
 
             mesDiv += '</div>';
 
@@ -429,6 +463,10 @@ function showModalItem(hash, edIzm, prices, stock){
 
     $.blockUI({ message: mesDiv});
 
+    var itChar = $(".itemPLengthInput").attr("name") 
+    itChar = itChar.replace(/,/,".")
+    itChar = itChar - 0
+
     $(function() {
         $( "#slider-vertical" ).slider({
             range: "min",
@@ -444,7 +482,6 @@ function showModalItem(hash, edIzm, prices, stock){
         $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
         
     });
-
 
     $(function() {
         $( "#slider-vertical-arma" ).slider({
@@ -508,9 +545,13 @@ function showModalItem(hash, edIzm, prices, stock){
 
 
         if(ch==itChar){
-            $("#slicePrice").html("")
+            $("#slicePrice").empty()
+            $("#slicePrice").attr("name", "0")
         } else {
-            $("#slicePrice").html("20")
+            
+            $("#slicePrice").attr("name", "20")
+            var rezka = ($(".itemPCountInput").attr("value")-0)*20
+            $("#slicePrice").html(rezka)
         }
 
 
@@ -593,6 +634,15 @@ function showModalItem(hash, edIzm, prices, stock){
             nL = nL + "px"
             //alert(nL)
             $(this).css("width", nL); 
+
+            if($("#slicePrice").attr("name")!=undefined){
+                if($("#slicePrice").attr("name")=="20"){
+                    // alert($("#itemPCountInput").attr("value"))
+                    var rezka = ($(".itemPCountInput").attr("value")-0)*20
+                    $("#slicePrice").html(rezka)
+                }
+                
+            }
             
             if($(father).find($(".itemPLengthInput")).attr('name')!=0){
                 wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
@@ -802,6 +852,7 @@ function setOverallPrices(){
 
     sAll = 0
     cAll = 0
+    rAll = 0
 
     $(".itemPriceTd").each( function(){
 
@@ -849,6 +900,15 @@ function setOverallPrices(){
         
 
     })
+
+    $(".itemRezkaTd").each( function(){
+        if($(this).html()!=""){
+            rAll = (rAll - 0) + (($(this).html() * 20 ) - 0)
+        }
+    })
+
+
+    rAll = rAll.toFixed(2)
     cAll = cAll.toFixed(3)
     //sAll = sAll.toFixed(2)
     
@@ -874,6 +934,7 @@ function setOverallPrices(){
     sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
     cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
     gAll = gAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+gAll.split('.')[1]
+    rAll = rAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+rAll.split('.')[1]
     
     $("#CountAll").empty()
     $("#CountAll").append(cAll)
@@ -891,6 +952,9 @@ function setOverallPrices(){
     
     $("#NDSAll").empty()
     $("#NDSAll").append(nAll)
+
+    $("#SumRezka").empty()
+    $("#SumRezka").append(rAll)
 
     $(".itemCountInput").change()
 
@@ -938,6 +1002,7 @@ function setOverallPrices(){
 
         sAll = 0
         cAll = 0
+        rAll = 0
 
         $(".itemPriceTd").each( function(){
 
@@ -985,8 +1050,16 @@ function setOverallPrices(){
             
 
         })
+
+        $(".itemRezkaTd").each( function(){
+            if($(this).html()!=""){
+                rAll = (rAll - 0) + (($(this).html() * 20 ) - 0)
+            }
+        })
+
         cAll = cAll.toFixed(3)
         //sAll = sAll.toFixed(2)
+        rAll = rAll.toFixed(2)
         
 
         $("#SumAll").attr("name",sAll)
@@ -1005,8 +1078,9 @@ function setOverallPrices(){
 
         nAll = nAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+nAll.split('.')[1]
         sAll = sAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+sAll.split('.')[1]
-        cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]
-        
+        cAll = cAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+cAll.split('.')[1]       
+        rAll = rAll.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ')+'.'+rAll.split('.')[1]
+
         $("#CountAll").empty()
         $("#CountAll").append(cAll)
 
@@ -1016,20 +1090,27 @@ function setOverallPrices(){
         $("#NDSAll").empty()
         $("#NDSAll").append(nAll)
 
+        $("#SumRezka").empty()
+        $("#SumRezka").append(rAll)
+
         basket = ""
 
         
             $('tbody#lItemTab tr').each(function(i) {
             
                 var ihash = $(this).attr("name")
-                if(ihash.split(":")[0]=="0"){
-                    var char = $(this).find(".itemCharTd").html()
-                } else {
-                    var char = ''
-                }
+                // if(ihash.split(":")[0]=="0"){
+                //     var char = $(this).find(".itemCharTd").html()
+                // } else {
+                //     var char = ''
+                // }
+
+                var char = $(this).find(".itemCharTd").html()
+                var rezka = $(this).find(".itemRezkaTd").html()
+                
                 
                 var count = $(this).find(".itemCountInput").attr("value")
-                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
                 
             });
         
@@ -1046,13 +1127,24 @@ function setOverallPrices(){
 function modern_addItem(hash, edIzm, prices){
     yaCounter15882208.reachGoal('onAddLinkPressed'); 
     weight = $(".itemPWeightInput").attr("value")
+    // if($("#slicePrice").attr("name")!=undefined){
+    //     rezka = $("#SumRezka").html()
+    //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
+    //     $("#SumRezka").html(rezka)
+    // }
     char=''
+    rezkaCount = ""
     if(weight==undefined){
         weight = $(".itemPLengthInput").attr("value")
         char = $(".itemPCharInput").attr("value")
     }
     if($(".itemArmaCharInput").attr("value")!=undefined){
         char = $(".itemArmaCharInput").attr("value")
+        if($("#slicePrice").html()!=""){
+            rezkaCount = $(".itemPCountInput").attr("value") - 0
+        } else {
+            rezkaCount = ""
+        }
     }
     $.unblockUI()
 
@@ -1065,15 +1157,17 @@ function modern_addItem(hash, edIzm, prices){
                 char = $(this).find(".itemChar").attr("name")
             }
             cell += "<td class='itemNameTd'>"+$(this).find(".itemName").attr("name");
-            cell += '<span class="buySpan">';
-            cell += '<a class="oItem" href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a></span></td>';
+            cell += '<span class="delEdSpan">';
+            cell += '<a href="Убрать из корзины" onClick="delModernItem(\''+hash+'\'); return false">X</a>';
+            cell += '<a href="#" onClick="modern_editItem(\''+hash+'\'); return false"><img src="edit.png" /></a></span></td>';
             cell += "<td class='itemCharTd'>"+char+"</td>";
-            cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' /></td>";
+            cell += "<td class='itemCountTd'><input class='itemCountInput' name='"+edIzm+"' type='textarea' value='"+weight+"' disabled /></td>";
             cell += "<td class='itemEdIzmTd' name='"+edIzm+"'>"+edIzm+"</td>";
             cell += "<td class='itemPriceTd' name='"+prices+"'></td>";
             cell += "<td class='itemNdsKfTd'>18%</td>";
             cell += "<td class='itemNdsSumTd'></td>";
             cell += "<td class='itemSumTd'></td>";
+            cell += "<td class='itemRezkaTd' style='display:none'>"+rezkaCount+"</td>";
         }
         
     })
@@ -1087,8 +1181,20 @@ function modern_addItem(hash, edIzm, prices){
     bCount = (bCount - 0)+1;
     $('span.basketCount').html(bCount);  
 
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            if(($this).find(".itemCharTd").html()==char){
+                delModernItem(hash, char)
+            }
+            
+
+        }
+
+    })
     $('tbody#lItemTab').prepend(newRow);
-// 
+    
+
     basket = ""
 
     $('tbody#lItemTab tr').each(function(i) {
@@ -1097,14 +1203,16 @@ function modern_addItem(hash, edIzm, prices){
 
 
         var ihash = $(this).attr("name")
-        if(ihash.split(":")[0]=="0"){
-            var char = $(this).find(".itemCharTd").html()
-        } else {
-            var char = ''
-        }
-        
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+
+        var char = $(this).find(".itemCharTd").html()
+        var rezka = $(this).find(".itemRezkaTd").html()
         var count = $(this).find(".itemCountInput").attr("value")
-        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
     });
 
     $.cookie("basket", basket)
@@ -1114,8 +1222,79 @@ function modern_addItem(hash, edIzm, prices){
     
 }
 
-function delModernItem(hash){
+function modern_editItem(hash){
+    edIzm = $('tr[name="'+hash+'"]').find(".itemEdIzmTd").attr("name")
+    prices = $('tr[name="'+hash+'"]').find(".itemPriceTd").attr("name")
+    stock = "1"
+
+    showModalItem(hash, edIzm, prices, stock, "c")
     
+
+    
+    var countT = $('tr[name="'+hash+'"]').find(".itemCountInput").attr("value") - 0
+    var charT = $('tr[name="'+hash+'"]').find(".itemCharTd").html()
+    if($(".itemPCharInput").attr("value")!=undefined){
+        $(".itemPCharInput").attr("value", charT)
+        $(".itemPCharInput").change()
+    } 
+    if($(".itemArmaCharInput").attr("value")!=undefined){
+        $(".itemArmaCharInput").attr("value", charT)
+        $(".itemArmaCharInput").change()
+    }
+    if($(".itemPWeightInput").attr("value")!=undefined){
+        $(".itemPWeightInput").attr("value", countT)
+        $(".itemPWeightInput").change()
+    } else if($(".itemPLengthInput").attr("value")!=undefined){
+        $(".itemPLengthInput").attr("value", countT)
+        $(".itemPLengthInput").change()
+    }
+    
+
+}
+
+function changeItem(hash){
+    weight = $(".itemPWeightInput").attr("value")
+    // if($("#slicePrice").attr("name")!=undefined){
+    //     rezka = $("#SumRezka").html()
+    //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
+    //     $("#SumRezka").html(rezka)
+    // }
+    char=''
+    if(weight==undefined){
+        weight = $(".itemPLengthInput").attr("value")
+        char = $(".itemPCharInput").attr("value")
+    }
+    if($(".itemArmaCharInput").attr("value")!=undefined){
+        char = $(".itemArmaCharInput").attr("value")
+        if($("#slicePrice").html()!=""){
+                rezkaCount = $(".itemPCountInput").attr("value")
+            } else {
+                rezkaCount = ""
+            }
+        
+    }
+    $.unblockUI()
+    $('tr[class="itemTr"]').each(function(){
+
+        if($(this).attr("name")==hash){
+            $(this).find(".itemCountInput").attr("value", weight)
+            if(char!=''){
+                $(this).find(".itemCharTd").html(char)
+            }
+            $(this).find(".itemRezkaTd").html(rezkaCount)
+            $(this).find(".itemCountInput").change()
+        }
+    })
+    setOverallPrices()
+}
+
+function delModernItem(hash, char){
+    
+    if (char==undefined) {
+        char = ''
+    };
+    itt = 0
+
     delElement = document.getElementById(hash)
     tab = document.createElement("tbody")
 
@@ -1124,8 +1303,16 @@ function delModernItem(hash){
     $('tr[class="itemTr"]').each(function(){
 
         if($(this).attr("name")==hash){
-
-            $(this).remove()
+            if(char!=''){
+                if($(this).find(".itemCharTd").html()==char){
+                    $(this).remove()
+                    itt = 1
+                }
+            } else {
+                $(this).remove()
+                itt = 1
+            }
+            
         } else {
             // var ihash = $(this).attr("name")
             // if(ihash.split(":")[0]=="0"){
@@ -1137,44 +1324,75 @@ function delModernItem(hash){
             // var count = $(this).find(".itemCountInput").attr("value")
             // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
         }
-        
-        
-        
+
     })
 
     // $.cookie("basket", basket)
 
+    basket = ""
+
     $('tbody#lItemTab tr').each(function(i) {
         var number = i + 1;
         $(this).find('td:first').text(number);
+
+        var ihash = $(this).attr("name")
+        // if(ihash.split(":")[0]=="0"){
+        //     var char = $(this).find(".itemCharTd").html()
+        // } else {
+        //     var char = ''
+        // }
+
+        var char = $(this).find(".itemCharTd").html()
+        var rezka = $(this).find(".itemRezkaTd").html()
+        var count = $(this).find(".itemCountInput").attr("value")
+        basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
     });
 
     var bCount = $('span.basketCount').html();
     bCount = (bCount - 0)-1;
 
     $('span.basketCount').html(bCount); 
+
+    
+
+    $.cookie("basket", null)
+    $.cookie("basket", basket)
     
     setOverallPrices()
 
 }
 
-function setModernItem(hash, char, count){
+function setModernItem(hash, char, count, rezka){
     // alert(1);
     $.ajax({
         type: "POST",
         url: "getItems.php",
         async: false,
-        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"",
+        data: "from_hash=true&hash="+hash+"&char="+char+"&count="+count+"&rezka="+rezka+"",
         success: function(html){
             
             $("#lItemTab").append(html)
-
+            basket = ""
             i = 0
             $('tbody#lItemTab tr').each(function(i) {
                 var number = i + 1;
                 $(this).find('td:first').text(number);
+
+                var ihash = $(this).attr("name")
+                // if(ihash.split(":")[0]=="0"){
+                //     var char = $(this).find(".itemCharTd").html()
+                // } else {
+                //     var char = ''
+                // }
+
+                var char = $(this).find(".itemCharTd").html()
+                var rezka = $(this).find(".itemRezkaTd").html()
+                var count = $(this).find(".itemCountInput").attr("value")
+                basket += "setModernItem('"+ihash+"','"+char+"','"+count+"','"+rezka+"');"
             });
 
+            $.cookie("basket", null)
+            $.cookie("basket", basket)
             // var bCount = $('span.basketCount').html();
             bCount = $('tbody#lItemTab tr').length
 
@@ -1375,7 +1593,7 @@ function getOrderFomat(format){
     $('tr.itemTr').each( function(){
 
         if($(this).find('input.itemCharInput').length!=0){
-            sendRow += ''+$(this).find('input.itemCharInput').attr('value')+':'+$(this).attr('name')+':-:'+$(this).find('input.itemCountnput').attr('value')+':'+$(this).find('.itemPriceTd').html()+';';
+            sendRow += ''+$(this).find('input.itemCharInput').attr('value')+':'+$(this).attr('name')+':-:'+$(this).find('input.itemCountInput').attr('value')+':'+$(this).find('.itemPriceTd').html()+';';
         } else {
             sendRow += ''+$(this).attr('name')+':-:'+$(this).find('input.itemCountInput').attr('value')+':'+$(this).find('.itemPriceTd').html()+';';
         }
