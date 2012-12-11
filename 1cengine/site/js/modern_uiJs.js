@@ -399,31 +399,31 @@ function showModalItem(hash, edIzm, prices, stock, c){
             itChar = itChar - 0
             var itName = $(this).find(".itemName").attr("name")
             // alert(itName.indexOf("Арматура"))
-            if(itName.indexOf("Арматура")!=-1){
-                // alert(1)
-                mesDiv += "<div class='armaImages'>"
-                mesDiv += "<div class='armaImage im1'></div>"
-                mesDiv += "<div class='armaImage im2'></div>"
-                mesDiv += "<div class='armaImage im3'></div>"
-                mesDiv += "<div class='armaImage im4'></div>"
-                mesDiv += "<div class='armaImage im5'></div>"
-                mesDiv += "<div class='armaImage im6'></div>"
-                mesDiv += "<div class='armaImage im7'></div>"
-                mesDiv += "<div class='armaImage im8'></div>"
-                mesDiv += "<div class='armaImage im9'></div>"
-                mesDiv += "<div class='armaImage im10'></div>"
-                mesDiv += "<div class='armaImage im11'></div>"
-                mesDiv += "<div class='armaImage im12'></div>"
-                mesDiv += "<div class='armaImage im13'></div>"
-                mesDiv += "<div class='armaImage im14'></div>"
-                mesDiv += "<div class='armaImage im15'></div>"
-                mesDiv += "<div class='armaImage im16'></div>"
-                mesDiv += "</div>"
+            // if(itName.indexOf("Арматура")!=-1){
+            //     // alert(1)
+            //     mesDiv += "<div class='armaImages'>"
+            //     mesDiv += "<div class='armaImage im1'></div>"
+            //     mesDiv += "<div class='armaImage im2'></div>"
+            //     mesDiv += "<div class='armaImage im3'></div>"
+            //     mesDiv += "<div class='armaImage im4'></div>"
+            //     mesDiv += "<div class='armaImage im5'></div>"
+            //     mesDiv += "<div class='armaImage im6'></div>"
+            //     mesDiv += "<div class='armaImage im7'></div>"
+            //     mesDiv += "<div class='armaImage im8'></div>"
+            //     mesDiv += "<div class='armaImage im9'></div>"
+            //     mesDiv += "<div class='armaImage im10'></div>"
+            //     mesDiv += "<div class='armaImage im11'></div>"
+            //     mesDiv += "<div class='armaImage im12'></div>"
+            //     mesDiv += "<div class='armaImage im13'></div>"
+            //     mesDiv += "<div class='armaImage im14'></div>"
+            //     mesDiv += "<div class='armaImage im15'></div>"
+            //     mesDiv += "<div class='armaImage im16'></div>"
+            //     mesDiv += "</div>"
 
-                mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
+            //     mesDiv += '<div style="height:15px;width:390px"><span style="float:left;margin-top:-4px;margin-left:50px">0.2</span> <div id="slider-vertical-arma"></div> <span style="float:right;margin-top:-16px">'+$(this).find(".itemChar").attr("name")+'</span></div>';
 
-                mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
-            }
+            //     mesDiv += '<p>Длина арматуры <input class="pUi itemArmaCharInput" id="amountArma" value="itChar"> метра</p>'
+            // }
             // mesDiv += '<table><tr><td>'
 
             mesDiv += '<table class="popUpTab" name="'+edIzm+'"><tr><td>Цена за тонну:</td><td class="TNPrice" name="'+prices+'">'+TN+'</td><td><input class="pUi itemPWeightInput" value="0" name="'+itemWeight+'" /> тонн </td></tr>';
@@ -432,7 +432,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
 
-            mesDiv += '<div>Стоимость резки: <span id="slicePrice" name="0"></span> руб.</div>'
+            // mesDiv += '<div>Стоимость резки: <span id="slicePrice" name="0"></span> руб.</div>'
 
 
             mesDiv += '<div style="margin-top:30px">';
@@ -454,8 +454,9 @@ function showModalItem(hash, edIzm, prices, stock, c){
             $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
             $.blockUI.defaults.css.fontSize = '14px'
             $.blockUI.defaults.css.width = '450px'
-            $.blockUI.defaults.css.height = '420px'
+            $.blockUI.defaults.css.height = 'auto'
             $.blockUI.defaults.css.paddingTop = '10px'
+            $.blockUI.defaults.css.paddingBottom = '10px'
         }
 
     })
