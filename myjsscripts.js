@@ -20,7 +20,7 @@ function selector_constructor(idElement, welcomLabel, items) {
 		item_menu.className = "MenuElement";
 		item_menu.innerHTML = items[i];
 		item_menu.setAttribute("item_index", i);
-		item_menu.onclick = ;
+		//item_menu.onclick = ;
 		_local_menu.append(item_menu);
 	}
 	//$()
