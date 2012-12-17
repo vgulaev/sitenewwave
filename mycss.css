@@ -1,7 +1,16 @@
 /*#metalSelector {
-	background-color: #B81900;
+ background-color: #B81900;
 
-}*/
+ }*/
 .MenuElement {
 	position: absolute;
+}
+
+.for_debug_div_blockmodel {
+	border: 3px solid red
+}
+
+#divmain {
+	width: 972px;
+	margin: 0 auto;
 }
