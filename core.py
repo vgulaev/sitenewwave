@@ -3,7 +3,7 @@
 import sys,os
 import cgi
 import cgitb; cgitb.enable()
-import htmlrootclass
+from htmlrootclass import htmlroot 
 
 if ((sys.platform) == "win32"):
     print ("")
@@ -12,5 +12,7 @@ else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
 
+result_doc = htmlroot()
+result_doc.initHTML()
 
-print (html_doc.toxml())
+print (result_doc.html_doc.toxml())
