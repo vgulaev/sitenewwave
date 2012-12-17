@@ -1679,7 +1679,7 @@ $(document).ready( function(){
         // alert('in')
         var elem = this
         myTimer = window.setTimeout( function(){
-            $(elem).css({border:"1px solid rgb(45, 54, 148)"})
+            $(elem).css({border:"1px solid rgb(45, 54, 148)", position:"absolute", backgroundColor:"white", boxShadow:"0px 0px 5px 5px rgb(207, 207, 207)"})
             $(elem).animate({
                 width : "230px",
                 height : "80px"
@@ -1709,7 +1709,7 @@ $(document).ready( function(){
 
     }).mouseleave( function (){
         clearTimeout(myTimer)
-        $(this).css({border:"none"})
+        $(this).css({border:"none", position:"relative",backgroundColor:"none",boxShadow:"none"})
         $(this).css({
             width : "200px",
             height : "70px"            
