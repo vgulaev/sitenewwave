@@ -1655,6 +1655,11 @@ function getOrderFomat(format){
     openLink(q[1],format)
 }
 
+// function onHoverTime(elem){
+
+    
+// }
+
 
 $(document).ready( function(){
 
@@ -1666,6 +1671,68 @@ $(document).ready( function(){
 
     $("#popUpOrderClose").click( function(){
         $.unblockUI()
+    })
+
+    
+
+    $("td.iRefTd").mouseenter( function(){
+        // alert('in')
+        var elem = this
+        myTimer = window.setTimeout( function(){
+            $(elem).css({border:"1px solid rgb(45, 54, 148)"})
+            $(elem).animate({
+                width : "230px",
+                height : "80px"
+            }, 500)
+            $(elem).find("span").each( function(){
+                $(this).animate({
+                    fontWeight: "bold",
+                    paddingTop:"30px",
+                    height:"51px",
+                    display:"block"
+                    
+                }, 500)
+                
+            })
+            $(elem).find("div").each( function(){
+                $(this).animate({
+                    width:"100px",
+                    height:"51px",
+                    marginTop:"15px",
+                    marginLeft:"10px"
+                })
+                $(this).css({backgroundPosition:"0 0"})
+            })
+
+        }, 1000)
+        
+
+    }).mouseleave( function (){
+        clearTimeout(myTimer)
+        $(this).css({border:"none"})
+        $(this).css({
+            width : "200px",
+            height : "70px"            
+        })
+        $(this).find("span").each( function(){
+            $(this).css({
+                fontWeight: "lighter",
+                paddingTop:"0px",
+                height:"auto",
+                display:"block",
+                float:"left"
+            })
+            
+        })
+        $(this).find("div").each( function(){
+                $(this).css({
+                    width:"50px",
+                    height:"36px",
+                    backgroundPosition: "50px 36px",
+                    marginTop:"0px",
+                    marginLeft:"0px"
+                })
+            })
     })
 
 
