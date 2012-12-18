@@ -1678,12 +1678,17 @@ $(document).ready( function(){
     $("td.iRefTd").mouseenter( function(){
         // alert('in')
         var elem = this
+        var spWidth = 0
         myTimer = window.setTimeout( function(){
-            $(elem).css({border:"1px solid rgb(45, 54, 148)", position:"absolute", backgroundColor:"white", boxShadow:"0px 0px 5px 5px rgb(207, 207, 207)"})
+            $(elem).css({border:"1px solid rgb(45, 54, 148)", position:"absolute", backgroundColor:"white", boxShadow:"0px 0px 5px 5px rgb(207, 207, 207)", zIndex:"11"})
+            $(elem).find("span").each( function(){
+                spWidth = this.offsetWidth
+                spWidth = spWidth + 150
+            })
             $(elem).animate({
-                width : "230px",
+                width : spWidth+"px",
                 height : "80px"
-            }, 500)
+            }, 450)
             $(elem).find("span").each( function(){
                 $(this).animate({
                     fontWeight: "bold",
@@ -1709,7 +1714,7 @@ $(document).ready( function(){
 
     }).mouseleave( function (){
         clearTimeout(myTimer)
-        $(this).css({border:"none", position:"relative",backgroundColor:"none",boxShadow:"none"})
+        $(this).css({border:"none", position:"relative",backgroundColor:"none",boxShadow:"none",zIndex:"1"})
         $(this).css({
             width : "200px",
             height : "70px"            
