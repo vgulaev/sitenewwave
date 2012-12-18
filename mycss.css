@@ -24,3 +24,21 @@
 	border-bottom-color: #A6CFED;
 	border-bottom-style: solid;
 }
+#divObjMenu {
+	background: none repeat scroll 0 0 #2D3694;
+	margin: 10px 0 0;
+	width: 775px;
+	float: right;
+}
+
+#divObjMenu ul li {
+	float: left;
+}
+
+#divObjMenu a:link {
+	color: #FFFFFF;
+}
+
+body {
+	font: 62%/1.5 Arial, Helvetica, sans-serif;
+}
