@@ -6,11 +6,21 @@
 	position: absolute;
 }
 
-.for_debug_div_blockmodel {
-	border: 3px solid red
-}
+/*.for_debug_div_blockmodel {
+ border: 3px solid red
+ }
 
-#divmain {
+ .nav {
+ border: 3px solid red
+ }*/
+#divMain {
 	width: 972px;
 	margin: 0 auto;
+}
+
+#divHead {
+	height: 105.617px;
+	border-bottom-width: 6px;
+	border-bottom-color: #A6CFED;
+	border-bottom-style: solid;
 }

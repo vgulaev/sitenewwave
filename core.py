@@ -8,7 +8,7 @@ from htmlrootclass import htmlroot
 
 if ((sys.platform) == "win32"):
     print ("")
-    #sys.stdout = open('temp.html', 'w')
+    sys.stdout = open('temp.html', 'w')
 else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
