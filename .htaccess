@@ -1,0 +1,10 @@
+<IfModule mod_cgi.c>
+	AddHandler cgi-script .py
+</IfModule>
+
+<IfModule mod_fcgid.c>
+ AddHandler fcgid-script .fcgi
+ </IfModule>
+<IfModule mod_charset.c>
+ AddHandler fastcgi-script .fcgi
+</IfModule>
