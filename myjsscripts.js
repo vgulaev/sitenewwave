@@ -51,5 +51,6 @@ function example() {
 
 $(document).ready(function() {
 	//alert("Hello!!!");
-	selector_constructor("profilName", "Выберите профиль...", ["Арматура", "Швелер", "Проволока", "Балка"]);
+	//selector_constructor("profilName", "Выберите профиль...", ["Арматура", "Швелер", "Проволока", "Балка"]);
+	//$(".draggable").draggable();
 })
