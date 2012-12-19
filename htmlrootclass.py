@@ -33,3 +33,5 @@ class htmlroot:
         htmlBody.appendChild(divMain)
         self.html_doc.documentElement.appendChild(htmlBody)
         
+def getElementById(list):
+    return 2244242
