@@ -333,3 +333,67 @@ h5 {
     font-weight: 900;
 }
 
+.tbl {
+    border: 0px solid rgb(255, 255, 255);
+    margin: 0px 0px 1.8em;
+}
+
+caption {
+    font-size: 106%;
+    line-height: 1.5;
+    font-weight: 900;
+    margin: 0px;
+    padding: 0.8em 0px 1.8em;
+    position: relative;
+    text-align: center;
+}
+
+.tbl .fst {
+    border-left: 0px solid !important;
+}
+
+.tbl th {
+    background: none repeat scroll 0% 0% transparent;
+    color: rgb(72, 72, 72);
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-width: 1px 1px 8px;
+    border-right: 1px solid rgb(204, 204, 204);
+    border-left: 1px solid rgb(204, 204, 204);
+    border-color: rgb(238, 238, 238) rgb(204, 204, 204) rgb(255, 255, 255);
+    padding: 0px 10px 1px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.tbl .lst {
+    border-right: 0px solid !important;
+}
+
+.tbl .fst th {
+    border-top: 0px solid !important;
+}
+
+.tbl td {
+    background: none repeat scroll 0% 0% rgb(238, 238, 238);
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-width: 0px 0px 0px 1px;
+    padding: 8px 10px 7px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.odd td {
+    background: none repeat scroll 0% 0% transparent;
+}
+
