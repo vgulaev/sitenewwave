@@ -233,3 +233,103 @@ ul li, ul ul li, ul ul ul li {
 #main2 {
     background: url("/img/sprite2.png") repeat-y scroll -70px 0px rgb(255, 255, 255);
 }
+
+.page-products {
+    font-size: 87%;
+    line-height: 1.8;
+}
+
+.page-products .product-col1 {
+    float: left;
+    width: 230px;
+}
+
+.page-products .product-col2 {
+    background: none repeat scroll 0% 0% rgb(247, 247, 247);
+    margin-left: 254px;
+    margin-right: -23px;
+    padding: 17px 26px 1px 24px;
+}
+
+.clear {
+    clear: both;
+    font-size: 0px;
+    height: 0px;
+    line-height: 0;
+    float: none !important;
+    width: 100% !important;
+}
+
+#cont3 blockquote {
+    padding-left: 2.6em;
+}
+
+blockquote {
+    line-height: 1.74;
+    font-size: 0.86em;
+    background: none repeat scroll 0% 0% rgb(238, 238, 238);
+    margin: 2.1em 0px;
+    padding: 1px 20px 1px 4.6em;
+}
+
+.page-products-sale {
+    padding-top: 14px;
+}
+
+table {
+    border-collapse: collapse;
+    clear: both;
+    width: 99.9%;
+}
+
+table td {
+    font-size: 0.86em;
+    line-height: 1.73;
+}
+
+td, th {
+    vertical-align: top;
+}
+
+.mod-files ul li {
+    background: url("/afedorov/img/download.png") no-repeat scroll 0px 0.6em transparent;
+    padding-left: 20px;
+}
+
+.w40 {
+    width: 40% !important;
+}
+
+.w10 {
+    width: 10% !important;
+}
+
+
+.mod-files ul, .mod-files ol {
+    margin-left: 0px;
+}
+
+.mod-files li h5 {
+    margin-bottom: 0px;
+}
+
+h5 {
+    font-size: 106%;
+    font-weight: 900;
+}
+
+.mod-files ol {
+    padding-left: 17px;
+}
+
+.mod-files ol li {
+    background: none repeat scroll 0% 0% transparent;
+    padding-left: 0px;
+    list-style-type: decimal;
+}
+
+.mod-files .file-head {
+    background: none repeat scroll 0% 0% transparent;
+    font-weight: 900;
+}
+
