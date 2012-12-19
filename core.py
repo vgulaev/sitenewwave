@@ -8,46 +8,38 @@ from htmlrootclass import htmlroot
 from xml.dom.minidom import DOMImplementation, getDOMImplementation
 from xml.dom.minidom import parse, parseString
 import xml.etree.ElementTree as ET
-sys.path.insert(0, os.path.expanduser('~/site/python'))
-#import lxml 
 
 if ((sys.platform) == "win32"):
     print ("")
-    sys.stdout = open('temp.html', 'w')
+    #sys.stdout = open('temp.html', 'w')
 else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
 
-#result_doc = htmlroot()
-#result_doc.initHTML()
+# domHeader = parse("mainpage_template.html")
+# headReceiver = domHeader.getElementsByTagName('head')[0];
+# bodyReceiver = domHeader.getElementsByTagName('body')[0];
 
-#print (result_doc.html_doc.toxml())
+# dom1 = parse("htmlstaticcontent/002aboutcompany/index.html")
 
-#f = open("htmlstaticcontent/002aboutcompany/index.html", "r")
-domHeader = parse("mainpage_template.html")
-headReceiver = domHeader.getElementsByTagName('head')[0];
-bodyReceiver = domHeader.getElementsByTagName('body')[0];
+# name = dom1.getElementsByTagName('link')
+# for x in name:
+    # x.setAttribute("href", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("href"))
 
-dom1 = parse("htmlstaticcontent/002aboutcompany/index.html")
+# name = dom1.getElementsByTagName('img')
+# for x in name:
+     # x.setAttribute("src", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("src"))
 
-name = dom1.getElementsByTagName('link')
-for x in name:
-    x.setAttribute("href", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("href"))
+# bodyForImport = dom1.getElementsByTagName('body')[0]
 
-name = dom1.getElementsByTagName('img')
-for x in name:
-     x.setAttribute("src", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("src"))
+# for x in bodyForImport.childNodes:
+    # bodyReceiver.appendChild(x)
 
-#print(dom1.toxml())
-
-bodyForImport = dom1.getElementsByTagName('body')[0]
-
-for x in bodyForImport.childNodes:
-    bodyReceiver.appendChild(x)
-
-#import all styles    
-name = dom1.getElementsByTagName("link")
-for x in name:
-    headReceiver.appendChild(x)
+# name = dom1.getElementsByTagName("link")
+# for x in name:
+    # headReceiver.appendChild(x)
     
-print domHeader.toxml("utf-8")
+# print domHeader.toxml("utf-8")
+
+tree = ET.parse('mainpage_template.html')
+print(ET.tostring(tree.getroot(), "utf-8"))
