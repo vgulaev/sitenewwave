@@ -139,11 +139,11 @@ input { padding: 3px 0px 2px; width: 50%; }
 #obj-navig { float: right; margin: 20px 18px 0px 0px; text-align: right; width: 150px; }
 #obj-navig a, #obj-navig a:hover { text-decoration: none; }
 #obj-navig img { margin-left: 8px; }
-#obj-navig img.nav1 { background: url('img/sprite.png') no-repeat scroll -48px -32px transparent; }
-#obj-navig img.nav2 { background: url('img/sprite.png') no-repeat scroll -60px -32px transparent; }
-#obj-navig img.nav3 { background: url('img/sprite.png') no-repeat scroll -72px -32px transparent; }
-#obj-navig a img.nav2 { background: url('img/sprite.png') no-repeat scroll -12px -32px transparent; }
-#obj-navig a img.nav3 { background: url('img/sprite.png') no-repeat scroll -24px -32px transparent; }
+#obj-navig img.nav1 { background: url('sprite.png') no-repeat scroll -48px -32px transparent; }
+#obj-navig img.nav2 { background: url('sprite.png') no-repeat scroll -60px -32px transparent; }
+#obj-navig img.nav3 { background: url('sprite.png') no-repeat scroll -72px -32px transparent; }
+#obj-navig a img.nav2 { background: url('sprite.png') no-repeat scroll -12px -32px transparent; }
+#obj-navig a img.nav3 { background: url('sprite.png') no-repeat scroll -24px -32px transparent; }
 #cont3 .obj-news { padding-top: 1px; }
 #cont3 .obj-news h2 { margin: 1em 0px 0.9em ! important; }
 #cont3 .obj-news h2 a, #cont3 .obj-news h2 a:link, #cont3 .obj-news h2 a:visited, #cont3 .obj-news h2 a:hover, #cont3 .obj-news h2 a:active { color: rgb(45, 54, 148); }

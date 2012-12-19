@@ -18,5 +18,8 @@ else:
 
 #print (result_doc.html_doc.toxml())
 
-f = open("mainpage_template.html", "r")
-print (f.read())
+#f = open("mainpage_template.html", "r")
+#print (f.read())
+form = cgi.FieldStorage()
+
+print "<p>name:", form["name"].value

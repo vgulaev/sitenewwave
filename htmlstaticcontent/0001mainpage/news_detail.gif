@@ -1,0 +1,1 @@
+ErrorException [ 2 ]: htmlspecialchars(): Invalid multibyte sequence in argument ~ SYSPATH/classes/kohana/core.php [ 1492 ]
