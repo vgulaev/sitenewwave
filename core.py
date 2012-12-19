@@ -21,17 +21,20 @@ else:
 
 #print (result_doc.html_doc.toxml())
 
-#f = open("htmlstaticcontent/0001mainpage/index.html", "r")
-dom1 = parse("htmlstaticcontent\\0001mainpage\\index.xml")
+#f = open("htmlstaticcontent/002aboutcompany/index.html", "r")
+dom1 = parse("htmlstaticcontent/002aboutcompany/index.html")
 
 name = dom1.getElementsByTagName('link')
 for x in name:
-    x.setAttribute("href", "htmlstaticcontent/0001mainpage/" + x.getAttribute("href"))
+    x.setAttribute("href", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("href"))
 
 name = dom1.getElementsByTagName('img')
 for x in name:
-    x.setAttribute("src", "htmlstaticcontent/0001mainpage/" + x.getAttribute("src"))
+     x.setAttribute("src", "htmlstaticcontent/002aboutcompany/" + x.getAttribute("src"))
 
-dom2 = ET.parse("mainpage_template.html")
+print(dom1.toxml())
+# dom2 = ET.parse("mainpage_template.html")
 
-print(ET.tostring(dom2.getroot(), "utf-8", "html"))
+# ET.register_namespace("", "")
+
+# print(ET.tostring(dom2.getroot(), "utf-8", "xml"))
