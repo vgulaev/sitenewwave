@@ -1,0 +1,235 @@
+h1.title {
+    margin: 0px;
+    color: rgb(0, 0, 0);
+    padding: 8px 0px 0px;
+    font-size: 200%;
+    line-height: 1.6;
+}
+
+#obj-path {
+    color: rgb(182, 182, 182);
+    font-size: 0.85em;
+    font-weight: 100;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+    color: rgb(45, 54, 148);
+}
+
+#obj-path a {
+    color: rgb(182, 182, 182) !important;
+    position: relative;
+    top: -1px;
+    font-weight: 100;
+}
+
+#obj-path ins {
+    margin: 0px 4px;
+    text-decoration: none;
+    font-size: 0.96em;
+}
+
+#wrap {
+    clear: both;
+    margin: 0px 245px 0px 178px;
+    height: 1%;
+    position: relative;
+}
+
+#col3 {
+    float: right;
+    margin-right: -245px;
+    position: relative;
+    width: 245px;
+}
+
+#cont3 {
+    height: 1%;
+    padding: 18px 0px 50px;
+}
+
+#main h2, #cont1 h2, #cont3 h2 {
+    color: rgb(45, 54, 148);
+    margin: 0px 0px 0.5em;
+    padding: 0px;
+}
+
+#cont3 h2 {
+    margin: 0px 0px 1em;
+    font-size: 106%;
+    font-weight: 900;
+}
+
+#cont3 img {
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+    border-top: 2px double rgb(229, 229, 229);
+    margin: 0px 0px 1.4em;
+}
+
+#cont3 div > img {
+    border-top: 1px solid rgb(229, 229, 229);
+    padding-top: 3px;
+}
+
+#cont3 ul, #cont3 ol, #cont3 p {
+    font-size: 0.86em;
+    line-height: 1.73;
+}
+
+#cont3 h3, #cont3 p {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#cont3 p {
+    margin: 0px 0px 1.4em;
+}
+
+#cont3 ul, #cont3 ol, #cont3 p {
+    font-size: 0.86em;
+    line-height: 1.73;
+}
+
+#cont3 ul {
+    margin: 0px 0px 1.4em;
+    padding: 0px 0px 0px 5px;
+}
+
+#cont3 ul li, #cont3 ul ul li, #cont3 ul ul ul li {
+    background: url("/img/p1.gif") no-repeat scroll 0px 1em transparent;
+}
+
+#cont3 .obj-catalog2 {
+    margin-top: 3.7em;
+    padding: 0px 0px 1px;
+    position: relative;
+}
+
+#cont3 .obj-catalog2 h2 {
+    border-bottom: 1px solid rgb(221, 221, 221);
+    margin: 0px 0px 15px !important;
+    padding: 0px 0px 3px 92px !important;
+    position: relative;
+    z-index: 1;
+}
+
+#cont3 .obj-catalog2 img {
+    border: 0px solid;
+    padding: 0px;
+    position: absolute;
+    top: -9px;
+    right: 167px;
+    z-index: 0;
+}
+
+#cont3 .obj-news ul, #cont3 .obj-catalog2 div {
+    font-size: 0.93em;
+}
+
+#cont3 .obj-catalog2 div {
+    padding-left: 92px;
+}
+
+#cont3 .obj-catalog2 h3 {
+    font-size: 111%;
+    font-weight: 900;
+    line-height: 1.61;
+}
+
+#cont3 .obj-catalog2 h3 {
+    color: rgb(86, 86, 86);
+    margin: 0px;
+    padding: 0px;
+}
+
+#cont3 .obj-catalog2 p {
+    font-size: 0.91em;
+    line-height: 1.8;
+}
+
+#cont3 .obj-catalog2 p {
+    margin: 0.2em 0px 1.4em;
+}
+
+#col2 {
+    display: table;
+    float: right;
+    width: 99.4%;
+}
+
+#cont2 {
+    height: auto !important;
+    min-height: 350px;
+    padding: 15px 27px 20px 24px;
+}
+
+.aleft {
+    text-align: left !important;
+}
+
+img.aleft, object.aleft {
+    float: left;
+    margin: 0.4em 25px 5px 0px;
+}
+
+#cont2 img {
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+    border: 2px double rgb(229, 229, 229);
+}
+
+.ind10 {
+    margin-left: 40px;
+}
+
+.ind10, .ind20, .ind30 {
+    padding: 1.2em 0px;
+}
+
+ins, samp {
+    color: rgb(170, 170, 170);
+    text-decoration: none;
+}
+
+ul {
+    margin-left: 2.7em;
+    padding: 0.8em 0px;
+}
+
+ul li, ul ul li, ul ul ul li {
+    background: url("/img/p1.gif") no-repeat scroll 0px 0.9em transparent;
+    list-style-type: none;
+    padding: 2px 0px 2px 1.9em;
+}
+
+#col1 {
+    background: url("/img/sprite2.png") no-repeat scroll 176px -3px transparent;
+    float: left;
+    margin-left: -178px;
+    position: relative;
+    width: 178px;
+}
+
+#cont1 {
+    height: 1%;
+    padding: 17px 12px 50px;
+}
+
+#obj-menu ul {
+    color: rgb(179, 181, 206);
+    list-style: none outside none;
+    margin: 0px;
+    padding: 1px 0px 0px;
+    text-align: left;
+}
+
+#obj-menu ul li {
+    font-weight: 900;
+    background: none repeat scroll 0% 0% transparent;
+    margin: 0px;
+    padding: 0px 0px 8px;
+    height: 1%;
+}
+
+#main2 {
+    background: url("/img/sprite2.png") repeat-y scroll -70px 0px rgb(255, 255, 255);
+}
