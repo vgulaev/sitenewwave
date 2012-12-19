@@ -6,7 +6,8 @@ import cgi
 import cgitb; cgitb.enable()
 from htmlrootclass import htmlroot
 from xml.dom.minidom import DOMImplementation, getDOMImplementation
-from xml.dom.minidom import parse, parseString 
+from xml.dom.minidom import parse, parseString
+import xml.etree.ElementTree as ET 
 
 if ((sys.platform) == "win32"):
     print ("")
@@ -31,8 +32,6 @@ name = dom1.getElementsByTagName('img')
 for x in name:
     x.setAttribute("src", "htmlstaticcontent/0001mainpage/" + x.getAttribute("src"))
 
-print(dom1.toxml())
-#print (f.read())
-#form = cgi.FieldStorage()
+dom2 = ET.parse("mainpage_template.html")
 
-#print "<p>name:", form["name"].value
+print(ET.tostring(dom2.getroot(), "utf-8", "html"))
