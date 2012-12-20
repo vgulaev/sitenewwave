@@ -73,7 +73,6 @@ $APPLICATION->IncludeFile(
 
 			<span id='showBasketSpan'>
                 <p><a href='Показать заказ' title='Заказ' id='tabBasket' onClick='return false'>Показать заказ (<span class='basketCount'>0</span>)</a></p>
-                <!-- <p><a href="/1cengine/site/fullprice.php" title="Перейти на страницу с полным прайс-листом">Полный прайс</a></p> -->
                 <!-- <p><a href="javascript:showGroups()" title="Показать группы товаров">Показать группы товаров</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
                 <p>Скачать прайс:
@@ -100,6 +99,7 @@ $APPLICATION->IncludeFile(
                     <input id="itemName" placeholder="Введите здесь интересующий вас товар" />
                     <div id="searchButton">Найти</div>
     			</div><br />
+                <a href="javascript:showGroups()" title="Показать группы товаров"><div id="showGroupsDiv">Показать группы</div></a>
                 <span id="hollowResult"></span>
                 <div id="qRes">
     				<table id="tableRes">
@@ -145,30 +145,8 @@ $APPLICATION->IncludeFile(
                         </tr>
                         
                     </table>
-                    <!-- <ul>
-                        <li><a href="javascript:showGroup2('Арматура')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); return true;"><strong>Арматура</strong></a></li>
-                        <li><a href="javascript:showGroup2('Балка')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); return true;"><strong>Балка</strong></a></li>
-                        <li><a href="javascript:showGroup2('Квадрат')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); return true;"><strong>Квадрат</strong></a></li>
-                        <li><a href="javascript:showGroup2('Круг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); return true;"><strong>Круг</strong></a></li>
-                        <li><a href="javascript:showGroup2('Лист')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); return true;"><strong>Лист</strong></a></li>
-                        <li><a href="javascript:showGroup2('Труба')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); return true;"><strong>Труба</strong></a></li>
-                        <li><a href="javascript:showGroup2('Швеллер')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); return true;"><strong>Швеллер</strong></a></li>
-                        <li><a href="javascript:showGroup2('Профнастил')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); return true;"><strong>Профнастил</strong></a></li>
-                        <li><a href="javascript:showGroup2('Штрипс')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); return true;"><strong>Штрипс</strong></a></li>
-                        <li><a href="javascript:showGroup2('Проволока')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); return true;"><strong>Проволока</strong></a></li>
-                        <li><a href="javascript:showGroup2('Металлосайдинг')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); return true;"><strong>Металлосайдинг</strong></a></li>
-                        <li><a href="javascript:showGroup2('Металлочерепица')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); return true;"><strong>Металлочерепица</strong></a></li>
-                        <li><a href="javascript:showGroup2('Угол')" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); return true;"><strong>Угол</strong></a></li>
-                    </ul> -->
+                    
                 </div>
-
-                <!-- <div id="myCanvasContainer">
-                    <canvas width="300" height="300" id="myCanvas">
-                        <p>Anything in here will be replaced on browsers that support the canvas element</p>
-                    </canvas>
-                </div> -->
-
-                <div id="groupDiv"></div>
 
             </div>
             <div id="basketDiv" style="display:none">
