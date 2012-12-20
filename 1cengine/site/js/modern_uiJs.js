@@ -101,26 +101,42 @@ $(function(){
 
 
 function showGroups(){
-    $("#itemName").attr("value", "")
-    $("#tableRes").empty()
-    $("#myCanvasContainer").hide()
-    $('#tags').hide();
-    $("#showAll").hide();
+    // $("#itemName").attr("value", "")
+    // $("#tableRes").empty()
+    // $("#myCanvasContainer").hide()
+    // $('#tags').hide();
+    // $("#showAll").hide();
 
     // if($("#groupDiv").find("li")==undefined){
-        $.ajax({
-            type: "POST",
-            url: "getGroups.php",
-            async: true,
-            data: "",
-            success: function(html){
-                $("#groupDiv").html(html)
-                $("#groupDiv").show()
-            }
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "getGroups.php",
+        //     async: true,
+        //     data: "",
+        //     success: function(html){
+        //         $("#groupDiv").html(html)
+        //         $("#groupDiv").show()
+        //     }
+        // });
     // } else {
     //     $("#groupDiv").show()
     // }
+
+    $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+    $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
+    $.blockUI.defaults.fadeOut = 100; //и исчезновение
+    //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+    $.blockUI.defaults.css.backgroundColor = 'white'
+    $.blockUI.defaults.css.cursor = 'defaults'
+    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+    $.blockUI.defaults.css.fontSize = '14px'
+    $.blockUI.defaults.css.width = '700px'
+    $.blockUI.defaults.css.height = '370px'
+    $.blockUI.defaults.css.paddingTop = '20px'
+    $.blockUI.defaults.css.paddingLeft = '20px'
+
+
+    $.blockUI({ message: $("#tags")});
     
 }
 
@@ -145,6 +161,7 @@ function searchItem2(item){
 function showGroup2(groupName){
     $("#itemName").attr('value', groupName)
     $("#itemName").change()
+    $.unblockUI()
 }
 
 function getItemChar(hash){
@@ -1683,7 +1700,7 @@ $(document).ready( function(){
             $(elem).css({border:"1px solid rgb(45, 54, 148)", position:"absolute", backgroundColor:"white", boxShadow:"0px 0px 5px 5px rgb(207, 207, 207)", zIndex:"11"})
             $(elem).find("span").each( function(){
                 spWidth = this.offsetWidth
-                spWidth = spWidth + 150
+                spWidth = spWidth + 170
             })
             $(elem).animate({
                 width : spWidth+"px",
@@ -1799,13 +1816,15 @@ $(document).ready( function(){
 				
 				$(html).appendTo("#tableRes")
                 if($(".item").length>=1){
-                    $("#myCanvasContainer").hide();
+                    
                     $("#tags").hide();
+                    $("#showGroupsDiv").show()
                     $('#hollowResult').empty()
                 } else {
                     $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
                     // $('#myCanvasContainer').show();
                     $('#tags').show();
+                    $("#showGroupsDiv").hide()
                 }
 				if($(".item").length==20){
 					$("#showAll").show();
