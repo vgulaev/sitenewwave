@@ -70,7 +70,6 @@ input { padding: 3px 0px 2px; width: 50%; }
 #wrap { clear: both; margin: 0px 245px 0px 178px; height: 1%; position: relative; }
 #main #wrap { margin: 0px 225px 0px 265px; }
 #wrap:after { content: ""; display: block; clear: both; }
-#header { background: none repeat scroll 0% 0% rgb(255, 255, 255); border-bottom: 6px solid rgb(166, 207, 237); height: 1%; position: relative; }
 #header .box { clear: both; width: 100%; }
 #header .box:after { content: ""; display: block; clear: both; }
 #header #logo { display: block; position: absolute; left: 0px; top: 24px; z-index: 2; }
@@ -119,3 +118,62 @@ input { padding: 3px 0px 2px; width: 50%; }
 #obj-navig a img.nav2 { background: url('img/sprite.png') no-repeat scroll -12px -32px transparent; }
 #obj-navig a img.nav3 { background: url('img/sprite.png') no-repeat scroll -24px -32px transparent; }
 #obj-auth{border: solid 3px red}
+
+#header {
+	background-attachment: scroll;
+background-clip: border-box;
+background-color: white;
+background-image: none;
+background-origin: padding-box;
+background-size: auto;
+border-bottom-color: #A6CFED;
+border-bottom-style: solid;
+border-bottom-width: 6px;
+color: #484848;
+display: block;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 105px;
+line-height: 19px;
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+margin-top: 0px;
+position: relative;
+text-align: left;
+width: 972px;
+}
+header {
+	background-attachment: scroll;
+background-clip: border-box;
+background-color: white;
+background-image: none;
+background-origin: padding-box;
+background-size: auto;
+border-bottom-color: #A6CFED;
+border-bottom-style: solid;
+border-bottom-width: 6px;
+color: #484848;
+display: block;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+height: 105px;
+line-height: 19px;
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+margin-top: 0px;
+position: relative;
+text-align: left;
+width: 972px;
+margin: 0 auto;
+}
+header .box { clear: both; width: 100%; }
+header .box:after { content: ""; display: block; clear: both; }
+header #logo { display: block; position: absolute; left: 0px; top: 24px; z-index: 2; }
