@@ -35,12 +35,21 @@ def mySiteParser(site_url):
 			header = header + 11
 			length = footer - header
 
+			p2 = re.compile('<div id="main[\w/]*">', re.DOTALL)
+
+			div = p2.findall(html)
+			print div
+
 			body = html[header:footer]
+
+
 
 			body = body.replace("/bitrix/templates/trimet/img/default/", "/afedorov/img/")
 			body = body.replace("/upload/medialibrary/658/", "/afedorov/img/")
 			body = body.replace("/upload/medialibrary/51b/", "/afedorov/img/")
 			body = body.replace("/images/", "/afedorov/images/")
+
+			body = div[0]+body
 
 			f.write(body)
 			f.close
