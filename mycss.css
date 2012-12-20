@@ -118,6 +118,4 @@ input { padding: 3px 0px 2px; width: 50%; }
 #obj-navig img.nav3 { background: url('img/sprite.png') no-repeat scroll -72px -32px transparent; }
 #obj-navig a img.nav2 { background: url('img/sprite.png') no-repeat scroll -12px -32px transparent; }
 #obj-navig a img.nav3 { background: url('img/sprite.png') no-repeat scroll -24px -32px transparent; }
-
-
-
+#obj-auth{border: solid 3px red}

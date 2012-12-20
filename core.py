@@ -8,6 +8,7 @@ from htmlrootclass import htmlroot
 from xml.dom.minidom import DOMImplementation, getDOMImplementation
 from xml.dom.minidom import parse, parseString
 import xml.etree.ElementTree as ET
+import html5lib
 
 if ((sys.platform) == "win32"):
     print ("")
@@ -16,7 +17,10 @@ else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
 
-# domHeader = parse("mainpage_template.html")
+f = open("mainpage_template.html")
+doc = html5lib.parse(f)
+print(doc.toxml())
+#domHeader = parse("mainpage_template.html")
 # headReceiver = domHeader.getElementsByTagName('head')[0];
 # bodyReceiver = domHeader.getElementsByTagName('body')[0];
 
@@ -39,7 +43,7 @@ else:
 # for x in name:
     # headReceiver.appendChild(x)
     
-# print domHeader.toxml("utf-8")
+#print domHeader.toxml("utf-8")
 
-tree = ET.parse('mainpage_template.html')
-print(ET.tostring(tree.getroot(), "utf-8"))
+#tree = ET.parse('mainpage_template.html')
+#print(ET.tostring(tree.getroot(), "utf-8"))
