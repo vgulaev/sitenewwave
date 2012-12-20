@@ -663,7 +663,7 @@
 .tagTab{
 	/*font-size:18px;*/
 	/*font-weight:normal;*/
-	width:600px;
+	width:700px;
 }
 
 .tagTab td{
@@ -727,5 +727,118 @@
 	background-repeat: no-repeat;
 	float:left;
 	margin-left:-15px;
-
 }
+
+
+
+/*.tagTab td:hover{
+	width:230px;
+	height:80px;
+	border: 1px solid black;
+}*/
+
+
+
+/*.tagTab td:hover span{
+	font-weight: bold !important;
+	padding-top:10px;
+	height:51px;
+	display:block;
+	float:left;
+}*/
+
+.armaTagDiv{
+	width:50px;
+	height:36px;
+	background-image: url('images/armatura.png');
+	background-position: 50px 36px;
+	float:left;
+}
+
+
+
+.listTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/list_stalnoy.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.shvellerTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/shveller.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.balkaTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/balka_dvutavrovaya.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.trubaTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/truba_1.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.profnastilTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/profnastil.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.kvadratTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/kvadratu.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.provolokaTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/provoloka.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.ugolTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/ugolok_stalnoy.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.krugTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/krugi.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.metallosadingTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/metallosaiding.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.shtripsTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/shtrips.png');
+	background-position: 50px 36px;
+	float:left;
+}
+.metallocherepicaTagDiv{
+	width:50px;
+	height:36px;
+	background-image:url('images/cherepica.png');
+	background-position: 50px 36px;
+	float:left;
+}
+

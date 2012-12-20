@@ -121,27 +121,27 @@ $APPLICATION->IncludeFile(
                 <div id="tags">
                     <table class="tagTab" style="font-size:16px">
                         <tr>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><strong>Арматура</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); showGroup2('Лист'); return false;"><strong>Лист</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); showGroup2('Швеллер'); return false;"><strong>Швеллер</strong></a></td>
+                            <td class="iRefTd armaTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>
+                            <td class="iRefTd listTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); showGroup2('Лист'); return false;"><div class="listTagDiv"></div><span><strong>Лист</strong></span></a></td>
+                            <td class="iRefTd shvellerTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); showGroup2('Швеллер'); return false;"><div class="shvellerTagDiv"></div><span><strong>Швеллер</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); showGroup2('Балка'); return false;"><strong>Балка</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); showGroup2('Труба'); return false;"><strong>Труба</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); showGroup2('Профнастил'); return false;"><strong>Профнастил</strong></a></td>
+                            <td class="iRefTd balkaTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); showGroup2('Балка'); return false;"><div class="balkaTagDiv"></div><span><strong>Балка</strong></span></a></td>
+                            <td class="iRefTd trubaTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); showGroup2('Труба'); return false;"><div class="trubaTagDiv"></div><span><strong>Труба</strong></span></a></td>
+                            <td class="iRefTd profnastilTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); showGroup2('Профнастил'); return false;"><div class="profnastilTagDiv"></div><span><strong>Профнастил</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); showGroup2('Квадрат'); return false;"><strong>Квадрат</strong></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); showGroup2('Проволока'); return false;"><strong>Проволока</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); showGroup2('Угол'); return false;"><strong>Угол</strong></a></td>
+                            <td class="iRefTd kvadratTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); showGroup2('Квадрат'); return false;"><div class="kvadratTagDiv"></div><span><strong>Квадрат</strong></span></a></td>
+                            <td class="iRefTd provolokaTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); showGroup2('Проволока'); return false;"><div class="provolokaTagDiv"></div><span><strong>Проволока</strong></span></a></td>
+                            <td class="iRefTd ugolTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); showGroup2('Угол'); return false;"><div class="ugolTagDiv"></div><span><strong>Угол</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); showGroup2('Круг'); return false;"><strong>Круг</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); showGroup2('Металлосайдинг'); return false;"><strong>Металлосайдинг</strong></a></td>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); showGroup2('Штрипс'); return false;"><strong>Штрипс</strong></a></td>
+                            <td class="iRefTd krugTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); showGroup2('Круг'); return false;"><div class="krugTagDiv"></div><span><strong>Круг</strong></span></a></td>
+                            <td class="iRefTd metallosaidingTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); showGroup2('Металлосайдинг'); return false;"><div class="metallosadingTagDiv"></div><span><strong>Металлосайдинг</strong></span></a></td>
+                            <td class="iRefTd shtripsTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); showGroup2('Штрипс'); return false;"><div class="shtripsTagDiv"></div><span><strong>Штрипс</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td><img src="http://yaca.yandex.ru/blocks/b-rubric/__list/b-rubric__list__help.png" /><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); showGroup2('Металлочерепица'); return false;"><strong>Металлочерепица</strong></a></td>
+                            <td class="iRefTd metallocherepicaTagTd"><a href="Открыть группу" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); showGroup2('Металлочерепица'); return false;"><div class="metallocherepicaTagDiv"></div><span><strong>Металлочерепица</strong></span></a></td>
                         </tr>
                         
                     </table>
