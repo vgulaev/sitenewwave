@@ -4,14 +4,9 @@
 import sys,os
 import cgi
 import cgitb; cgitb.enable()
-<<<<<<< HEAD
-=======
-from xml.dom.minidom import DOMImplementation, getDOMImplementation
-from xml.dom.minidom import parse, parseString
-from xml.etree.ElementTree import tostring
 sys.path.insert(0, os.path.expanduser('~/site/python'))
->>>>>>> b6a96b3ba4c1aa74d8a7af4c6d5715087c03b862
 from bs4 import BeautifulSoup
+from urllist import trimeturls
 
 if ((sys.platform) == "win32"):
     print ("")
@@ -22,22 +17,31 @@ else:
     
 print("<!DOCTYPE html>")
 
-soup = BeautifulSoup(open("mainpage_template.html"))
+def findpath(pagename):
+    result = "htmlstaticcontent/0001mainpage/";
+    for element in trimeturls:
+        if element.urlname == pagename:
+            result = element.path  
+    return(result)
 
-soupForImport = BeautifulSoup(open("htmlstaticcontent/0001mainpage/index.html"))
+def makecontent(path):
+    soup = BeautifulSoup(open("mainpage_template.html"))
+    soupForImport = BeautifulSoup(open(path + "index.html"))
+    nodes = soupForImport.find_all("img")
+    for currentelement in nodes:
+        currentelement["src"] = path + currentelement["src"]
+    nodes = soupForImport.html.body.contents
+    for currentelement in nodes:
+        if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
+            soup.html.body.append(currentelement)
+            nodes = soupForImport.find_all("link")
+    for currentelement in nodes:
+        currentelement["href"] = path + currentelement["href"] 
+        soup.html.head.append(currentelement)
+    print(soup.prettify("utf-8"))
 
-nodes = soupForImport.find_all("img")
-for currentelement in nodes:
-    currentelement["src"] = "htmlstaticcontent/0001mainpage/" + currentelement["src"] 
+form = cgi.FieldStorage()
 
-nodes = soupForImport.html.body.contents
-for currentelement in nodes:
-    if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
-        soup.html.body.append(currentelement)
-
-nodes = soupForImport.find_all("link")
-for currentelement in nodes:
-    currentelement["href"] = "htmlstaticcontent/0001mainpage/" + currentelement["href"] 
-    soup.html.head.append(currentelement)
-
-print(soup.prettify("utf-8"))
+pathtohtml = findpath("mainpage")
+makecontent(pathtohtml)
+#if form.has_key("name"):

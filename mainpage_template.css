@@ -119,7 +119,7 @@ input { padding: 3px 0px 2px; width: 50%; }
 #obj-navig a img.nav3 { background: url('img/sprite.png') no-repeat scroll -24px -32px transparent; }
 #obj-auth{border: solid 3px red}
 
-#header {
+/*#header {
 	background-attachment: scroll;
 background-clip: border-box;
 background-color: white;
@@ -145,7 +145,7 @@ margin-top: 0px;
 position: relative;
 text-align: left;
 width: 972px;
-}
+}*/
 header {
 	background-attachment: scroll;
 background-clip: border-box;
