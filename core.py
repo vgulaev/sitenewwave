@@ -42,11 +42,11 @@ def makecontent(path):
 
 form = cgi.FieldStorage()
 
-if form.has_key("name"):
-    pathtohtml = findpath(form["name"].value)
+if form.has_key("page"):
+    pathtohtml = findpath(form["page"].value)
 else:
-    pathtohtml = "htmlstaticcontent/0001mainpage/"
-    #pathtohtml = "htmlstaticcontent/002aboutcompany/"
+    #pathtohtml = "htmlstaticcontent/0001mainpage/"
+    pathtohtml = "htmlstaticcontent/0003metalwork/"
 
 makecontent(pathtohtml)
 #if form.has_key("name"):

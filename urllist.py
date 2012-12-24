@@ -11,4 +11,5 @@ class urltype:
 trimeturls = list()
 
 trimeturls.append(urltype("mainpage", "htmlstaticcontent/0001mainpage/"))
-trimeturls.append(urltype("about", "htmlstaticcontent/002aboutcompany/"))
+trimeturls.append(urltype("about", "htmlstaticcontent/0002aboutcompany/"))
+trimeturls.append(urltype("metalwork", "htmlstaticcontent/0003metalwork/"))
