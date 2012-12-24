@@ -4,6 +4,13 @@
 import sys,os
 import cgi
 import cgitb; cgitb.enable()
+<<<<<<< HEAD
+=======
+from xml.dom.minidom import DOMImplementation, getDOMImplementation
+from xml.dom.minidom import parse, parseString
+from xml.etree.ElementTree import tostring
+sys.path.insert(0, os.path.expanduser('~/site/python'))
+>>>>>>> b6a96b3ba4c1aa74d8a7af4c6d5715087c03b862
 from bs4 import BeautifulSoup
 
 if ((sys.platform) == "win32"):
