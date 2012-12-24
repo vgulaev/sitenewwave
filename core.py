@@ -36,5 +36,4 @@ for currentelement in nodes:
     currentelement["href"] = "htmlstaticcontent/0001mainpage/" + currentelement["href"] 
     soup.html.head.append(currentelement)
 
-
-print(soup.prettify())
+print(soup.prettify("utf-8"))
