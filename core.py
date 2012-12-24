@@ -18,7 +18,7 @@ else:
 print("<!DOCTYPE html>")
 
 def findpath(pagename):
-    result = "htmlstaticcontent/0001mainpage/";
+    result = "htmlstaticcontent/0001mainpage/"
     for element in trimeturls:
         if element.urlname == pagename:
             result = element.path  
@@ -42,6 +42,11 @@ def makecontent(path):
 
 form = cgi.FieldStorage()
 
-pathtohtml = findpath("mainpage")
+if form.has_key("name"):
+    pathtohtml = findpath(form["name"].value)
+else:
+    pathtohtml = "htmlstaticcontent/0001mainpage/"
+    #pathtohtml = "htmlstaticcontent/002aboutcompany/"
+
 makecontent(pathtohtml)
 #if form.has_key("name"):
