@@ -71,7 +71,7 @@
 			new $.oSlideshow(options)
 		}
 	})
-}
+})(jQuery);
 
 $(document).ready(function() {
 	if ($('.slideshow').length > 0) {
