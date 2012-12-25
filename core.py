@@ -45,8 +45,7 @@ form = cgi.FieldStorage()
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
 else:
-    #pathtohtml = "htmlstaticcontent/0001mainpage/"
-    pathtohtml = "htmlstaticcontent/0003metalwork/"
+    pathtohtml = "htmlstaticcontent/0001mainpage/"
 
 makecontent(pathtohtml)
 #if form.has_key("name"):
