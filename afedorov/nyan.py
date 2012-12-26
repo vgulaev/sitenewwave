@@ -13,6 +13,7 @@ def mySiteParser(site_url, dirlist):
 	
 	dirname = site_url.replace("http://trimet.ru/", "")
 	dirname = dirname.replace("/", "_")
+	dirname = dirname.replace(":","")
 	dirname_origin = dirname
 	if not dirname_origin in dirlist and not dirname_origin == '':
 		global count
