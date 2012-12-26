@@ -6,30 +6,48 @@ import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 import sqlalchemy
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+
+Base = declarative_base()
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
     
 print("<!DOCTYPE html>")
 
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    fullname = Column(String)
+    password = Column(String)
+    def __init__(self, name, fullname, password):
+        self.name = name
+        self.fullname = fullname
+        self.password = password
+    
+    def __repr__(self):
+        return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.password)
+
 print(sqlalchemy.__version__)
+print(User.__table__)
+print(User.__mapper__)
 
-engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru')
+# engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru')
 
+engine = create_engine('sqlite:///new.db')
 
-# conn = sqlite3.connect('example.db')
-# c = conn.cursor()
+#Base.metadata.create_all(engine)
 
-# # Create table
-# c.execute('''CREATE TABLE stocks
-             # (date text, trans text, symbol text, qty real, price real)''')
+Session = sessionmaker(bind=engine)
+Session.configure(bind=engine)
+session = Session()
 
-# # Insert a row of data
-# c.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
-
-# # Save (commit) the changes
-# conn.commit()
-
-# # We can also close the connection if we are done with it.
-# # Just be sure any changes have been committed or they will be lost.
-# conn.close()
+for i in range(0, 1000):
+    ed_user = User('ed', 'Ed Jones', 'edspassword')
+    session.add(ed_user)
+    
+session.commit()
+print("Finish")
