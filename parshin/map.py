@@ -10,3 +10,4 @@ print ("")
     
 print("<!DOCTYPE html>")
 print "Hello world!"
+print "Just for permissions"
