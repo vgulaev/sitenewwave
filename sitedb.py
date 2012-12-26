@@ -8,6 +8,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
@@ -20,9 +21,9 @@ print("<!DOCTYPE html>")
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    fullname = Column(String)
-    password = Column(String)
+    name = Column(VARCHAR(250))
+    fullname = Column(VARCHAR(250))
+    password = Column(VARCHAR(250))
     def __init__(self, name, fullname, password):
         self.name = name
         self.fullname = fullname
@@ -35,11 +36,11 @@ print(sqlalchemy.__version__)
 print(User.__table__)
 print(User.__mapper__)
 
-# engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru')
+engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
 
-engine = create_engine('sqlite:///new.db')
+#engine = create_engine('sqlite:///new.db')
 
-#Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
