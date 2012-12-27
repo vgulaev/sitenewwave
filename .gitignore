@@ -172,3 +172,4 @@ googlehostedservice.htmlexample.db
 ## DB files
 #############
 *.db
+import/
