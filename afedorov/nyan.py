@@ -97,7 +97,7 @@ def mySiteParser(site_url, dirlist):
 					img = img.replace("\"", "") 
 
 					# imgname = 
-					p4 = re.compile("[\w]\.jpg|[\w]\.png|[\w].gif")
+					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif")
 					imgname = p4.findall(img)
 
 					for imgnameiterator in imgname:
