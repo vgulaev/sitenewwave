@@ -27,6 +27,7 @@ def findpath(pagename):
 def makecontent(path):
     soup = BeautifulSoup(open("mainpage_template.html"))
     soupForImport = BeautifulSoup(open(path + "index.html"))
+    soupFooter = BeautifulSoup(open("mainfooter_template.html"))
     # change path for img tag to correct path
     nodes = soupForImport.find_all("img")
     for currentelement in nodes:
@@ -40,11 +41,22 @@ def makecontent(path):
     for currentelement in nodes:
        currentelement["href"] = "/"+path + currentelement["href"] 
        soup.html.head.append(currentelement)
+    # add footer
+    
+
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
             soup.html.body.append(currentelement)
+    
+    
+    node = soupFooter.find("footer", {"id": "footer"})
+
+    soup.html.body.append(node)
     print(soup.prettify("utf-8"))
+
+    
+
 
 form = cgi.FieldStorage()
 

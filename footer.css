@@ -1,4 +1,4 @@
-#divFooter{
+#footer{
     background: none repeat scroll 0% 0% rgb(255, 255, 255);
     border-top: 1px solid rgb(239, 239, 239);
     clear: both;
@@ -8,17 +8,19 @@
     position: relative;
     font-size:0.86em;
     font: Arial,Helvetica,sans-serif;
+    width:972px;
+    margin: 0px auto;
 }
 
-#divFooter form{
-	padding:0;
+#footer form{
+    padding:0;
 }
 
-#divFooter fieldset{
-	border:0;
+#footer fieldset{
+    border:0;
 }
 
-#divFooter input{
+#footer input{
     color: rgb(124, 124, 124);
     display: block;
     height: 1.5em !important;
@@ -32,18 +34,18 @@
 }
 
 
-#divFooterLeft{
-	width:275px;
-	line-height: 1.65;
-	float:left;
+#fleft{
+    width:275px;
+    line-height: 1.65;
+    float:left;
 }
 
-#divFooterLeft p{
-	margin-bottom:1.6em;
+#fleft p{
+    margin-bottom:1.6em;
 }
 
-#divFooterLeft span{
-	display:block;
+#fleft span{
+    display:block;
 }
 
 #copyr{
@@ -56,21 +58,21 @@
     font-size:1.3em;
 }
 
-#divFooterRight{
-	width:226px;
-	float:right;
+#fright{
+    width:226px;
+    float:right;
 }
 
 .input-field{
-	font-size:0.8em;
+    font-size:0.8em;
 }
 
 #author{
-	line-height:1.65em;
+    line-height:1.65em;
 }
 
-#divFooterCenter{
-	margin: 0px 240px 0px 287px;
+#box{
+    margin: 0px 240px 0px 287px;
 }
 
 #obj-mmenu2 {
