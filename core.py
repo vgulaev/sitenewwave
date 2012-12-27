@@ -30,15 +30,15 @@ def makecontent(path):
     # change path for img tag to correct path
     nodes = soupForImport.find_all("img")
     for currentelement in nodes:
-        currentelement["src"] = "/"+path + currentelement["src"]
+        currentelement["src"] = path + currentelement["src"]
     # change path for script tag to correct path
     nodes = soupForImport.find_all("script")
     for currentelement in nodes:
-        currentelement["src"] = "/"+path + currentelement["src"]
+        currentelement["src"] = path + currentelement["src"]
         soup.html.head.append(currentelement)
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
-       currentelement["href"] = "/"+path + currentelement["href"] 
+       currentelement["href"] = path + currentelement["href"] 
        soup.html.head.append(currentelement)
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
