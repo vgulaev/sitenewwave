@@ -116,12 +116,21 @@ def mySiteParser(site_url, dirlist):
 				### <<< img on site ###
 
 					
+				### replace img path in body >>> ###
 
+				p6 = re.compile("src=\"[\w/]+.jpg|src=\"[\w/]+.png|src=\"[\w/]+.gif")
 
-				body = body.replace("/bitrix/templates/trimet/img/default/", "")
-				body = body.replace("/upload/medialibrary/658/", "")
-				body = body.replace("/upload/medialibrary/51b/", "")
-				body = body.replace("/images/", "")
+				imgpaths = p6.findall(body)
+
+				for path in imgpaths:
+					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif")
+					imgname = p4.findall(path)
+
+					for img in imgname:
+
+						body = body.replace(path, "src=\""+img)
+
+				### <<< replace img path in body ###
 
 				body = div[0]+body+"</div>"
 
