@@ -22,9 +22,8 @@ print ("")
 #print("<!DOCTYPE html>")
 #client = Client('http://192.168.194.14/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl')
 p = dict(http = 'http://tdymkru:8awzVTe1@127.0.0.1:3128')
-client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl')
+client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', proxy = p)
 client.set_options(cache=DocumentCache())
-client.set_options(proxy = p)
 
 result = client.service.HelloWorld()
 print result
