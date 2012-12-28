@@ -173,3 +173,11 @@ googlehostedservice.htmlexample.db
 #############
 *.db
 import/
+
+#############
+## Sublime
+#############
+
+sftp-config.json
+.sublime-project
+.sublime-workspace
