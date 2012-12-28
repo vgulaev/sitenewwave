@@ -118,7 +118,7 @@ def mySiteParser(site_url, dirlist):
 
 							for img in imgname:
 
-								csstext = csstext.replace(path, "url\('/img/"+img)
+								csstext = csstext.replace(path, "url('/img/"+img)
 
 
 						fcss.write(csstext)
