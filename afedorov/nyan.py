@@ -49,19 +49,48 @@ def mySiteParser(site_url, dirlist):
 
 				urlList = p.findall(html)
 
+				### header&footer erase >>> ###
+
+				preheader = html.find('<div id="header')
+				
 				header = html.find("/header -->")
 				footer = html.find('<div id="footer')
 				# body = p2.findall(html)
 
+				preheader = html[0:preheader]
+
 				header = header + 11
 				length = footer - header
+				preheader = preheader.replace('<?xml version="1.0" encoding="utf-8" ?>','')
+				preheader = preheader.replace('<!--?xml version="1.0" encoding="utf-8" ?-->','')
+				preheader = preheader.replace('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">','')
 
-				p2 = re.compile('<div id="main[\w/]*">', re.DOTALL)
+				ph = re.compile('<style\stype="text/css"\smedia="all">@import\surl\("[\w/.-]+"\);</style>\n',re.DOTALL)
+				delete = ph.findall(preheader)
+				for el in delete:
+					preheader = preheader.replace(el,'')
 
-				div = p2.findall(html)
-				print div
+				ph = re.compile('<link\srel="stylesheet"\shref="[\w/.-]+"\stype="text/css"\smedia="screen"\s/>\n',re.DOTALL)
+				delete = ph.findall(preheader)
+				for el in delete:
+					preheader = preheader.replace(el,'')
+
+				ph = re.compile('<script\ssrc="[\w/.-]+"></script>\n',re.DOTALL)
+				delete = ph.findall(preheader)
+				for el in delete:
+					preheader = preheader.replace(el,'')
+
+				ph = re.compile('<script\stype="text/javascript"\sasync=""\ssrc="[\w/.-]+"></script>\n',re.DOTALL)
+				delete = ph.findall(preheader)
+				for el in delete:
+					preheader = preheader.replace(el,'')
+
+				preheader = preheader.replace('</head>', '<link rel="stylesheet" type="text/css" href="index.css" media="all" />\n</head>')
 
 				body = html[header:footer]
+
+
+				### <<< header&footer erase ###
 
 				### css on site >>> ###
 
@@ -132,7 +161,7 @@ def mySiteParser(site_url, dirlist):
 
 				### <<< replace img path in body ###
 
-				body = div[0]+body+"</div>"
+				body = preheader+body+"</div>"
 
 				f.write(body)
 				f.close
