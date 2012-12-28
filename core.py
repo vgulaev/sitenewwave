@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 import sys, os
@@ -45,18 +45,20 @@ def makecontent(path):
        currentelement["href"] = "/"+path + currentelement["href"] 
        soup.html.head.append(currentelement)
     
+    # set title
+    title = soupForImport.find("title")
+    soup.html.head.title.replaceWith(title)
     
-
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
             soup.html.body.append(currentelement)
-    
+
     
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
-
     soup.html.body.append(node)
+    
     print(soup.prettify("utf-8"))
 
     
