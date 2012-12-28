@@ -11,10 +11,10 @@ from suds.cache import DocumentCache
 #from suds import WebFault
 import logging
 logging.basicConfig(level=logging.INFO)
-#if __debug__:
-#    logging.getLogger('suds.client').setLevel(logging.DEBUG)
-#else:
-#    logging.getLogger('suds.client').setLevel(logging.CRITICAL)
+if __debug__:
+    logging.getLogger('suds.client').setLevel(logging.DEBUG)
+else:
+    logging.getLogger('suds.client').setLevel(logging.CRITICAL)
     
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
