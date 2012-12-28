@@ -105,7 +105,23 @@ def mySiteParser(site_url, dirlist):
 
 					try: 
 						fcss = open(dirname+"/index.css",'wb')
-						fcss.write(urllib.urlopen(cssurl).read())
+
+						csstext = urllib.urlopen(cssurl).read()
+
+						p6 = re.compile("url\(\"[\w/]+.jpg|url\(\"[\w/]+.png|url\(\"[\w/]+.gif|url\(\"[\w/]+.ico|url\('[\w/]+.jpg|url\('[\w/]+.png|url\('[\w/]+.gif|url\('[\w/]+.ico")
+
+						imgpaths = p6.findall(csstext)
+
+						for path in imgpaths:
+							p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif|[\w]+\.ico")
+							imgname = p4.findall(path)
+
+							for img in imgname:
+
+								csstext = csstext.replace(path, "url\('/img/"+img)
+
+
+						fcss.write(csstext)
 						fcss.close()
 						print "Success on " + cssurl
 					except:
@@ -126,7 +142,7 @@ def mySiteParser(site_url, dirlist):
 					img = img.replace("\"", "") 
 
 					# imgname = 
-					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif")
+					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif|[\w]+\.ico")
 					imgname = p4.findall(img)
 
 					for imgnameiterator in imgname:
@@ -147,12 +163,12 @@ def mySiteParser(site_url, dirlist):
 					
 				### replace img path in body >>> ###
 
-				p6 = re.compile("src=\"[\w/]+.jpg|src=\"[\w/]+.png|src=\"[\w/]+.gif")
+				p6 = re.compile("src=\"[\w/]+.jpg|src=\"[\w/]+.png|src=\"[\w/]+.gif|src=\"[\w/]+.ico")
 
 				imgpaths = p6.findall(body)
 
 				for path in imgpaths:
-					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif")
+					p4 = re.compile("[\w]+\.jpg|[\w]+\.png|[\w]+\.gif|[\w]+\.ico")
 					imgname = p4.findall(path)
 
 					for img in imgname:
