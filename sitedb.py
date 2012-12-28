@@ -3,6 +3,7 @@
 # This Python file uses the following encoding: utf-8
 import sys, os
 import cgitb; cgitb.enable()
+from xml.sax.xmlreader import XMLReader
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -10,11 +11,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
+import xml.sax as saxparser
 
 Base = declarative_base()
 
 class Goods(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'goods'
     id = Column(Integer, primary_key=True)
     id1C = Column(String(250))
     fullname = Column(String(250))
@@ -32,11 +34,8 @@ print ("")
 print("<!DOCTYPE html>")
 
 print(sqlalchemy.__version__)
-print(User.__table__)
-print(User.__mapper__)
 
 # engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
-
 engine = create_engine('sqlite:///new.db')
 
 #check that tables exist
@@ -46,13 +45,42 @@ if 'users' in metadata.tables.keys():
     print("yes")
 
 print(metadata.tables.keys())
-#Base.metadata.create_all(engine)
-Base.metadata.create(User)
- 
+
+Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
+
+import xml.sax.xmlreader
+import xml.sax.saxutils
+
+#===============================================================================
+# def testJunk(file, e2content):
+#  attr0 = xml.sax.xmlreader.AttributesImpl({})
+#  x =  xml.sax.saxutils.XMLGenerator(file)
+#  x.startDocument()
+#  x.startElement("document", attr0)
+# 
+#  x.startElement("element1", attr0)
+#  x.characters("bingo")
+#  x.endElement("element1")
+# 
+#  x.startElement("element2", attr0)
+#  x.characters(e2content)
+#  x.endElement("element2")
+# 
+#  x.endElement("document")
+#  x.endDocument()
+#  
+# testJunk(open("test.xml","w"), "wham < 3!")
+#===============================================================================
 #===============================================================================
 # Session = sessionmaker(bind=engine)
 # Session.configure(bind=engine)
 # session = Session()
+# session.commit()
+#===============================================================================
+
+
+#session.commit()
 # 
 # for i in range(0, 1000):
 #    ed_user = User('ed', 'Ed Jones', 'edspassword')
@@ -61,5 +89,19 @@ Base.metadata.create(User)
 # session.commit()
 #===============================================================================
 #print(Base.metadata.tables.keys())
+
+sys.path.insert(0, os.path.expanduser('~/site/python'))
+
+from lxml import etree 
+#from bs4 import BeautifulSoup
+#soup = BeautifulSoup(open("import/goods.xml"), "xml")
+#goodsarray = soup.find_all("Номенклатура")
+#help(xml.sax.xmlreader)
+context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
+i = 0;
+
+for action, elem in context:
+    i = i + 1;
+    print "%s: %s" % (action, elem.tag), i
 
 print("Finish")
