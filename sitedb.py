@@ -20,11 +20,9 @@ class Goods(Base):
     id = Column(Integer, primary_key=True)
     id1C = Column(String(250))
     fullname = Column(String(250))
-    password = Column(String(250))
-    def __init__(self, name, fullname, password):
-        self.name = name
+    def __init__(self, name, fullname):
+        self.id1C = name
         self.fullname = fullname
-        self.password = password
     
     def __repr__(self):
         return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.password)
@@ -33,6 +31,7 @@ print ("Content-Type: text/html; charset=utf-8")
 print ("")
 print("<!DOCTYPE html>")
 
+print "<html><head></head><body>"
 print(sqlalchemy.__version__)
 
 # engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
@@ -52,33 +51,9 @@ Base.metadata.create_all(engine)
 import xml.sax.xmlreader
 import xml.sax.saxutils
 
-#===============================================================================
-# def testJunk(file, e2content):
-#  attr0 = xml.sax.xmlreader.AttributesImpl({})
-#  x =  xml.sax.saxutils.XMLGenerator(file)
-#  x.startDocument()
-#  x.startElement("document", attr0)
-# 
-#  x.startElement("element1", attr0)
-#  x.characters("bingo")
-#  x.endElement("element1")
-# 
-#  x.startElement("element2", attr0)
-#  x.characters(e2content)
-#  x.endElement("element2")
-# 
-#  x.endElement("document")
-#  x.endDocument()
-#  
-# testJunk(open("test.xml","w"), "wham < 3!")
-#===============================================================================
-#===============================================================================
-# Session = sessionmaker(bind=engine)
-# Session.configure(bind=engine)
-# session = Session()
-# session.commit()
-#===============================================================================
-
+Session = sessionmaker(bind=engine)
+Session.configure(bind=engine)
+session = Session()
 
 #session.commit()
 # 
@@ -97,11 +72,25 @@ from lxml import etree
 #soup = BeautifulSoup(open("import/goods.xml"), "xml")
 #goodsarray = soup.find_all("Номенклатура")
 #help(xml.sax.xmlreader)
-context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
+#context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
+context = etree.iterparse("import/goods.xml")
+
 i = 0;
 
+def make_record_in_base(act, elem):
+    print "%s: %s" % (act, elem.tag), elem.get("fullname")
+    article = Goods(elem.get("fullname"), "")
+    session.add(article)
+    session.commit()
+
 for action, elem in context:
-    i = i + 1;
-    print "%s: %s" % (action, elem.tag), i
+    if elem.tag == "Номенклатура":
+        make_record_in_base(action, elem)
+        print i
+        i = i + 1
+    
+session.close()
 
 print("Finish")
+
+print "</body></html>"
