@@ -35,10 +35,10 @@ print "<html><head></head><body>"
 print(sqlalchemy.__version__)
 
 engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
-#engine = create_engine('sqlite:///new.db')
+# engine = create_engine('sqlite:///new.db')
 
-#check that tables exist
-metadata = MetaData(bind = engine)
+# check that tables exist
+metadata = MetaData(bind=engine)
 metadata.reflect() 
 if 'users' in metadata.tables.keys():
     print("yes")
@@ -55,7 +55,7 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-#session.commit()
+# session.commit()
 # 
 # for i in range(0, 1000):
 #    ed_user = User('ed', 'Ed Jones', 'edspassword')
@@ -63,22 +63,22 @@ session = Session()
 #    
 # session.commit()
 #===============================================================================
-#print(Base.metadata.tables.keys())
+# print(Base.metadata.tables.keys())
 
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
 from lxml import etree 
-#from bs4 import BeautifulSoup
-#soup = BeautifulSoup(open("import/goods.xml"), "xml")
-#goodsarray = soup.find_all("Номенклатура")
-#help(xml.sax.xmlreader)
+# from bs4 import BeautifulSoup
+# soup = BeautifulSoup(open("import/goods.xml"), "xml")
+# goodsarray = soup.find_all("Номенклатура")
+# help(xml.sax.xmlreader)
 context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
-#context = etree.iterparse("import/goods.xml")
+# context = etree.iterparse("import/goods.xml")
 
 i = 0;
 
 def make_record_in_base(act, elem):
-    print "<p>","%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
+    print "<p>", "%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
     article = Goods(elem.get("fullname"), elem.get("id1C"))
     session.add(article)
     session.commit()
@@ -88,6 +88,8 @@ for action, elem in context:
         make_record_in_base(action, elem)
         print i
         i = i + 1
+    else:
+        print "cant work"
     
 session.close()
 
