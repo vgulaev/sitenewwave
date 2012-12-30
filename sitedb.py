@@ -34,8 +34,8 @@ print("<!DOCTYPE html>")
 print "<html><head></head><body>"
 print(sqlalchemy.__version__)
 
-# engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
-engine = create_engine('sqlite:///new.db')
+engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
+#engine = create_engine('sqlite:///new.db')
 
 #check that tables exist
 metadata = MetaData(bind = engine)
@@ -72,8 +72,8 @@ from lxml import etree
 #soup = BeautifulSoup(open("import/goods.xml"), "xml")
 #goodsarray = soup.find_all("Номенклатура")
 #help(xml.sax.xmlreader)
-#context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
-context = etree.iterparse("import/goods.xml")
+context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
+#context = etree.iterparse("import/goods.xml")
 
 i = 0;
 
