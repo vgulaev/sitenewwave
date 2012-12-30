@@ -90,7 +90,7 @@ for action, elem in context:
         i = i + 1
     else:
         print "cant make eq"
-    
+
 session.close()
 
 print("Finish")
