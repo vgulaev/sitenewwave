@@ -20,9 +20,9 @@ class Goods(Base):
     id = Column(Integer, primary_key=True)
     id1C = Column(String(250))
     fullname = Column(String(250))
-    def __init__(self, name, fullname):
-        self.id1C = name
+    def __init__(self, fullname, id1C):
         self.fullname = fullname
+        self.id1C = id1C
     
     def __repr__(self):
         return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.password)
@@ -78,8 +78,8 @@ context = etree.iterparse("import/goods.xml")
 i = 0;
 
 def make_record_in_base(act, elem):
-    print "%s: %s" % (act, elem.tag), elem.get("fullname")
-    article = Goods(elem.get("fullname"), "")
+    print "<p>","%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
+    article = Goods(elem.get("fullname"), elem.get("id1C"))
     session.add(article)
     session.commit()
 
