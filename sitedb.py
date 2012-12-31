@@ -3,7 +3,6 @@
 # This Python file uses the following encoding: utf-8
 import sys, os
 import cgitb; cgitb.enable()
-from xml.sax.xmlreader import XMLReader
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -11,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
-import xml.sax as saxparser
+from lxml import etree 
 
 Base = declarative_base()
 
@@ -34,8 +33,12 @@ print("<!DOCTYPE html>")
 print "<html><head></head><body>"
 print(sqlalchemy.__version__)
 
-engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
-#engine = create_engine('sqlite:///new.db')
+if ((sys.platform) == "win32"):
+    engine = create_engine('sqlite:///new.db')
+    context = etree.iterparse("import/goods.xml")
+else:
+    engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
+    context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
 
 # check that tables exist
 metadata = MetaData(bind=engine)
@@ -48,32 +51,9 @@ print(metadata.tables.keys())
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
-import xml.sax.xmlreader
-import xml.sax.saxutils
-
 Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
-
-# session.commit()
-# 
-# for i in range(0, 1000):
-#    ed_user = User('ed', 'Ed Jones', 'edspassword')
-#    session.add(ed_user)
-#    
-# session.commit()
-#===============================================================================
-# print(Base.metadata.tables.keys())
-
-sys.path.insert(0, os.path.expanduser('~/site/python'))
-
-from lxml import etree 
-# from bs4 import BeautifulSoup
-# soup = BeautifulSoup(open("import/goods.xml"), "xml")
-# goodsarray = soup.find_all("Номенклатура")
-# help(xml.sax.xmlreader)
-context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
-#context = etree.iterparse("import/goods.xml")
 
 i = 0;
 
