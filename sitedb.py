@@ -10,7 +10,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
-from lxml import etree 
+from lxml import etree
+from secrets import str_conection_to_MySQL
 
 Base = declarative_base()
 
@@ -37,7 +38,7 @@ if ((sys.platform) == "win32"):
     engine = create_engine('sqlite:///new.db')
     context = etree.iterparse("import/goods.xml")
 else:
-    engine = create_engine('mysql://tdymkru:8awzVTe1@localhost:3306/tdymkru?charset=utf8')
+    engine = create_engine(str_conection_to_MySQL)
     context = etree.iterparse(os.path.expanduser("~/site/www/import/goods.xml"))
 
 # check that tables exist
