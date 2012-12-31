@@ -19,4 +19,4 @@ class Goods(Base):
         self.id1C = id1C
     
     def __repr__(self):
-        return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.password)
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)

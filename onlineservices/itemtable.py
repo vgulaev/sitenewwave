@@ -4,7 +4,30 @@
 import sys, os
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
+if ((sys.platform) == "win32"):
+    sys.path.insert(0, "../")
+else:
+    sys.path.insert(0, os.path.expanduser('~/site/www'))
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from dbclasses import Goods
+from secrets import str_conection_to_MySQL
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
+
+if ((sys.platform) == "win32"):
+    engine = create_engine('sqlite:///../new.db')
+else:
+    engine = create_engine(str_conection_to_MySQL)
+
+Session = sessionmaker(bind=engine)
+Session.configure(bind=engine)
+session = Session()
+
+q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
+
+print(q)
+
 print "Hello!!!"
