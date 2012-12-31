@@ -12,20 +12,9 @@ from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
 from lxml import etree
 from secrets import str_conection_to_MySQL
+from dbclasses import Goods
 
 Base = declarative_base()
-
-class Goods(Base):
-    __tablename__ = 'goods'
-    id = Column(Integer, primary_key=True)
-    id1C = Column(String(250))
-    fullname = Column(String(250))
-    def __init__(self, fullname, id1C):
-        self.fullname = fullname
-        self.id1C = id1C
-    
-    def __repr__(self):
-        return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.password)
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
