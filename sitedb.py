@@ -58,7 +58,7 @@ session = Session()
 i = 0;
 
 def make_record_in_base(act, elem):
-    print "<p>", "%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
+    #print "<p>", "%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
     article = Goods(elem.get("fullname"), elem.get("id1C"))
     session.add(article)
 
