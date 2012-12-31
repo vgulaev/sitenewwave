@@ -28,6 +28,7 @@ session = Session()
 
 q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
 
-print(q)
+for el in q:
+    print "<p>", el.fullname, "</p>"
 
 print "Hello!!!"
