@@ -61,16 +61,16 @@ def make_record_in_base(act, elem):
     print "<p>", "%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
     article = Goods(elem.get("fullname"), elem.get("id1C"))
     session.add(article)
-    session.commit()
 
 for action, elem in context:
-    if elem.tag == "Номенклатура":
+    if elem.tag == u"Номенклатура":
         make_record_in_base(action, elem)
         print i
         i = i + 1
     else:
         print "cant make eq"
 
+session.commit()
 session.close()
 
 print("Finish")
