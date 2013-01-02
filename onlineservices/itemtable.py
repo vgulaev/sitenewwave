@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 import sys, os
+import cgi
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 if ((sys.platform) == "win32"):
@@ -17,6 +18,8 @@ from secrets import str_conection_to_MySQL
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
 
+form = cgi.FieldStorage()
+
 if ((sys.platform) == "win32"):
     engine = create_engine('sqlite:///../new.db')
 else:
@@ -28,7 +31,8 @@ session = Session()
 
 q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
 
-for el in q:
-    print "<p>", el.fullname.encode("utf-8"), "</p>"
+print "<p>", form["likecondition"].value, "</p>"
+# for el in q:
+    # print "<p>", el.fullname.encode("utf-8"), "</p>"
 
 print "Hello!!!"
