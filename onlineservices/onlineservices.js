@@ -3,7 +3,7 @@ function printlist() {
 		type : "POST",
 		url : "itemtable.py",
 		async : true,
-		data : {"likecondition" : "труба арматура"},
+		data : {"likecondition" : $("#searchstring").val()},
 		success : function(html) {
 			$("#main").html(html)
 		}

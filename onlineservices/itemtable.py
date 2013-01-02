@@ -29,10 +29,12 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
-
-print "<p>", form["likecondition"].value, "</p>"
-# for el in q:
-    # print "<p>", el.fullname.encode("utf-8"), "</p>"
+likeex = "%" + form["likecondition"].value + "%"
+print "<p>", likeex, "</p>"
+#q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
+q = session.query(Goods).filter(Goods.fullname.like(likeex)).all()
+#print session.query(Goods).filter(Goods.fullname.like(form["likecondition"].value))
+for el in q:
+    print "<p>", el.fullname.encode("utf-8"), "</p>"
 
 print "Hello!!!"
