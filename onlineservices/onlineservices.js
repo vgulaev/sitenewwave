@@ -12,39 +12,45 @@ function printlist() {
 	})
 }
 
-function take_options() {
-	el = "Арматура Балка Воронка Ендова Желоб Заглушка Квадрат Колено Конек Кронштейн";
-	
-	return el.split(" ");
-}
-
-function filled_options_from_string(selectid, html)
-{
+function filled_options_from_string(selectid, html) {
 	optionsforapend = html.split(" ");
-	
-	for (el in optionsforapend){
-		if (optionsforapend[el].length > 2) {		options = document.createElement("option");
-		options.value = optionsforapend[el];
-		text = document.createTextNode(optionsforapend[el]);
-		options.appendChild(text);
-		$(selectid).append(options);
-};
+
+	for (el in optionsforapend) {
+		if (optionsforapend[el].length > 2) {
+			options = document.createElement("option");
+			options.value = optionsforapend[el];
+			text = document.createTextNode(optionsforapend[el]);
+			options.appendChild(text);
+			$(selectid).append(options);
+		};
 	}
 	$("#main").html(html);
 }
 
-function filed_options_for_seperator_id(selectid){
-	$.ajax({
-		type : "POST",
-		url : "getwords.py",
-		async : true,
-		/*data : {
-			"likecondition" : $("#searchstring").val()
-		},*/
-		success : function(html) {
-			filled_options_from_string(selectid, html);
-		}
-	})
+function filed_options_for_seperator_id(selectid) {
+	str1 = "Арматура Балка Воронка Ендова";
+	str2 = "Желоб Заглушка Квадрат";
+	str3 = "Колено Конек Кронштейн";
+	if (selectid == "#selector1") {
+		filled_options_from_string(selectid, str1);
+	} else if (selectid == "#selector2") {
+		filled_options_from_string(selectid, str2);
+	} else {
+		filled_options_from_string(selectid, str3);
+	}
+	;
+
+	/*$.ajax({
+	 type : "POST",
+	 url : "getwords.py",
+	 async : true,
+	 /*data : {
+	 "likecondition" : $("#searchstring").val()
+	 },
+	 success : function(html) {
+	 filled_options_from_string(selectid, html);
+	 }
+	 })*/
 }
 
 function add_selector() {
@@ -60,12 +66,12 @@ function add_selector() {
 	selectorbody.appendChild(options);
 
 	/*for (el in optionsforapend) {
-		options = document.createElement("option");
-		options.value = optionsforapend[el];
-		text = document.createTextNode(optionsforapend[el]);
-		options.appendChild(text);
-		selectorbody.appendChild(options);
-	};*/
+	 options = document.createElement("option");
+	 options.value = optionsforapend[el];
+	 text = document.createTextNode(optionsforapend[el]);
+	 options.appendChild(text);
+	 selectorbody.appendChild(options);
+	 };*/
 
 	$("#searchPanel").append(selectorbody);
 
@@ -73,7 +79,7 @@ function add_selector() {
 	$("#selector" + idselector).change(function() {
 		add_selector();
 	});
-	
+
 	optionsforapend = filed_options_for_seperator_id("#selector" + idselector);
 }
 
