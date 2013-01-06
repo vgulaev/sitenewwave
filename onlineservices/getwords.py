@@ -12,7 +12,7 @@ else:
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from dbclasses import Goods
+from dbclasses import Words, Goods
 from secrets import str_conection_to_MySQL
 
 print ("Content-Type: text/html; charset=utf-8")
@@ -32,7 +32,16 @@ session = Session()
 #likeex = "%" + form["likecondition"].value + "%"
 #print "<p>", likeex, "</p>"
 #q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
-#q = session.query(Goods).filter(Goods.fullname.like(likeex)).all()
-#print session.query(Goods).filter(Goods.fullname.like(form["likecondition"].value))
+q = session.query(Words)
 
-print "Hello!!!"
+#for i in range(1,3):
+    #q = q.filter(Words.order == 1)
+    #print i
+
+q = q.filter(Words.order == 1).group_by(Words.value).all()
+
+result = "";
+for el in q:
+    result = result + el.value + " " 
+
+print result.lstrip()
