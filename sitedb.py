@@ -48,12 +48,12 @@ session = Session()
 i = 0;
 
 def make_record_in_base_table_goods(act, elem):
-    article = Goods(elem.get("fullname"), elem.get("id1C"))
-    session.add(article)
+    dbrecord = Goods(elem.get("fullname"), elem.get("id1C"))
+    session.add(dbrecord)
 
 def make_record_in_base_table_words(act, elem):
-    article = Goods(elem.get("fullname"), elem.get("id1C"))
-    session.add(article)
+    dbrecord = Words(elem.get("fullname"), elem.get("id1C"), elem.get("value"), elem.get("order"))
+    session.add(dbrecord)
 
 for action, elem in context:
     if elem.tag == u"Номенклатура":
@@ -62,7 +62,19 @@ for action, elem in context:
         i = i + 1
     else:
         print "cant make eq"
+        
+if ((sys.platform) == "win32"):
+    context = etree.iterparse("import/words.xml")
+else:
+    context = etree.iterparse(os.path.expanduser("~/site/www/import/words.xml"))
 
+for action, elem in context:
+    if elem.tag == u"Word":
+        make_record_in_base_table_goods(action, elem)
+        print i
+        i = i + 1
+    else:
+        print "cant make eq"
 
 session.commit()
 session.close()
