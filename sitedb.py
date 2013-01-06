@@ -12,7 +12,7 @@ from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
 from lxml import etree
 from secrets import str_conection_to_MySQL
-from dbclasses import Goods
+from dbclasses import Goods, Words
 
 Base = declarative_base()
 
