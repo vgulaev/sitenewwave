@@ -14,9 +14,9 @@ function printlist() {
 
 function add_selector() {
 
-	idselector = parseInt($("#searchPanel").attr("selectorIndex")) + 1;
+	idselector = (parseInt($("#searchPanel").attr("selectorIndex")) + 1).toString();
 	selectorbody = document.createElement("select");
-	selectorbody.setAttribute("id", "selector1")
+	selectorbody.setAttribute("id", "selector" + idselector)
 
 	options = document.createElement("option");
 	options.value = "Пусто";
@@ -33,9 +33,10 @@ function add_selector() {
 	};
 
 	$("#searchPanel").append(selectorbody);
-
-	$("#selector1").change(function () {
-		alert("ok");
+	
+	$("#searchPanel").attr("selectorIndex", idselector)
+	$("#selector" + idselector).change(function () {
+		add_selector();
 	});
 }
 
