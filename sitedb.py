@@ -70,7 +70,7 @@ else:
 
 for action, elem in context:
     if elem.tag == u"Word":
-        make_record_in_base_table_goods(action, elem)
+        make_record_in_base_table_words(action, elem)
         print i
         i = i + 1
     else:
