@@ -44,4 +44,4 @@ result = "";
 for el in q:
     result = result + el.value + " " 
 
-print result.lstrip()
+print result.lstrip().encode("utf-8")

@@ -18,6 +18,21 @@ function take_options() {
 	return el.split(" ");
 }
 
+function filled_options_from_string(selectid, html)
+{
+	optionsforapend = html.split(" ");
+	
+	for (el in optionsforapend){
+		if (optionsforapend[el].length > 2) {		options = document.createElement("option");
+		options.value = optionsforapend[el];
+		text = document.createTextNode(optionsforapend[el]);
+		options.appendChild(text);
+		$(selectid).append(options);
+};
+	}
+	$("#main").html(html);
+}
+
 function filed_options_for_seperator_id(selectid){
 	$.ajax({
 		type : "POST",
@@ -27,7 +42,7 @@ function filed_options_for_seperator_id(selectid){
 			"likecondition" : $("#searchstring").val()
 		},*/
 		success : function(html) {
-			$("#main").html(html)
+			filled_options_from_string(selectid, html);
 		}
 	})
 }
