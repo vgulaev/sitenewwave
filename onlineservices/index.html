@@ -2,20 +2,20 @@
 <html lang="ru">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<script src="/lib/js/jquery-1.8.3.min.js"></script>
+		<script src="/sitenewwave/lib/js/jquery-1.8.3.min.js"></script>
+		 <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
 		<script src="onlineservices.js"></script>
 	</head>
 	<body>
-		<p>
+		<p id="searchPanel" selectorIndex = "20">
 			Привет
 		</p>
-		<select id="searchstring">
-			<option>Арматура</option>
-			<option>Арматура</option>
-			<option>Арматура</option>
-			<option>Арматура</option>
-		</select>
-		<button onclick="printlist()">Загрузить</button>
+		<script type="text/javascript">
+			managesearchPanel()
+		</script>
+		<button onclick="printlist()">
+			Загрузить
+		</button>
 		<div id="main"></div>
 	</body>
 </html>
