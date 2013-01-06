@@ -20,3 +20,19 @@ class Goods(Base):
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class Words(Base):
+    __tablename__ = 'words'
+    id = Column(Integer, primary_key=True)
+    id1C = Column(String(250))
+    fullname = Column(String(250))
+    value = Column(String(250))
+    order = Column(Integer)
+    def __init__(self, fullname, id1C, value, order):
+        self.fullname = fullname
+        self.id1C = id1C
+        self.value = value
+        self.order = order
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)

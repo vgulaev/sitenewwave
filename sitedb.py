@@ -47,18 +47,22 @@ session = Session()
 
 i = 0;
 
-def make_record_in_base(act, elem):
-    #print "<p>", "%s: %s" % (act, elem.tag), elem.get("fullname"), "</p>"
+def make_record_in_base_table_goods(act, elem):
+    article = Goods(elem.get("fullname"), elem.get("id1C"))
+    session.add(article)
+
+def make_record_in_base_table_words(act, elem):
     article = Goods(elem.get("fullname"), elem.get("id1C"))
     session.add(article)
 
 for action, elem in context:
     if elem.tag == u"Номенклатура":
-        make_record_in_base(action, elem)
+        make_record_in_base_table_goods(action, elem)
         print i
         i = i + 1
     else:
         print "cant make eq"
+
 
 session.commit()
 session.close()
