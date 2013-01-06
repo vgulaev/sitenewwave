@@ -12,9 +12,9 @@ from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import sessionmaker
 from lxml import etree
 from secrets import str_conection_to_MySQL
-from dbclasses import Goods, Words
+from dbclasses import Base, Goods, Words
 
-Base = declarative_base()
+#Base = declarative_base()
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
