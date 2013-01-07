@@ -21,43 +21,62 @@ function filled_options_from_string(selectid, html) {
 			options.value = optionsforapend[el];
 			text = document.createTextNode(optionsforapend[el]);
 			options.appendChild(text);
-			$(selectid).append(options);
-		};
+			$(selectid.jqueryid).append(options);
+		}
+		;
 	}
-	$("#main").html(html);
+	// $("#main").html(html);
 }
 
 function filed_options_for_seperator_id(selectid) {
-	str1 = "Арматура Балка Воронка Ендова";
-	str2 = "Желоб Заглушка Квадрат";
-	str3 = "Колено Конек Кронштейн";
-	if (selectid == "#selector1") {
-		filled_options_from_string(selectid, str1);
-	} else if (selectid == "#selector2") {
-		filled_options_from_string(selectid, str2);
-	} else {
-		filled_options_from_string(selectid, str3);
-	}
-	;
+	/*
+	 * str1 = "Арматура Балка Воронка Ендова"; str2 = "Желоб Заглушка Квадрат";
+	 * str3 = "Колено Конек Кронштейн"; if (selectid.jqueryid == "#selector1") {
+	 * filled_options_from_string(selectid, str1); } else if (selectid.jqueryid ==
+	 * "#selector2") { filled_options_from_string(selectid, str2); } else {
+	 * filled_options_from_string(selectid, str3); } ;
+	 */
 
-	/*$.ajax({
-	 type : "POST",
-	 url : "getwords.py",
-	 async : true,
-	 /*data : {
-	 "likecondition" : $("#searchstring").val()
-	 },
-	 success : function(html) {
-	 filled_options_from_string(selectid, html);
-	 }
-	 })*/
+	fullnamecondition = "";
+	orderindex = selectid.intid;
+
+	$("#searchPanel> select").each(function(index, el) {
+		if (el.value != "null") {
+			fullnamecondition = fullnamecondition + el.value + "%";
+		}
+	});
+
+	if (fullnamecondition == "") {
+		fullnamecondition = "%";
+	}
+
+	// $("#main").html(fullnamecondition + " == " + orderindex.toString());
+
+	$.ajax({
+		type : "POST",
+		url : "getwords.py",
+		async : true,
+		data : {
+			"likecondition" : fullnamecondition
+		},
+		success : function(html) {
+			filled_options_from_string(selectid, html);
+		}
+	})
+
 }
 
 function add_selector() {
 
-	idselector = (parseInt($("#searchPanel").attr("selectorIndex")) + 1).toString();
+	selectorIndex = parseInt($("#searchPanel").attr("selectorIndex"))
+	var selectorid = {
+		intid : selectorIndex + 1,
+		strid : "selector" + (selectorIndex + 1).toString(),
+		jqueryid : "#selector" + (selectorIndex + 1).toString()
+	}
+	idselector = selectorid.strid;
 	selectorbody = document.createElement("select");
-	selectorbody.setAttribute("id", "selector" + idselector)
+	selectorbody.setAttribute("id", selectorid.strid)
 
 	options = document.createElement("option");
 	options.value = "null";
@@ -65,25 +84,16 @@ function add_selector() {
 	options.appendChild(text);
 	selectorbody.appendChild(options);
 
-	/*for (el in optionsforapend) {
-	 options = document.createElement("option");
-	 options.value = optionsforapend[el];
-	 text = document.createTextNode(optionsforapend[el]);
-	 options.appendChild(text);
-	 selectorbody.appendChild(options);
-	 };*/
-
 	$("#searchPanel").append(selectorbody);
 
-	$("#searchPanel").attr("selectorIndex", idselector)
-	$("#selector" + idselector).change(function() {
+	$("#searchPanel").attr("selectorIndex", selectorid.intid)
+	$(selectorid.jqueryid).change(function() {
 		add_selector();
 	});
 
-	optionsforapend = filed_options_for_seperator_id("#selector" + idselector);
+	optionsforapend = filed_options_for_seperator_id(selectorid);
 }
 
 function managesearchPanel() {
 	add_selector();
-	//$("#searchPanel").html("опять иван" + $("#searchPanel").attr("selectorIndex"));
 }
