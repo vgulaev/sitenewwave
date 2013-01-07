@@ -2,16 +2,39 @@
 <html lang="ru">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<!--script src="/sitenewwave/lib/js/jquery-1.8.3.min.js"></script-->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+		<script src="/sitenewwave/lib/js/jquery-1.8.3.min.js"></script>
 		<script src="/lib/js/jquery-1.8.3.min.js"></script>
-		 <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
 		<script src="onlineservices.js"></script>
+		<style>
+			.ui-combobox {
+				position: relative;
+				display: inline-block;
+			}
+			.ui-combobox-toggle {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin-left: -1px;
+				padding: 0;
+				/* adjust styles for IE 6/7 */
+				*height: 1.7em;
+				*top: 0.1em;
+			}
+			.ui-combobox-input {
+				margin: 0;
+				padding: 0.3em;
+			}
+		</style>
 	</head>
 	<body>
 		<p id="searchPanel" selectorIndex = "0">
 			Привет
 		</p>
-		<input id="searchstring"></input>
+		<input id="searchstring">
+		</input>
 		<button onclick="printlist()">
 			Загрузить
 		</button>
@@ -19,5 +42,11 @@
 		<script type="text/javascript">
 			managesearchPanel()
 		</script>
+    <script>
+ 
+    /*$(function() {
+        $( "#selector1" ).combobox();
+    });*/
+    </script>		
 	</body>
 </html>
