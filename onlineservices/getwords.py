@@ -34,14 +34,19 @@ session = Session()
 #q = session.query(Goods).filter(Goods.fullname.like(u"%арма%")).all()
 q = session.query(Words)
 
-#for i in range(1,3):
-    #q = q.filter(Words.order == 1)
-    #print i
+if (form.has_key("orderindex")):
+	q = q.filter(Words.order == form["orderindex"].value)
 
-q = q.filter(Words.order == 1).group_by(Words.value).all()
+if (form.has_key("fullnamecondition")):
+	q = q.filter(Words.fullname.like(form["fullnamecondition"].value))
+
+q = q.group_by(Words.value).all()
 
 result = "";
 for el in q:
     result = result + el.value + " " 
 
+#if (form.has_key("fullnamecondition")):
+#	result = result + " " +form["fullnamecondition"].value
+	
 print result.lstrip().encode("utf-8")

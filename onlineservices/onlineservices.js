@@ -16,7 +16,7 @@ function filled_options_from_string(selectid, html) {
 	optionsforapend = html.split(" ");
 
 	for (el in optionsforapend) {
-		if (optionsforapend[el].length > 2) {
+		if (optionsforapend[el].length > 1) {
 			options = document.createElement("option");
 			options.value = optionsforapend[el];
 			text = document.createTextNode(optionsforapend[el]);
@@ -42,13 +42,15 @@ function filed_options_for_seperator_id(selectid) {
 
 	$("#searchPanel> select").each(function(index, el) {
 		if (el.value != "null") {
-			fullnamecondition = fullnamecondition + el.value + "%";
+			fullnamecondition = fullnamecondition + el.value + " ";
 		}
 	});
+	
+	fullnamecondition = $.trim(fullnamecondition) + "%";
 
-	if (fullnamecondition == "") {
-		fullnamecondition = "%";
-	}
+	// if (fullnamecondition == "") {
+		// fullnamecondition = "%";
+	// }
 
 	// $("#main").html(fullnamecondition + " == " + orderindex.toString());
 
@@ -57,7 +59,8 @@ function filed_options_for_seperator_id(selectid) {
 		url : "getwords.py",
 		async : true,
 		data : {
-			"likecondition" : fullnamecondition
+			"fullnamecondition" : fullnamecondition,
+			"orderindex": selectid.intid
 		},
 		success : function(html) {
 			filled_options_from_string(selectid, html);
