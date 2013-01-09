@@ -109,7 +109,7 @@ function filled_options_from_string(selectid, html) {
 	optionsforapend = html.split(" ");
 
 	for (el in optionsforapend) {
-		if (optionsforapend[el].length > 1) {
+		if ($.trim(optionsforapend[el]) != "")  {
 			options = document.createElement("option");
 			options.value = optionsforapend[el];
 			text = document.createTextNode(optionsforapend[el]);
@@ -162,11 +162,13 @@ function filed_options_for_seperator_id(selectid) {
 
 function onchange_selector(el) {
 	selectorIndex = parseInt($("#searchPanel").attr("selectorIndex"));
-	currentIndex = parseInt(el.getAttribute("index")) + 1; 
-	for (var i = currentIndex; i < selectorIndex+1; i++) {
+	currentIndex = parseInt(el.getAttribute("index")); 
+	for (var i = currentIndex + 1; i < selectorIndex+1; i++) {
 		$("#selector"+i.toString()).remove();
 	};
-	add_selector();
+	$("#searchPanel").attr("selectorIndex", currentIndex)
+	if (el.value != "null")
+		add_selector();
 }
 
 function add_selector() {
