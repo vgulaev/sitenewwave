@@ -121,27 +121,29 @@ function filled_options_from_string(selectid, html) {
 	}
 	if (addedIndex == 0) {
 		$(selectid.jqueryid).remove()
-	}
-	else if (addedIndex == 1) {
+	} else if (addedIndex == 1) {
 		$(selectid.jqueryid).val(options.value);
 		add_selector();
-	};
+	}
+	;
 	// $("#main").html(html);
 }
 
 function filed_options_for_seperator_id(selectid) {
 
-	/*str1 = "Арматура Балка Воронка Ендова";
-	 str2 = "Желоб Заглушка Квадрат";
-	 str3 = "Колено Конек Кронштейн";
-	 if (selectid.jqueryid == "#selector1") {
-	 filled_options_from_string(selectid, str1);
-	 } else if (selectid.jqueryid == "#selector2") {
-	 filled_options_from_string(selectid, str2);
-	 } else {
-	 filled_options_from_string(selectid, str3);
-	 }
-	 ;*/
+	if (document.URL == "http://127.0.0.1:8020/sitenewwave/onlineservices/index.html") {
+		str1 = "Арматура Балка Воронка Ендова";
+		str2 = "Желоб Заглушка Квадрат";
+		str3 = "Колено Конек Кронштейн";
+		if (selectid.jqueryid == "#selector1") {
+			filled_options_from_string(selectid, str1);
+		} else if (selectid.jqueryid == "#selector2") {
+			filled_options_from_string(selectid, str2);
+		} else {
+			filled_options_from_string(selectid, str3);
+		}
+	}
+	;
 
 	fullnamecondition = "";
 	orderindex = selectid.intid;
@@ -152,22 +154,24 @@ function filed_options_for_seperator_id(selectid) {
 		}
 	});
 
-	if (fullnamecondition == "") 
-	fullnamecondition = "%";
+	if (fullnamecondition == "")
+		fullnamecondition = "%";
 	//fullnamecondition = $.trim(fullnamecondition) + "%";
 
-	$.ajax({
-		type : "POST",
-		url : "getwords.py",
-		async : true,
-		data : {
-			"fullnamecondition" : fullnamecondition,
-			"orderindex" : selectid.intid
-		},
-		success : function(html) {
-			filled_options_from_string(selectid, html);
-		}
-	})
+	if (document.URL == "http://tdymk.ru/onlineservices/index.html") {
+		$.ajax({
+			type : "POST",
+			url : "getwords.py",
+			async : true,
+			data : {
+				"fullnamecondition" : fullnamecondition,
+				"orderindex" : selectid.intid
+			},
+			success : function(html) {
+				filled_options_from_string(selectid, html);
+			}
+		})
+	}
 }
 
 function onchange_selector(el) {
@@ -204,6 +208,7 @@ function add_selector() {
 
 	$("#searchPanel").attr("selectorIndex", selectorid.intid)
 
+	$(selectorid.jqueryid).addClass("beautifulselector");
 	$(selectorid.jqueryid).change(function() {
 		onchange_selector(this);
 	});
