@@ -23,12 +23,13 @@ print ("")
 #client = Client('http://192.168.194.14/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl')
 #p = dict(http = 'http://tdymkru:28061984@localhost:3128')
 #client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', proxy = p)
-client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl')
+#client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', None,"WebService", "teradel")
+client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', location = "http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws")
 
 client.set_options(cache=DocumentCache())
 
 result = client.service.HelloWorld()
-print result
+print(result.encode("utf-8"))
 
 #result = client.service.GetAddress()
 #for adress in result[0]:
