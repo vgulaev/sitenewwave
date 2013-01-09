@@ -121,6 +121,10 @@ function filled_options_from_string(selectid, html) {
 	}
 	if (addedIndex == 0) {
 		$(selectid.jqueryid).remove()
+	}
+	else if (addedIndex == 1) {
+		$(selectid.jqueryid).val(options.value);
+		add_selector();
 	};
 	// $("#main").html(html);
 }
@@ -144,11 +148,13 @@ function filed_options_for_seperator_id(selectid) {
 
 	$("#searchPanel> select").each(function(index, el) {
 		if (el.value != "null") {
-			fullnamecondition = fullnamecondition + el.value + " ";
+			fullnamecondition = fullnamecondition + el.value + "%";
 		}
 	});
 
-	fullnamecondition = $.trim(fullnamecondition) + "%";
+	if (fullnamecondition == "") 
+	fullnamecondition = "%";
+	//fullnamecondition = $.trim(fullnamecondition) + "%";
 
 	$.ajax({
 		type : "POST",
