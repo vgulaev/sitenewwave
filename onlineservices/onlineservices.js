@@ -107,33 +107,37 @@ function printlist() {
 
 function filled_options_from_string(selectid, html) {
 	optionsforapend = html.split(" ");
-
+	addedIndex = 0;
 	for (el in optionsforapend) {
-		if ($.trim(optionsforapend[el]) != "")  {
+		if ($.trim(optionsforapend[el]) != "") {
 			options = document.createElement("option");
 			options.value = optionsforapend[el];
 			text = document.createTextNode(optionsforapend[el]);
 			options.appendChild(text);
 			$(selectid.jqueryid).append(options);
+			addedIndex = addedIndex + 1;
 		}
 		;
 	}
+	if (addedIndex == 0) {
+		$(selectid.jqueryid).remove()
+	};
 	// $("#main").html(html);
 }
 
 function filed_options_for_seperator_id(selectid) {
 
 	/*str1 = "Арматура Балка Воронка Ендова";
-	str2 = "Желоб Заглушка Квадрат";
-	str3 = "Колено Конек Кронштейн";
-	if (selectid.jqueryid == "#selector1") {
-		filled_options_from_string(selectid, str1);
-	} else if (selectid.jqueryid == "#selector2") {
-		filled_options_from_string(selectid, str2);
-	} else {
-		filled_options_from_string(selectid, str3);
-	}
-	;*/
+	 str2 = "Желоб Заглушка Квадрат";
+	 str3 = "Колено Конек Кронштейн";
+	 if (selectid.jqueryid == "#selector1") {
+	 filled_options_from_string(selectid, str1);
+	 } else if (selectid.jqueryid == "#selector2") {
+	 filled_options_from_string(selectid, str2);
+	 } else {
+	 filled_options_from_string(selectid, str3);
+	 }
+	 ;*/
 
 	fullnamecondition = "";
 	orderindex = selectid.intid;
@@ -147,24 +151,24 @@ function filed_options_for_seperator_id(selectid) {
 	fullnamecondition = $.trim(fullnamecondition) + "%";
 
 	$.ajax({
-	 type : "POST",
-	 url : "getwords.py",
-	 async : true,
-	 data : {
-	 "fullnamecondition" : fullnamecondition,
-	 "orderindex": selectid.intid
-	 },
-	 success : function(html) {
-	 filled_options_from_string(selectid, html);
-	 }
-	 })
+		type : "POST",
+		url : "getwords.py",
+		async : true,
+		data : {
+			"fullnamecondition" : fullnamecondition,
+			"orderindex" : selectid.intid
+		},
+		success : function(html) {
+			filled_options_from_string(selectid, html);
+		}
+	})
 }
 
 function onchange_selector(el) {
 	selectorIndex = parseInt($("#searchPanel").attr("selectorIndex"));
-	currentIndex = parseInt(el.getAttribute("index")); 
-	for (var i = currentIndex + 1; i < selectorIndex+1; i++) {
-		$("#selector"+i.toString()).remove();
+	currentIndex = parseInt(el.getAttribute("index"));
+	for (var i = currentIndex + 1; i < selectorIndex + 1; i++) {
+		$("#selector" + i.toString()).remove();
 	};
 	$("#searchPanel").attr("selectorIndex", currentIndex)
 	if (el.value != "null")
