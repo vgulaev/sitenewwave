@@ -123,7 +123,7 @@ function filled_options_from_string(selectid, html) {
 
 function filed_options_for_seperator_id(selectid) {
 
-	str1 = "Арматура Балка Воронка Ендова";
+	/*str1 = "Арматура Балка Воронка Ендова";
 	str2 = "Желоб Заглушка Квадрат";
 	str3 = "Колено Конек Кронштейн";
 	if (selectid.jqueryid == "#selector1") {
@@ -133,7 +133,7 @@ function filed_options_for_seperator_id(selectid) {
 	} else {
 		filled_options_from_string(selectid, str3);
 	}
-	;
+	;*/
 
 	fullnamecondition = "";
 	orderindex = selectid.intid;
@@ -146,7 +146,7 @@ function filed_options_for_seperator_id(selectid) {
 
 	fullnamecondition = $.trim(fullnamecondition) + "%";
 
-	/*$.ajax({
+	$.ajax({
 	 type : "POST",
 	 url : "getwords.py",
 	 async : true,
@@ -157,8 +157,16 @@ function filed_options_for_seperator_id(selectid) {
 	 success : function(html) {
 	 filled_options_from_string(selectid, html);
 	 }
-	 })*/
+	 })
+}
 
+function onchange_selector(el) {
+	selectorIndex = parseInt($("#searchPanel").attr("selectorIndex"));
+	currentIndex = parseInt(el.getAttribute("index")) + 1; 
+	for (var i = currentIndex; i < selectorIndex+1; i++) {
+		$("#selector"+i.toString()).remove();
+	};
+	add_selector();
 }
 
 function add_selector() {
@@ -172,6 +180,7 @@ function add_selector() {
 	idselector = selectorid.strid;
 	selectorbody = document.createElement("select");
 	selectorbody.setAttribute("id", selectorid.strid)
+	selectorbody.setAttribute("index", selectorid.intid)
 
 	options = document.createElement("option");
 	options.value = "null";
@@ -182,13 +191,14 @@ function add_selector() {
 	$("#searchPanel").append(selectorbody);
 
 	$("#searchPanel").attr("selectorIndex", selectorid.intid)
+
 	$(selectorid.jqueryid).change(function() {
-		add_selector();
+		onchange_selector(this);
 	});
 
 	optionsforapend = filed_options_for_seperator_id(selectorid);
-	
-	$( selectorid.jqueryid ).combobox();
+
+	//$( selectorid.jqueryid ).combobox();
 }
 
 function managesearchPanel() {
