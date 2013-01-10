@@ -1,29 +1,35 @@
 #itemName{
 	float:left;
 	width:600px;
-	height:25px;
+	height:32px !important;
 	border:1px solid #a1a1a1;
 	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
 	font-size:16px;
+	padding: 3px 0px 2px !important;
+	vertical-align: middle;
 }
 
 #itemName:focus{
 	float:left;
 	width:600px;
-	height:25px;
+	height:32px !important;
 	border:1px solid #a1a1a1;
 	box-shadow: 0 0 5px 2px #ffe06f, 0px 1px 1px rgb(207, 207, 207) inset;
 	font-size:16px;
+	padding: 3px 0px 2px !important;
+	vertical-align: middle;
 }
 
 #leftTr{
 	width:200px;
 	padding-top:50px;
 	font-size:16px;
+	vertical-align: top;
 }
 
 #leftTr li{
 	margin-left:50px;
+	line-height: 1.73;
 }
 
 #leftTr a{
@@ -36,7 +42,7 @@
 
 #searchButton{
 	width:100px;
-	height:27px;
+	height:23px;
 	cursor:pointer;
 	border:1px outset rgb(48, 57, 154);
 	margin-left:10px;
@@ -47,12 +53,14 @@
 	color:white;
 	font-weight:bold;
 	font-size:14px;
-	padding-top:3px;
+	padding-top:7px;
 }
 
 #qRes{
 	width:750px;
 	margin-top:40px;
+    font-size: 0.86em;
+    line-height: 1.73;
 }
 
 #tableRes td{
@@ -61,6 +69,7 @@
 	padding:2px;
 	padding-right:10px;
 	padding-left:10px;
+
 }
 
 #tableRes td:first-child{
@@ -69,20 +78,34 @@
 
 #tableRes{
 	font-size:14px;
+	width:750px;
+	border-collapse: collapse;
+	font-size:12px;
+	line-height: 22px;
 }
 
-.iHeader{
-	font-size:14px;
+tr.iHeader{
+	font-size:13px;
 	font-weight:bold;
-	border-top:1px solid black;
+	border-top:1px solid black !important;
+	height:auto;
+	width:750px;
+	/*display:block;*/
 }
 .iHeader td{
+	font-size:13px;
+	line-height: 20px;
 	border-left:none !important;
 	border-right:none;
+	vertical-align:top;
+
 }
 .iHeader td:first-child{
+	font-size:13px;
+	line-height: 20px;
 	vertical-align:middle;
 	padding-left:15px !important;
+
 }
 .price{
 	text-align: right;
@@ -133,6 +156,10 @@
 #basketCaption{
 	font-size:16px;
 	font-weight:bold;
+	margin-bottom:5px;
+}
+#basketTab{
+	width:100%;
 }
 .itemHeader{
 	border-bottom:1px solid black;
@@ -140,6 +167,7 @@
 	padding-right:10px;
 	padding-left:10px;
 	font-size:12px;
+	line-height: 1.73;
 }
 
 #lItemTab td{
@@ -157,6 +185,7 @@
 #mainTr{
 	vertical-align:top;
 }
+
 #searchDiv{
 	/*margin-top:-30px;*/
 	height:30px;
@@ -168,8 +197,9 @@
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-right:1px solid black;
-	padding: 0px 10px;
+	padding: 3px 10px 0px 10px;
 	border-bottom:1px solid white;
+	height:21px;
 }
 .inactiveDiv{
 	float:left;
@@ -178,9 +208,10 @@
 	border-top:1px solid black;
 	border-left:1px solid black;
 	border-right:1px solid black;
-	padding: 0px 10px;
+	padding: 3px 10px 0px 10px;
 	background-color: #e1e1e1;
 	cursor:pointer;
+	height:21px;
 }
 #orderDiv{
 	border-top:1px solid black;
@@ -289,6 +320,8 @@
 	text-align: right;
 	font-weight:bold;
 	white-space: nowrap;
+	font-size:14px;
+	padding-left:10px;
 }
 
 #Summary{
@@ -328,8 +361,11 @@
 }
 #tags{
 	width:300px;
-	height:300px;
+	height:400px;
 	background-color:white;
+	padding-top:0px;
+	margin-top:-50px;
+	display:block;
 }
 #tags li{
 	float:left;
@@ -385,6 +421,7 @@
 .pUi{
 	width:30px;
 	font-family: courier;
+	font-size:14;
 }
 
 .popUpCancel{
@@ -414,7 +451,7 @@
 }
 .popUpTab{
 	margin-bottom:10px;
-	font-size:18px;
+	font-size:16px;
 	margin-left:10px;
 }
 .popUpTab td:first-child{
@@ -509,7 +546,7 @@
 .orderFormInput{
 	margin:5px;
 	width:250px;
-	height:25px;
+	height:30px;
 	border:1px solid #a1a1a1;
 	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
 	font-size:16px;
@@ -524,7 +561,7 @@
 }
 #sendOrderButton{
 	width:120px;
-	height:27px;
+	height:23px;
 	cursor:pointer;
 	border:1px outset rgb(48, 57, 154);
 	margin-left:10px;
@@ -535,8 +572,11 @@
 	color:white;
 	font-weight:bold;
 	font-size:14px;
-	padding-top:3px;
+	padding-top:7px;
 	margin-left: 250px;
+}
+#sendOrderButton a{
+	text-decoration: none;
 }
 
 #shipment{
@@ -580,7 +620,7 @@
 #deliveryTab input{
 	margin:5px;
 	width:250px;
-	height:25px;
+	height:30px;
 	border:1px solid #a1a1a1;
 	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
 	font-size:16px;
@@ -638,7 +678,7 @@
 
 #backToBasketButton{
 	width:150px;
-	height:27px;
+	height:23px;
 	cursor:pointer;
 	border:1px outset rgb(48, 57, 154);
 	margin-left:10px;
@@ -649,7 +689,7 @@
 	color:white;
 	font-weight:bold;
 	font-size:14px;
-	padding-top:3px;
+	padding-top:7px;
 }
 #tabPrice{
 	color:#5da130;
@@ -857,5 +897,5 @@
 	color:white;
 	font-weight:bold;
 	font-size:12px;
-	padding-top:3px;
+	padding-top:5px;
 }

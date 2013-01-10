@@ -648,7 +648,7 @@ function showModalItem(hash, edIzm, prices, stock, c){
             $('.itemPCountInput').attr('value',num)
             //alert(this.value.length + " | " + this.size + " | " + $(this).css("width").replace(/px/, "")-0)
             
-            var nL = this.value.length*10
+            var nL = 10+this.value.length*10
             nL = nL + "px"
             //alert(nL)
             $(this).css("width", nL); 

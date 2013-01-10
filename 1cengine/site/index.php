@@ -11,7 +11,13 @@ if( $m->isMobile() ){
     
 }
 
-echo readfile("../../mainpaige_template.html");
+$fp = fopen("../../mainpage_template.html","r");
+$template_string = fread($fp, filesize("../../mainpage_template.html"));
+$qq = '<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />';
+// $template_string = str_replace($qq, "", $template_string); 
+echo $template_string;
+fclose($fp);
+// echo file_get_contents("../../mainpage_template.html");
 
 ?>
 
@@ -21,13 +27,13 @@ echo readfile("../../mainpaige_template.html");
         $title = str_replace("(", "", $title);
         $title = str_replace(")", "", $title);
         $title = str_replace("\"", "", $title);
-        $APPLICATION->SetTitle($title." купить онлайн | Тримет ООО");
-        $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
-        $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
+        // $APPLICATION->SetTitle($title." купить онлайн | Тримет ООО");
+        // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
+        // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
     } else {
-        $APPLICATION->SetTitle("Купить Online");
-        $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
-        $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
+        // $APPLICATION->SetTitle("Купить Online");
+        // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
+        // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
     }
 
     if(isset($_GET["ref"])){
@@ -39,32 +45,30 @@ echo readfile("../../mainpaige_template.html");
 
 ?>
 
+<div id="main2">
+
+    <a id="top" title="Перейти к содержимому" tabindex="1" href="#sm"></a><div id="header"></div>
+      <!-- /header -->
+    <div class="clear"></div><div id="post-header"></div>
+
 <script type="text/javascript" src='/1cengine/site/js/jquery.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery.blockUI.js'> </script>
-<!-- <script type="text/javascript" src='/1cengine/site/js/Array.js'> </script> -->
 <script type="text/javascript" src='/1cengine/site/js/jquery.cookie.js'> </script>
-<!-- <script type="text/javascript" src='/1cengine/site/js/jquery.chromatable.js'> </script> -->
 <script type="text/javascript" src='/1cengine/site/js/jquery-ui-1.8.23.custom.min.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery.tagcanvas.min.js'> </script>
-<!-- <script type="text/javascript" src='/1cengine/site/js/jquery.elastic.source.js'> </script>
--->
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
-<!--<script type="text/javascript" src='/1cengine/site/js/uiJS.js'> </script>
-<script type="text/javascript" src='/1cengine/site/js/uiBasket.js'> </script>
-
-<script type="text/javascript" src='js/uiOrders.js'> </script>-->
 
 <link rel="stylesheet" type="text/css" href="modern_style.css" />
 
 <h1 style="font-size:14px;display:none">Продажа металлопроката, профнастила и металлосайдинга онлайн в Тюмени и Тюменской Области</h1>
 
 <table style="width:100%;">
-	<tr>
-		<td id="leftTr">
+    <tr>
+        <td id="leftTr">
 
-			<span id='showBasketSpan'>
+            <span id='showBasketSpan'>
                 <p><a href='Показать заказ' title='Заказ' id='tabBasket' onClick='return false'>Показать заказ (<span class='basketCount'>0</span>)</a></p>
                 <!-- <p><a href="javascript:showGroups()" title="Показать группы товаров">Показать группы товаров</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
@@ -85,17 +89,17 @@ echo readfile("../../mainpaige_template.html");
 
             </span>
             
-		</td>
-		<td id="mainTr" rowspan="2">
+        </td>
+        <td id="mainTr" rowspan="2">
             <div id="pTableContentTab">
-    			<div id="searchDiv">
+                <div id="searchDiv">
                     <input id="itemName" placeholder="Введите здесь интересующий вас товар" />
                     <div id="searchButton">Найти</div>
-    			</div><br />
+                </div><br />
                 <a href="javascript:showGroups()" title="Показать группы товаров"><div id="showGroupsDiv">Показать группы</div></a>
                 <span id="hollowResult"></span>
                 <div id="qRes">
-    				<table id="tableRes">
+                    <table id="tableRes">
                         <?php
                             if($_GET["ref"]!=""){
                                 $_GET["term"]=$_GET["ref"];
@@ -103,13 +107,13 @@ echo readfile("../../mainpaige_template.html");
                                 require_once("getItems.php");
                             }
                         ?>
-    				</table>
-    			</div>
-    			<p>
-    				<a id="showAll" style="display:none" href="Все результаты" onClick="return false">
-    					Показать все результаты
-    				</a>
-    			</p>
+                    </table>
+                </div>
+                <p>
+                    <a id="showAll" style="display:none" href="Все результаты" onClick="return false">
+                        Показать все результаты
+                    </a>
+                </p>
 
                 <div id="tags">
                     <table class="tagTab" style="font-size:16px">
@@ -344,43 +348,25 @@ echo readfile("../../mainpaige_template.html");
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
             </div>
-		</td>
-	</tr>
-	<tr>
-		<td id="leftTrBottomTd">
-			<p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
-			<p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
-		</td>
-	</tr>
+        </td>
+    </tr>
+    <tr>
+        <td id="leftTrBottomTd">
+            <p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
+            <p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
+        </td>
+    </tr>
 </table>
     <a class='scrollTop' href='#header' style='display:none;'></a>  
+
+
 <?php 
 
-$APPLICATION->IncludeFile(
-    SITE_TEMPLATE_PATH . '/include_areas/page_standart_pre_footer.php',
-    array('css_class' => $cssClass),
-    array('MODE' => 'php')
-); ?>
+// $fp = fopen("../../mainfooter_template.html","r");
+echo file_get_contents("../../mainfooter_template.html");
+// fclose($fp);
+?>
 
-    <div id="footer">
-        <a href="#top" id="bottom" tabindex="3" title="наверх страницы"></a>
-        <div id="post-cont" class="clear">&nbsp;</div>
-
-<?php
-$APPLICATION->IncludeFile(
-    '/copy.php',
-    array('SET_TITLE' => 'N',),
-    array('MODE' => 'php')
-); ?>
-
-
-
-        <div class="fright">
-            <form id="search2" method="get" action="/search/">
-                <fieldset class="input-field">
-                    <input id="q" name="q" value="Поиск" type="text" onfocus="if(this.value=='Поиск') this.value=''" onblur="if(this.value=='') this.value='Поиск'" />
-                </fieldset>
-            </form>
 
             <div id="obj-counter">
                 <!-- LiveInternet counter -->
@@ -441,24 +427,8 @@ $APPLICATION->IncludeFile(
             </div> -->
         </div>
 
-<?php $APPLICATION->IncludeComponent(
-    'bitrix:menu',
-    'bottom',
-    array(
-        "ROOT_MENU_TYPE"        => "top",
-        "MAX_LEVEL"             => "1",
-        "CHILD_MENU_TYPE"       => "left",
-        "USE_EXT"               => "N",
-        "ALLOW_MULTI_SELECT"    => "N",
-        "MENU_CACHE_TYPE"       => "N",
-        "MENU_CACHE_TIME"       => "3600",
-        "MENU_CACHE_USE_GROUPS" => "Y",
-        "MENU_CACHE_GET_VARS"   => Array()
-    ),
-    false
-); ?>
 
-    </div> <!-- /footer -->
+
 </div> <!-- /main -->
 
 </body>
