@@ -368,63 +368,6 @@ echo file_get_contents("../../mainfooter_template.html");
 ?>
 
 
-            <div id="obj-counter">
-                <!-- LiveInternet counter -->
-                <script type="text/javascript"><!--//--><![CDATA[//><!--
-                document.write('<a href="http://www.liveinternet.ru/click" target="_blank">' +
-                '<img src="http://counter.yadro.ru/hit?t14.1;r' + 
-                escape(document.referrer) + 
-                ( (typeof(screen)=='undefined') ? '' : ';s' + screen.width + '*' + screen.height + '*' + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth) ) +
-                ';u' + escape(document.URL) + 
-                ';h' + escape(document.title.substring(0,80)) + 
-                ';' + Math.random() +
-                '" alt="" title="LiveInternet: показано количество просмотров и посетителей" ' +
-                'border="0" width="88" height="31" /><\/a>');
-                //--><!]]></script>
-                <!--/LiveInternet-->
-                <!-- GoogleAnalysts counter-->
-                <script type="text/javascript">
-                var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', 'UA-33206471-1']);
-                _gaq.push(['_trackPageview']);
-                (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                })();
-                </script> 
-                <!-- /GoogleAnalysts -->
-                <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter15882208 = new Ya.Metrika({id:15882208,
-                    clickmap:true,
-                    trackLinks:true, webvisor:true});
-        } catch(e) {}
-    });
-   
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/15882208" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter --> 
-            </div>
-
-            <!-- <div id="autor">
-                <p>Создание сайта</p>
-                <a href="http://russianmultimedia.ru/contacts.php#feedback" title="Создание сложных мультимедийных продуктов: сайтов публичных компаний, 3d-видео и стерео роликов, мультимедийных инсталляций" target="_blank">Russian multimedia company</a>
-            </div> -->
         </div>
 
 
