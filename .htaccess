@@ -2,6 +2,10 @@
 	AddHandler cgi-script .py
 </IfModule>
 
+RewriteEngine on
+RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
+RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
+
 <IfModule mod_fcgid.c>
  AddHandler fcgid-script .fcgi
  </IfModule>

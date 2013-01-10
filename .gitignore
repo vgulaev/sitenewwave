@@ -167,3 +167,23 @@ lib/js/jquery-ui-1.9.2.custom.js
 lib/js/jquery-ui-1.9.2.custom.min.js
 temp.html
 googlehostedservice.htmlexample.db
+
+#############
+## DB files
+#############
+*.db
+import/
+
+#############
+## Sublime
+#############
+
+sftp-config.json
+.sublime-project
+.sublime-workspacesecrets.py
+
+#############
+## Secrets string
+#############
+
+secrets.py
