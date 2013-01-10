@@ -3,6 +3,7 @@
 </IfModule>
 
 RewriteEngine on
+RewriteRule ^1cengine/ - [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
