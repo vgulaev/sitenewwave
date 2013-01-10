@@ -1,12 +1,6 @@
 <?php
-function my_dbConnect(){
-    $dbCon = mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
 
-    mysql_select_db('trimetru_goods') or die(mysql_error());
-    mysql_query('SET NAMES utf8');
-
-    return $dbCon;
-}
+require_once("secrets.php");
 
 function getGroups(){
 	$query = "SELECT `name`

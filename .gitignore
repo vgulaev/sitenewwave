@@ -185,14 +185,15 @@ import/
 #############
 
 sftp-config.json
-.sublime-project
-.sublime-workspacesecrets.py
+*.sublime-project
+*.sublime-workspacesecrets.py
 
 #############
 ## Secrets string
 #############
 
 secrets.py
+secrets.php
 
 #############
 ## track only usefull content from afedorov

@@ -4,12 +4,8 @@ header('Content-Type: text/html; charset=utf-8');
 $req = $_GET['term'];
 
 
-function my_dbConnect(){
-    mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
+require_once("secrets.php");
 
-    mysql_select_db('trimetru_goods') or die(mysql_error());
-    mysql_query('SET NAMES utf8');
-}
 function getItems($req){
 
     $ret = array();

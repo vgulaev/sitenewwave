@@ -185,11 +185,12 @@ if __name__ == '__main__':
     parser.parse(inpsrc)
 
     import MySQLdb
+    from secrets import *
 
-    conn = MySQLdb.connect (host = "localhost",
-                           user = "trimetru_goods",
-                           passwd = "&rUI24*(^o",
-                           db = "trimetru_goods")
+    conn = MySQLdb.connect (host = host_var,
+                           user = user_var,
+                           passwd = passwd_var,
+                           db = db_var)
     conn.set_character_set('utf8')
     cursor = conn.cursor()
     cursor.execute('SET NAMES utf8;')

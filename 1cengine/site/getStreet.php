@@ -3,12 +3,8 @@ header('Content-Type: text/html; charset=utf-8');
 $req = $_GET['term'];
 $town = $_GET['town'];
 
-function my_dbConnect(){
-    mysql_connect('localhost','trimetru_street','trimetstreetkladr') OR DIE("Не могу создать соединение ");
+require_once("secrets.php");
 
-    mysql_select_db('trimetru_street') or die(mysql_error());
-    mysql_query('SET NAMES utf8');
-}
 function getStreets($town,$req){
 
     $ret = array();
@@ -36,7 +32,7 @@ WHERE `CODE,C,13` LIKE '".$t."%' LIMIT 1");
     return $ret;
 }
 
-my_dbConnect();
+my_dbConnectKladr();
 //print_r(getStreets($town,$req));
 $res = getStreets($town,$req);
 
