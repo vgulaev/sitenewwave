@@ -197,7 +197,7 @@ secrets.py
 #############
 ## track only usefull content from afedorov
 #############
-afedorov/*
+afedorov/
 !afedorov/*.py
 !afedorov/*.py
 !afedorov/images/*
