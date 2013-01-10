@@ -161,12 +161,18 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-lib/
-lib/js/jquery-1.8.3.js
-lib/js/jquery-ui-1.9.2.custom.js
-lib/js/jquery-ui-1.9.2.custom.min.js
-temp.html
+
 googlehostedservice.htmlexample.db
+
+#############
+## ignore default output
+#############
+temp.html
+
+#############
+## standarts lib
+#############
+lib/
 
 #############
 ## DB files
@@ -187,3 +193,12 @@ sftp-config.json
 #############
 
 secrets.py
+
+#############
+## track only usefull content from afedorov
+#############
+afedorov/*
+!afedorov/*.py
+!afedorov/*.py
+!afedorov/images/*
+!afedorov/img/*
