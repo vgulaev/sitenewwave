@@ -10,15 +10,8 @@ if( $m->isMobile() ){
     }
     
 }
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-?>
 
-<?php
-$APPLICATION->IncludeFile(
-    SITE_TEMPLATE_PATH . '/include_areas/page_standart_header.php',
-    array(),
-    array('MODE' => 'php')
-);
+echo readfile("../../mainpaige_template.html");
 
 ?>
 

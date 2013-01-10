@@ -203,3 +203,9 @@ afedorov/
 !afedorov/*.py
 !afedorov/images/*
 !afedorov/img/*
+
+#############
+## do not track csv files
+#############
+
+searchQueries.csv
