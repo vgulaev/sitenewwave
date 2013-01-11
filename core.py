@@ -53,6 +53,7 @@ def makecontent(path):
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
             soup.html.body.append(currentelement)
+            #print("Hello")
 
     
     # add footer

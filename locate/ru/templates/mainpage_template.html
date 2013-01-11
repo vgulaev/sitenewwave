@@ -8,25 +8,36 @@
 
 		<title> Главная страница </title>
 		<script type="text/javascript">
-			function loadfile(filename) {
-				var fileref = document.createElement('script')
-				fileref.setAttribute("type", "text/javascript")
+			function loadfile(filename, tag) {
+				var fileref = document.createElement(tag)
+				if (tag == "script") {
+					fileref.setAttribute("type", "text/javascript");
+					sourcestr = "src";
+				} else if (tag == "link") {
+					fileref.setAttribute("rel", "stylesheet");
+					fileref.setAttribute("type", "text/css");
+					fileref.setAttribute("media", "all");
+					sourcestr = "href";
+				}
 				
 				if (document.URL.indexOf("127.0.0.1") == -1) {
-					fileref.setAttribute("src", filename)
+					fileref.setAttribute(sourcestr, filename)
 				} else {
-					fileref.setAttribute("src", "/sitenewwave" + filename)
+					fileref.setAttribute(sourcestr, "/sitenewwave" + filename)
 				}
 				if ( typeof fileref != "undefined")
 					document.getElementsByTagName("head")[0].appendChild(fileref)
 			}
 
-			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js");
+			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js", "script");
+			loadfile("/lib/ownlibs/js/trimet.js", "script");
+			loadfile("/mainpage_template.css", "link");
+			loadfile("/footer.css", "link");
 		</script>
 		<!--script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script-->
 		<script src="http://trimet.ru/bitrix/templates/trimet/js/rmc_1.0.4.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />
-		<link rel="stylesheet" type="text/css" href="/footer.css" media="all" />
+		<!--link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" /-->
+		<!--link rel="stylesheet" type="text/css" href="/footer.css" media="all" /-->
 	</head>
 	<body class="page-main">
 		<header>
@@ -59,6 +70,7 @@
 					"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
 					alt="" height="10" width="11" /></a>
 				</div><!-- /obj-navig -->
+				<div id="obj-lang" style="display: none"><ul><li><a>По русски</a></li><li><a>In English</a></li></ul></div>
 			</div>
 		</header>
 	</body>
