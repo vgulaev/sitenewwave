@@ -173,6 +173,7 @@ temp.html
 ## standarts lib
 #############
 lib/
+!lib/ownlibs/
 
 #############
 ## DB files
