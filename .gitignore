@@ -172,8 +172,8 @@ temp.html
 #############
 ## standarts lib
 #############
-lib/
-!lib/ownlibs/
+lib/frameworks
+lib/css
 
 #############
 ## DB files
