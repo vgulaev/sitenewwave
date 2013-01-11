@@ -129,6 +129,7 @@ function printlist() {
 		}
 	})*/
 	createCookie("locate","ru",10);
+	//createCookie("locate","ru",10);
 }
 
 function filled_options_from_string(selectid, html) {
