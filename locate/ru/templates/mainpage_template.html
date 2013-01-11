@@ -7,44 +7,59 @@
 		"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн" />
 
 		<title> Главная страница </title>
-		<script src="lib/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript">
+			function loadfile(filename) {
+				var fileref = document.createElement('script')
+				fileref.setAttribute("type", "text/javascript")
+				
+				if (document.URL.indexOf("127.0.0.1") == -1) {
+					fileref.setAttribute("src", filename)
+				} else {
+					fileref.setAttribute("src", "/sitenewwave" + filename)
+				}
+				if ( typeof fileref != "undefined")
+					document.getElementsByTagName("head")[0].appendChild(fileref)
+			}
+
+			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js");
+		</script>
+		<!--script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script-->
+		<script src="http://trimet.ru/bitrix/templates/trimet/js/rmc_1.0.4.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />
 		<link rel="stylesheet" type="text/css" href="/footer.css" media="all" />
-		<script src="http://trimet.ru/bitrix/templates/trimet/js/rmc_1.0.4.js" type="text/javascript"></script>
 	</head>
 	<body class="page-main">
 		<header>
-				<a title="Тримет" href="/core.py">
-				<img id="logo" src="/img/logo.png" alt="Тримет" height="47" width="184" />
-				</a>
-				<div class="box">
-					<div id="obj-mmenu" style="margin-top: 72px;">
-						<ul>
-							<li>
-								<a href="/about/" title="О компании">О компании</a>
-							</li>
-							<li>
-								<a href="/services/" title="Услуги">Услуги</a>
-							</li>
-							<li>
-								<a href="/products/" title="Продукция">Продукция</a>
-							</li>
-							<li>
-								<a href="/suppliers/" title="Поставщикам">Поставщикам</a>
-							</li>
-							<li>
-								<a href="/contacts/" title="Контакты">Контакты</a>
-							</li>
-							<li>
-								<a href="/1cengine/site/" title="Купить Online">Купить Online</a>
-							</li>
-						</ul>
-					</div><!-- obj-mmenu -->
-					<div id="obj-navig" style="margin-top: 82px;">
-						<img class="nav1" src="/img/n.gif" alt="" height="10" width="11" /><a href=
-						"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
-						alt="" height="10" width="11" /></a>
-					</div><!-- /obj-navig -->
-				</div>		</header>
+			<a title="Тримет" href="/core.py"> <img id="logo" src="/img/logo.png" alt="Тримет" height="47" width="184" /> </a>
+			<div class="box">
+				<div id="obj-mmenu" style="margin-top: 72px;">
+					<ul>
+						<li>
+							<a href="/about/" title="О компании">О компании</a>
+						</li>
+						<li>
+							<a href="/services/" title="Услуги">Услуги</a>
+						</li>
+						<li>
+							<a href="/products/" title="Продукция">Продукция</a>
+						</li>
+						<li>
+							<a href="/suppliers/" title="Поставщикам">Поставщикам</a>
+						</li>
+						<li>
+							<a href="/contacts/" title="Контакты">Контакты</a>
+						</li>
+						<li>
+							<a href="/1cengine/site/" title="Купить Online">Купить Online</a>
+						</li>
+					</ul>
+				</div><!-- obj-mmenu -->
+				<div id="obj-navig" style="margin-top: 82px;">
+					<img class="nav1" src="/img/n.gif" alt="" height="10" width="11" /><a href=
+					"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
+					alt="" height="10" width="11" /></a>
+				</div><!-- /obj-navig -->
+			</div>
+		</header>
 	</body>
 </html>
