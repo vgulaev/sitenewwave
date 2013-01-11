@@ -26,10 +26,10 @@ def findpath(pagename):
 
 def makecontent(path):
     # print path
-    soup = BeautifulSoup(open("mainpage_template.html"))
+    soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
     soupForImport = BeautifulSoup(open(path + "index.html"))
     # print soupForImport
-    soupFooter = BeautifulSoup(open("mainfooter_template.html"))
+    soupFooter = BeautifulSoup(open("locate/ru/templates/mainfooter_template.html"))
     # change path for img tag to correct path
     nodes = soupForImport.find_all("img")
     for currentelement in nodes:
