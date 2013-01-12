@@ -54,16 +54,10 @@ def makecontent(path):
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
             soup.html.body.append(currentelement)
             #print("Hello")
-
-    
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
-    
     print(soup.prettify("utf-8"))
-
-    
-
 
 form = cgi.FieldStorage()
 

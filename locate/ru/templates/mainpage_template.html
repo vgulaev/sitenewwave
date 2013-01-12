@@ -19,7 +19,7 @@
 					fileref.setAttribute("media", "all");
 					sourcestr = "href";
 				}
-				
+
 				if (document.URL.indexOf("127.0.0.1") == -1) {
 					fileref.setAttribute(sourcestr, filename)
 				} else {
@@ -31,6 +31,7 @@
 
 			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js", "script");
 			loadfile("/lib/ownlibs/js/trimet.js", "script");
+			loadfile("/lib/ownlibs/js/clean_css.js", "script");
 			loadfile("/mainpage_template.css", "link");
 			loadfile("/footer.css", "link");
 		</script>
@@ -70,8 +71,19 @@
 					"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
 					alt="" height="10" width="11" /></a>
 				</div><!-- /obj-navig -->
-				<div id="obj-lang"><ul><li><a>По русски</a></li><li><a>In English</a></li></ul></div>
+				<div id="obj-lang">
+					<ul>
+						<li>
+							<a>По русски</a>
+						</li>
+						<li>
+							<a>In English</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</header>
+		<button onclick="clearcss()">Очистить</button>
+		<div id="output"></div>
 	</body>
 </html>
