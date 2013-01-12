@@ -1,417 +1,57 @@
-/* ::::: http://www.trimet.ru/bitrix/templates/trimet/css/rmc_1.0.3.css ::::: */
-
 body {
 	text-align: center;
 }
+
 body, blockquote, input, select, textarea, form, fieldset, table, td, ul, ol, p {
 	margin: 0px;
 	padding: 0px;
 }
+
 body, a img, fieldset, form {
 	border: 0px solid;
 }
-input, select, textarea, form {
-	width: 100%;
-}
+
 body {
 	background: none repeat scroll 0% 0% rgb(255, 255, 255);
 	color: rgb(72, 72, 72);
 }
+
 a, a:link, a:visited, a:hover, a:active {
 	color: rgb(45, 54, 148);
 }
-a:visited {
-	color: rgb(59, 67, 155);
-}
-a:hover {
-	text-decoration: none;
-}
-h1, h2, h3, h4, h5, h6 {
-	margin: 0px 0px 0.7em;
-	text-align: left;
-}
-h2 {
-	margin: 0px 0px 0.7em;
-}
+
 p {
 	margin: 0px 0px 1.4em;
 }
+
 ul {
 	margin-left: 2.7em;
 	padding: 0.8em 0px;
 }
+
 ul li, ul ul li, ul ul ul li {
-	background: url('p1.gif') no-repeat scroll 0px 0.9em transparent;
+	background: url("p1.gif") no-repeat scroll 0px 0.9em transparent;
 	list-style-type: none;
 	padding: 2px 0px 2px 1.9em;
 }
-input, td img {
-	vertical-align: middle;
-}
+
 body {
 	font: 62%/1.5 Arial, Helvetica, sans-serif;
 }
-h1, h2, h3, h4, h5, h6 {
-	font-size: 1.1em;
-	font-weight: 100;
-}
-h2 {
-	font-size: 170%;
-}
-input, select, textarea, table, form {
-	font: 1em Arial, Helvetica, sans-serif;
-}
-.clear {
-	line-height: 0;
-	font-size: 0px;
-}
-#main, #main2, #main3 {
-	font-size: 1.3em;
-}
-#footer {
-	font-size: 0.86em;
-}
-#footer .fleft {
-	line-height: 1.65;
-}
-#footer #obj-mmenu2 li {
-	line-height: 1;
-}
-#footer input {
-	font-size: 1.26em;
-}
-#autor {
-	line-height: 1.65;
-}
-#autor a:link, #autor a:visited, #autor a:hover, #autor a:active {
-}
+
 #obj-mmenu ul {
 	font-size: 0.96em;
 	font-weight: 900;
 }
+
 #obj-mmenu ul li {
 	line-height: 1.1em;
 }
+
 #obj-navig {
 	font-size: 11px;
 }
-#cont1 h2 {
-	font-size: 106%;
-	font-weight: 900;
-}
-#cont3 h2 {
-	font-size: 106%;
-	font-weight: 900;
-}
-#cont3 ul, #cont3 ol, #cont3 p {
-	font-size: 0.86em;
-	line-height: 1.73;
-}
-#main h2, #main #cont1 h2, #main #cont3 h2 {
-	font-size: 140%;
-	font-weight: 100;
-}
-#main .mod-text .fleft {
-	font-size: 0.8em;
-}
-#main .obj-ulinks p {
-	font-size: 0.85em;
-	line-height: 1.7em;
-}
-#main .obj-ulinks h2 {
-	font-size: 156%;
-}
-#main .obj-ulinks2 {
-	font-size: 0.9em;
-	line-height: 1.6;
-}
-.input-field {
-	font-size: 0.8em;
-}
-.input-field textarea, .input-field select, .input-field input {
-	font-size: 1.1em;
-	line-height: 1.2;
-}
-.fleft {
-	float: left;
-}
-.fright {
-	float: right;
-}
-#cont2 img {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	border: 2px double rgb(229, 229, 229);
-}
-#cont2 > div img {
-	border: 1px solid rgb(229, 229, 229);
-	padding: 3px;
-}
-.download {
-	background: url('download.png') no-repeat scroll 0px 100% transparent;
-	padding-left: 20px;
-}
-.clear {
-	clear: both;
-	font-size: 0px;
-	height: 0px;
-	line-height: 0;
-	float: none ! important;
-	width: 100% ! important;
-}
-.print {
-	display: none;
-}
-#main h2, #cont1 h2, #cont3 h2 {
-	color: rgb(45, 54, 148);
-	margin: 0px 0px 0.5em;
-	padding: 0px;
-}
-#cont1 h2 {
-	margin: 0px 0px 1em;
-}
-#cont3 h2 {
-	margin: 0px 0px 1em;
-}
-#footer div.fleft {
-	width: 275px;
-}
-#footer div.fright {
-	width: 226px;
-}
-#footer div.box {
-	margin: 0px 240px 0px 287px;
-}
-#footer div.fleft span {
-	display: block;
-}
-#footer div.fleft p {
-	margin-bottom: 1.6em;
-}
-#footer #copyr {
-	margin: 1.4em 0px 1.6em;
-	text-align: left;
-}
-#footer #copyr span {
-	color: rgb(127, 127, 127);
-}
-#footer form {
-	padding: 0px;
-}
-#footer input {
-	color: rgb(124, 124, 124);
-	display: block;
-	height: 1.5em ! important;
-	margin: 1.2em 0px 15px;
-	padding: 3px 0px 2px;
-	text-indent: 5px;
-	width: 146px;
-}
-#footer fieldset {
-	border: 0px solid;
-}
-#autor {
-	color: rgb(143, 143, 143);
-}
-#autor a {
-	color: rgb(45, 54, 148) ! important;
-}
-#autor p {
-	margin: 0px;
-}
-#obj-counter {
-	padding: 7px 0px;
-}
-#obj-counter img {
-	margin: 0px 5px 5px 0px;
-}
-form {
-	padding-top: 1.4em;
-}
-input {
-	padding: 3px 0px 2px;
-	width: 50%;
-}
-#main, #main2, #main3 {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	margin: 0px auto;
-	text-align: left;
-	width: 972px;
-}
-#wrap {
-	clear: both;
-	margin: 0px 245px 0px 178px;
-	height: 1%;
-	position: relative;
-}
-#main #wrap {
-	margin: 0px 225px 0px 265px;
-}
-#wrap:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-#header .box {
-	clear: both;
-	width: 100%;
-}
-#header .box:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-#header #logo {
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 24px;
-	z-index: 2;
-}
-#post-header {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	padding: 10px 0px 10px 206px;
-}
-#main #post-header {
-	height: 382px;
-	padding: 0px;
-}
-#col1 {
-	background: url('sprite2.png') no-repeat scroll 176px -3px transparent;
-	float: left;
-	margin-left: -178px;
-	position: relative;
-	width: 178px;
-}
-#cont1 {
-	height: 1%;
-	padding: 17px 12px 50px;
-}
-#main #col1 {
-	background: none repeat scroll 0% 0% transparent;
-	margin-left: -265px;
-	width: 265px;
-}
-#main #cont1 {
-	padding: 18px 30px 50px 12px;
-}
-#col2 {
-	display: table;
-	float: right;
-	width: 99.4%;
-}
-#cont2 {
-	height: auto ! important;
-	min-height: 350px;
-	padding: 15px 27px 20px 24px;
-}
-#main #cont2 {
-	padding: 1px 20px 10px 0px;
-}
-#col3 {
-	float: right;
-	margin-right: -245px;
-	position: relative;
-	width: 245px;
-}
-#cont3 {
-	height: 1%;
-	padding: 18px 0px 50px;
-}
-#main #col3 {
-	margin-right: -225px;
-	width: 225px;
-}
-#footer {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	border-top: 1px solid rgb(239, 239, 239);
-	clear: both;
-	color: rgb(176, 176, 176);
-	padding: 7px 0px 20px 11px;
-	height: 1%;
-	position: relative;
-}
-#footer:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-#post-cont {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	left: 0px;
-	top: -50px;
-	position: absolute;
-	height: 49px;
-	width: 178px ! important;
-}
-.ui-tabs-hide {
-	display: none;
-}
-.ui-tabs-nav {
-	margin: 0px 0px 1.4em;
-	padding: 10px 0px 1px;
-	overflow: hidden;
-}
-.ui-tabs-nav:after {
-	display: block;
-	clear: both;
-	content: " ";
-}
-.ui-tabs-nav li {
-	background: none repeat scroll 0% 0% transparent ! important;
-	margin: 0px 0px 0.4em ! important;
-	padding: 4px 13px;
-	float: left;
-	position: relative;
-	text-align: center;
-}
-.ui-tabs-nav li.ui-tabs-selected {
-	background: none repeat scroll 0% 0% rgb(179, 179, 179) ! important;
-}
-.ui-tabs-nav a {
-	border-bottom: 1px dashed rgb(45, 54, 148);
-	color: rgb(45, 54, 148) ! important;
-	margin: 0px;
-	padding: 0px;
-	text-decoration: none;
-	white-space: nowrap;
-}
-.ui-tabs-nav a:hover {
-	border: 0px solid;
-	color: rgb(45, 54, 148) ! important;
-}
-.ui-tabs-nav li.ui-tabs-selected a, .ui-tabs-nav li.ui-tabs-selected a:hover {
-	border: 0px solid;
-	color: rgb(255, 255, 255) ! important;
-	cursor: text;
-	padding: 0px 0px 1px;
-}
-.ui-tabs-panel {
-	clear: both;
-}
-.input-field {
-	border: 0px solid;
-}
-#post-header img {
-	left: 0px;
-	position: absolute;
-	top: 0px;
-}
-#obj-auth {
-	clear: both;
-	float: right;
-	padding: 17px 0px 0px;
-	width: 100%;
-}
-.obj-banners {
-	margin-bottom: 0.8em;
-	text-align: center;
-}
-.obj-banners img {
-	border: 0px solid ! important;
-	display: block;
-	margin: 0px auto;
-	padding: 0px;
-}
+
 #obj-mmenu {
 	background: none repeat scroll 0% 0% rgb(45, 54, 148);
 	clear: both;
@@ -419,12 +59,14 @@ input {
 	margin: 10px 0px 0px;
 	width: 775px;
 }
+
 #obj-mmenu ul {
 	color: rgb(174, 179, 212);
 	height: 1%;
 	margin: 0px;
 	padding: 10px 0px 0px 25px;
 }
+
 #obj-mmenu ul li {
 	background: none repeat scroll 0% 0% transparent;
 	float: left;
@@ -432,88 +74,48 @@ input {
 	padding: 0px 19px 10px;
 	white-space: nowrap;
 }
+
 #obj-mmenu a:link, #obj-mmenu a:visited, #obj-mmenu a:hover, #obj-mmenu a:active {
 	color: rgb(255, 255, 255);
 	text-decoration: none;
 }
-#obj-mmenu a:hover, #obj-mmenu a:active {
-	text-decoration: underline;
-}
-#obj-mmenu2 a:link, #obj-mmenu2 a:visited, #obj-mmenu2 a:hover, #obj-mmenu2 a:active {
-	color: rgb(59, 67, 155);
-}
-#obj-mmenu2 a:hover, #obj-mmenu2 a:active {
-	text-decoration: none;
-}
+
 #obj-navig {
 	float: right;
 	margin: 20px 18px 0px 0px;
 	text-align: right;
 	width: 150px;
 }
+
 #obj-navig a, #obj-navig a:hover {
 	text-decoration: none;
 }
+
 #obj-navig img {
 	margin-left: 8px;
 }
+
 #obj-navig img.nav1 {
-	background: url('img/sprite.png') no-repeat scroll -48px -32px transparent;
-}
-#obj-navig img.nav2 {
-	background: url('img/sprite.png') no-repeat scroll -60px -32px transparent;
-}
-#obj-navig img.nav3 {
-	background: url('img/sprite.png') no-repeat scroll -72px -32px transparent;
-}
-#obj-navig a img.nav2 {
-	background: url('img/sprite.png') no-repeat scroll -12px -32px transparent;
-}
-#obj-navig a img.nav3 {
-	background: url('img/sprite.png') no-repeat scroll -24px -32px transparent;
-}
-#obj-auth {
-	border: solid 3px red
+	background: url("img/sprite.png") no-repeat scroll -48px -32px transparent;
 }
 
-/*#header {
- background-attachment: scroll;
- background-clip: border-box;
- background-color: white;
- background-image: none;
- background-origin: padding-box;
- background-size: auto;
- border-bottom-color: #A6CFED;
- border-bottom-style: solid;
- border-bottom-width: 6px;
- color: #484848;
- display: block;
- font-family: Arial, Helvetica, sans-serif;
- font-size: 13px;
- font-style: normal;
- font-variant: normal;
- font-weight: normal;
- height: 105px;
- line-height: 19px;
- margin-bottom: 0px;
- margin-left: 0px;
- margin-right: 0px;
- margin-top: 0px;
- position: relative;
- text-align: left;
- width: 972px;
- }*/
+#obj-navig img.nav2 {
+	background: url("img/sprite.png") no-repeat scroll -60px -32px transparent;
+}
+
+#obj-navig a img.nav2 {
+	background: url("img/sprite.png") no-repeat scroll -12px -32px transparent;
+}
+
 header {
 	background-attachment: scroll;
 	background-clip: border-box;
 	background-color: white;
 	background-image: none;
 	background-origin: padding-box;
-	background-size: auto;
-	border-bottom-color: #A6CFED;
-	border-bottom-style: solid;
-	border-bottom-width: 6px;
-	color: #484848;
+	background-size: auto auto;
+	border-bottom: 6px solid rgb(166, 207, 237);
+	color: rgb(72, 72, 72);
 	display: block;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -522,24 +124,17 @@ header {
 	font-weight: normal;
 	height: 105px;
 	line-height: 19px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-top: 0px;
 	position: relative;
 	text-align: left;
 	width: 972px;
-	margin: 0 auto;
+	margin: 0px auto;
 }
+
 header .box {
 	clear: both;
 	width: 100%;
 }
-header .box:after {
-	content: "";
-	display: block;
-	clear: both;
-}
+
 header #logo {
 	display: block;
 	position: absolute;
@@ -551,10 +146,11 @@ header #logo {
 #obj-lang {
 	display: none;
 }
+
 #obj-lang ul li {
 	float: left;
 }
 
 #obj-lang ul {
-	margin-left: 0px
+	margin-left: 0px;
 }

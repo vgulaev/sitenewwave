@@ -29,11 +29,11 @@
 					document.getElementsByTagName("head")[0].appendChild(fileref)
 			}
 
+			loadfile("/mainpage_template.css", "link");
+			loadfile("/footer.css", "link");
 			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js", "script");
 			loadfile("/lib/ownlibs/js/trimet.js", "script");
 			loadfile("/lib/ownlibs/js/clean_css.js", "script");
-			loadfile("/mainpage_template.css", "link");
-			loadfile("/footer.css", "link");
 		</script>
 		<!--script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script-->
 		<script src="http://trimet.ru/bitrix/templates/trimet/js/rmc_1.0.4.js" type="text/javascript"></script>
@@ -65,12 +65,12 @@
 							<a href="/1cengine/site/" title="Купить Online">Купить Online</a>
 						</li>
 					</ul>
-				</div><!-- obj-mmenu -->
+				</div>
 				<div id="obj-navig" style="margin-top: 82px;">
 					<img class="nav1" src="/img/n.gif" alt="" height="10" width="11" /><a href=
 					"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
 					alt="" height="10" width="11" /></a>
-				</div><!-- /obj-navig -->
+				</div>
 				<div id="obj-lang">
 					<ul>
 						<li>
@@ -83,7 +83,6 @@
 				</div>
 			</div>
 		</header>
-		<button onclick="clearcss()">Очистить</button>
-		<div id="output"></div>
+		<!--button onclick="clearcss()">Очистить</button-->
 	</body>
 </html>
