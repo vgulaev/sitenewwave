@@ -14,7 +14,9 @@ if( $m->isMobile() ){
 $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 $qq = '<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />';
-// $template_string = str_replace($qq, "", $template_string); 
+$titleTamplate = '<title> Главная страница </title>';
+$title = '<title> Купить Online </title>';
+$template_string = str_replace($titleTamplate, $title, $template_string); 
 echo $template_string;
 fclose($fp);
 // echo file_get_contents("../../mainpage_template.html");
