@@ -190,11 +190,14 @@ sftp-config.json
 *.sublime-workspacesecrets.py
 
 #############
-## Secrets string
+## Secrets string and files
 #############
 
 secrets.py
 secrets.php
+yandex_702686bca6646344.html
+yandex_702686bca6646344.txt
+google08c306b085ecc151.html
 
 #############
 ## track only usefull content from afedorov
@@ -222,3 +225,9 @@ wiki/
 #############
 
 sitemap.xml
+
+#############
+## ignore GOST content
+#############
+
+download/files/
