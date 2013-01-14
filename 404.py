@@ -23,7 +23,7 @@ footer_string = footer.read()
 footer.close()
 
 print header_string
-print "<h2>Упс, похоже вы обратились к несуществующей странице. Быть может вы ищете что-то из списка ниже?</h2>"
+print "<h2>Упс, похоже вы обратились к несуществующей странице. Быть может вы ищете что-то из списка ниже?</h2>\n"
 print '''<div class="mod-sitemap">
 	<ul class="level1">
 		<li>
