@@ -7,12 +7,7 @@
 
 setlocale(LC_ALL, "ru_RU");
 
-function my_dbConnect(){
-    mysql_connect('localhost','trimetru_goods','&rUI24*(^o') OR DIE("Не могу создать соединение ");
-
-    mysql_select_db('trimetru_goods') or die(mysql_error());
-    mysql_query('SET NAMES utf8');
-}
+require_once("1cengine/site/secrets.php");
 
 my_dbConnect();
 
