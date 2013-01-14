@@ -343,7 +343,7 @@ fclose($fp);
 
                     <a href="Посмотреть заказ" onClick="$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
 
-                    <a href="javascript:createOrder()"><div id="sendOrderButton">Оформить</div></a>
+                    <a href="javascript:createOrder()" style="text-decoration:none;"><div id="sendOrderButton">Оформить</div></a>
 
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                 </div>
