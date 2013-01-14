@@ -12,4 +12,5 @@ def getGroups():
 	connector.dbClose()
 
 	print row
-	
+
+getGroups()
