@@ -55,7 +55,6 @@ fclose($fp);
 <script type="text/javascript" src='/1cengine/site/js/jquery.blockUI.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery.cookie.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/jquery-ui-1.8.23.custom.min.js'> </script>
-<script type="text/javascript" src='/1cengine/site/js/jquery.tagcanvas.min.js'> </script>
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
