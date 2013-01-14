@@ -10,7 +10,7 @@ print ("Content-Type: text/html; charset=utf-8\n")
 
 _PATH = os.path.abspath(os.path.dirname(__file__))
 
-h_file = os.path.join(_PATH, 'locate/ru/templates/mainheader_template.html')
+h_file = os.path.join(_PATH, 'locate/ru/templates/mainpage_template.html')
 header = open(h_file,'r')
 header_string = header.read()
 header.close()
