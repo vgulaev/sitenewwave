@@ -68,4 +68,4 @@ else:
     pathtohtml = "htmlstaticcontent/0001mainpage/"
 
 makecontent(pathtohtml)
-print("Hello!!!");
+#print("Hello!!!");
