@@ -11,12 +11,12 @@ html_file = open(html_file_name,'r')
 html_file_string = html_file.read()
 html_file.close()
 
-p6 = re.compile("/upload[\w\-\s/]+\.jpg|src=\"[\w\-\s/]+\.png|src=\"[\w\-\s/]+\.gif|src=\"[\w\-\s/]+\.ico")
+p6 = re.compile("/upload[\w\-\s_/\.]+\.jpg|/upload[\w\-\s_/\.]+\.png|/upload[\w\-\s_/\.]+\.gif|/upload[\w\-\s_/\.]+\.ico")
 
 imgpaths = p6.findall(html_file_string)
 
 for path in imgpaths:
-    p4 = re.compile("[\w\-\s]+\.jpg|[\w\-\s]+\.png|[\w\-\s]+\.gif|[\w\-\s]+\.ico")
+    p4 = re.compile("[\w\-_\s\.]+jpg|[\w\-_\s\.]+png|[\w\-_\s\.]+gif|[\w\-_\s\.]+ico")
     imgname = p4.findall(path)
 
     for img in imgname:
