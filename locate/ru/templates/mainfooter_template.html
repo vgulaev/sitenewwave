@@ -46,9 +46,7 @@
 		</div>
 
 		<script type="text/javascript">
-			//chech hosting it is real site need use counters from Google, Yandex and LiveInternet
-			if ((window.URL.indexOf("trimet") != -1) || (window.URL.indexOf("тримет") != -1)) {
-				//GoogleAnalysts counter
+			if ((document.URL.indexOf("trimet") != -1) || (document.URL.indexOf("тримет") != -1)) {
 				var _gaq = _gaq || [];
 				_gaq.push(['_setAccount', 'UA-33206471-1']);
 				_gaq.push(['_trackPageview']);
@@ -60,7 +58,6 @@
 					var s = document.getElementsByTagName('script')[0];
 					s.parentNode.insertBefore(ga, s);
 				})();
-				//Yandex counter
 				(function(d, w, c) {
 					(w[c] = w[c] || []).push(function() {
 						try {
