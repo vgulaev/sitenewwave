@@ -55,3 +55,4 @@ trimeturls.append(urltype("contacts/maps", "htmlstaticcontent/018_contacts_maps_
 trimeturls.append(urltype("products/faq/926", "htmlstaticcontent/040_products_faq_926_/"))
 trimeturls.append(urltype("products/request", "htmlstaticcontent/037_products_request_/"))
 
+trimeturls.append(urltype("products/krovl/dobornye-jelementy", "htmlstaticcontent/046_products_krovl_dobornye-jelemety_/"))
