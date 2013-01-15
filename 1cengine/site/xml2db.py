@@ -101,13 +101,14 @@ def insertGroup(gName, gHash, pHash):
 
 def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock): 
 
-    print iName.encode("utf-8") + ' ' + cName.encode("utf-8")
-    if type(groupSecondName) == type(dict()):
-        groupSecondName = iName
+    if type(iName) != type(dict()) and type(cName) != type(dict()):
+        print iName.encode("utf-8") + ' ' + cName.encode("utf-8")
+        if type(groupSecondName) == type(dict()):
+            groupSecondName = iName
 
-    cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, ('',(groupSecondName+' '+cName).encode("utf-8"), iHash, pHash, iName, cName, weight, length, kf, edIzm, price, priceType, itemHashN, inStock))
-    row = cursor.fetchone()
-    conn.commit()
+        cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, ('',(groupSecondName+' '+cName).encode("utf-8"), iHash, pHash, iName, cName, weight, length, kf, edIzm, price, priceType, itemHashN, inStock))
+        row = cursor.fetchone()
+        conn.commit()
 
 
 def groupEater(group):
