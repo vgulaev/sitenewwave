@@ -1,0 +1,6 @@
+<?php
+
+$xml = simplexml_load_file('pricelist.xml');
+
+print_r((String)$xml->data[0]);
+?>

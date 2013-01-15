@@ -2,11 +2,35 @@
 <html lang="ru">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Developing online services</title>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-		<script src="/sitenewwave/lib/js/jquery-1.8.3.min.js"></script>
-		<script src="/lib/js/jquery-1.8.3.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			function loadfile(filename, tag) {
+				var fileref = document.createElement(tag)
+				if (tag == "script") {
+					fileref.setAttribute("type", "text/javascript");
+					sourcestr = "src";
+				} else if (tag == "link") {
+					fileref.setAttribute("rel", "stylesheet");
+					fileref.setAttribute("type", "text/css");
+					fileref.setAttribute("media", "all");
+					sourcestr = "href";
+				}
+
+				if (document.URL.indexOf("127.0.0.1") == -1) {
+					fileref.setAttribute(sourcestr, filename)
+				} else {
+					fileref.setAttribute(sourcestr, "/sitenewwave" + filename)
+				}
+				if ( typeof fileref != "undefined")
+					document.getElementsByTagName("head")[0].appendChild(fileref)
+			}
+
+			//loadfile("/mainpage_template.css", "link");
+			//loadfile("/footer.css", "link");
+			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js", "script");
+		</script-->
 		<script src="onlineservices.js"></script>
 		<style>
 			.ui-combobox {
