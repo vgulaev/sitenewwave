@@ -37,7 +37,7 @@ trimeturls.append(urltype("products/faq", "htmlstaticcontent/034_products_faq_/"
 trimeturls.append(urltype("products/faq/933", "htmlstaticcontent/043_products_faq_933_/"))
 trimeturls.append(urltype("products/gost", "htmlstaticcontent/033_products_gost_/"))
 trimeturls.append(urltype("products/faq/929", "htmlstaticcontent/041_products_faq_929_/"))
-trimeturls.append(urltype("products/krovl/soputstvujuwie/tovary", "htmlstaticcontent/030_products_krovl_soputstvujuwie_tovary_/"))
+trimeturls.append(urltype("products/krovl/soputstvujuwie_tovary", "htmlstaticcontent/030_products_krovl_soputstvujuwie_tovary_/"))
 trimeturls.append(urltype("products/dealers", "htmlstaticcontent/031_products_dealers_/"))
 trimeturls.append(urltype("products/special", "htmlstaticcontent/036_products_special_/"))
 trimeturls.append(urltype("products/faq/915", "htmlstaticcontent/038_products_faq_915_/"))
