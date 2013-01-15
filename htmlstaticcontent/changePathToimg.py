@@ -11,7 +11,7 @@ html_file = open(html_file_name,'r')
 html_file_string = html_file.read()
 html_file.close()
 
-p6 = re.compile("/upload[\w\-\s_/\.]+\.jpg|/upload[\w\-\s_/\.]+\.png|/upload[\w\-\s_/\.]+\.gif|/upload[\w\-\s_/\.]+\.ico")
+p6 = re.compile("/upload[\w\-\s_/\.]+jpg|/upload[\w\-\s_/\.]+png|/upload[\w\-\s_/\.]+gif|/upload[\w\-\s_/\.]+ico")
 
 imgpaths = p6.findall(html_file_string)
 
