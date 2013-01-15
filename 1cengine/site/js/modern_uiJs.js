@@ -132,7 +132,7 @@ function showGroups(){
     $.blockUI.defaults.css.fontSize = '14px'
     $.blockUI.defaults.css.width = '700px'
     $.blockUI.defaults.css.height = '370px'
-    $.blockUI.defaults.css.paddingTop = '20px'
+    $.blockUI.defaults.css.paddingTop = '70px'
     $.blockUI.defaults.css.paddingLeft = '20px'
 
 
