@@ -73,11 +73,11 @@
 	})
 })(jQuery);
 
-$(document).ready(function() {
+function makeslideshowathead() {
 	if ($('.slideshow').length > 0) {
 		$('.slideshow').slideshow({
 			'imageContSelector' : '#post-header',
 			'switcherItemSelector' : '.slideshow-switcher a'
 		})
 	}
-})
+}
