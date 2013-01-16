@@ -41,9 +41,9 @@ def makecontent(path):
     scripttag = soup.find("script", {"id": "headerscripts"})
     for currentelement in nodes:
         if currentelement.has_key("src"): 
-            #currentelement["src"] = "/"+path + currentelement["src"]
-            scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
-            #soup.html.head.append(currentelement)
+            currentelement["src"] = "/"+path + currentelement["src"]
+            soup.html.head.append(currentelement)
+            #scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
        currentelement["href"] = "/"+path + currentelement["href"] 
