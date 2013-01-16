@@ -38,21 +38,21 @@ def makecontent(path):
             currentelement["src"] = "/"+path + currentelement["src"]
     # change path for script tag to correct path
     nodes = soupForImport.find_all("script")
-    #scripttag = soup.find("script", {"id": "headerscripts"})
     for currentelement in nodes:
         if currentelement.has_key("src"): 
             currentelement["src"] = "/"+path + currentelement["src"]
             soup.html.head.append(currentelement)
             #scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
+    nodes = soupForImport.find_all("link")
+    for currentelement in nodes:
+       currentelement["href"] = "/"+path + currentelement["href"] 
+       soup.html.head.append(currentelement)
+    #for Eclipse debugging
     if ((sys.platform) == "win32"):
          nodes = soup.find_all("script")
          for currentelement in nodes:
              if currentelement.has_key("src"):
                  currentelement["src"] = "/sitenewwave" + currentelement["src"]
-    nodes = soupForImport.find_all("link")
-    for currentelement in nodes:
-       currentelement["href"] = "/"+path + currentelement["href"] 
-       soup.html.head.append(currentelement)
     
     # set title
     title = soupForImport.find("title")
