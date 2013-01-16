@@ -69,7 +69,7 @@
 <td class="w45"><h5>В пределах г.&nbsp;Тюмени</h5><p>Доставка металлопроката до&nbsp;объекта в&nbsp;пределах&nbsp;г. Тюмени осуществляется автомобилями &laquo;КАМАЗ&raquo; и&nbsp;&laquo;ГАЗель&raquo;.<br /><a class="download" href="/download/files/uslugi/dostavka1.doc" title="Скачать файл" target="_blank">Скачать прайс-лист</a> <ins>(207 Кб, doc)</ins></p></td>
 <td class="w05">&nbsp;</td>
 <td><h5>Междугородние поставки</h5><p>Для междугородних поставок металлопроката возможна доставка как автомобильным, так и&nbsp;железнодорожным и&nbsp;водным транспортом.<br /><a class="download" href="/download/files/uslugi/dostavka2.doc" title="Скачать файл" target="_blank">Скачать прайс-лист</a> <ins>(230 Кб, doc)</ins></p>
-<a href="#section2" class="internal-link">Междугородняя доставка от 1 тонны<span class="new">&nbsp;</span></a></td>
+<a id="showNew" href="#section2" class="internal-link">Междугородняя доставка от 1 тонны<span class="new">&nbsp;</span></a></td>
 </tr>
 </table>
 
@@ -335,8 +335,14 @@
 </div>
 
 <script type="text/javascript">
-                                $(".tbl").tabs();
-                            </script>
+        $(".tbl").tabs();
+
+        $("#showNew").click( function(){
+            $("#section1").toggle();
+            $("#section2").toggle();  
+        })
+
+</script>
 
 <p>Дополнительную информацию о&nbsp;стоимости услуг можно получить по&nbsp;тел. +7&nbsp;(3452)&nbsp;520-670.</p>
 </div>
