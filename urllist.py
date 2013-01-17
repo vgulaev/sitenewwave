@@ -12,7 +12,7 @@ trimeturls = list()
 
 trimeturls.append(urltype("mainpage", "htmlstaticcontent/0001mainpage/"))
 trimeturls.append(urltype("about", "htmlstaticcontent/002_about_/"))
-trimeturls.append(urltype("services", "htmlstaticcontent/003_services_/"))
+trimeturls.append(urltype("services", "htmlstaticcontent/020_services_metalwork_/"))
 trimeturls.append(urltype("services/metalwork", "htmlstaticcontent/020_services_metalwork_/"))
 
 trimeturls.append(urltype("about/awards", "htmlstaticcontent/011_about_awards_/"))
@@ -46,7 +46,7 @@ trimeturls.append(urltype("about/partners", "htmlstaticcontent/015_about_partner
 trimeturls.append(urltype("products/faq/935", "htmlstaticcontent/044_products_faq_935_/"))
 trimeturls.append(urltype("about/leaderships", "htmlstaticcontent/013_about_leaderships_/"))
 trimeturls.append(urltype("products/metalloprokat", "htmlstaticcontent/024_products_metalloprokat_/"))
-trimeturls.append(urltype("services", "htmlstaticcontent/003_services_/"))
+
 trimeturls.append(urltype("about/news", "htmlstaticcontent/016_about_news_/"))
 trimeturls.append(urltype("products/faq/931", "htmlstaticcontent/042_products_faq_931_/"))
 trimeturls.append(urltype("services/weighing", "htmlstaticcontent/022_services_weighing_/"))
