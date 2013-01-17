@@ -30,7 +30,7 @@ ul {
 }
 
 ul li, ul ul li, ul ul ul li {
-	background: url("p1.gif") no-repeat scroll 0px 0.9em transparent;
+	background: url("/img/p1.gif") no-repeat scroll 0px 0.9em transparent;
 	list-style-type: none;
 	padding: 2px 0px 2px 1.9em;
 }
