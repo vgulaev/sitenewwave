@@ -73,7 +73,7 @@ function send(){
                 <label class="file_label" id="label_html" for="html">
                     <img src='html.png' />
                 </label>
-            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[3].'"'; ?> style="display:none;" id="pdf" />
+            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[3].'"'; ?> style="display:none;" id="pdf" selected />
                 <label class="file_label" id="label_pdf" for="pdf">
                     <img src='pdf.png' />
                 </label>
