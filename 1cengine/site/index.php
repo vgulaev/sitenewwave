@@ -53,8 +53,8 @@ fclose($fp);
       <!-- /header -->
     <div class="clear"></div><div id="post-header"></div>
 
-<script type="text/javascript" src='/1cengine/site/js/jquery.blockUI.js'> </script>
-<script type="text/javascript" src='/1cengine/site/js/jquery.cookie.js'> </script>
+<script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.blockUI.js'> </script>
+<script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.cookie.js'> </script>
 
 <script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
