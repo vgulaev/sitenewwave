@@ -12,7 +12,7 @@ trimeturls = list()
 
 trimeturls.append(urltype("mainpage", "htmlstaticcontent/0001mainpage/"))
 trimeturls.append(urltype("about", "htmlstaticcontent/002_about_/"))
-trimeturls.append(urltype("services", "htmlstaticcontent/003_services_/"))
+trimeturls.append(urltype("services", "htmlstaticcontent/020_services_metalwork_/"))
 trimeturls.append(urltype("services/metalwork", "htmlstaticcontent/020_services_metalwork_/"))
 
 trimeturls.append(urltype("about/awards", "htmlstaticcontent/011_about_awards_/"))
@@ -25,7 +25,7 @@ trimeturls.append(urltype("suppliers", "htmlstaticcontent/005_suppliers_/"))
 trimeturls.append(urltype("products/faq/902", "htmlstaticcontent/035_products_faq_902_/"))
 trimeturls.append(urltype("products/krovl/profnastil", "htmlstaticcontent/026_products_krovl_profnastil_/"))
 trimeturls.append(urltype("about/history/photo", "htmlstaticcontent/012_about_history_photo_/"))
-trimeturls.append(urltype("products/krovl/vodostochnye_sistemy/", "htmlstaticcontent/028_products_krovl_vodostochnye_sistemy_/"))
+trimeturls.append(urltype("products/krovl/vodostochnye_sistemy", "htmlstaticcontent/028_products_krovl_vodostochnye_sistemy_/"))
 trimeturls.append(urltype("products/krovl/metallosajding", "htmlstaticcontent/027_products_krovl_metallosajding_/"))
 trimeturls.append(urltype("contacts", "htmlstaticcontent/006_contacts_/"))
 trimeturls.append(urltype("contacts/urinfo", "htmlstaticcontent/019_contacts_urinfo_/"))
@@ -46,7 +46,7 @@ trimeturls.append(urltype("about/partners", "htmlstaticcontent/015_about_partner
 trimeturls.append(urltype("products/faq/935", "htmlstaticcontent/044_products_faq_935_/"))
 trimeturls.append(urltype("about/leaderships", "htmlstaticcontent/013_about_leaderships_/"))
 trimeturls.append(urltype("products/metalloprokat", "htmlstaticcontent/024_products_metalloprokat_/"))
-trimeturls.append(urltype("services", "htmlstaticcontent/003_services_/"))
+
 trimeturls.append(urltype("about/news", "htmlstaticcontent/016_about_news_/"))
 trimeturls.append(urltype("products/faq/931", "htmlstaticcontent/042_products_faq_931_/"))
 trimeturls.append(urltype("services/weighing", "htmlstaticcontent/022_services_weighing_/"))
@@ -55,3 +55,4 @@ trimeturls.append(urltype("contacts/maps", "htmlstaticcontent/018_contacts_maps_
 trimeturls.append(urltype("products/faq/926", "htmlstaticcontent/040_products_faq_926_/"))
 trimeturls.append(urltype("products/request", "htmlstaticcontent/037_products_request_/"))
 
+trimeturls.append(urltype("products/krovl/dobornye-jelementy", "htmlstaticcontent/046_products_krovl_dobornye-jelementy_/"))

@@ -1,0 +1,282 @@
+<html lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content=
+		"металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока" />
+		<meta name="description" content=
+		"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн" />
+
+		<title> Главная страница </title>
+		<script type="text/javascript">
+			function loadfile(filename, tag) {
+				var fileref = document.createElement(tag)
+				if (tag == "script") {
+					fileref.setAttribute("type", "text/javascript");
+					sourcestr = "src";
+				} else if (tag == "link") {
+					fileref.setAttribute("rel", "stylesheet");
+					fileref.setAttribute("type", "text/css");
+					fileref.setAttribute("media", "all");
+					sourcestr = "href";
+				}
+
+				if (document.URL.indexOf("127.0.0.1") == -1) {
+					fileref.setAttribute(sourcestr, filename)
+				} else {
+					fileref.setAttribute(sourcestr, "/sitenewwave" + filename)
+				}
+				if ( typeof fileref != "undefined")
+					document.getElementsByTagName("head")[0].appendChild(fileref)
+			}
+
+			loadfile("/mainpage_template.css", "link");
+			loadfile("/footer.css", "link");
+			loadfile("/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js", "script");
+			loadfile("/lib/ownlibs/js/trimet.js", "script");
+			loadfile("/lib/ownlibs/js/clean_css.js", "script");
+		</script>
+		<!--script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script-->
+		<!--script src="http://trimet.ru/bitrix/templates/trimet/js/rmc_1.0.4.js" type="text/javascript"></script-->
+		<!--link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" /-->
+		<!--link rel="stylesheet" type="text/css" href="/footer.css" media="all" /-->
+	</head>
+	<body class="page-main">
+		<header>
+			<a title="Тримет" href="/core.py"> <img id="logo" src="/img/logo.png" alt="Тримет" height="47" width="184" /> </a>
+			<div class="box">
+				<div id="obj-mmenu" style="margin-top: 72px;">
+					<ul>
+						<li>
+							<a href="/about/" title="О компании">О компании</a>
+						</li>
+						<li>
+							<a href="/services/" title="Услуги">Услуги</a>
+						</li>
+						<li>
+							<a href="/products/" title="Продукция">Продукция</a>
+						</li>
+						<li>
+							<a href="/suppliers/" title="Поставщикам">Поставщикам</a>
+						</li>
+						<li>
+							<a href="/contacts/" title="Контакты">Контакты</a>
+						</li>
+						<li>
+							<a href="/1cengine/site/" title="Купить Online">Купить Online</a>
+						</li>
+					</ul>
+				</div>
+				<div id="obj-navig" style="margin-top: 82px;">
+					<img class="nav1" src="/img/n.gif" alt="" height="10" width="11" /><a href=
+					"/contacts/feedback/" title=""><img class="nav2" src="/img/n.gif"
+					alt="" height="10" width="11" /></a>
+				</div>
+				<div id="obj-lang">
+					<ul>
+						<li>
+							<a>По русски</a>
+						</li>
+						<li>
+							<a>In English</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<!--button onclick="clearcss()">Очистить</button-->
+	</body>
+</html>
+
+<h2>Упс, похоже вы обратились к несуществующей странице. Быть может вы ищете что-то из списка ниже?</h2>
+
+<div class="mod-sitemap">
+	<ul class="level1">
+		<li>
+			<h2><a href="/about/" title="О компании">О компании</a></h2>
+			<ul>
+				<li>
+					<h3><a href="/about/history/" title="История">История</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/history/photo/" title="История в фото">История в фото</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/leaderships/" title="Руководство">Руководство</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/strong/" title="Преимущества">Преимущества</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/awards/" title="Награды">Награды</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/news/" title="Новости">Новости</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/partners/" title="Партнеры">Партнеры</a></h3>
+				</li>
+				<li>
+					<h3><a href="/about/vacancies/" title="Вакансии">Вакансии</a></h3>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<h2><a href="/services/" title="Услуги">Услуги</a></h2>
+			<ul>
+				<li>
+					<h3><a href="/services/metalwork/" title="Металлообработка">Металлообработка</a></h3>
+				</li>
+				<li>
+					<h3><a href="/services/delivery/" title="Доставка">Доставка</a></h3>
+				</li>
+				<li>	
+					<h3><a href="/services/weighing/" title="Взвешивание авто">Взвешивание авто</a></h3>
+				</li>
+				<li>
+					<h3><a href="/services/storage/" title="Складские услуги">Складские услуги</a></h3>
+				</li>
+			</ul>
+		</li>
+		<li><h2><a href="/products/" title="Продукция">Продукция</a></h2>
+			<ul>
+				<li>
+					<h3><a href="/1cengine/site/" title="Купить Online">Купить Online</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/metalloprokat/" title="Металлопрокат">Металлопрокат</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/krovl/" title="Кровля и фасад">Кровля и фасад</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/gost/" title="ГОСТы">ГОСТы</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/faq/" title="Вопросы и ответы">Вопросы и ответы</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/special/" title="Спецпредложение">Спецпредложение</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/request/" title="Оформить заявку">Оформить заявку</a></h3>
+				</li>
+				<li>
+					<h3><a href="/products/dealers/" title="Дилерам">Дилерам</a></h3>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul class="level1">
+		<li>
+			<h2><a href="/suppliers/" title="Поставщикам">Поставщикам</a></h2>
+		</li>
+		<li>
+			<h2><a href="/contacts/" title="Контакты">Контакты</a></h2>
+			<ul>
+				<li>
+					<h3><a href="/contacts/maps/" title="Схемы проезда">Схемы проезда</a></h3>
+				</li>
+				<li>
+					<h3><a href="/contacts/feedback/" title="Обратная связь">Обратная связь</a></h3>
+				</li>
+				<li>
+					<h3><a href="/contacts/urinfo/" title="Информация о юридическом лице">Информация о юридическом лице</a></h3>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<h2><a href="/1cengine/site/" title="Купить Online">Купить Online</a></h2>
+		</li>
+	</ul><div class="clear">&nbsp;</div>
+</div>
+<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+<link href="footer.css" rel="stylesheet" type="text/css" />
+<footer id="footer">
+    <div id="fleft">
+        <p id="copyr"><span>© 2012 ООО «Тримет»</span> Копирование материалов возможно только с письменного разрешения компании</p>
+        <p>625014, г. Тюмень, ул. Республики, 278 а, строение 1 <span>+7 (3452) 520-670</span>
+            <a href="/contacts/maps/" title="Схемы проезда">Схемы проезда</a>
+        </p>
+    </div>
+    <div id="box">
+        
+        <ul id="obj-mmenu2">
+            <li><a href="/about/" title="О компании">О компании</a></li>
+            <li><a href="/services/" title="Услуги">Услуги</a></li>
+            <li><a href="/products/" title="Продукция">Продукция</a></li>
+            <li><a href="/suppliers/" title="Поставщикам">Поставщикам</a></li>
+            <li><a href="/contacts/" title="Контакты">Контакты</a></li>
+            <li><a href="/1cengine/site/" title="Купить Online">Купить Online</a></li>
+        </ul> <!-- obj-mmenu -->
+
+    </div>
+    <div id="fright">
+
+            <div id="obj-counter" style="display:none">
+                <!-- LiveInternet counter -->
+                <script type="text/javascript">
+                document.write('<a href="http://www.liveinternet.ru/click" target="_blank">' +
+                '<img src="http://counter.yadro.ru/hit?t14.1;r' + 
+                escape(document.referrer) + 
+                ( (typeof(screen)=='undefined') ? '' : ';s' + screen.width + '*' + screen.height + '*' + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth) ) +
+                ';u' + escape(document.URL) + 
+                ';h' + escape(document.title.substring(0,80)) + 
+                ';' + Math.random() +
+                '" alt="" title="LiveInternet: показано количество просмотров и посетителей" ' +
+                'border="0" width="88" height="31" /><\/a>');
+                </script><a href="http://www.liveinternet.ru/click" target="_blank"><img src="http://counter.yadro.ru/hit?t14.1;r;s1920*1080*24;uhttp%3A//www.trimet.ru/;h%u0413%u043B%u0430%u0432%u043D%u0430%u044F%20%u0441%u0442%u0440%u0430%u043D%u0438%u0446%u0430;0.8778673124898658" alt="" title="LiveInternet: показано количество просмотров и посетителей" border="0" height="31" width="88"></a>
+                <!--/LiveInternet-->
+            </div>
+
+            <!-- GoogleAnalysts counter-->
+                <script type="text/javascript">
+                if(window.location.hostname.toString() == "trimet.ru"){
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-33206471-1']);
+                    _gaq.push(['_trackPageview']);
+                    (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                 
+                }
+                </script>
+                <!-- /GoogleAnalysts -->
+
+                <!-- Yandex.Metrika counter -->
+
+                <script type="text/javascript">
+                if(window.location.hostname.toString() == "trimet.ru"){
+                    (function (d, w, c) {
+                        (w[c] = w[c] || []).push(function() {
+                            try {
+                                w.yaCounter15882208 = new Ya.Metrika({id:15882208,
+                                        clickmap:true,
+                                        trackLinks:true, webvisor:true});
+                            } catch(e) {}
+                        });
+                       
+                        var n = d.getElementsByTagName("script")[0],
+                            s = d.createElement("script"),
+                            f = function () { n.parentNode.insertBefore(s, n); };
+                        s.type = "text/javascript";
+                        s.async = true;
+                        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+                        if (w.opera == "[object Opera]") {
+                            d.addEventListener("DOMContentLoaded", f);
+                        } else { f(); }
+                    })(document, window, "yandex_metrika_callbacks");
+                }
+                </script>
+                <noscript><div><img src="//mc.yandex.ru/watch/15882208" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                <!-- /Yandex.Metrika counter --> 
+
+            <div id="autor">
+                <p>Создание сайта</p>
+                <a href="http://trimet.ru" title="Продажа металлопроката" target="_blank">ООО «Тримет»</a>
+            </div>
+        
+    </div>
+</footer>

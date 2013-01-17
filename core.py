@@ -42,10 +42,17 @@ def makecontent(path):
         if currentelement.has_key("src"): 
             currentelement["src"] = "/"+path + currentelement["src"]
             soup.html.head.append(currentelement)
+            #scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
        currentelement["href"] = "/"+path + currentelement["href"] 
        soup.html.head.append(currentelement)
+    #for Eclipse debugging
+    if ((sys.platform) == "win32"):
+         nodes = soup.find_all("script")
+         for currentelement in nodes:
+             if currentelement.has_key("src"):
+                 currentelement["src"] = "/sitenewwave" + currentelement["src"]
     
     # set title
     title = soupForImport.find("title")
@@ -66,7 +73,12 @@ form = cgi.FieldStorage()
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
 else:
-    pathtohtml = "htmlstaticcontent/0001mainpage/"
+    if ((sys.platform) == "win32"): 
+        #string for debug
+        pathtohtml = "htmlstaticcontent/005_suppliers_/"
+    else:
+        #at server always use main page 
+        pathtohtml = "htmlstaticcontent/0001mainpage/"
 
 makecontent(pathtohtml)
 #print("Hello!!!");

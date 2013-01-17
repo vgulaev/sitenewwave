@@ -36,3 +36,31 @@ class Words(Base):
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class Offers(Base):
+    __tablename__ = 'offers'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(201))
+    hash = Column(String(64))
+    parent_hash = Column(String(64))
+    father_hash = Column(String(64))
+    display_name = Column(String(100))
+    char_name = Column(String(25))
+    weight = Column(String(10))
+    length = Column(String(10))
+    kf = Column(String(10))
+    edIzm = Column(String(10))
+    def __init__(self, name, hash, parent_hash, father_hash, display_name, char_name, weight, length, kf, edIzm):
+        self.name = name
+        self.hash = hash
+        self.parent_hash = parent_hash
+        self.father_hash = father_hash
+        self.display_name = display_name
+        self.char_name = char_name
+        self.weight = weight
+        self.length = length
+        self.kf = kf
+        self.edIzm = edIzm
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.name, self.hash)
