@@ -40,11 +40,13 @@ def writeItemsToFile(row):
         
     addRow = addRow + '</urlset>'
 
-    sitemapBase = open("sitemapBase.xml",'r')
+    _PATH = os.path.abspath(__file__)
+
+    sitemapBase = open(_PATH+"sitemapBase.xml",'r')
     sitemapBase_string = sitemapBase.read()
     sitemapBase.close()
 
-    sitemapBase = open("sitemap.xml",'w+')
+    sitemapBase = open(_PATH+"sitemap.xml",'w+')
     sitemap = sitemapBase_string + addRow
     sitemapBase.write(sitemap)
     sitemapBase.close()
