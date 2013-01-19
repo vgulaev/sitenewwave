@@ -19,3 +19,4 @@ else:
 print("<!DOCTYPE html>")
 
 print("this py test sitemap");
+print("this py test sitemap");
