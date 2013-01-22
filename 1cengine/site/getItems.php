@@ -28,7 +28,7 @@ function getItems($req){
             }
             $ij++;
         }*/
-        $cond .= "CONCAT(`offers`.`display_name`, ` `,`offers`.`char_name`) LIKE '%".$req." %' AND ";
+        $cond .= "CONCAT(display_name, ' ', char_name) LIKE '%".$req."%' AND ";
         //echo $cond;
     } else {
         
