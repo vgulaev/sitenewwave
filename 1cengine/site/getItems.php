@@ -18,7 +18,7 @@ function getItems($req){
 
     $cond = 'WHERE ';
     if($_GET["strict"]=="yes"){
-        $ij=0;
+        /*$ij=0;
         foreach($reqArray as $rA){
             // print_r($rA." | ");
             if($ij==$c-1){
@@ -27,7 +27,8 @@ function getItems($req){
                 $cond .= "`offers`.`name` LIKE '%".$rA." %' AND ";
             }
             $ij++;
-        }
+        }*/
+        $cond .= "CONCAT(`offers`.`display_name`, ` `,`offers`.`char_name`) LIKE '%".$req." %' AND ";
         //echo $cond;
     } else {
         
