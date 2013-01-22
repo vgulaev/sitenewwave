@@ -6,8 +6,6 @@ import cgi
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
-from urllist import trimeturls
-import Cookie
 
 if ((sys.platform) == "win32"):
     print ("")
