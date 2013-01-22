@@ -6,7 +6,7 @@ import cgi
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
-from grab import *
+#from grab import *
 import urllib
 
 if ((sys.platform) == "win32"):
@@ -33,7 +33,7 @@ print("""<!DOCTYPE html>
 
 soup = BeautifulSoup(open("../sitemap.xml"), "xml")
 
-g = Grab()
+#g = Grab()
 nodes = soup.find_all("loc")
 #nodes =  soup.find_all("loc2222")
 nodessize = len(nodes)
