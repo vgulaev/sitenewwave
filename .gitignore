@@ -225,6 +225,7 @@ wiki/
 #############
 
 sitemap.xml
+price.xml
 
 #############
 ## ignore GOST content
