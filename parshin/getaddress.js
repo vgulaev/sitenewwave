@@ -7,8 +7,11 @@ function getaddress() {
 		data : {
 			"likecondition" : $("#searchstring").val()
 		},
-		success : function(html) {
-			$("#ymap").html(html)
+		success : function(address) {
+			//$("#ymap").html(address)
+			//alert("sdf");
+			$('.ymap').empty();
+			CreateMap(address.split(';'));
 		}
 	})
 }
