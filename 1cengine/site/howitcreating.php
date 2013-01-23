@@ -1,13 +1,17 @@
+<!DOCTYPE html>
 <?php
 
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-?>
-<?php
-$APPLICATION->IncludeFile(
-    SITE_TEMPLATE_PATH . '/include_areas/page_standart_header.php',
-    array(),
-    array('MODE' => 'php')
-);
+$fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
+$template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
+fclose($fp);
+
+$titleTamplate = '<title> Тримет </title>';
+$title = '<title> Купить Online </title>';
+
+$template_string = str_replace($titleTamplate, $title, $template_string); 
+$template_string = str_replace("</body>", "", $template_string); 
+$template_string = str_replace("</html>", "", $template_string); 
+
 
 ?>
 <div id="fb-root"></div>
@@ -153,25 +157,15 @@ $APPLICATION->IncludeFile(
             </div>
         </div>
 
-<?php $APPLICATION->IncludeComponent(
-    'bitrix:menu',
-    'bottom',
-    array(
-        "ROOT_MENU_TYPE"        => "top",
-        "MAX_LEVEL"             => "1",
-        "CHILD_MENU_TYPE"       => "left",
-        "USE_EXT"               => "N",
-        "ALLOW_MULTI_SELECT"    => "N",
-        "MENU_CACHE_TYPE"       => "N",
-        "MENU_CACHE_TIME"       => "3600",
-        "MENU_CACHE_USE_GROUPS" => "Y",
-        "MENU_CACHE_GET_VARS"   => Array()
-    ),
-    false
-); ?>
-
-    </div> <!-- /footer -->
 </div> <!-- /main -->
 
-</body>
+<?php 
 
+// $fp = fopen("../../mainfooter_template.html","r");
+echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");
+// fclose($fp);
+?>
+
+
+</body>
+</html>
