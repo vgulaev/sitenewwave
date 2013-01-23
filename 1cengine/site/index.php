@@ -289,8 +289,8 @@ if(isset($_GET["ref"])){
                                     <td>
                                         <select id='carry' name='carry'>
                                             <option disabled selected>--</option>
-                                            <option price='2400' value='Длинномер' checked /> Длинномер </option>
-                                            <option price='1200' value='Газель' /> Газель </option>
+                                            <option price='2400' value='Длинномер' checked > Длинномер </option>
+                                            <option price='1200' value='Газель'> Газель </option>
                                         </select>
                                     </td>
                                 </tr>
