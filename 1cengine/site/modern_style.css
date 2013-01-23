@@ -30,6 +30,7 @@
 	padding-top:50px;
 	font-size:16px;
 	vertical-align: top;
+	text-align:left;
 }
 
 #leftTr li{
@@ -132,6 +133,7 @@ tr.iHeader{
 #leftTrBottomTd{
 	vertical-align:bottom;
 	font-size:16px;
+	text-align:left;
 }
 #leftTrBottomTd a{
 	border-bottom: 1px dashed rgb(45, 54, 148);
@@ -149,10 +151,6 @@ tr.iHeader{
 	margin-left:20px;
 }
 
-#showBasketSpan{
-	/*float:left;
-	padding-left:15px;*/
-}
 #showBasketSpan a{
 	border-bottom: 1px dashed rgb(45, 54, 148);
 	text-decoration: none;	
