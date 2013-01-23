@@ -21,7 +21,6 @@ else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
     
 print ("Content-Type: text/html; charset=utf-8")
-
 print ("")
 
 form = cgi.FieldStorage()
@@ -32,13 +31,12 @@ else:
     likecondition = "пельмени"
     
 likeex = "%" + likecondition + "%"
-print "<p>", likeex, "</p>"
  
-#client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', location = "http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws")
+client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', location = "http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws")
+client.set_options(cache=DocumentCache())
+result = client.service.GetAddress(likeex)
 
-#client.set_options(cache=DocumentCache())
+for adress in result[0]:
+    print adress[0] + ';'
 
-#result = client.service.GetAddress()
 
-#for adress in result[0]:
-#    print "<p>", adress[0].encode("utf-8"), "</p>"

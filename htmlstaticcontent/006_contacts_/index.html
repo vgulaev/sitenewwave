@@ -295,11 +295,32 @@
                     </tr>
         </tbody>
     </table>
+    <script type="text/javascript">
+        function showEmail(name, domain) {
+            window.location = 'mailto:' + name + '@' + domain;
+            return false
+        }
+        $(".open-button").click( function(){
+            var forOpen
+            var parents = $(this).parents("table.tbl")
+            $(parents).find("tbody").each( function(){
+                forOpen = this
+                $(this).toggle()
+            })
+            $('table.tbl').find("tbody").each( function(){
+                if(this!=forOpen){
+                    $(this).hide()
+                }
+            })
+            return false;
+        })
+    </script>
 </div></div></div><div id="col1"><div id="cont1"><div id="obj-menu">
     <ul>
         <li><a href="/contacts/maps/" title="Схемы проезда">Схемы проезда</a></li>
         <li><a href="/contacts/feedback/" title="Обратная связь">Обратная связь</a></li>
         <li><a href="/contacts/urinfo/" title="Информация о юридическом лице">Информация о юридическом лице</a></li>
     </ul>
+
 </div> <!-- menu -->
 </div></div></div>    </div>
