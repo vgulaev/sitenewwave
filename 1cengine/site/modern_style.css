@@ -33,11 +33,11 @@
 }
 
 #leftTr li{
-	margin-left:50px;
+	margin-left:0px;
 	line-height: 1.73;
 	background:none;
-	padding:none;
-	list-style:circle;
+	padding:0;
+	list-style:disc;
 }
 
 #leftTr a{
