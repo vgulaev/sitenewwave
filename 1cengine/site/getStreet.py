@@ -24,7 +24,7 @@ else:
 
 def getStreets(town,term):
 	ret = []
-	connector = myDBC("goods")
+	connector = myDBC("kladr")
 	connector.dbConnect()
 	r = connector.dbExecute("""
 			SELECT `SOCR,C,10`, `NAME,C,40`, `CODE,C,17` 
@@ -47,6 +47,8 @@ def getStreets(town,term):
 		else:
 			appendStr = row[0]+'. '+row[1]
 			ret.append(appendStr)
+
+	connector.dbClose()
 
 	return ret
 
