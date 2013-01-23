@@ -74,18 +74,22 @@ if(isset($_GET["ref"])){
                 <!-- <p><a href="javascript:showGroups()" title="Показать группы товаров">Показать группы товаров</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
                 <p>Скачать прайс:
-                    <li><a href="/download/files/price.xlsx" title="Скачать прайс в формате xls">xls</a></li>
-                    <li><a href="/download/files/price.pdf" title="Скачать прайс в формате pdf">pdf</a></li>
-                    <li><a href="/download/files/price.ods" title="Скачать прайс в формате ods">ods</a></li>
+                    <ul>
+                        <li><a href="/download/files/price.xlsx" title="Скачать прайс в формате xls">xls</a></li>
+                        <li><a href="/download/files/price.pdf" title="Скачать прайс в формате pdf">pdf</a></li>
+                        <li><a href="/download/files/price.ods" title="Скачать прайс в формате ods">ods</a></li>
+                    </ul>
                 </p>
             </div>
             <div id='showPriceSpan'>
                 <p><a href='Показать%20прайс' title='В прайс' id='tabPrice' onClick='return false'>Добавить товар</a></p>
                 <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
-                    <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
-                    <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
-                    <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
+                    <ul>
+                        <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
+                        <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
+                        <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
+                    </ul>
                 </p>
 
             </div>
