@@ -13,37 +13,34 @@ if( $m->isMobile() ){
 
 $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
-$qq = '<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />';
+fclose($fp);
+
 $titleTamplate = '<title> Тримет </title>';
-$title = '<title> Купить Online </title>';
+
+if(isset($_GET["ref"])){
+    $ntitle = str_replace("\\\"", "\"",$_GET["ref"]);
+    $ntitle = str_replace("(", "", $ntitle);
+    $ntitle = str_replace(")", "", $ntitle);
+    $ntitle = str_replace("\"", "", $ntitle);
+
+    $title = '<title> '.$ntitle.' купить онлайн | Тримет ООО </title>';
+    // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
+    // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
+} else {
+    $title = '<title> Купить Online </title>';
+    // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
+    // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
+}
+
 $template_string = str_replace($titleTamplate, $title, $template_string); 
 echo $template_string;
-fclose($fp);
-// echo file_get_contents("../../mainpage_template.html");
 
-?>
+if(isset($_GET["ref"])){
+    if(strstr($_GET["ref"], "кастом")!=false){
 
-<?php 
-    if(isset($_GET["ref"])){
-        $title = str_replace("\\\"", "\"",$_GET["ref"]);
-        $title = str_replace("(", "", $title);
-        $title = str_replace(")", "", $title);
-        $title = str_replace("\"", "", $title);
-        // $APPLICATION->SetTitle($title." купить онлайн | Тримет ООО");
-        // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
-        // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
-    } else {
-        // $APPLICATION->SetTitle("Купить Online");
-        // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
-        // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
+        header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
     }
-
-    if(isset($_GET["ref"])){
-        if(strstr($_GET["ref"], "кастом")!=false){
-
-            header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
-        }
-    }
+}
 
 ?>
 
