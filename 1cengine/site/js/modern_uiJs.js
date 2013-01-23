@@ -101,26 +101,6 @@ $(function(){
 
 
 function showGroups(){
-    // $("#itemName").attr("value", "")
-    // $("#tableRes").empty()
-    // $("#myCanvasContainer").hide()
-    // $('#tags').hide();
-    // $("#showAll").hide();
-
-    // if($("#groupDiv").find("li")==undefined){
-        // $.ajax({
-        //     type: "POST",
-        //     url: "getGroups.php",
-        //     async: true,
-        //     data: "",
-        //     success: function(html){
-        //         $("#groupDiv").html(html)
-        //         $("#groupDiv").show()
-        //     }
-        // });
-    // } else {
-    //     $("#groupDiv").show()
-    // }
 
     $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100;  //ускоряем появление
@@ -137,6 +117,8 @@ function showGroups(){
 
 
     $.blockUI({ message: $("#tags")});
+
+    return false;
     
 }
 
