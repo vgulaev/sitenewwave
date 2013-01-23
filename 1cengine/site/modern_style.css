@@ -82,6 +82,7 @@
 
 #tableRes td:first-child{
 	border-left:none;
+	text-align:left;
 }
 
 #tableRes{
