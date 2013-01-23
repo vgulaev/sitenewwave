@@ -15,6 +15,8 @@ $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 fclose($fp);
 
+$strReplace()
+
 $titleTamplate = '<title> Тримет </title>';
 
 if(isset($_GET["ref"])){
@@ -33,6 +35,10 @@ if(isset($_GET["ref"])){
 }
 
 $template_string = str_replace($titleTamplate, $title, $template_string); 
+$template_string = str_replace("</body>", "", $template_string); 
+$template_string = str_replace("</head>", "", $template_string); 
+
+
 echo $template_string;
 
 if(isset($_GET["ref"])){
@@ -356,12 +362,6 @@ if(isset($_GET["ref"])){
     <a class='scrollTop' href='#header' style='display:none;'></a>  
 
 
-<?php 
-
-// $fp = fopen("../../mainfooter_template.html","r");
-echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");
-// fclose($fp);
-?>
 
 
         </div>
@@ -370,5 +370,13 @@ echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");
 
 </div> <!-- /main -->
 
-</body>
+<?php 
 
+// $fp = fopen("../../mainfooter_template.html","r");
+echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");
+// fclose($fp);
+?>
+
+
+</body>
+</html>
