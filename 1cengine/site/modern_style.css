@@ -914,5 +914,10 @@ tr.iHeader{
 }
 .ui-menu-item{
 	background-image:none;
+	
+	/*font-size:12px;*/
+}
+.ui-autocomplete{
 	background-color: white;
+	border:1px solid gray;
 }
