@@ -14,7 +14,7 @@ if( $m->isMobile() ){
 $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 $qq = '<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />';
-$titleTamplate = '<title> Главная страница </title>';
+$titleTamplate = '<title> Тримет </title>';
 $title = '<title> Купить Online </title>';
 $template_string = str_replace($titleTamplate, $title, $template_string); 
 echo $template_string;
