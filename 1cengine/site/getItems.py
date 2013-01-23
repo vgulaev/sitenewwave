@@ -103,7 +103,7 @@ def getRAL(rKey):
         '9003':'#F8F9FB'
     }
 
-    return ralArray(rKey)
+    return ralArray[rKey]
 
 r = getItems(req)
 showItems(r)
