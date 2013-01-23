@@ -15,8 +15,6 @@ $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 fclose($fp);
 
-$strReplace()
-
 $titleTamplate = '<title> Тримет </title>';
 
 if(isset($_GET["ref"])){
