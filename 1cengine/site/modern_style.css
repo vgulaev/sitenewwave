@@ -35,6 +35,9 @@
 #leftTr li{
 	margin-left:50px;
 	line-height: 1.73;
+	background:none;
+	padding:none;
+	list-style:circle;
 }
 
 #leftTr a{
