@@ -54,7 +54,27 @@ def getItems(req):
 
 def showItems(r):
     for row in r:
-        print row[0], " ", row[1]
+        print "<li>",row[0], " ", row[1],"</li>"
+
+def getRAL(rKey):
+    ralArray = {
+        '1014':'#DFCEA1',
+        '3003':'#870A24',
+        '3005':'#581E29',
+        '3011':'#791F24',
+        '5002':'#162E7B',
+        '5005':'#004389',
+        '5021':'#00747D',
+        '6002':'#276230',
+        '6005':'#0E4438',
+        '6029':'#006F43',
+        '7004':'#999A9F',
+        '8017':'#45302B',
+        '9002':'#DADBD5',
+        '9003':'#F8F9FB'
+    }
+
+    return ralArray(rKey)
 
 r = getItems(req)
 showItems(r)
