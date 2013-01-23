@@ -13,6 +13,7 @@ $template_string = str_replace("</body>", "", $template_string);
 $template_string = str_replace("</html>", "", $template_string); 
 
 
+echo $template_string;
 ?>
 <style type="text/css">
 
