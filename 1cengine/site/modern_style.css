@@ -908,3 +908,11 @@ tr.iHeader{
 	font-size:12px;
 	padding-top:5px;
 }
+
+.ui-helper-hidden-accessible{
+	display:none;
+}
+.ui-menu-item{
+	background-image:none;
+	background-color: white;
+}
