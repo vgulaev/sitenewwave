@@ -26,7 +26,7 @@ if($_SESSION['1cusername']!=''){
 ?>
 
 
-<script src='jquery.js' type='text/javascript'></script>
+<script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script>
 <script src='registration.js' type='text/javascript'></script>
 <link rel="stylesheet" type="text/css" href="style-auth.css" />
 

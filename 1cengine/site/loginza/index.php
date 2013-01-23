@@ -16,8 +16,8 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
 
 ?>
 
-<script src='jquery.js' type='text/javascript'></script>
-<script src='jquery.cookie.js' type='text/javascript'></script>
+<script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.cookie.js'> </script>
 <script src='authorization.js' type='text/javascript'></script>
 <script src="http://loginza.ru/js/widget.js" type="text/javascript"></script>
 
