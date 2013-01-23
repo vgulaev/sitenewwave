@@ -144,6 +144,8 @@ function showGroup2(groupName){
     $("#itemName").attr('value', groupName)
     $("#itemName").change()
     $.unblockUI()
+
+    return false;
 }
 
 function getItemChar(hash){
