@@ -360,12 +360,6 @@ if(isset($_GET["ref"])){
     <a class='scrollTop' href='#header' style='display:none;'></a>  
 
 
-
-
-        </div>
-
-
-
 </div> <!-- /main -->
 
 <?php 
