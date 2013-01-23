@@ -118,7 +118,6 @@ function showGroups(){
 
     $.blockUI({ message: $("#tags")});
 
-    return false;
     
 }
 
