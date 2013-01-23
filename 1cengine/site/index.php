@@ -69,7 +69,7 @@ if(isset($_GET["ref"])){
     <tr>
         <td id="leftTr">
 
-            <span id='showBasketSpan'>
+            <div id='showBasketSpan'>
                 <p><a href='Показать заказ' title='Заказ' id='tabBasket' onClick='return false'>Показать заказ (<span class='basketCount'>0</span>)</a></p>
                 <!-- <p><a href="javascript:showGroups()" title="Показать группы товаров">Показать группы товаров</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
@@ -78,8 +78,8 @@ if(isset($_GET["ref"])){
                     <li><a href="/download/files/price.pdf" title="Скачать прайс в формате pdf">pdf</a></li>
                     <li><a href="/download/files/price.ods" title="Скачать прайс в формате ods">ods</a></li>
                 </p>
-            </span>
-            <span id='showPriceSpan'>
+            </div>
+            <div id='showPriceSpan'>
                 <p><a href='Показать прайс' title='В прайс' id='tabPrice' onClick='return false'>Добавить товар</a></p>
                 <p><a href='javascript:createOrder()' title='Сохранить заказ'>Оформить заказ</a></p>
                 <p>Скачать заказ:
@@ -88,7 +88,7 @@ if(isset($_GET["ref"])){
                     <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
                 </p>
 
-            </span>
+            </div>
             
         </td>
         <td id="mainTr" rowspan="2">
