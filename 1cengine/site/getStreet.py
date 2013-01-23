@@ -8,6 +8,7 @@ import cgitb; cgitb.enable()
 
 print ("Content-Type: text/html; charset=utf-8\n")
 
+import json
 from secrets import *
 
 get = cgi.FieldStorage()
@@ -57,11 +58,7 @@ def getStreets(town,term):
 
 def showStreets(ret):
 
-	print "<ul>"
-	for x in ret:
-		print "<li>"+x+"</li>"
-		
-	print "</ul>"
+	print json.dumps(ret)
 
 ret = getStreets(town,term)
 showStreets(ret)
