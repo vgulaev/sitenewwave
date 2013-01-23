@@ -12,14 +12,16 @@ from secrets import *
 
 get = cgi.FieldStorage()
 if "term" in get:
-	term = "."+get["term"].value
+	term = get["term"].value
 else:
 	term = ""
 
 if "town" in get:
-	town = "."+get["town"].value
+	town = get["town"].value
 else:
 	town = ""
+
+# print term, ' ', town
 
 
 def getStreets(town,term):
@@ -33,6 +35,7 @@ def getStreets(town,term):
 		""")
 	
 	for row in r:
+		# print row[0], " ", row[1], " ", row[2]
 		t = str(row[2])[0:11]
 		r2 = connector.dbExecute("""
 			SELECT `SOCR,C,10`, `NAME,C,40`, `CODE,C,13` 
