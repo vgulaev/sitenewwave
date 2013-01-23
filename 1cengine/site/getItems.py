@@ -67,10 +67,10 @@ def showItems(r):
         if not row[4] in parentArray:
             parentArray.append(row[4])
 
-            print '<tr class="iHeader"><td><strong>'+row[4]+'</strong></td><td>Размер</td>';
-            priceTypeArray = split("|", row[3]);
+            print '<tr class="iHeader"><td><strong>'+row[4]+'</strong></td><td>Размер</td>'
+            priceTypeArray = split("|", row[3])
             i=0
-            foreach($priceTypeArray as $priceType){
+
             for priceType in priceTypeArray:
                 if priceType != '':
                     if i == 0:
