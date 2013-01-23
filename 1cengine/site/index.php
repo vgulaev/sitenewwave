@@ -346,7 +346,7 @@ if(isset($_GET["ref"])){
 
                     <p>*Обязательны для заполнения</p>
 
-                    <a href="Посмотреть заказ" onClick="$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
+                    <a href="Посмотреть%20заказ" onClick="$('#switchOrderDiv').click(); return false"><div id="backToBasketButton">Посмотреть заказ</div></a>
 
                     <a href="javascript:createOrder()" style="text-decoration:none;"><div id="sendOrderButton">Оформить</div></a>
 
