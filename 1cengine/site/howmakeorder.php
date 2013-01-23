@@ -26,6 +26,12 @@ echo $template_string;
 }
 </style>
 
+<div id="main2">
+
+    <a id="top" title="Перейти к содержимому" tabindex="1" href="#sm"></a><div id="header"></div>
+      <!-- /header -->
+    <div class="clear"></div><div id="post-header"></div>
+
 <link rel="stylesheet" type="text/css" href="modern_style.css" />
 
 <table>
