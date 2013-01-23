@@ -57,7 +57,7 @@ def showItems(r):
     parentArray = []
     for row in r:
 
-        ral = r[0].split("RAL ")
+        ral = row[0].split("RAL ")
         if ral.__len__()>1:
             rKey = ral[1].split(" ")
             ralColor = getRAL(rKey[0])
