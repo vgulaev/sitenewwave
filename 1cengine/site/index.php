@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-<!--DOCTYPE html-->
+<!DOCTYPE html>
 <?php
 require_once('mobile.inc.php');
 $m = new Mobile_Detect();
