@@ -14,7 +14,7 @@ $server->soap_defencoding = 'UTF-8';
 $result=$server->GetPrice("");
 $content = $server->__getLastResponse();
 
-$fileout = 'price.xml';
+$fileout = '/web/trimetru/site/www/import/price.xml';
 $handle = fopen($fileout, 'w+');
 
 $filein = 'http://195.239.221.58:30080/download/price.xml';
