@@ -68,7 +68,7 @@ def showItems(r):
             parentArray.append(row[4])
 
             print '<tr class="iHeader"><td><strong>'+row[4]+'</strong></td><td>Размер</td>'
-            priceTypeArray = split("|", row[3])
+            priceTypeArray = row[3].split("|")
             i=0
 
             for priceType in priceTypeArray:
