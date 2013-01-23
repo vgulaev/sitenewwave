@@ -1,3 +1,4 @@
+<!--DOCTYPE html-->
 <?php session_start(); ?>
 <?php
 require_once('mobile.inc.php');
