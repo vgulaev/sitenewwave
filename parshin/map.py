@@ -30,7 +30,7 @@ client.set_options(cache=DocumentCache())
 #result = client.service.HelloWorld()
 #print(result.encode("utf-8"))
 
-result = client.service.GetAddress()
+result = client.service.GetAddress('we')
 
 print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'
 print '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Поиск магазинов</title>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+		<script src="/lib/frameworks/jquery/1.8.3/jquery-1.8.3.min.js"></script>
+		<script src="multigeocoder.js"></script>
+		<script src="getaddress.js"></script>
+		<script src="/es5-shim/es5-shim.min.js" type="text/javascript"></script>'
+		<script src="http://yandex.st/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>'
+		<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>'
+	</head>
+	<body>
+		<p> Наменование товара </p>
+		<input id="searchstring">
+		</input>
+		<button onclick="getaddress()">
+			Найти
+		</button>
+		<script type="text/javascript">
+			ymaps.ready(function () {
+				var map = new ymaps.Map("map", {
+				center: [ 57.101278, 65.615761 ],
+					zoom: 11,
+					behaviors: ["default", "scrollZoom"]
+				});
+				var mGeocoder = new MultiGeocoder({ boundedBy : map.getBounds() });
+				// Геокодирование массива адресов и координат.
+				mGeocoder.geocode([
+					"Тюмень Народная  4",
+					"Тюмень Пржевальского  50",
+					"Тюмень Барабинская  3 А",
+					"Тюмень Энергетиков  66",
+					"Тюмень Майский прое 1",
+					"Тюмень Интернациональная  35",
+					"Тюмень Депутатская  129",
+					"Тюмень Волгоградская  67/1",
+					"Тюмень Седова  55/1",
+					"Ялуторовск Луговая  37",
+					"Ялуторовск Ворошилова  64",
+					"Ялуторовск Свободы  106",
+					"Ялуторовск Муравьева-Апостола  74а",
+					"Тюмень Большая Заречная  41/1",
+				])
+				.then(function (res) {
+					// Асинхронно получаем коллекцию найденных геообъектов.
+					map.geoObjects.add(res.geoObjects);
+				},
+				function (err) {
+					console.log(err);
+				});
+			});
+		</script>
+		<div id="map" style="width: 400px; height: 400px;"></div>
+	</body>
+</html>
