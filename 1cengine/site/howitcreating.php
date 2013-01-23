@@ -15,6 +15,11 @@ $template_string = str_replace("</html>", "", $template_string);
 
 echo $template_string;
 ?>
+<div id="main2">
+
+    <a id="top" title="Перейти к содержимому" tabindex="1" href="#sm"></a><div id="header"></div>
+      <!-- /header -->
+    <div class="clear"></div><div id="post-header"></div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
