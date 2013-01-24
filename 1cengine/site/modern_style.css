@@ -333,6 +333,10 @@ tr.iHeader{
 	padding-left:10px;
 }
 
+#Summary td:first-child{
+	text-align:left;
+}
+
 #Summary{
 	margin-top:20px;
 	width:250px;

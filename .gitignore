@@ -202,11 +202,11 @@ google08c306b085ecc151.html
 #############
 ## track only usefull content from afedorov
 #############
-afedorov/
-!afedorov/*.py
+
 !afedorov/*.py
 !afedorov/images/*
 !afedorov/img/*
+afedorov/
 
 #############
 ## do not track csv files
