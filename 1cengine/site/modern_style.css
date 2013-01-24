@@ -342,6 +342,9 @@ tr.iHeader{
 	width:250px;
 	font-size:16px;
 }
+.itemNameTd{
+	text-align:left;
+}
 .itemEdIzmTd{
 	width:30px;
 	white-space: nowrap;
