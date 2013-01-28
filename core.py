@@ -1,7 +1,7 @@
-##!/web/trimetru/python/bin/python2.6
+#!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
-#--!c:/Python27/python.exe 
+#-- #!c:/Python27/python.exe 
 import sys, os
 import cgi
 import cgitb; cgitb.enable()
@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
 
-debugmode = True
+debugmode = False
 if ((sys.platform) == "win32"):
     #print ("")
     #sys.stdout = open('temp.html', 'w')
