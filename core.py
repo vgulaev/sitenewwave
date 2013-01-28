@@ -1,6 +1,7 @@
-#!/web/trimetru/python/bin/python2.6
+##!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
+#--!c:/Python27/python.exe 
 import sys, os
 import cgi
 import cgitb; cgitb.enable()
@@ -9,9 +10,12 @@ from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
 
+debugmode = True
 if ((sys.platform) == "win32"):
+    #print ("")
+    #sys.stdout = open('temp.html', 'w')
+    print ("Content-Type: text/html; charset=utf-8")
     print ("")
-    sys.stdout = open('temp.html', 'w')
 else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
@@ -28,6 +32,11 @@ def findpath(pagename):
 def makecontent(path):
     # print path
     soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
+    if (debugmode == True):
+        soup.html.noscript.extract()
+        nodes = soup.html.body("script")
+        for currentelement in nodes:
+            currentelement.extract()
     soupForImport = BeautifulSoup(open(path + "index.html"))
     # print soupForImport
     soupFooter = BeautifulSoup(open("locate/ru/templates/mainfooter_template.html"))
