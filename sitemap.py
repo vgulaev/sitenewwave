@@ -71,4 +71,3 @@ def makecontent(path=None):
     print(soup.prettify("utf-8"))
 
 makecontent()
-# print("Hello!!!");
