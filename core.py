@@ -1,4 +1,4 @@
-#!/web/trimetru/python/bin/python2.6
+#!c:/Python27/python.exe
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 import sys, os
@@ -10,8 +10,10 @@ from urllist import trimeturls
 import Cookie
 
 if ((sys.platform) == "win32"):
+    #print ("")
+    #sys.stdout = open('temp.html', 'w')
+    print ("Content-Type: text/html; charset=utf-8")
     print ("")
-    sys.stdout = open('temp.html', 'w')
 else:
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
