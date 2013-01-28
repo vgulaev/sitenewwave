@@ -1,7 +1,7 @@
-#!c:/Python27/python.exe
+#!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
-#-- #!/web/trimetru/python/bin/python2.6
+#-- #!c:/Python27/python.exe
 import sys, os
 import cgi
 import cgitb; cgitb.enable()
