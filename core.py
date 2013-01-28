@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
 
+debugmode = True
 if ((sys.platform) == "win32"):
     #print ("")
     #sys.stdout = open('temp.html', 'w')
@@ -30,6 +31,11 @@ def findpath(pagename):
 def makecontent(path):
     # print path
     soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
+    if (debugmode == True):
+        soup.html.noscript.extract()
+        nodes = soup.html.body("script")
+        for currentelement in nodes:
+            currentelement.extract()
     soupForImport = BeautifulSoup(open(path + "index.html"))
     # print soupForImport
     soupFooter = BeautifulSoup(open("locate/ru/templates/mainfooter_template.html"))
