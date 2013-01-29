@@ -42,3 +42,23 @@
 .webstore-Pf-zb {
 	display: inline-block;
 }
+.improve_panel_ul {
+	margin: 0px;
+	padding: 0px;
+	display: inline;
+}
+.improve_panel_ul li {
+	background: none;
+	margin: 0px;
+	padding: 6px 12px;
+	background: none repeat scroll 0% 0% rgb(119, 119, 119);
+	color: rgb(255, 255, 255);
+	font-weight: bold;
+}
+
+.improve_panel_ul li:hover {
+	background-color: rgb(255, 153, 0);
+}
+#improve_panel_options {
+	display: none;
+}
