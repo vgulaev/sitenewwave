@@ -1,0 +1,54 @@
+.webstore-button {
+	border-radius: 2px 2px 2px 2px;
+	border: 1px solid;
+	cursor: pointer;
+	color: rgb(255, 255, 255);
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+	text-transform: uppercase;
+	padding: 0px 4px;
+	box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.06) inset, 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+	outline: 0px none;
+}
+.webstore-A-B-o {
+	margin: auto;
+}
+.webstore-A-B-H {
+	display: inline-block;
+}
+.webstore-A-L-i-J-B-K {
+	height: 28px;
+	font-size: 11px;
+	line-height: 28px;
+	min-width: 170px;
+}
+.webstore-button.webstore-A-B-C {
+	border-color: rgb(45, 83, 175);
+	background-color: rgb(77, 123, 214);
+	background-image: -moz-linear-gradient(center top , rgb(86, 137, 219) 0%, rgb(77, 123, 214) 100%);
+}
+.webstore-tb-ub-mc-nc-oc-z {
+	position: absolute;
+	top: 35px;
+	right: 40px;
+}
+.webstore-sb-zc-Ac-Bc, .webstore-sb-dc-Kc-Lc-e, .webstore-sb-Tb-Yb, .webstore-sb-tb-ub-Mc-B, .webstore-sb-tb-ub-bc-B, .webstore-sb-tb-ub-Nc-Eb, .webstore-sb-tb-ub-Nc-Eb-o, .webstore-sb-tb-ub-Oc-Pc, .webstore-sb-tb-ub-vb-Eb-o, .webstore-sb-tb-ub-Qc-Eb, .webstore-sb-tb-ub-Qc-Eb-o, .webstore-sb-tb-ub-Rc-Eb, .webstore-sb-tb-ub-Rc-Eb-o, .webstore-sb-tb-ub-Sc-Eb, .webstore-sb-tb-ub-Sc-Eb-o, .webstore-sb-tb-ub-qb-sc, .webstore-sb-tb-ub-pc-Pc, .webstore-A-Eb-Kb, .webstore-A-Eb-Kb-Ib, .webstore-A-Eb-Kb-Tc {
+}
+/*body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	background-color: rgb(255, 255, 255);
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 14px;
+	overflow-x: auto;
+	overflow-y: scroll;
+}
+html {
+	height: 100%;
+}*/
+.webstore-Pf-zb {
+	display: inline-block;
+}
