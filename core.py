@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
 
-debugmode = True
+debugmode = False
 if ((sys.platform) == "win32"):
     #print ("")
     #sys.stdout = open('temp.html', 'w')
