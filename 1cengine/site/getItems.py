@@ -28,7 +28,7 @@ def getItems(req):
             if reqWord.__len__()>1:
                 condition = condition + "`offers`.`name` LIKE '%"+reqWord+"%' AND "
             else:
-                condition = condition + "`offers`.`name` LIKE '% "+reqWord+" %' AND "
+                condition = condition + "`offers`.`name` LIKE '% "+reqWord+"%' AND "
 
         if "show_all" in get:
             limit = ""
