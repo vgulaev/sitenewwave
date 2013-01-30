@@ -11,7 +11,7 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 #lightbox-secNav-btnClose {
     width: 66px;
     position: absolute;
-    top: 20px;
+    top: -2px;
     right: 0px;
     z-index: 100;
 }
