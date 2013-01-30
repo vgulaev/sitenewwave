@@ -51,7 +51,7 @@ def makecontent(path):
         if currentelement.has_key("src"):
             if not currentelement["src"][0] == "/": 
                 currentelement["src"] = "/"+path + currentelement["src"]
-                soup.html.head.append(currentelement)
+            soup.html.head.append(currentelement)
             #scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
