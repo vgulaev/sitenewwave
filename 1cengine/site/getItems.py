@@ -138,7 +138,7 @@ def showItems(req):
 
         print rt
 
-        return parentArray
+    return parentArray
         # print "<li>",row[0], " ", row[1],"</li>"
 
 def getItemByHash(hash):
@@ -223,7 +223,7 @@ else:
 if "from_hash" in get:
     from_hash = True
 else:
-    from_hash = false
+    from_hash = False
 
 if from_hash == True:
     hash = get["hash"]
@@ -233,6 +233,6 @@ if from_hash == True:
     showItemByHash(hash, char, count,rezka)
 else:
     res = showItems(req)
-    if $_GET["strict"] == "True" and res.__len__()==0:
+    if "strict" in get and res.__len__()==0:
         print "<tr><td>Извините, данный товар в настоящее время отсутствует на складе</td></tr>"
      
