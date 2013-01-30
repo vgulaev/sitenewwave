@@ -43,15 +43,16 @@ def writeItemsToFile(row):
     _PATH = os.path.abspath(os.path.dirname(__file__))
 
     sitemapBaseFilepath = os.path.join(_PATH, 'sitemapBase.xml')
+    sitemapFilepath = os.path.join(_PATH, 'sitemap.xml')
 
     sitemapBase = open(sitemapBaseFilepath,'r')
     sitemapBase_string = sitemapBase.read()
     sitemapBase.close()
 
-    sitemapBase = open(sitemapBaseFilepath,'w+')
+    sitemapFile = open(sitemapBaseFilepath,'w+')
     sitemap = sitemapBase_string + addRow
-    sitemapBase.write(sitemap)
-    sitemapBase.close()
+    sitemapFile.write(sitemap)
+    sitemapFile.close()
 
     print "sitemap generated"
 
