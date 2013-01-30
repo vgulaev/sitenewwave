@@ -48,9 +48,10 @@ def makecontent(path):
     # change path for script tag to correct path
     nodes = soupForImport.find_all("script")
     for currentelement in nodes:
-        if currentelement.has_key("src"): 
-            currentelement["src"] = "/"+path + currentelement["src"]
-            soup.html.head.append(currentelement)
+        if currentelement.has_key("src"):
+            if not currentelement["src"][0] == "/": 
+                currentelement["src"] = "/"+path + currentelement["src"]
+                soup.html.head.append(currentelement)
             #scripttag.string = scripttag.string + "loadfile(\"" + "/"+path + currentelement["src"]+"\", \"script\");"
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
