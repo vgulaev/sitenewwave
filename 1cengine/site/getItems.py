@@ -100,10 +100,15 @@ def getRAL(rKey):
         '7004':'#999A9F',
         '8017':'#45302B',
         '9002':'#DADBD5',
-        '9003':'#F8F9FB'
+        '9003':'#F8F9FB',
+        '1018':'#F1CF44',
+        '3009':'#703731'
     }
 
-    return ralArray[rKey]
+    if rkey in ralArray:
+        return ralArray[rKey]
+    else:
+        return '#000000'
 
 r = getItems(req)
 showItems(r)
