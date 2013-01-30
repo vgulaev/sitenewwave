@@ -94,12 +94,52 @@ def showItems(r):
                         openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""', '1'); 
                         return false">купить</a>
                     </span></td>""" 
+
+            stock = "Под заказ"
+            stockSchema = 'href="http://schema.org/PreOrder"'
+
         else:
             rt = rt + """<a class="oItem" href="Добавить в корзину" 
                     onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
                         openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""','0'); 
                         return false">заказать</a>
                     </span></td>"""
+
+            stock = "Под заказ"
+            stockSchema = 'href="http://schema.org/PreOrder"'
+
+        if not ralColor == "":
+            rt = rt + '<td name="'+row[1]+'" class="itemChar" itemprop="model" style="background-color:'+ralColor+';"><span style="color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;">'+row[1]+'</span></td>'
+        else:
+            rt = rt + '<td name="'+row[1]+'" class="itemChar" itemprop="model">'+row[1]+'</td>'
+        
+
+        
+        paLength = priceArray.__len__() - 1
+        j = 0
+        for price in priceArray:
+            if price != "":
+                if j == paLength:
+                    rt = rt + '''<td class="price itemPrice'''+str(j)+'''" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <span itemprop="price">'''+str(price)+'''</span>
+                            <meta itemprop="priceCurrency" content="RUB" />
+                            <span style="display:none;" itemprop="availability" '''+stockSchema+'>'+stock+'''</span>
+                            <div style="display:none;" itemprop="seller" itemscope itemtype="http://schema.org/Organization">
+                                <span itemprop="name">Тримет ООО</span>
+                                <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <span itemprop="streetAddress">ул. Республики, 278 а, строение 1</span>
+                                    <span itemprop="postalCode">625014</span>
+                                    <span itemprop="addressLocality">Тюмень, Россия</span> 
+                                </div>
+                                <span itemprop="telephone">+7 (3452) 520-670</span>
+                            </div>
+                        </td>'''
+                else:
+                    rt = rt + '<td class="price itemPrice'+str(j)+'"><span>'+str(price)+'</span></td>'
+                        
+                j = j + 1
+
+        rt = rt + '</tr>'
 
         print rt
         # print "<li>",row[0], " ", row[1],"</li>"
