@@ -81,3 +81,11 @@ function makeslideshowathead() {
 		})
 	}
 }
+
+function toggleTabs(){
+	$("div#catalog-tab1").toggle()
+	$("div#catalog-tab2").toggle()
+}
+
+$("a.catalog-tab1").click( toggleTabs() )
+$("a.catalog-tab2").click( toggleTabs() )
