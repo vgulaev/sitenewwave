@@ -1760,9 +1760,9 @@ $(document).ready( function(){
 		value = $("#itemName").attr('value')
 		$.ajax({
 	        type: "GET",
-	        url: "getItems.php",
+	        url: "getItems.py",
 	        async: false,
-	        data: "term="+encodeURIComponent(value)+"&show_all",
+	        data: "term="+encodeURIComponent(value)+"&show_all=true",
 	        success: function(html){
 	            $("#tableRes").empty()
 				
@@ -1791,7 +1791,7 @@ $(document).ready( function(){
 		value = $("#itemName").attr("value");
 		$.ajax({
 	        type: "GET",
-	        url: "getItems.php",
+	        url: "getItems.py",
 	        async: false,
 	        data: "term="+encodeURIComponent(value)+"",
 	        success: function(html){
