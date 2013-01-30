@@ -144,6 +144,53 @@ def showItems(r):
         print rt
         # print "<li>",row[0], " ", row[1],"</li>"
 
+def getItemByHash(hash):
+    hashArray = hash.split(":")
+
+    itemHash = hashArray[0]
+    pHash = hashArray[1]
+    newRow = ""
+
+    connector = myDBC("goods")
+    connector.dbConnect()
+
+    r = connector.dbExecute("""
+            SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, `offers`.`edIzm` 
+            FROM `offers` 
+            WHERE `offers`.`hash`='"""+itemHash+"""' AND `offers`.`father_hash`='"""+pHash+"""' 
+        """)
+
+    connector.dbClose()
+
+    return r
+
+def showItemByHash(hash, char, count,rezka):
+
+    r = getItemByHash(hash)
+
+    if char == "":
+        char = row[1]
+
+    for row in r:
+        cell = """
+            <tr class='itemTr' name='"""+hash+"""'><td></td>
+            <td class='itemNameTd'>"""+row[0]+"""
+                <span class="delEdSpan">
+                <a href="Убрать из корзины" onClick="delModernItem('"""+hash+"""'); return false">X</a>
+                <a href="Изменить" onClick="modern_editItem('"""+hash+"""'); return false"><img src="edit.png" /></a></span></td>
+            <td class='itemCharTd'>"""+char+"""</td>
+            <td class='itemCountTd'><input class='itemCountInput' name='"""+row[3]+"""' type='textarea' value='"""+count+"""' disabled /></td>
+            <td class='itemEdIzmTd' name='"""+row[3]+"""'>"""+row[3]+"""</td>
+            <td class='itemPriceTd' name='"""+row[2]+"""'></td>
+            <td class='itemNdsKfTd'>18%</td>
+            <td class='itemNdsSumTd'></td>
+            <td class='itemSumTd'></td>
+            <td class='itemRezlaTd' style='display:none'>"""+rezk+"""</td></tr>
+        """
+
+        print cell
+
+
 
 def getRAL(rKey):
     ralArray = {
