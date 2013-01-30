@@ -10,12 +10,6 @@ print ("Content-Type: text/html; charset=utf-8\n")
 
 from secrets import *
 
-get = cgi.FieldStorage()
-if "term" in get:
-    req = get["term"].value
-else:
-    req = ""
-
 def getItems(req):
 
     connector = myDBC("goods")
@@ -52,7 +46,9 @@ def getItems(req):
 
     return r
 
-def showItems(r):
+def showItems(req):
+
+    r = getItems(req)
 
     parentArray = []
     for row in r:
@@ -79,7 +75,9 @@ def showItems(r):
                         print '<td class="priceHeader">'+priceType+'<br /><span>Цена</span></td>'
                     i = i + 1
                         
-            print '</tr>'priceArray = row[2].split("|")
+            print '</tr>'
+
+        priceArray = row[2].split("|")
 
         rt = '''
             <tr class="item" id="'''+row[5]+':'+row[7]+'''" itemscope itemtype="http://schema.org/Product">
@@ -94,20 +92,17 @@ def showItems(r):
                         openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""', '1'); 
                         return false">купить</a>
                     </span></td>""" 
-
-            stock = "Под заказ"
-            stockSchema = 'href="http://schema.org/PreOrder"'
-
+            stock = "В наличии"
+            stockSchema = 'href="http://schema.org/InStock"'
         else:
             rt = rt + """<a class="oItem" href="Добавить в корзину" 
                     onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
                         openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""','0'); 
                         return false">заказать</a>
                     </span></td>"""
-
             stock = "Под заказ"
             stockSchema = 'href="http://schema.org/PreOrder"'
-
+            
         if not ralColor == "":
             rt = rt + '<td name="'+row[1]+'" class="itemChar" itemprop="model" style="background-color:'+ralColor+';"><span style="color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;">'+row[1]+'</span></td>'
         else:
@@ -142,6 +137,8 @@ def showItems(r):
         rt = rt + '</tr>'
 
         print rt
+
+        return parentArray
         # print "<li>",row[0], " ", row[1],"</li>"
 
 def getItemByHash(hash):
@@ -191,7 +188,6 @@ def showItemByHash(hash, char, count,rezka):
         print cell
 
 
-
 def getRAL(rKey):
     ralArray = {
         '1014':'#DFCEA1',
@@ -211,14 +207,32 @@ def getRAL(rKey):
         '1018':'#F1CF44',
         '3009':'#703731'
     }
-
     if rKey in ralArray:
         return ralArray[rKey]
     else:
         return '#000000'
 
-r = getItems(req)
-showItems(r)
 
 
+get = cgi.FieldStorage()
+if "term" in get:
+    req = get["term"].value
+else:
+    req = ""
 
+if "from_hash" in get:
+    from_hash = True
+else:
+    from_hash = false
+
+if from_hash == True:
+    hash = get["hash"]
+    char = get["char"]
+    count = get["count"]
+    rezka = get["rezka"]
+    showItemByHash(hash, char, count,rezka)
+else:
+    res = showItems(req)
+    if $_GET["strict"] == "True" and res.__len__()==0:
+        print "<tr><td>Извините, данный товар в настоящее время отсутствует на складе</td></tr>"
+     
