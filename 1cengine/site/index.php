@@ -16,7 +16,9 @@ $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 fclose($fp);
 
-$titleTamplate = '<title> Тримет </title>';
+$titleTemplate = '<title> Тримет </title>';
+$keywordsTemplate = '<meta name="keywords" content=
+        "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока" />';
 
 if(isset($_GET["ref"])){
     $ntitle = str_replace("\\\"", "\"",$_GET["ref"]);
@@ -25,15 +27,27 @@ if(isset($_GET["ref"])){
     $ntitle = str_replace("\"", "", $ntitle);
 
     $title = '<title> '.$ntitle.' купить онлайн | Тримет ООО </title>';
+
+    $keywordsArray = explode(" ", $ntitle);
+    $keywordsString = "";
+    foreach($keywordsArray as $keyword){
+        $keywordsString .= $keyword.", ";
+    }
+    $keywordsString .= "купить, онлайн, тюмень";
+
+    $keywords = '<meta name="keywords" content="'.$keywordsString.'" />';
+    
     // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
     // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
 } else {
     $title = '<title> Купить Online </title>';
+    $keywords = $keywordsTemplate;
     // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
     // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
 }
 
-$template_string = str_replace($titleTamplate, $title, $template_string); 
+$template_string = str_replace($titleTemplate, $title, $template_string); 
+$template_string = str_replace($keywordsTemplate, $keywords, $template_string); 
 $template_string = str_replace("</body>", "", $template_string); 
 $template_string = str_replace("</html>", "", $template_string); 
 
