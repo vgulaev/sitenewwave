@@ -100,7 +100,7 @@ input { padding: 3px 0px 2px; width: 50%; }
 #footer:after { content: ""; display: block; clear: both; }
 #post-cont { background: none repeat scroll 0% 0% rgb(255, 255, 255); left: 0px; top: -50px; position: absolute; height: 49px; width: 178px ! important; }
 .ui-tabs-hide { display: none; }
-.ui-tabs-nav { margin: 0px 0px 1.4em; padding: 10px 0px 1px; overflow: hidden; }
+.ui-tabs-nav { margin: 0; padding: 0; overflow: hidden; float:right;}
 .ui-tabs-nav:after { display: block; clear: both; content: " "; }
 .ui-tabs-nav li { background: none repeat scroll 0% 0% transparent ! important; margin: 0px 0px 0.4em ! important; padding: 4px 13px; float: left; position: relative; text-align: center; }
 .ui-tabs-nav li.ui-tabs-selected { background: none repeat scroll 0% 0% rgb(179, 179, 179) ! important; }

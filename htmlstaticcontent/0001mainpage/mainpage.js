@@ -83,6 +83,6 @@ function makeslideshowathead() {
 }
 
 function toggleTabs(){
-	$("div#catalog-tab1, div#catalog-tab2, a.closeLiButton, a.helpLiButton").toggle()
+	$("div#catalog-tab1, div#catalog-tab2, li.closeLiButton, li.helpLiButton").toggle()
 	return false
 }
