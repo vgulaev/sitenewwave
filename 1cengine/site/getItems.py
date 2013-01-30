@@ -79,10 +79,30 @@ def showItems(r):
                         print '<td class="priceHeader">'+priceType+'<br /><span>Цена</span></td>'
                     i = i + 1
                         
-            print '</tr>'
+            print '</tr>'priceArray = row[2].split("|")
 
-        print "<li>",row[0], " ", row[1],"</li>"
+        rt = '''
+            <tr class="item" id="'''+row[5]+':'+row[7]+'''" itemscope itemtype="http://schema.org/Product">
+                <td name="'''+row[0]+'''" class="itemName" >
+                <span itemprop="name">'''+row[0]+'''</span>   
+                    <span class="buySpan">
+            '''
 
+        if not row[8] == 0:
+            rt = rt + """<a class="bItem" href="Добавить в корзину" 
+                    onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
+                        openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""', '1'); 
+                        return false">купить</a>
+                    </span></td>""" 
+        else:
+            rt = rt + """<a class="oItem" href="Добавить в корзину" 
+                    onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
+                        openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""','0'); 
+                        return false">заказать</a>
+                    </span></td>"""
+
+        print rt
+        # print "<li>",row[0], " ", row[1],"</li>"
 
 
 def getRAL(rKey):
@@ -105,7 +125,7 @@ def getRAL(rKey):
         '3009':'#703731'
     }
 
-    if rkey in ralArray:
+    if rKey in ralArray:
         return ralArray[rKey]
     else:
         return '#000000'
