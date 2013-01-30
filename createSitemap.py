@@ -49,7 +49,7 @@ def writeItemsToFile(row):
     sitemapBase_string = sitemapBase.read()
     sitemapBase.close()
 
-    sitemapFile = open(sitemapBaseFilepath,'w+')
+    sitemapFile = open(sitemapFilepath,'w+')
     sitemap = sitemapBase_string + addRow
     sitemapFile.write(sitemap)
     sitemapFile.close()
