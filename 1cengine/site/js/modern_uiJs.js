@@ -1268,6 +1268,8 @@ function modern_editItem(hash){
 
 }
 
+/// изменить товар в заказе ///
+
 function changeItem(hash){
     weight = $(".itemPWeightInput").attr("value")
     // if($("#slicePrice").attr("name")!=undefined){
@@ -1303,6 +1305,8 @@ function changeItem(hash){
     })
     setOverallPrices()
 }
+
+/// удаление товара из заказа ///
 
 function delModernItem(hash, char){
     
@@ -1382,6 +1386,8 @@ function delModernItem(hash, char){
 
 }
 
+/// установка товара из заказа из куки ///
+
 function setModernItem(hash, char, count, rezka){
     // alert(1);
     $.ajax({
@@ -1422,6 +1428,8 @@ function setModernItem(hash, char, count, rezka){
         }
     });
 }
+
+/// отправка заказа на сервер 1с ///
 
 function sendOrder(orderString){
     
@@ -1490,6 +1498,8 @@ function sendOrder(orderString){
     return ret
 }
 
+/// создание заказа клиента ///
+
 function createOrder(){
     if($("#emailInput").attr("value")==""){
         // $.unblockUI()
@@ -1523,20 +1533,12 @@ function createOrder(){
       
         })
         var order = sendOrder(sendRow);
-        
-        // $("#basketCaption").empty()
-
-        // var oA = order.split(",")
-        // $("#basketCaption").append("Заказ "+oA[0])
-        
-        // $("#switchOrderDiv").click()
-
-        
-        // $.unblockUI()
 
     }
     
 }
+
+/// получить заказ клиента ///
 
 function getOrder(uid){
     $.ajax({
@@ -1552,6 +1554,8 @@ function getOrder(uid){
         }
     });
 }
+
+/// парсер заказа для отображения заказа клиента ///
 
 function parseOrder(order){
 
@@ -1622,6 +1626,8 @@ function parseOrder(order){
     $("#tabBasket").click()
 }
 
+/// Открытие файла заказа ///
+
 function openLink(linkUID,type){
     $.ajax({
         type: "POST",
@@ -1636,6 +1642,8 @@ function openLink(linkUID,type){
     });
 }
 
+/// не могу найти референса к этому. по крайней мере ещё ///
+
 function getOrderFomat(format){
     var sendRow = '';
     $('tr.itemTr').each( function(){
@@ -1645,23 +1653,18 @@ function getOrderFomat(format){
         } else {
             sendRow += ''+$(this).attr('name')+':-:'+$(this).find('input.itemCountInput').attr('value')+':'+$(this).find('.itemPriceTd').html()+';';
         }
-  
-  
+    
     })
     var order = sendOrder(sendRow);
     var q = order.split(',')
 
-
     openLink(q[1],format)
 }
 
-// function onHoverTime(elem){
-
-    
-// }
-
 
 $(document).ready( function(){
+
+    /// Обработка куки ///
 
     if($.cookie("basket")!=undefined){
         eval($.cookie("basket"))
@@ -1673,7 +1676,7 @@ $(document).ready( function(){
         $.unblockUI()
     })
 
-    
+    /// Попап наименований групп ///
 
     $("td.iRefTd").mouseenter( function(){
         // alert('in')
@@ -1740,19 +1743,19 @@ $(document).ready( function(){
             })
     })
 
+    /// Кнопка показать НДС ///
 
-    // if( ! $('#myCanvas').tagcanvas({
-    //     textColour : '#242491',
-    //     outlineColour : '#242491',
-    //     outlineThickness : 1,
-    //     maxSpeed : 0.03,
-    //     depth : 0.75
-    // },'tags')) {
-    //      // TagCanvas failed to load
-    //     $('#myCanvasContainer').hide();
-    //     $('#tags').hide();
-    // }
+    $("#showNds").change( function(){
+        // alert($("#showNds").attr("checked"))
+        if($("#showNds").attr("checked")=="checked"){
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
+        } else {
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
+        }
+    })
+    
 
+    /// Вывод товаров по запросу ///
 
 	$("#itemName").focus();
 
@@ -1772,17 +1775,6 @@ $(document).ready( function(){
         
     	});
 	})
-
-
-    $("#showNds").change( function(){
-        // alert($("#showNds").attr("checked"))
-        if($("#showNds").attr("checked")=="checked"){
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
-        } else {
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
-        }
-    })
-	
 		
 	tmOutId = 0
 
@@ -1835,6 +1827,8 @@ $(document).ready( function(){
         );
     });
 
+    /// Разбор GET-параметров ///
+
 	var squery = String(document.location).replace(/\%2F/g, "\\")
     var squery = String(document.location).replace(/\s\s/g, "\s")
     if(squery.split("?",2)[1]){
@@ -1864,6 +1858,8 @@ $(document).ready( function(){
             getOrder(decodeURI(GET['uid']))
         }
     }
+
+    /// работа доставки. автодополнение, выбор города ///
 
     townS = $('#townSelect option:selected').attr('value')
     
