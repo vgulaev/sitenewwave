@@ -1866,7 +1866,7 @@ $(document).ready(function() {
     townS = $('#townSelect option:selected').attr('value')
 
     $("#destination").autocomplete({
-        source: "getStreet.php?town=" + townS,
+        source: "getStreet.py?town=" + townS,
         delay: 10,
         minChars: 2,
         matchSubset: 1,
@@ -1880,7 +1880,7 @@ $(document).ready(function() {
     $("select").change(function() {
 
         townS = $('#townSelect option:selected').attr('value')
-        $("#destination").autocomplete("option", "source", "getStreet.php?town=" + townS)
+        $("#destination").autocomplete("option", "source", "getStreet.py?town=" + townS)
     })
 
     $("#townSelect").change(function() {
