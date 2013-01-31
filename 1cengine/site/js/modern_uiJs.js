@@ -454,6 +454,8 @@ function showModalItem(hash, edIzm, prices, stock, c){
     
 
     $.blockUI({ message: mesDiv});
+    $( ".blockMsg" ).draggable();
+
 
 
     if($(".itemPLengthInput").attr("name")!=undefined){
