@@ -235,10 +235,10 @@ if(isset($_GET["ref"])){
                                 <td><span class='withDelivery' style='display:none'>Стоимость доставки:</span><span class='withoutDelivery'>Без доставки</span></td>
                                 <td id='SumDelivery'></td>
                             </tr>
-                            <!-- <tr>
+                            <tr>
                                 <td>Стоимость доп. услуг:</td>
                                 <td id='SumRezka'></td>
-                            </tr> -->
+                            </tr>
                             <tr>
                                 <td>Общая стоимость:</td>
                                 <td name='0' id='SumAll'></td>
