@@ -397,7 +397,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
             itChar = itChar - 0
             var itName = $(this).find(".itemName").attr("name")
             // alert(itName.indexOf("Арматура"))
-            if(itName.indexOf("Арматура") != -1) {
+            if(itName.indexOf("Арматура") != -1 && isNaN(itChar)!=true) {
                 // alert(1)
                 mesDiv += "<div class='armaImages'>"
                 mesDiv += "<div class='armaImage im1'></div>"
