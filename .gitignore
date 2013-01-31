@@ -232,3 +232,10 @@ price.xml
 #############
 
 download/files/
+
+############
+## do not track blog engines
+############
+
+zine/
+wordpress/
