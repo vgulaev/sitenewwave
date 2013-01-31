@@ -56,3 +56,5 @@ trimeturls.append(urltype("products/faq/926", "htmlstaticcontent/040_products_fa
 trimeturls.append(urltype("products/request", "htmlstaticcontent/037_products_request_/"))
 
 trimeturls.append(urltype("products/krovl/dobornye-jelementy", "htmlstaticcontent/046_products_krovl_dobornye-jelementy_/"))
+
+trimeturls.append(urltype("kabinet", "1cengine/kabinet/"))
