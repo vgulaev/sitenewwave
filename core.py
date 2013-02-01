@@ -78,7 +78,7 @@ def makecontent(path):
         import imp
         python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
         
-        r = python_lib.__main__()
+        r = python_lib.__main__(python_method_name)
         
         python_replace = BeautifulSoup(r)
         currentelement.replaceWith(python_replace)
