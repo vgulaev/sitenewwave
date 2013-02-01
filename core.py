@@ -67,7 +67,22 @@ def makecontent(path):
     # set title
     title = soupForImport.find("title")
     soup.html.head.title.replaceWith(title)
-    
+
+    # loading python script
+    nodes = soupForImport.html.find_all("pythonscript")
+    # print nodes.__len__()
+    for currentelement in nodes:
+        python_lib_name = currentelement.contents[0].split("|")[0].split("{")[1]
+        python_method_name = currentelement.contents[0].split("|")[1].split("}")[0]
+        
+        import imp
+        python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
+        
+        r = python_lib.__main__()
+        
+        python_replace = BeautifulSoup(r)
+        currentelement.replaceWith(python_replace)
+
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
@@ -76,6 +91,10 @@ def makecontent(path):
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
+
+    
+
+
     print(soup.prettify("utf-8"))
 
 form = cgi.FieldStorage()
