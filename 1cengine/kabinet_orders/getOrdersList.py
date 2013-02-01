@@ -45,33 +45,31 @@ def getOrdersList(UID):
     """
 
     listOrder = listOrder + """
-        <table>
-            <thead>
-                <tr>
-                    <th>---</th>
-                    <th>Номер</th>
-                    <th>Сумма Документов</th>
-                    <th>Дата</th>
-                    <th>Ответственный</th>
-                    <th>Контрагент</th>
-                </tr>
-            </thead>
-            <tbody>
+        
     """
 
+    odd = "odd"
 
     for order in result[2][0]:
         listOrder = listOrder + """
-            <tr>
-                <td><a href='http://trimet.ru/1cengine/site/index.php?uid="""+str(order[0])+"""'>Просмотреть заказ</a></td>
-                <td>"""+str(order[3])+"""</td>
-                <td>"""+str(order[2])+"""</td>
-                <td>"""+str(order[1])+"""</td>
-                <td>"""+str(order[4])+"""</td>
-                <td>"""+str(order[5])+"""</td>
-            </tr>
+            <div class="orderItem """+odd+""" ">
+                <span class="openOrderDownload">"""+str(order[3])+"""</span>
+                <span>"""+str(order[2])+"""</span>
+                <span>"""+str(order[1])+"""</span>
+                
+                <p class="orderDownload">
+                    Скачать заказ: 
+                    <a href='javascript:openLink(" """+str(order[0])+""" ","xlsx")' title="Скачать заказ в формате xls"> xls </a>
+                    <a href='javascript:openLink(" """+str(order[0])+""" ","pdf")' title="Скачать заказ в формате pdf"> pdf </a>
+                    <a href='javascript:openLink(" """+str(order[0])+""" ","odf")' title="Скачать заказ в формате ods"> ods </a>
+                </p>
+            </div>
         """
-        # print " ---- ",order[0]," | ",order[1]," | ",order[2]," | ",order[3]," | ",order[4]," | ",order[5]," ---- <br />"
+        
+        if odd=="odd":
+            odd=""
+        else:
+            odd = "odd"
 
     listOrder = listOrder + "</tbody></table>"
 
