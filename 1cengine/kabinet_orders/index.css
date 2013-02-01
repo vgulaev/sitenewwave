@@ -11,7 +11,12 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 .orderItem span{
 	font-size:16px;
 	margin:5px 30px;
-	text-align:justify;
+	display:block;
+	float:left;
+	width:100px;
+}
+.orderItem div{
+	height:30px;
 }
 
 .orderItem{
@@ -30,4 +35,16 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 .orderDownload a{
 	margin:0 15px;
+}
+.orderListHeader{
+	background-color: white;
+	height:50px;
+}
+.orderListHeader span{
+	font-size:16px;
+	margin:5px 30px;
+	width:100px;
+	display:block;
+	float:left;
+	padding-left: 3px;
 }

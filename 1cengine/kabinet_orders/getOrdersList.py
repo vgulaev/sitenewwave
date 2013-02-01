@@ -58,10 +58,12 @@ def getOrdersList(UID):
     for order in result[2][0]:
         listOrder = listOrder + """
             <div class="orderItem """+odd+""" ">
-                <span class="openOrderDownload">"""+str(order[3])+"""</span>
-                <span>"""+str(order[2])+"""</span>
-                <span>"""+str(order[1].split(" ")[0])+"""</span>
-                
+                <div>
+                    <span class="openOrderDownload">"""+str(order[3])+"""</span>
+                    <span>"""+str(order[2])+"""</span>
+                    <span>"""+str(order[1].split(" ")[0])+"""</span>
+                </div>
+
                 <p class="orderDownload">
                     Скачать заказ: 
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать заказ в формате xls"> xls </a>
