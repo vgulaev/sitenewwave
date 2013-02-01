@@ -18,6 +18,7 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	margin:5px auto;
 	padding:15px 0;
 	display:block;
+	cursor:pointer;
 }
 .odd{
 	background-color: rgb(238, 238, 238);

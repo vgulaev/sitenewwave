@@ -46,7 +46,11 @@ def getOrdersList(UID):
     """
 
     listOrder = listOrder + """
-        
+        <div class="orderListHeader">
+            <span>Номер</span>
+            <span>Сумма</span>
+            <span>Дата</span>
+        </div>
     """
 
     odd = "odd"
@@ -56,7 +60,7 @@ def getOrdersList(UID):
             <div class="orderItem """+odd+""" ">
                 <span class="openOrderDownload">"""+str(order[3])+"""</span>
                 <span>"""+str(order[2])+"""</span>
-                <span>"""+str(order[1])+"""</span>
+                <span>"""+str(order[1].split(" ")[0])+"""</span>
                 
                 <p class="orderDownload">
                     Скачать заказ: 
