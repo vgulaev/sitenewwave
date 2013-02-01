@@ -23,6 +23,7 @@ else:
 
 def getOrdersList(UID):
 
+    # client = Client('http://195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws?wsdl', location = "http://195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws")
     client = Client('http://192.168.194.14/DemoTrimet/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/DemoTrimet/ws/privetoffice.1cws")
     client.set_options(cache=DocumentCache())
 
@@ -59,9 +60,9 @@ def getOrdersList(UID):
                 
                 <p class="orderDownload">
                     Скачать заказ: 
-                    <a href='javascript:openLink(" """+str(order[0])+""" ","xlsx")' title="Скачать заказ в формате xls"> xls </a>
-                    <a href='javascript:openLink(" """+str(order[0])+""" ","pdf")' title="Скачать заказ в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(" """+str(order[0])+""" ","odf")' title="Скачать заказ в формате ods"> ods </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать заказ в формате xls"> xls </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать заказ в формате pdf"> pdf </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать заказ в формате ods"> ods </a>
                 </p>
             </div>
         """
