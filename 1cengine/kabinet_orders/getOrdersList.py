@@ -31,26 +31,16 @@ def getOrdersList(UID):
     result = client.service.OrderLists(UID,None,None)
 
     listOrder = """
-        <style>
-            table{
-                border-left:1px solid gray;
-                border-top:1px solid gray;
-            }
-            td,th{
-                border-right:1px solid gray;
-                border-bottom:1px solid gray;
-                text-align:center;
-                padding:5px;
-            }
-        </style>
+        
     """
 
     listOrder = listOrder + """
         <div class="orderListHeader">
             <span>Номер</span>
             <span>Сумма</span>
-            <span>Дата</span>
+            <span><a href="javascript:pass()">Дата</a></span>
         </div>
+        <div id="ordersContainer">
     """
 
     odd = "odd"
@@ -61,7 +51,7 @@ def getOrdersList(UID):
                 <div>
                     <span class="openOrderDownload">"""+str(order[3])+"""</span>
                     <span>"""+str(order[2])+"""</span>
-                    <span>"""+str(order[1].split(" ")[0])+"""</span>
+                    <span class="orderDate">"""+str(order[1].split(" ")[0])+"""</span>
                 </div>
 
                 <p class="orderDownload">
@@ -78,7 +68,7 @@ def getOrdersList(UID):
         else:
             odd = "odd"
 
-    listOrder = listOrder + "</tbody></table>"
+    listOrder = listOrder + "</div>"
 
     return listOrder
 

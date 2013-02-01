@@ -81,7 +81,7 @@ def makecontent(path):
         r = python_lib.__main__(python_method_name)
         
         python_replace = BeautifulSoup(r)
-        currentelement.replaceWith(python_replace)
+        currentelement.replaceWith(python_replace.html.body)
 
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
