@@ -17,8 +17,8 @@ if ((sys.platform) == "win32"):
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
 else:
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
+    print ("Content-Type: text/html; charset=utf-8\n")
+    print ("Set-Cookie: sid=9e28ca95-fe04-b518-828c-577baebb190c")
     
 print("<!DOCTYPE html>")
 
@@ -97,7 +97,17 @@ def makecontent(path):
 
     print(soup.prettify("utf-8"))
 
+
+
+if os.environ.get('REQUEST_METHOD','') == "POST":
+    # print os.environ.get('REQUEST_METHOD','')
+    raw_post = sys.stdin.read()
+    # print raw_post
+
+    os.environ["POST_DATA"] = raw_post
+
 form = cgi.FieldStorage()
+# print os.environ.get('REQUEST_METHOD','')
 
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
@@ -111,3 +121,9 @@ else:
 
 makecontent(pathtohtml)
 #print("Hello!!!");
+
+
+
+if "CUSTOM_COOKIES" in os.environ:
+    print 1
+    print os.environ["CUSTOM_COOKIES"]

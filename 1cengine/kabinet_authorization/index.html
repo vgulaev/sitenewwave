@@ -33,20 +33,32 @@
 <p>
     Войдите в систему для просмотра заказов
 </p>
+<form method="POST" action="/kabinet/authorization/">
 <table>
     <tr>
         <td>Ваш e-mail</td>
-        <td><input class="emailInput" /></td>
+        <td><input class="emailInput" name="email" /></td>
     </tr>
     <tr>
         <td>Ваш пароль</td>
-        <td><input type="password" class="passwdInput" /></td>
+        <td><input type="password" name="passwd" class="passwdInput" /></td>
     </tr>
 </table>
+
 <div>
-    <div class="enterButton">Войти</div>
+    <input type="submit" value="Войти" class="enterButton" />
+    <!-- <div class="enterButton">Войти</div> -->
     <div class="regButton">Зарегистрироваться</div>
 </div>
+</form>
+
+<pythonscript>
+    {user|authorize()}
+</pythonscript>
+
+<pythonscript>
+    {user|testSession()}
+</pythonscript>
 
 </div></div><div id="col1"><div id="cont1"><div id="obj-menu">
     <ul>
