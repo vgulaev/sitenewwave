@@ -79,8 +79,12 @@ def makecontent(path):
         python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
         
         r = python_lib.__main__(python_method_name)
-        
-        python_replace = BeautifulSoup(r)
+
+        if r != None:
+            python_replace = BeautifulSoup(r)
+        else:
+            python_replace = BeautifulSoup("<html><body></body></html>")
+
         currentelement.replaceWith(python_replace.html.body)
 
     nodes = soupForImport.html.body.contents

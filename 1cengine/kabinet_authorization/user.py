@@ -33,18 +33,18 @@ class User():
 
     def checkUser(self,email,passwd):
         email = email.replace("%40", "@")
-        print email," >> ", passwd
+        # print email," >> ", passwd
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
                 FROM `users`
                 WHERE `users`.`email`='"""+email+"""' AND `users`.`passwdhash`='"""+passwd+"""'
             """)
 
-        print row
+        # print row
 
         if row.__len__() > 0:
             self.uid = row[0][0]
-            print row[0][0]
+            # print row[0][0]
             return row[0][0]
         else:
             return False
@@ -65,7 +65,7 @@ class User():
     def checkSID(self):
         try:
             cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-            print 1
+            # print 1
             # print " <<< ",cookie, " >>> "
             if cookie.has_key("sid"):
                 # print cookie["sid"].value
@@ -75,10 +75,10 @@ class User():
                     WHERE `uids`.`sid`='"""+cookie["sid"].value+"""'
                     """)
                 # print row
-                print 3
+                # print 3
                 if row.__len__() > 0:
-                    print 5
-                    print row[0][0]
+                    # print 5
+                    # print row[0][0]
                     if row[0][0] == cgi.escape(os.environ["REMOTE_ADDR"]):
                         return True
                     else:
@@ -86,14 +86,14 @@ class User():
                 else:
                     return False
             else:
-                print 4
+                # print 4
                 return False
         except:
             return False
 
     def generateSID(self, uid):
         import uuid, OpenSSL
-        print uid
+        # print uid
         self.sid = uuid.UUID(bytes = OpenSSL.rand.bytes(16))
         today = datetime.datetime.now()
         row = self.connector.dbExecute("""
@@ -116,7 +116,7 @@ class User():
         return sid
 
     def testSession(self):
-        print 0
+        # print 0
         if self.checkSID():
             return "Passed"
         else:
@@ -127,6 +127,15 @@ class User():
             uid = self.checkUser(email,passwd)
             if uid:
                 c=self.setSession(uid)
+            else:
+                return """
+                    <p>No such user</p>
+                    <script type="text/javascript">
+                        $(document).ready( function(){
+                                $.cookie("sid","")
+                            })
+                    </script>
+                """
             # print "Set-Cookie: sid="+str(c)
 
             # os.environ["CUSTOM_COOKIES"] = c.output()
@@ -142,7 +151,14 @@ class User():
                     </script>
                 """
         else:
-            return "No email"
+            return """
+                <p>No email</p>
+                <script type="text/javascript">
+                    $(document).ready( function(){
+                            $.cookie("sid","")
+                        })
+                </script>
+            """
 
 
 
@@ -156,7 +172,7 @@ def __main__(funkt=False):
 
     elif funkt=="newUser":
         uid = user.newUser(email,passwd)
-        print uid
+        # print uid
         user.setSession(uid)
 
     elif funkt!=False:

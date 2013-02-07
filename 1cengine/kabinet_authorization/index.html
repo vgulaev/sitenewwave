@@ -35,7 +35,7 @@
     Войдите в систему для просмотра заказов
 </p>
 <form method="POST" action="/kabinet/authorization/" id="regForm">
-<table>
+<table class="loginTable">
     <tr>
         <td>Ваш e-mail</td>
         <td><input class="emailInput" name="email" /></td>
@@ -54,10 +54,8 @@
 </div>
 
 <div>
-    <!-- <input type="submit" value="Войти" class="enterButton" /> -->
-    <div class="enterButton">Войти</div>
-    <!-- <div class="regButton">Зарегистрироваться</div> -->
-    <!-- <input type="submit" value="Зарегистрироваться" class="regButton" /> -->
+    <div class="enterButton submitButton">Войти</div>
+    <div class="regButton submitButton" style="display:none;">Зарегистрироваться</div>
 </div>
 </form>
 

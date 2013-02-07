@@ -76,3 +76,20 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	color:white;
 	cursor:pointer;
 }
+.loginTable{
+	margin-bottom:15px;
+}
+.loginTable input{
+	font-size:16px;
+	padding-right: 10px;
+	margin:5px;
+	width:250px;
+	height:30px;
+	border: 1px solid rgb(161, 161, 161);
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+}
+.loginTable tr td:first-child{
+	width:150px;
+	vertical-align:middle;
+	font-size:16px;
+}

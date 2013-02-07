@@ -1,5 +1,5 @@
 $(document).ready( function (){
-    $(".enterButton").click( function(){
+    $(".submitButton").click( function(){
         if($(".newUser").attr("checked") == "checked"){
             newUser()
         } else {
@@ -9,9 +9,13 @@ $(document).ready( function (){
 
     $(".newUser").change( function(){
         if($(".newUser").attr("checked") == "checked"){
-            $(".passwdRepeatTr").slideDown("400")
+            $(".passwdRepeatTr").show()
+            $(".regButton").show()
+            $(".enterButton").hide()
         } else {
-            $(".passwdRepeatTr").slideUp("400")
+            $(".passwdRepeatTr").hide()
+            $(".regButton").hide()
+            $(".enterButton").show()
         }
     })
 
