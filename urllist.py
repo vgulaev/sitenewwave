@@ -59,3 +59,4 @@ trimeturls.append(urltype("products/krovl/dobornye-jelementy", "htmlstaticconten
 
 trimeturls.append(urltype("kabinet", "1cengine/kabinet/"))
 trimeturls.append(urltype("kabinet/orders", "1cengine/kabinet_orders/"))
+trimeturls.append(urltype("kabinet/authorization", "1cengine/kabinet_authorization/"))
