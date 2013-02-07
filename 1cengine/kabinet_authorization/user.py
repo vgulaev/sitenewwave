@@ -152,11 +152,7 @@ class User():
             else:
                 return """
                     <p>No email</p>
-                    <script type="text/javascript">
-                        $(document).ready( function(){
-                                $.cookie("sid","")
-                            })
-                    </script>
+                    
                 """
         else:
             self.newUser(email,passwd)
@@ -164,7 +160,6 @@ class User():
 
 
 def __main__(funkt=False):
-
 
     user = User()
     if funkt=="checkUser":
@@ -177,6 +172,7 @@ def __main__(funkt=False):
         user.setSession(uid)
 
     elif funkt!=False:
+        # print "user."+funkt
         return eval("user."+funkt)
 
     user.connector.dbClose()
