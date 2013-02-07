@@ -5,7 +5,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 import Cookie, datetime, random
-import cookielib, cookie
+import HTMLParser
 
 lib_path = os.path.abspath('../../')
 sys.path.append(lib_path)
@@ -32,15 +32,19 @@ class User():
             return True
 
     def checkUser(self,email,passwd):
-
+        email = email.replace("%40", "@")
+        print email," >> ", passwd
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
                 FROM `users`
                 WHERE `users`.`email`='"""+email+"""' AND `users`.`passwdhash`='"""+passwd+"""'
             """)
 
+        print row
+
         if row.__len__() > 0:
             self.uid = row[0][0]
+            print row[0][0]
             return row[0][0]
         else:
             return False
@@ -61,38 +65,42 @@ class User():
     def checkSID(self):
         try:
             cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-            # print 1
-            print " <<< ",cookie, " >>> "
+            print 1
+            # print " <<< ",cookie, " >>> "
             if cookie.has_key("sid"):
+                # print cookie["sid"].value
                 row = self.connector.dbExecute("""
-                    SELECT `uids`.`reg_ip`
+                    SELECT `uids`.`ip_reg`
                     FROM `uids`
-                    WHERE `uids`.`sid`='"""+cookie["sid"]+"""'
+                    WHERE `uids`.`sid`='"""+cookie["sid"].value+"""'
                     """)
+                # print row
                 print 3
                 if row.__len__() > 0:
-                    # if row[0][0] == cgi.escape(os.environ["REMOTE_ADDR"]):
-                    return True
-                    print 2
-                    # else:
-                        # return False
+                    print 5
+                    print row[0][0]
+                    if row[0][0] == cgi.escape(os.environ["REMOTE_ADDR"]):
+                        return True
+                    else:
+                        return False
                 else:
                     return False
             else:
-                # print 4
+                print 4
                 return False
         except:
             return False
 
     def generateSID(self, uid):
         import uuid, OpenSSL
+        print uid
         self.sid = uuid.UUID(bytes = OpenSSL.rand.bytes(16))
         today = datetime.datetime.now()
         row = self.connector.dbExecute("""
-            INSERT INTO `trimetru_users`.`uids` (`id_user`,`sid`,`date`)
-            VALUES ('"""+str(uid)+"""','"""+str(self.sid)+"""','')
+            INSERT INTO `trimetru_users`.`uids` (`id_user`,`sid`,`date`,`ip_reg`)
+            VALUES ('"""+str(uid)+"""','"""+str(self.sid)+"""','','"""+cgi.escape(os.environ["REMOTE_ADDR"])+"""')
             """)
-        print self.sid
+        # print self.sid
         return self.sid
 
     def setSession(self, uid):
@@ -108,7 +116,7 @@ class User():
         return sid
 
     def testSession(self):
-        # print 0
+        print 0
         if self.checkSID():
             return "Passed"
         else:
@@ -117,13 +125,22 @@ class User():
     def authorize(self):
         if email != False:
             uid = self.checkUser(email,passwd)
-            c=self.setSession(uid)
-            print "Set-Cookie: sid="+str(c)
-            cc = cookielib.Cookie()
-            cc.set_coolie()
+            if uid:
+                c=self.setSession(uid)
+            # print "Set-Cookie: sid="+str(c)
+
             # os.environ["CUSTOM_COOKIES"] = c.output()
-            print os.environ["HTTP_COOKIE"]
-            return "Authorized"
+                print os.environ["HTTP_COOKIE"]
+                return """ 
+                    <p>Authorized</p>
+                    <script type="text/javascript">
+                        $(document).ready( function(){
+                                $.cookie("sid","")
+                                $.cookie("sid",\""""+str(c)+"""\")
+                                // alert('"""+str(c)+"""')
+                            })
+                    </script>
+                """
         else:
             return "No email"
 

@@ -17,8 +17,8 @@ if ((sys.platform) == "win32"):
     print ("Content-Type: text/html; charset=utf-8")
     print ("")
 else:
-    print ("Content-Type: text/html; charset=utf-8\n")
-    print ("Set-Cookie: sid=9e28ca95-fe04-b518-828c-577baebb190c")
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
     
 print("<!DOCTYPE html>")
 
@@ -121,9 +121,3 @@ else:
 
 makecontent(pathtohtml)
 #print("Hello!!!");
-
-
-
-if "CUSTOM_COOKIES" in os.environ:
-    print 1
-    print os.environ["CUSTOM_COOKIES"]
