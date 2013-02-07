@@ -17,3 +17,10 @@ ErrorDocument 404 /404.py
 <IfModule mod_charset.c>
  AddHandler fastcgi-script .fcgi
 </IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpeg "access plus 3 day"
+  ExpiresByType image/gif "access plus 3 day"
+  ExpiresByType image/png "access plus 3 day"
+</IfModule>
