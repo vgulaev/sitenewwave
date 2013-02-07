@@ -136,6 +136,7 @@ class User():
                                     $.cookie("sid","")
                                     $.cookie("sid",\""""+str(c)+"""\")
                                     // alert('"""+str(c)+"""')
+                                    window.location = "/kabinet/authorization/"
                                 })
                         </script>
                     """

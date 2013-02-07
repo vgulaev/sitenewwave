@@ -1,4 +1,9 @@
 $(document).ready( function (){
+    $(".exitButton").click( function(){
+        $.cookie("sid","")
+        window.location = "/kabinet/authorization/"
+    })
+
     $(".submitButton").click( function(){
         if($(".newUser").attr("checked") == "checked"){
             newUser()

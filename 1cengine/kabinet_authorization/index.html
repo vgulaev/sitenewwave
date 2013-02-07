@@ -4,7 +4,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <title>Список заказов</title>
+    <title>Авторизация</title>
     <link rel="stylesheet" type="text/css" href="index.css" media="all" />
     <script src="/lib/frameworks/sha256.js"></script>
     <script src="/lib/frameworks/jqrequired/jquery.cookie.js"></script>
@@ -31,33 +31,9 @@
 <h1 class="title">Список заказов</h1>        <a href="#bottom" id="sm" tabindex="2" title="вниз страницы"></a>
 
 <div id="obj-path"><a href="/" title="На главную">Главная</a>&nbsp;<ins>&gt;</ins><a href="/kabinet/" title="личный кабинет">Личный кабинет</a>&nbsp;<ins>&gt;</ins>Авторизация</div> <!-- /obj-path -->    </div> <!-- /post-header --><div id="wrap"><div id="col2"><div id="cont2"> 
-<p>
-    Войдите в систему для просмотра заказов
-</p>
-<form method="POST" action="/kabinet/authorization/" id="regForm">
-<table class="loginTable">
-    <tr>
-        <td>Ваш e-mail</td>
-        <td><input class="emailInput" name="email" /></td>
-    </tr>
-    <tr>
-        <td>Ваш пароль</td>
-        <td><input type="password" name="passwd" class="passwdInput" /></td>
-    </tr>
-    <tr class="passwdRepeatTr" style="display:none;">
-        <td>Повторите пароль</td>
-        <td><input type="password" name="passwdRepeat" class="passwdInputRepeat" /></td>
-    </tr>
-</table>
-<div>
-    <label for="newUser">Новый пользователь </label><input type="checkbox" name="newUser" class="newUser" />
-</div>
-
-<div>
-    <div class="enterButton submitButton">Войти</div>
-    <div class="regButton submitButton" style="display:none;">Зарегистрироваться</div>
-</div>
-</form>
+<pythonscript>
+    {template|showAuthorizationPage()}
+</pythonscript>
 
 <pythonscript>
     {user|authorize()}
