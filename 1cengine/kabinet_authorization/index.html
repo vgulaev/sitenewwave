@@ -34,7 +34,7 @@
 <p>
     Войдите в систему для просмотра заказов
 </p>
-<form method="POST" action="/kabinet/authorization/">
+<form method="POST" action="/kabinet/authorization/" id="regForm">
 <table>
     <tr>
         <td>Ваш e-mail</td>
@@ -44,12 +44,20 @@
         <td>Ваш пароль</td>
         <td><input type="password" name="passwd" class="passwdInput" /></td>
     </tr>
+    <tr class="passwdRepeatTr" style="display:none;">
+        <td>Повторите пароль</td>
+        <td><input type="password" name="passwdRepeat" class="passwdInputRepeat" /></td>
+    </tr>
 </table>
+<div>
+    <label for="newUser">Новый пользователь </label><input type="checkbox" name="newUser" class="newUser" />
+</div>
 
 <div>
-    <input type="submit" value="Войти" class="enterButton" />
-    <!-- <div class="enterButton">Войти</div> -->
-    <div class="regButton">Зарегистрироваться</div>
+    <!-- <input type="submit" value="Войти" class="enterButton" /> -->
+    <div class="enterButton">Войти</div>
+    <!-- <div class="regButton">Зарегистрироваться</div> -->
+    <!-- <input type="submit" value="Зарегистрироваться" class="regButton" /> -->
 </div>
 </form>
 
