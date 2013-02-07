@@ -32,15 +32,14 @@ class User():
             return True
 
     def checkUser(self,email,passwd):
-        email = email.replace("%40", "@")
-        # print email," >> ", passwd
+        print email," >> ", passwd
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
                 FROM `users`
                 WHERE `users`.`email`='"""+email+"""' AND `users`.`passwdhash`='"""+passwd+"""'
             """)
 
-        # print row
+        print row
 
         if row.__len__() > 0:
             self.uid = row[0][0]
@@ -50,6 +49,7 @@ class User():
             return False
 
     def newUser(self,email,passwd):
+        email = email.replace("%40", "@")
         if self.isValidEmail(email) == True:
             row = self.connector.dbExecute("""
                 INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
@@ -57,10 +57,10 @@ class User():
             """)
 
             self.uid = self.cursor.lastrowid
-            return self.uid
+            return self.generateSID(self.uid)
 
         else:
-            return False
+            return "Username is taken"
 
     def checkSID(self):
         try:
@@ -123,42 +123,43 @@ class User():
             return "Failed"
 
     def authorize(self):
-        if email != False:
-            uid = self.checkUser(email,passwd)
-            if uid:
-                c=self.setSession(uid)
+        if is_new == False:
+            if email != False:
+                uid = self.checkUser(email,passwd)
+                # print passwd
+                if uid != False:
+                    c=self.setSession(uid)
+                    return """ 
+                        <p>Authorized</p>
+                        <script type="text/javascript">
+                            $(document).ready( function(){
+                                    $.cookie("sid","")
+                                    $.cookie("sid",\""""+str(c)+"""\")
+                                    // alert('"""+str(c)+"""')
+                                })
+                        </script>
+                    """
+                else:
+                    return """
+                        <p>No such user</p>
+                        <script type="text/javascript">
+                            $(document).ready( function(){
+                                    $.cookie("sid","")
+                                })
+                        </script>
+                    """
+                    
             else:
                 return """
-                    <p>No such user</p>
+                    <p>No email</p>
                     <script type="text/javascript">
                         $(document).ready( function(){
                                 $.cookie("sid","")
-                            })
-                    </script>
-                """
-            # print "Set-Cookie: sid="+str(c)
-
-            # os.environ["CUSTOM_COOKIES"] = c.output()
-                print os.environ["HTTP_COOKIE"]
-                return """ 
-                    <p>Authorized</p>
-                    <script type="text/javascript">
-                        $(document).ready( function(){
-                                $.cookie("sid","")
-                                $.cookie("sid",\""""+str(c)+"""\")
-                                // alert('"""+str(c)+"""')
                             })
                     </script>
                 """
         else:
-            return """
-                <p>No email</p>
-                <script type="text/javascript">
-                    $(document).ready( function(){
-                            $.cookie("sid","")
-                        })
-                </script>
-            """
+            self.newUser(email,passwd)
 
 
 
@@ -200,6 +201,7 @@ if "POST_DATA" in os.environ:
 # print post
 if "email" in post:
     email = post["email"]
+    email = email.replace("%40", "@")
 else:
     email = False
 
@@ -207,6 +209,15 @@ if "passwd" in post:
     passwd = post["passwd"]
 else:
     passwd = False
+
+if "newUser" in post:
+    is_new = post["newUser"]
+    if is_new == "on":
+        is_new = True
+    else:
+        is_new = False
+else:
+    is_new = False
 
 if "funkt" in post:
     funkt = post["funkt"]
