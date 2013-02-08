@@ -38,7 +38,7 @@ class User():
             return True
 
     def check_user(self,email,passwd):
-        print email," >> ", passwd
+        # print email," >> ", passwd
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
                 FROM `users`
@@ -124,7 +124,16 @@ class User():
         return sid
 
     def insert_1c_uid(self, uid, uid1c):
-        pass
+        row = self.connector.dbExecute("""
+            UPDATE `trimetru_users`.`uids`
+            SET `1cuid` = '"""+uid1c+"""'
+            WHERE `uid` = '"""+uid+"""'
+            """)
+        
+        if row.__len__()>0:
+            return True
+        else:
+            return False
 
     def test_session(self):
         # print 0
@@ -142,8 +151,9 @@ class User():
                     c=self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
                     uid1c = user_1c.authorize_user_1c(email,passwd)
+                    print uid1c
                     if not "Произошла ошибка" in uid1c:
-                        self.insert_1c_uid(uid, uid1c)
+                        print self.insert_1c_uid(uid, uid1c)
                     return """ 
                         <p>Authorized</p>
                         <script type="text/javascript">
@@ -151,7 +161,7 @@ class User():
                                     $.cookie("sid","")
                                     $.cookie("sid",\""""+str(c)+"""\")
                                     // alert('"""+str(c)+"""')
-                                    window.location = "/kabinet/authorization/"
+                                    // window.location = "/kabinet/authorization/"
                                 })
                         </script>
                     """
