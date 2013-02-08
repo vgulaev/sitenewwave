@@ -10,6 +10,12 @@ import HTMLParser
 lib_path = os.path.abspath('../../')
 sys.path.append(lib_path)
 
+_PATH_ = os.path.abspath(os.path.dirname(__file__))
+
+import imp
+python_lib_name = "1c_user_interaction"
+user_1c_lib = imp.load_source(python_lib_name, _PATH_+"/"+python_lib_name+".py")
+
 from secrets import *
 
 class User():
@@ -19,7 +25,7 @@ class User():
         self.uid = ""
         self.sid = ""
 
-    def isValidEmail(self,email):
+    def is_valid_email(self,email):
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
                 FROM `users`
@@ -31,7 +37,7 @@ class User():
         else:
             return True
 
-    def checkUser(self,email,passwd):
+    def check_user(self,email,passwd):
         print email," >> ", passwd
         row = self.connector.dbExecute("""
                 SELECT `users`.`id` 
@@ -48,21 +54,23 @@ class User():
         else:
             return False
 
-    def newUser(self,email,passwd):
+    def new_user(self,email,passwd):
         email = email.replace("%40", "@")
-        if self.isValidEmail(email) == True:
+        if self.is_valid_email(email) == True:
             row = self.connector.dbExecute("""
                 INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
                 VALUE (Null,'"""+email+"""','"""+passwd+"""',"")
             """)
 
             self.uid = self.cursor.lastrowid
-            return self.generateSID(self.uid)
+            user_1c = user_1c_lib.User1C()
+            print user_1c.register_user_1c(email,passwd)
+            return self.generate_SID(self.uid)
 
         else:
             return "Username is taken"
 
-    def checkSID(self):
+    def check_SID(self):
         try:
             cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
             # print 1
@@ -91,7 +99,7 @@ class User():
         except:
             return False
 
-    def generateSID(self, uid):
+    def generate_SID(self, uid):
         import uuid, OpenSSL
         # print uid
         self.sid = uuid.UUID(bytes = OpenSSL.rand.bytes(16))
@@ -103,8 +111,8 @@ class User():
         # print self.sid
         return self.sid
 
-    def setSession(self, uid):
-        sid = self.generateSID(uid)
+    def set_session(self, uid):
+        sid = self.generate_SID(uid)
         expiration = datetime.datetime.now() + datetime.timedelta(days=30)
         cookie = Cookie.SimpleCookie()
         cookie["sid"] = sid
@@ -115,9 +123,12 @@ class User():
 
         return sid
 
-    def testSession(self):
+    def insert_1c_uid(self, uid, uid1c):
+        pass
+
+    def test_session(self):
         # print 0
-        if self.checkSID():
+        if self.check_SID():
             return "Passed"
         else:
             return "Failed"
@@ -125,10 +136,14 @@ class User():
     def authorize(self):
         if is_new == False:
             if email != False:
-                uid = self.checkUser(email,passwd)
+                uid = self.check_user(email,passwd)
                 # print passwd
                 if uid != False:
-                    c=self.setSession(uid)
+                    c=self.set_session(uid)
+                    user_1c = user_1c_lib.User1C()
+                    uid1c = user_1c.authorize_user_1c(email,passwd)
+                    if not "Произошла ошибка" in uid1c:
+                        self.insert_1c_uid(uid, uid1c)
                     return """ 
                         <p>Authorized</p>
                         <script type="text/javascript">
@@ -156,21 +171,21 @@ class User():
                     
                 """
         else:
-            self.newUser(email,passwd)
+            self.new_user(email,passwd)
 
 
 
 def __main__(funkt=False):
 
     user = User()
-    if funkt=="checkUser":
-        uid = user.checkUser(email,passwd)
-        user.setSession(uid)
+    if funkt=="check_user":
+        uid = user.check_user(email,passwd)
+        user.set_session(uid)
 
-    elif funkt=="newUser":
-        uid = user.newUser(email,passwd)
+    elif funkt=="new_user":
+        uid = user.new_user(email,passwd)
         # print uid
-        user.setSession(uid)
+        user.set_session(uid)
 
     elif funkt!=False:
         # print "user."+funkt
@@ -207,8 +222,8 @@ if "passwd" in post:
 else:
     passwd = False
 
-if "newUser" in post:
-    is_new = post["newUser"]
+if "new_user" in post:
+    is_new = post["new_user"]
     if is_new == "on":
         is_new = True
     else:

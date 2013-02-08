@@ -26,27 +26,33 @@ _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
-	_CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
+    _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 else:
-	_CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
+    _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
 class User1C():
-	def __init__(self):
-		pass
+    def __init__(self):
+        pass
 
-	def register_user_1c(self, email, passwd):
-	    client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
-	    client.set_options(cache=DocumentCache())
+    def register_user_1c(self, email, passwd):
+        client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
+        client.set_options(cache=DocumentCache())
 
-	    username = ""
-	    fullname = ""
+        username = ""
+        fullname = ""
 
-	    result = client.service.AddUser(email,passwd,email,fullname)
+        result = client.service.AddUser(email,passwd,email,fullname)
 
-	    return result
+        return result
 
-	def 
+    def authorize_user_1c(self, email, passwd):
+        client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
+        client.set_options(cache=DocumentCache())
+
+        result = client.service.Authorize(email,passwd,"")
+
+        return result
 
 
 def __main__(funkt=False):
-	return eval(funkt)
+    return eval(funkt)
