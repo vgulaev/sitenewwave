@@ -182,7 +182,7 @@ class User():
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.cookie("sid","")
-                                    $.cookie("sid",\""""+str(c)+"""\")
+                                    $.cookie("sid",\""""+str(c)+"""\",{ expires 30, path '/'})
                                     // alert('"""+str(c)+"""')
                                     // window.location = "/kabinet/authorization/"
                                 })
