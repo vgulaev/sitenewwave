@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
+from htmlmin.minify import html_minify
 
 debugmode = False
 if ((sys.platform) == "win32"):
@@ -76,7 +77,8 @@ def makecontent(path):
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
-    print(soup.prettify("utf-8"))
+    #print(soup.prettify("utf-8"))
+    print(html_minify(unicode(soup)))
 
 form = cgi.FieldStorage()
 
