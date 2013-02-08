@@ -29,6 +29,13 @@ def findpath(pagename):
             result = element.path  
     return(result)
 
+def insertcontent(path):
+    try:
+        soupForInsert = BeautifulSoup(open(path))
+        return soupForInsert
+    except:
+        return BeautifulSoup("")
+
 def makecontent(path):
     # print path
     soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
