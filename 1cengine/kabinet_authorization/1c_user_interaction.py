@@ -26,6 +26,7 @@ _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
+    print 99
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
@@ -35,6 +36,7 @@ class User1C():
         pass
 
     def register_user_1c(self, email, passwd):
+        # print email, " | ", passwd
         client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
         client.set_options(cache=DocumentCache())
 
@@ -49,7 +51,7 @@ class User1C():
         client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
         client.set_options(cache=DocumentCache())
 
-        result = client.service.Authorize(email,passwd,"")
+        result = client.service.Authorize(email,passwd[:10],"")
 
         return result
 

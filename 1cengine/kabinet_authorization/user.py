@@ -129,7 +129,7 @@ class User():
             row = self.connector.dbExecute("""
                     UPDATE `trimetru_users`.`uids`
                     SET `sid` = '"""+str(self.sid)+"""'
-                    WHERE `uid`='"""+str(uid)+"""' AND `ip_reg`='"""+str(user_ip)+"""'
+                    WHERE `id_user`='"""+str(uid)+"""' AND `ip_reg`='"""+str(user_ip)+"""'
                 """)
         # print self.sid
         return self.sid
@@ -150,7 +150,7 @@ class User():
         row = self.connector.dbExecute("""
             UPDATE `trimetru_users`.`users`
             SET `1cuid` = '"""+str(uid1c)+"""'
-            WHERE `uid` = '"""+str(uid)+"""'
+            WHERE `id` = '"""+str(uid)+"""'
             """)
         
         if row.__len__()>0:
