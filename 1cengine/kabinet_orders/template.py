@@ -23,13 +23,14 @@ def show_orders():
     if user_lib.__main__("check_SID()") == True:
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
         sid = cookie["sid"].value
-        
+        print sid
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
-        python_lib_name = "get_orders_list"
-        get_orders_list_lib = imp.load_source(python_lib_name, _PATH_+"/"+python_lib_name+".py")
+        python_lib_name2 = "get_orders_list"
+        get_orders_list_lib = imp.load_source(python_lib_name2, _PATH_+"/"+python_lib_name2+".py")
         
         try:
             data = get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
+            # data = get_orders_list_lib.__main__("get_orders_list('b266ce1a-60d7-4725-b572-f1aa3282995f')")
         except:
             data = "Контрагент не назначен"
         

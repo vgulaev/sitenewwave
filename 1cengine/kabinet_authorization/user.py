@@ -200,14 +200,14 @@ class User():
                     user_1c = user_1c_lib.User1C()
                     uid1c = user_1c.authorize_user_1c(email,passwd)
                     # print uid1c
-                    if not "Произошла ошибка" in uid1c:
-                        if not self.is_1c_uid_linked:
-                            self.insert_1c_uid(uid, uid1c)
+                    if not "Произошла ошибка" in uid1c:    
+                        self.insert_1c_uid(uid, uid1c)
                     return """ 
                         <p>Authorized</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.cookie("sid", "")
+                                    $.removeCookie("sid",{ expires: 30, path: '/'});
+                                    // $.cookie("sid", "",{ expires: 30, path: '/'})
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
                                     window.location = "/kabinet/authorization/"
@@ -219,7 +219,7 @@ class User():
                         <p>No such user</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.cookie("sid", "");
+                                $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
                     """
@@ -227,6 +227,11 @@ class User():
             else:
                 return """
                     <p>No email</p>
+                    <script type="text/javascript">
+                            $(document).ready( function(){
+                                    // $.removeCookie("sid",{ expires: 30, path: '/'})
+                                })
+                        </script>
                     
                 """
         else:
