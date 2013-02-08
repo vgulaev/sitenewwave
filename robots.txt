@@ -1,2 +1,3 @@
 User-agent: *
 Sitemap: http://trimet.ru/sitemap.xml
+Host: trimet.ru
