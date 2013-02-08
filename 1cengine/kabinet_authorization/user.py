@@ -85,6 +85,18 @@ class User():
         else:
             return False
 
+    def is_1c_uid_linked(self,uid):
+        row.connector.dbExecute("""
+                SELECT `users`.`1cuid`
+                FROM `uids`
+                WHERE `uids`.`id` = '"""+str(uid)+"""'
+            """)
+
+        if row.__len__()>0:
+            return row[0][0]
+        else:
+            return False
+
     def check_SID(self):
         try:
             cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
@@ -174,17 +186,18 @@ class User():
                     c=self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
                     uid1c = user_1c.authorize_user_1c(email,passwd)
-                    print uid1c
+                    # print uid1c
                     if not "Произошла ошибка" in uid1c:
-                        print self.insert_1c_uid(uid, uid1c)
+                        if not self.is_1c_uid_linked:
+                            self.insert_1c_uid(uid, uid1c)
                     return """ 
                         <p>Authorized</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.cookie("sid","")
-                                    $.cookie("sid",\""""+str(c)+"""\",{ expires 30, path '/'})
+                                    $.removeCookie("sid", { path: '/' })
+                                    $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
-                                    // window.location = "/kabinet/authorization/"
+                                    window.location = "/kabinet/authorization/"
                                 })
                         </script>
                     """
@@ -193,7 +206,7 @@ class User():
                         <p>No such user</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.cookie("sid","")
+                                    $.removeCookie("sid", { path: '/' });
                                 })
                         </script>
                     """

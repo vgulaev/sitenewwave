@@ -27,8 +27,8 @@ else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
 
-def getOrdersList(UID):
-    
+def get_orders_list(UID):
+
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     client.set_options(cache=DocumentCache())
 
