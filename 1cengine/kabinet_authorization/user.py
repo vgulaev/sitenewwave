@@ -33,8 +33,10 @@ class User():
             """)
 
         if row.__len__() > 0:
+            print 11
             return False
         else:
+            print 22
             return True
 
     def check_user(self,email,passwd):
@@ -56,6 +58,7 @@ class User():
 
     def new_user(self,email,passwd):
         email = email.replace("%40", "@")
+        print 50
         if self.is_valid_email(email) == True:
             row = self.connector.dbExecute("""
                 INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
@@ -69,6 +72,18 @@ class User():
 
         else:
             return "Username is taken"
+
+    def is_uid_SID_linked(self,uid,ip_reg):
+        row = self.connector.dbExecute("""
+                SELECT `uids`.`sid`
+                FROM `uids`
+                WHERE `uids`.`id_user` = '"""+str(uid)+"""' AND `uids`.`ip_reg` ='"""+str(ip_reg)+"""'
+            """)
+
+        if row.__len__()>0:
+            return row[0][0]
+        else:
+            return False
 
     def check_SID(self):
         try:
@@ -104,10 +119,18 @@ class User():
         # print uid
         self.sid = uuid.UUID(bytes = OpenSSL.rand.bytes(16))
         today = datetime.datetime.now()
-        row = self.connector.dbExecute("""
-            INSERT INTO `trimetru_users`.`uids` (`id_user`,`sid`,`date`,`ip_reg`)
-            VALUES ('"""+str(uid)+"""','"""+str(self.sid)+"""','','"""+cgi.escape(os.environ["REMOTE_ADDR"])+"""')
-            """)
+        user_ip = cgi.escape(os.environ["REMOTE_ADDR"])
+        if self.is_uid_SID_linked(uid,user_ip) == False:
+            row = self.connector.dbExecute("""
+                    INSERT INTO `trimetru_users`.`uids` (`id_user`,`sid`,`date`,`ip_reg`)
+                    VALUES ('"""+str(uid)+"""','"""+str(self.sid)+"""','','"""+str(user_ip)+"""')
+                """)
+        else:
+            row = self.connector.dbExecute("""
+                    UPDATE `trimetru_users`.`uids`
+                    SET `sid` = '"""+str(self.sid)+"""'
+                    WHERE `uid`='"""+str(uid)+"""' AND `ip_reg`='"""+str(user_ip)+"""'
+                """)
         # print self.sid
         return self.sid
 
@@ -125,9 +148,9 @@ class User():
 
     def insert_1c_uid(self, uid, uid1c):
         row = self.connector.dbExecute("""
-            UPDATE `trimetru_users`.`uids`
-            SET `1cuid` = '"""+uid1c+"""'
-            WHERE `uid` = '"""+uid+"""'
+            UPDATE `trimetru_users`.`users`
+            SET `1cuid` = '"""+str(uid1c)+"""'
+            WHERE `uid` = '"""+str(uid)+"""'
             """)
         
         if row.__len__()>0:
@@ -232,8 +255,8 @@ if "passwd" in post:
 else:
     passwd = False
 
-if "new_user" in post:
-    is_new = post["new_user"]
+if "newUser" in post:
+    is_new = post["newUser"]
     if is_new == "on":
         is_new = True
     else:
