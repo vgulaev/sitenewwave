@@ -33,10 +33,10 @@ class User():
             """)
 
         if row.__len__() > 0:
-            print 11
+            # print 11
             return False
         else:
-            print 22
+            # print 22
             return True
 
     def check_user(self,email,passwd):
@@ -58,7 +58,7 @@ class User():
 
     def new_user(self,email,passwd):
         email = email.replace("%40", "@")
-        print 50
+        # print 50
         if self.is_valid_email(email) == True:
             row = self.connector.dbExecute("""
                 INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
@@ -67,7 +67,7 @@ class User():
 
             self.uid = self.cursor.lastrowid
             user_1c = user_1c_lib.User1C()
-            print user_1c.register_user_1c(email,passwd)
+            # print user_1c.register_user_1c(email,passwd)
             return self.generate_SID(self.uid)
 
         else:
@@ -90,6 +90,18 @@ class User():
                 SELECT `users`.`1cuid`
                 FROM `uids`
                 WHERE `uids`.`id` = '"""+str(uid)+"""'
+            """)
+
+        if row.__len__()>0:
+            return row[0][0]
+        else:
+            return False
+
+    def get_1c_sid(self,sid):
+        row = self.connector.dbExecute("""
+                SELECT `users`.`1cuid`
+                FROM `users`,`uids`
+                WHERE `uids`.`sid`='"""+sid+"""' AND `users`.`id`=`uids`.`id_user`
             """)
 
         if row.__len__()>0:
@@ -177,6 +189,7 @@ class User():
         else:
             return "Failed"
 
+
     def authorize(self):
         if is_new == False:
             if email != False:
@@ -194,7 +207,7 @@ class User():
                         <p>Authorized</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.removeCookie("sid", { path: '/' })
+                                    $.cookie("sid", "")
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
                                     window.location = "/kabinet/authorization/"
@@ -206,7 +219,7 @@ class User():
                         <p>No such user</p>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.removeCookie("sid", { path: '/' });
+                                    $.cookie("sid", "");
                                 })
                         </script>
                     """
