@@ -77,8 +77,9 @@ def makecontent(path):
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
-    #print(soup.prettify("utf-8"))
-    print(html_minify(unicode(soup)))
+    #print(unicode(soup))
+    print(soup.prettify("utf-8"))
+    #print(html_minify(soup.prettify("utf-8")))
 
 form = cgi.FieldStorage()
 
