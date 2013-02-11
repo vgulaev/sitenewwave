@@ -9,7 +9,17 @@ sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
-from htmlmin.minify import html_minify
+# from htmlmin.minify import html_minify
+import re
+
+# core_in_request = re.compile("/core\.py$")
+if os.environ['REQUEST_URI'] == "/core.py":
+    print "Status:301\nLocation: http://trimet.ru"
+elif "?page" in os.environ['REQUEST_URI']:
+    new_location = os.environ['REQUEST_URI'].split('?page=')[1]
+    print "Status:301\nLocation: http://trimet.ru/"+new_location
+
+
 
 debugmode = False
 if ((sys.platform) == "win32"):
@@ -22,6 +32,9 @@ else:
     print ("")
     
 print("<!DOCTYPE html>")
+
+print os.environ['REQUEST_URI']
+
 
 def findpath(pagename):
     result = "htmlstaticcontent/0001mainpage/"
