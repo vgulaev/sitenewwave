@@ -1960,7 +1960,8 @@ $(document).ready(function() {
         if($("#selfCarry").is(":checked")) {
             // alert(1)
             var totalCost = getTotalCost(0)
-
+            $(".withoutDelivery").show()
+            $(".withDelivery").hide()
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
             $("#SumDelivery").empty()
@@ -1972,7 +1973,8 @@ $(document).ready(function() {
         if($("#toDeliver").is(":checked")) {
             // alert(2)
             var totalCost = getTotalCost(1)
-
+            $(".withDelivery").show()
+            $(".withoutDelivery").hide()
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
             d_price = (d_price - 0).toFixed(2)
