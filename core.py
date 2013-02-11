@@ -19,25 +19,8 @@ elif "?page" in os.environ['REQUEST_URI']:
     new_location = os.environ['REQUEST_URI'].split('?page=')[1]
     print "Status:301\nLocation: http://trimet.ru/"+new_location
 
-
-
-debugmode = False
-if ((sys.platform) == "win32"):
-    #print ("")
-    #sys.stdout = open('temp.html', 'w')
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-else:
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-    
-print("<!DOCTYPE html>")
-
-# print os.environ['REQUEST_URI']
-
-
 def findpath(pagename):
-    result = "htmlstaticcontent/0001mainpage/"
+    result = "404"
     for element in trimeturls:
         if element.urlname == pagename:
             result = element.path  
@@ -98,6 +81,9 @@ form = cgi.FieldStorage()
 
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
+    if pathtohtml == "404":
+        # print "Content-Type: text/html; charset=utf-8\n"
+        print "Status:404\n"
 else:
     if ((sys.platform) == "win32"): 
         #string for debug
@@ -106,5 +92,17 @@ else:
         #at server always use main page 
         pathtohtml = "htmlstaticcontent/0001mainpage/"
 
+# Редирект должен осуществляться до вывода чего либо на страницу
+debugmode = False
+if ((sys.platform) == "win32"):
+    #print ("")
+    #sys.stdout = open('temp.html', 'w')
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
+else:
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
+    
+print("<!DOCTYPE html>")
+
 makecontent(pathtohtml)
-#print("Hello!!!");
