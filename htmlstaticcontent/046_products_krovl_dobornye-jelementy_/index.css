@@ -11,3 +11,6 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 #cont2{
 	width:494px;
 }
+#col2{
+	margin-left:-15px;
+}
