@@ -33,7 +33,7 @@ else:
     
 print("<!DOCTYPE html>")
 
-print os.environ['REQUEST_URI']
+# print os.environ['REQUEST_URI']
 
 
 def findpath(pagename):
