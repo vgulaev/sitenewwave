@@ -18,8 +18,8 @@ for dirname in dirList:
 		html_file_string = html_file.read()
 		html_file.close()
 
-		stringToReplace = "/bitrix/templates/trimet/img/default/p5.png"
-		stringForReplace = "/img/p5.png"
+		stringToReplace = "/images/img-4.jpg"
+		stringForReplace = "/img/img-4.jpg"
 
 		html_file_string = html_file_string.replace(stringToReplace, stringForReplace)
 
