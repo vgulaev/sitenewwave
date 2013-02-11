@@ -9,6 +9,9 @@ RewriteRule ^index.html core.py [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
+RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
+RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
+
 ErrorDocument 404 /404.py
 
 <IfModule mod_fcgid.c>
