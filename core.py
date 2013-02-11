@@ -83,7 +83,7 @@ if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
     if pathtohtml == "404":
         # print "Content-Type: text/html; charset=utf-8\n"
-        print "Status:404\n"
+        print "Status:307\nLocation: http://trimet.ru/404.py\n"
 else:
     if ((sys.platform) == "win32"): 
         #string for debug
