@@ -23,7 +23,7 @@ ErrorDocument 404 /404.py
 
 <IfModule mod_expires.c>
   ExpiresActive on
-  ExpiresByType image/jpeg "access plus 3 day"
-  ExpiresByType image/gif "access plus 3 day"
-  ExpiresByType image/png "access plus 3 day"
+  ExpiresByType image/jpeg "access plus 14 day"
+  ExpiresByType image/gif "access plus 14 day"
+  ExpiresByType image/png "access plus 14 day"
 </IfModule>
