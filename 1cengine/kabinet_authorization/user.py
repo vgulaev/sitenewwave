@@ -68,10 +68,11 @@ class User():
             self.uid = self.cursor.lastrowid
             user_1c = user_1c_lib.User1C()
             # print user_1c.register_user_1c(email,passwd)
-            return self.generate_SID(self.uid)
+            return self.uid 
+            # self.generate_SID(self.uid)
 
         else:
-            return "Username is taken"
+            return False
 
     def is_uid_SID_linked(self,uid,ip_reg):
         row = self.connector.dbExecute("""
@@ -235,23 +236,56 @@ class User():
                     
                 """
         else:
-            self.new_user(email,passwd)
+            uid = self.new_user(email,passwd)
+            if uid != False:
+                c = self.set_session(uid)
+                return """ 
+                        <p>User created</p>
+                        <script type="text/javascript">
+                            $(document).ready( function(){
+                                    $.removeCookie("sid",{ expires: 30, path: '/'});
+                                    // $.cookie("sid", "",{ expires: 30, path: '/'})
+                                    $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
+                                    // alert('"""+str(c)+"""')
+                                    window.location = "/kabinet/authorization/"
+                                })
+                        </script>
+                    """
+            else:
+                return """
+                    <p>User exists</p>
+                    <script type="text/javascript">
+                        $(document).ready( function(){
+                                alert('Пользователь уже существует!')
+                                // window.location = "/kabinet/authorization/"
+                            })
+                    </script>
+                """
 
 
 
 def __main__(funkt=False):
 
     user = User()
-    if funkt=="check_user":
-        uid = user.check_user(email,passwd)
-        user.set_session(uid)
+    # if funkt=="check_user":
+    #     uid = user.check_user(email,passwd)
+    #     user.set_session(uid)
 
-    elif funkt=="new_user":
-        uid = user.new_user(email,passwd)
-        # print uid
-        user.set_session(uid)
+    # elif funkt=="new_user":
+    #     uid = user.new_user(email,passwd)
+    #     # print uid
+    #     user.set_session(uid)
+    # print 1
+    if "is_valid_email" in funkt:
+        # print funkt
+        print ("Content-Type: text/html; charset=utf-8\n")
+
+        q = user.is_valid_email(email)
+        print q
+
 
     elif funkt!=False:
+        # print funkt
         # print "user."+funkt
         return eval("user."+funkt)
 
@@ -263,9 +297,10 @@ post = {}
 
 if "POST_DATA" in os.environ:
     raw_post = os.environ["POST_DATA"]
-# print raw_post
+else:
+    raw_post = sys.stdin.read()
 
-
+if raw_post != "":
     pre_post = raw_post.split("&")
     # print pre_post
     for variables in pre_post:
@@ -274,7 +309,8 @@ if "POST_DATA" in os.environ:
         # print key_var
         post[key_var[0]] = key_var[1]
 
-# print post
+
+
 if "email" in post:
     email = post["email"]
     email = email.replace("%40", "@")
