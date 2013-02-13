@@ -1,5 +1,8 @@
 body {
 	text-align: center;
+    font: 62%/1.5 Arial, Helvetica, sans-serif;    
+	background: none repeat scroll 0% 0% rgb(255, 255, 255);
+	color: rgb(72, 72, 72);
 }
 
 body, blockquote, input, select, textarea, form, fieldset, table, td, ul, ol, p {
@@ -9,11 +12,6 @@ body, blockquote, input, select, textarea, form, fieldset, table, td, ul, ol, p 
 
 body, a img, fieldset, form {
 	border: 0px solid;
-}
-
-body {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	color: rgb(72, 72, 72);
 }
 
 a, a:link, a:visited, a:hover, a:active {
@@ -33,10 +31,6 @@ ul li, ul ul li, ul ul ul li {
 	background: url("/img/p1.gif") no-repeat scroll 0px 0.9em transparent;
 	list-style-type: none;
 	padding: 2px 0px 2px 1.9em;
-}
-
-body {
-	font: 62%/1.5 Arial, Helvetica, sans-serif;
 }
 
 #obj-mmenu ul {
