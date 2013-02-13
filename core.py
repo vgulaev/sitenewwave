@@ -1,7 +1,7 @@
-#!/web/trimetru/python/bin/python2.6
+#!c:/Python27/python.exe
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
-# -- #!c:/Python27/python.exe
+# -- #!/web/trimetru/python/bin/python2.6
 import sys, os
 import cgi
 import cgitb; cgitb.enable()
@@ -12,12 +12,14 @@ import Cookie
 # from htmlmin.minify import html_minify
 import re
 
+debugmode = True
 # core_in_request = re.compile("/core\.py$")
-if os.environ['REQUEST_URI'] == "/core.py":
-    print "Status:301\nLocation: http://trimet.ru"
-elif "?page" in os.environ['REQUEST_URI']:
-    new_location = os.environ['REQUEST_URI'].split('?page=')[1]
-    print "Status:301\nLocation: http://trimet.ru/"+new_location
+if (debugmode == False):
+    if os.environ['REQUEST_URI'] == "/core.py":
+        print "Status:301\nLocation: http://trimet.ru"
+    elif "?page" in os.environ['REQUEST_URI']:
+        new_location = os.environ['REQUEST_URI'].split('?page=')[1]
+        print "Status:301\nLocation: http://trimet.ru/"+new_location
 
 def findpath(pagename):
     result = "404"
@@ -29,11 +31,11 @@ def findpath(pagename):
 def makecontent(path):
     # print path
     soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
-    if (debugmode == True):
-        soup.html.noscript.extract()
-        nodes = soup.html.body("script")
-        for currentelement in nodes:
-            currentelement.extract()
+    # if (debugmode == True):
+        # soup.html.noscript.extract()
+        # nodes = soup.html.body("script")
+        # for currentelement in nodes:
+            # currentelement.extract()
     soupForImport = BeautifulSoup(open(path + "index.html"))
     # print soupForImport
     soupFooter = BeautifulSoup(open("locate/ru/templates/mainfooter_template.html"))
@@ -93,7 +95,7 @@ else:
         pathtohtml = "htmlstaticcontent/0001mainpage/"
 
 # Редирект должен осуществляться до вывода чего либо на страницу
-debugmode = False
+
 if ((sys.platform) == "win32"):
     #print ("")
     #sys.stdout = open('temp.html', 'w')
