@@ -12,7 +12,18 @@ $(document).ready( function(){
     $.datepicker.setDefaults( $.datepicker.regional[ "ru-RU" ] )
     $(".dateInput").datepicker()
 
+    // $("dateFrom").change( function(){ orderDate("up") })
+
+    $(".datePickButton").click( function(){
+        $("#dateForm").submit()
+    })
 })
+
+function orderDate(way){
+    if(way="up"){
+        date_string_array = $(".dateFrom").val().split("/")
+    }
+}
 
 function parseDate(input){
     // alert(input)

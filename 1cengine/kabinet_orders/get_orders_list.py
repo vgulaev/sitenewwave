@@ -32,16 +32,49 @@ else:
 
 def get_orders_list(UID):
 
+    post = {}
+
+    if "POST_DATA" in os.environ:
+        raw_post = os.environ["POST_DATA"]
+    else:
+        raw_post = sys.stdin.read()
+
+    if raw_post != "":
+        pre_post = raw_post.split("&")
+        # print pre_post
+        for variables in pre_post:
+            # print variables
+            key_var = str(variables).split("=")
+            # print key_var
+            post[key_var[0]] = key_var[1]
+
+    date_from = None
+    date_to = None
+
+    if "dateFrom" in post:
+        if post["dateFrom"] != "":
+            date_from_array = post["dateFrom"].split("%2F")
+            date_from = date_from_array[2]+"-"+date_from_array[1]+"-"+date_from_array[0]
+            # print date_from
+
+    if "dateTo" in post:
+        if post["dateTo"] != "":
+            date_to_array = post["dateTo"].split("%2F")
+            date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
+
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     client.set_options(cache=DocumentCache())
 
 
-    result = client.service.OrderLists(UID,None,None)
+    result = client.service.OrderLists(UID,date_from,date_to)
 
     listOrder = """
          
         <div class="dateChooser">
-            Показать заказы в период: <input type="textarea" class="dateInput" /> - <input type="textarea" class="dateInput" />
+            <form method="POST" action="/kabinet/orders/" id="dateForm">
+                Показать заказы в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
+                <div class="datePickButton">Отправить запрос</div>
+            </form>
         </div>
     """
 
