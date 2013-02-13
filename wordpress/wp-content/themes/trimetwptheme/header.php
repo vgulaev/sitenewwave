@@ -10,55 +10,19 @@
  */
 ?><!DOCTYPE html>
 <?php
-
-$wwwdir = "C:/Users/Administrator/workspace/sitenewwave/";
-$fp = fopen($wwwdir."/locate/ru/templates/mainpage_template.html","r");
-$template_string = fread($fp, filesize($wwwdir."/locate/ru/templates/mainpage_template.html"));
-fclose($fp);
-
-$titleTemplate = '<title> Тримет </title>';
-$keywordsTemplate = '"металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока" />';
-
-if(isset($_GET["ref"])){
-    $ntitle = str_replace("\\\"", "\"",$_GET["ref"]);
-    $ntitle = str_replace("(", "", $ntitle);
-    $ntitle = str_replace(")", "", $ntitle);
-    $ntitle = str_replace("\"", "", $ntitle);
-
-    $title = '<title> '.$ntitle.' купить онлайн | Тримет ООО </title>';
-
-    $keywordsArray = explode(" ", $ntitle);
-    $keywordsString = "";
-    foreach($keywordsArray as $keyword){
-        $keywordsString .= $keyword.", ";
-    }
-    $keywordsString .= "купить, онлайн, тюмень";
-
-    $keywords = '"'.$keywordsString.'" />';
+    $wwwdir = "C:/Users/Administrator/workspace/sitenewwave/";
+    $doc = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $doc->loadHTMLFile($wwwdir."/locate/ru/templates/mainpage_template.html");
+    libxml_use_internal_errors(false);
     
-    // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
-    // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
-} else {
-    $title = '<title> Купить Online </title>';
-    $keywords = $keywordsTemplate;
-    // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
-    // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
-}
-
-$template_string = str_replace($titleTemplate, $title, $template_string); 
-$template_string = str_replace($keywordsTemplate, $keywords, $template_string); 
-$template_string = str_replace("</body>", "", $template_string); 
-$template_string = str_replace("</html>", "", $template_string); 
-
-
-echo $template_string;
-
-// Более не нужный кусок кода
-// if(isset($_GET["ref"])){
-//     if(strstr($_GET["ref"], "кастом")!=false){
-
-//         header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
-//     }
-// }
+    $template_string = $doc->saveHTML();
+    
+    //echo "<pre>"; print_r($doc); echo "</pre>";
+    $template_string = substr($template_string, 106);
+    $template_string = str_replace("</body>", "", $template_string);
+    $template_string = str_replace("</html>", "", $template_string);
+    
+    echo $template_string;
 ?>
 	<div id="main" class="wrapper">
