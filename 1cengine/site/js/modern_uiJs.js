@@ -138,7 +138,7 @@ function showGroups() {
 /// показать товары группы ///
 
 function showGroup2(groupName) {
-    $("#itemName").attr('value', groupName)
+    $("#itemName").val(groupName)
     $("#itemName").change()
     $.unblockUI()
 
@@ -152,7 +152,7 @@ function searchItem2(item) {
     var squery = squery.replace(/\s\s/g, " ")
     var squery = squery.replace(/%2C/g, ",")
     var squery = squery.replace(/\.com/, '')
-    $("#itemName").attr('value', squery)
+    $("#itemName").val(squery)
     $(".buySpan").find("a").attr("style", "float:right;color:white;border:1px outset rgb(48, 57, 154);border-radius:40px 10px;background-color: #5da130;width:50px;padding-left:10px;")
     //$("#itemName").change()
 }
@@ -177,14 +177,14 @@ function getItemChar(hash) {
 /// установка веса при редактировании ///
 
 function setModalWeight() {
-    if($(".itemPWeightInput").attr("value") != undefined) {
+    if($(".itemPWeightInput").val() != undefined) {
         father = $(".itemPWeightInput").parent().parent()
-        cW = $(".itemPWeightInput").attr("value")
+        cW = $(".itemPWeightInput").val()
 
 
         var pricesArray = $(".TNPrice").attr("name").split('|');
 
-        var wAll = $(".itemPWeightInput").attr('value') - 0
+        var wAll = $(".itemPWeightInput").val() - 0
         //var edIzm = $(".popUpTab").attr("name")
         if(wAll < 2) {
             k = 0
@@ -224,14 +224,14 @@ function setModalWeight() {
 function setModalLength() {
 
 
-    cKr = $(".itemPLengthInput").attr("value")
+    cKr = $(".itemPLengthInput").val()
     father = $(".itemPLengthInput").parent().parent()
 
 
     //alert($(".TNPrice").attr("name"))
     var pricesArray = $(".TNPrice").attr("name").split('|');
 
-    var wAll = $(".itemPLengthInput").attr('value') - 0
+    var wAll = $(".itemPLengthInput").val() - 0
     //var edZim = $(".popUpTab").attr("name")
     if(wAll < 100) {
         k = 0
@@ -244,7 +244,7 @@ function setModalLength() {
     TN = pricesArray[k]
     $(".TNPrice").html(TN)
     var itemKf = $(".itemPCountInput").attr("name")
-    var itemLength = $(".itemPCharInput").attr("value")
+    var itemLength = $(".itemPCharInput").val()
 
     if(itemLength != 0) {
         //alert(itemWeight*itemLength)
@@ -564,13 +564,13 @@ function showModalItem(hash, edIzm, prices, stock, c) {
             $("#sliceLeft").attr("name", lCh)
 
             $("#slicePrice").attr("name", "20")
-            var rezka = ($(".itemPCountInput").attr("value") - 0) * 20
+            var rezka = ($(".itemPCountInput").val() - 0) * 20
             $("#slicePrice").html(rezka)
         }
 
 
 
-        $(".itemArmaCharInput").attr("value", ch)
+        $(".itemArmaCharInput").val(ch)
 
         $("#slider-vertical-arma").slider("value", ch)
         $(".itemCharSpan").html("" + ch + "")
@@ -611,7 +611,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
             $(".profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6").show()
         }
 
-        $(".itemPCharInput").attr("value", ch)
+        $(".itemPCharInput").val(ch)
         father = $(this).parent().parent().parent()
         $(father).find(".itemPLengthInput").attr("name", ch)
 
@@ -641,7 +641,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
             var wN;
             var krN;
 
-            $('.itemPCountInput').attr('value', num)
+            $('.itemPCountInput').val(num)
             //alert(this.value.length + " | " + this.size + " | " + $(this).css("width").replace(/px/, "")-0)
             var nL = 10 + this.value.length * 10
             nL = nL + "px"
@@ -650,10 +650,10 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
             if($("#slicePrice").attr("name") != undefined) {
                 if($("#slicePrice").attr("name") == "20") {
-                    // alert($("#itemPCountInput").attr("value"))
-                    var rezka = ($(".itemPCountInput").attr("value") - 0) * 20
+                    // alert($("#itemPCountInput").val())
+                    var rezka = ($(".itemPCountInput").val() - 0) * 20
 
-                    var rezkaLeft = ($(".itemPCountInput").attr("value") - 0) * ($("#sliceLeft").attr("name") - 0)
+                    var rezkaLeft = ($(".itemPCountInput").val() - 0) * ($("#sliceLeft").attr("name") - 0)
                     $("#slicePrice").html(rezka)
                     $("#sliceLeft").html(rezkaLeft)
 
@@ -664,20 +664,20 @@ function showModalItem(hash, edIzm, prices, stock, c) {
             if($(father).find($(".itemPLengthInput")).attr('name') != 0) {
                 wN = num * $(father).find(".itemPWeightInput").attr('name') * $(father).find(".itemPLengthInput").attr('name')
                 krN = num * $(father).find(".itemPLengthInput").attr('name')
-                var oldWn = $(father).find(".itemPWeightInput").attr('value')
-                $(father).find(".itemPWeightInput").attr('value', (wN).toFixed(3))
+                var oldWn = $(father).find(".itemPWeightInput").val()
+                $(father).find(".itemPWeightInput").val((wN).toFixed(3))
                 var nL = (wN.toFixed(3) + '').length * 10
                 nL = nL + "px"
                 //alert('weight ' + nL)
                 $(father).find(".itemPWeightInput").css("width", nL);
 
-                $(father).find(".itemPLengthInput").attr('value', (krN).toFixed(2))
+                $(father).find(".itemPLengthInput").val((krN).toFixed(2))
                 var nL = (krN.toFixed(2) + '').length * 10
                 nL = nL + "px"
                 //alert('length ' + krN + " " + nL)
                 $(father).find(".itemPLengthInput").css("width", nL);
 
-                $(father).find(".itemSQuareInput").attr('value', ((krN).toFixed(2) * ($(".itemSQuareInput").attr('name') - 0)).toFixed(3))
+                $(father).find(".itemSQuareInput").val(((krN).toFixed(2) * ($(".itemSQuareInput").attr('name') - 0)).toFixed(3))
                 var nL = (krN.toFixed(3) + '').length * 10
                 nL = nL + "px"
                 //alert(nL)
@@ -687,9 +687,9 @@ function showModalItem(hash, edIzm, prices, stock, c) {
                 setModalLength()
 
             } else {
-                $(father).find(".itemPCountInput").attr('value', '--')
-                $(father).find(".itemPLengthInput").attr('value', '--')
-                $(father).find(".itemPWeightInput").attr('value', (wN).toFixed(3))
+                $(father).find(".itemPCountInput").val('--')
+                $(father).find(".itemPLengthInput").val('--')
+                $(father).find(".itemPWeightInput").val((wN).toFixed(3))
 
             }
         }
@@ -702,7 +702,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
         sQ = sQ.replace(/,/, ".")
         sQ = sQ.match(/\d+\.\d{0,3}|\d+/)
 
-        $(this).attr("value", sQ)
+        $(this).val(sQ)
 
         var nL = this.value - 0
         nL = nL.toFixed(2) + ""
@@ -716,9 +716,9 @@ function showModalItem(hash, edIzm, prices, stock, c) {
         var father;
         father = $(this).parent().parent().parent()
 
-        var cLength = ($(this).attr("value") - 0) / ($(this).attr("name") - 0)
+        var cLength = ($(this).val() - 0) / ($(this).attr("name") - 0)
 
-        father.find($(".itemPLengthInput")).attr('value', cLength)
+        father.find($(".itemPLengthInput")).val(cLength)
         father.find($(".itemPLengthInput")).change();
     })
 
@@ -730,7 +730,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
         cW = cW.replace(/,/, ".")
         cW = cW.match(/\d+\.\d{0,3}|\d+/)
 
-        $(this).attr("value", cW)
+        $(this).val(cW)
 
         var nL = this.value.length * 10
         nL = nL + "px"
@@ -744,13 +744,13 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
         if(weightName != 0) {
             num = cW / (father.find($(".itemPWeightInput")).attr('name') * father.find($(".itemPLengthInput")).attr('name'))
-            father.find($(".itemPCountInput")).attr('value', num)
+            father.find($(".itemPCountInput")).val(num)
             father.find($(".itemPCountInput")).change();
             setModalWeight()
 
         } else {
-            father.find($(".itemPCountInput")).attr('value', '--')
-            father.find($(".itemPLengthInput")).attr('value', '--')
+            father.find($(".itemPCountInput")).val('--')
+            father.find($(".itemPLengthInput")).val('--')
             father.find($(".itemPCountInput")).change();
 
         }
@@ -765,7 +765,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
         cKr = cKr.replace(/,/, ".")
         cKr = cKr.match(/\d+\.\d{0,2}|\d+/)
 
-        $(this).attr("value", cKr)
+        $(this).val(cKr)
 
         var nL = this.value - 0
         nL = nL.toFixed(2) + ""
@@ -782,14 +782,14 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
         if(weightName != 0) {
             num = cKr / father.find($(".itemPLengthInput")).attr('name')
-            father.find($(".itemPCountInput")).attr('value', num)
+            father.find($(".itemPCountInput")).val(num)
             father.find($(".itemPCountInput")).change();
 
             setModalLength()
 
         } else {
-            father.find($(".itemPCountInput")).attr('value', '--')
-            father.find($(".itemPLengthInput")).attr('value', '--')
+            father.find($(".itemPCountInput")).val('--')
+            father.find($(".itemPLengthInput")).val('--')
             father.find($(".itemPCountInput")).change();
         }
 
@@ -872,7 +872,7 @@ function setOverallPrices() {
     $(".itemPriceTd").each(function() {
 
         var father = $(this).parent();
-        var count = $(father).find(".itemCountInput").attr("value")
+        var count = $(father).find(".itemCountInput").val()
         var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
 
         if($(father).find(".itemEdIzmTd").attr("name") == "пог. м") {
@@ -897,7 +897,7 @@ function setOverallPrices() {
 
             // alert(k)
             $(father).find(".itemPriceTd").html(pricesArray[k]);
-            var count = $(father).find(".itemCountInput").attr("value")
+            var count = $(father).find(".itemCountInput").val()
             var sum = ((pricesArray[k] - 0) * count).toFixed(2)
             var nds = (((sum - 0) / 118) * 18).toFixed(2)
 
@@ -1021,7 +1021,7 @@ function setOverallPrices() {
         $(".itemPriceTd").each(function() {
 
             var father = $(this).parent();
-            var count = $(father).find(".itemCountInput").attr("value")
+            var count = $(father).find(".itemCountInput").val()
             var pricesArray = $(father).find(".itemPriceTd").attr("name").split('|');
 
             if($(father).find(".itemEdIzmTd").attr("name") == "пог. м") {
@@ -1045,7 +1045,7 @@ function setOverallPrices() {
 
                 // alert(k)
                 $(father).find(".itemPriceTd").html(pricesArray[k]);
-                var count = $(father).find(".itemCountInput").attr("value")
+                var count = $(father).find(".itemCountInput").val()
                 var sum = ((pricesArray[k] - 0) * count).toFixed(2)
                 var nds = (((sum - 0) / 118) * 18).toFixed(2)
 
@@ -1119,7 +1119,7 @@ function setOverallPrices() {
             var rezka = $(this).find(".itemRezkaTd").html()
 
 
-            var count = $(this).find(".itemCountInput").attr("value")
+            var count = $(this).find(".itemCountInput").val()
             basket += "setModernItem('" + ihash + "','" + char + "','" + count + "','" + rezka + "');"
 
         });
@@ -1135,7 +1135,7 @@ function setOverallPrices() {
 
 function modern_addItem(hash, edIzm, prices) {
     yaCounter15882208.reachGoal('onAddLinkPressed');
-    weight = $(".itemPWeightInput").attr("value")
+    weight = $(".itemPWeightInput").val()
     // if($("#slicePrice").attr("name")!=undefined){
     //     rezka = $("#SumRezka").html()
     //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
@@ -1147,13 +1147,13 @@ function modern_addItem(hash, edIzm, prices) {
 
     rezkaCount = ""
     if(weight == undefined) {
-        weight = $(".itemPLengthInput").attr("value")
-        char = $(".itemPCharInput").attr("value")
+        weight = $(".itemPLengthInput").val()
+        char = $(".itemPCharInput").val()
     }
-    if($(".itemArmaCharInput").attr("value") != undefined) {
-        char = $(".itemArmaCharInput").attr("value")
+    if($(".itemArmaCharInput").val() != undefined) {
+        char = $(".itemArmaCharInput").val()
         if($("#slicePrice").html() != "") {
-            rezkaCount = $(".itemPCountInput").attr("value") - 0
+            rezkaCount = $(".itemPCountInput").val() - 0
         } else {
             rezkaCount = ""
         }
@@ -1224,7 +1224,7 @@ function modern_addItem(hash, edIzm, prices) {
         // }
         var char = $(this).find(".itemCharTd").html()
         var rezka = $(this).find(".itemRezkaTd").html()
-        var count = $(this).find(".itemCountInput").attr("value")
+        var count = $(this).find(".itemCountInput").val()
         basket += "setModernItem('" + ihash + "','" + char + "','" + count + "','" + rezka + "');"
     });
 
@@ -1245,21 +1245,21 @@ function modern_editItem(hash) {
     showModalItem(hash, edIzm, prices, stock, "c")
     // alert(3)
 
-    var countT = $('tr[name="' + hash + '"]').find(".itemCountInput").attr("value") - 0
+    var countT = $('tr[name="' + hash + '"]').find(".itemCountInput").val() - 0
     var charT = $('tr[name="' + hash + '"]').find(".itemCharTd").html()
-    if($(".itemPCharInput").attr("value") != undefined) {
-        $(".itemPCharInput").attr("value", charT)
+    if($(".itemPCharInput").val() != undefined) {
+        $(".itemPCharInput").val(charT)
         $(".itemPCharInput").change()
     }
-    if($(".itemArmaCharInput").attr("value") != undefined) {
-        $(".itemArmaCharInput").attr("value", charT)
+    if($(".itemArmaCharInput").val() != undefined) {
+        $(".itemArmaCharInput").val(charT)
         $(".itemArmaCharInput").change()
     }
-    if($(".itemPWeightInput").attr("value") != undefined) {
-        $(".itemPWeightInput").attr("value", countT)
+    if($(".itemPWeightInput").val() != undefined) {
+        $(".itemPWeightInput").val(countT)
         $(".itemPWeightInput").change()
-    } else if($(".itemPLengthInput").attr("value") != undefined) {
-        $(".itemPLengthInput").attr("value", countT)
+    } else if($(".itemPLengthInput").val() != undefined) {
+        $(".itemPLengthInput").val(countT)
         $(".itemPLengthInput").change()
     }
 
@@ -1267,7 +1267,7 @@ function modern_editItem(hash) {
 }
 
 function changeItem(hash) {
-    weight = $(".itemPWeightInput").attr("value")
+    weight = $(".itemPWeightInput").val()
     // if($("#slicePrice").attr("name")!=undefined){
     //     rezka = $("#SumRezka").html()
     //     rezka = (rezka - 0) + ($("#slicePrice").html() - 0)
@@ -1275,13 +1275,13 @@ function changeItem(hash) {
     // }
     char = ''
     if(weight == undefined) {
-        weight = $(".itemPLengthInput").attr("value")
-        char = $(".itemPCharInput").attr("value")
+        weight = $(".itemPLengthInput").val()
+        char = $(".itemPCharInput").val()
     }
-    if($(".itemArmaCharInput").attr("value") != undefined) {
-        char = $(".itemArmaCharInput").attr("value")
+    if($(".itemArmaCharInput").val() != undefined) {
+        char = $(".itemArmaCharInput").val()
         if($("#slicePrice").html() != "") {
-            rezkaCount = $(".itemPCountInput").attr("value")
+            rezkaCount = $(".itemPCountInput").val()
         } else {
             rezkaCount = ""
         }
@@ -1291,7 +1291,7 @@ function changeItem(hash) {
     $('tr[class="itemTr"]').each(function() {
 
         if($(this).attr("name") == hash) {
-            $(this).find(".itemCountInput").attr("value", weight)
+            $(this).find(".itemCountInput").val(weight)
             if(char != '') {
                 $(this).find(".itemCharTd").html(char)
             }
@@ -1339,7 +1339,7 @@ function delModernItem(hash, char) {
             // } else {
             //     var char = ''
             // }
-            // var count = $(this).find(".itemCountInput").attr("value")
+            // var count = $(this).find(".itemCountInput").val()
             // basket += "setModernItem('"+ihash+"','"+char+"','"+count+"');"
         }
 
@@ -1360,7 +1360,7 @@ function delModernItem(hash, char) {
         // }
         var char = $(this).find(".itemCharTd").html()
         var rezka = $(this).find(".itemRezkaTd").html()
-        var count = $(this).find(".itemCountInput").attr("value")
+        var count = $(this).find(".itemCountInput").val()
         basket += "setModernItem('" + ihash + "','" + char + "','" + count + "','" + rezka + "');"
     });
 
@@ -1404,7 +1404,7 @@ function setModernItem(hash, char, count, rezka) {
                 // }
                 var char = $(this).find(".itemCharTd").html()
                 var rezka = $(this).find(".itemRezkaTd").html()
-                var count = $(this).find(".itemCountInput").attr("value")
+                var count = $(this).find(".itemCountInput").val()
                 basket += "setModernItem('" + ihash + "','" + char + "','" + count + "','" + rezka + "');"
             });
 
@@ -1425,15 +1425,15 @@ function setModernItem(hash, char, count, rezka) {
 function sendOrder(orderString) {
 
     if($('#selfCarry').is(':checked') == false) {
-        if($('#destination').attr('value') != "--") {
-            destination = $('input#destination').attr('value')
+        if($('#destination').val() != "--") {
+            destination = $('input#destination').val()
             delivery_cost = $("#delivery_cost").html()
         } else {
             destination = ''
             delivery_cost = ''
         }
-        if($('#sFormChecked').find('input:checked').attr('value') != "--") {
-            carry = $('#sFormChecked').find('input:checked').attr('value')
+        if($('#sFormChecked').find('input:checked').val() != "--") {
+            carry = $('#sFormChecked').find('input:checked').val()
         } else {
             carry = ''
         }
@@ -1444,7 +1444,7 @@ function sendOrder(orderString) {
     }
 
 
-    email = $('input#emailInput').attr('value')
+    email = $('input#emailInput').val()
     if(email != '') {
         if(isValidEmail(email) == false) {
             // $.unblockUI()
@@ -1452,11 +1452,11 @@ function sendOrder(orderString) {
             return null
         }
     }
-    main_phone = $('#mainPhoneInput').attr('value')
+    main_phone = $('#mainPhoneInput').val()
 
-    last_name = $('#lastNameInput').attr('value')
-    name_surname = $('#nameSurnameInput').attr('value')
-    other_phone = $('#otherPhoneInput').attr('value')
+    last_name = $('#lastNameInput').val()
+    name_surname = $('#nameSurnameInput').val()
+    other_phone = $('#otherPhoneInput').val()
 
     ret = ''
 
@@ -1495,11 +1495,11 @@ $("#sendOrderButtom").click(function() {
 })
 
 function createOrder() {
-    if($("#emailInput").attr("value") == "") {
+    if($("#emailInput").val() == "") {
         // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
-    } else if($("#mainPhoneInput").attr("value") == "") {
+    } else if($("#mainPhoneInput").val() == "") {
         // $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#phoneMainInput").focus()
@@ -1522,9 +1522,9 @@ function createOrder() {
         $('tr.itemTr').each(function() {
 
             if($(this).find('input.itemCharInput').length != 0) {
-                sendRow += '' + $(this).find('input.itemCharInput').attr('value') + ':' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').attr('value') + ':' + $(this).find('.itemPriceTd').html() + ';';
+                sendRow += '' + $(this).find('input.itemCharInput').val() + ':' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').val() + ':' + $(this).find('.itemPriceTd').html() + ';';
             } else {
-                sendRow += '' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').attr('value') + ':' + $(this).find('.itemPriceTd').html() + ';';
+                sendRow += '' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').val() + ':' + $(this).find('.itemPriceTd').html() + ';';
             }
 
         })
@@ -1644,9 +1644,9 @@ function getOrderFomat(format) {
     $('tr.itemTr').each(function() {
 
         if($(this).find('input.itemCharInput').length != 0) {
-            sendRow += '' + $(this).find('input.itemCharInput').attr('value') + ':' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').attr('value') + ':' + $(this).find('.itemPriceTd').html() + ';';
+            sendRow += '' + $(this).find('input.itemCharInput').val() + ':' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').val() + ':' + $(this).find('.itemPriceTd').html() + ';';
         } else {
-            sendRow += '' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').attr('value') + ':' + $(this).find('.itemPriceTd').html() + ';';
+            sendRow += '' + $(this).attr('name') + ':-:' + $(this).find('input.itemCountInput').val() + ':' + $(this).find('.itemPriceTd').html() + ';';
         }
 
     })
@@ -1765,7 +1765,7 @@ $(document).ready(function() {
     $("#itemName").focus();
 
     $("#showAll").click(function() {
-        value = $("#itemName").attr('value')
+        value = $("#itemName").val()
         $.ajax({
             type: "GET",
             url: "getItems.py",
@@ -1785,7 +1785,9 @@ $(document).ready(function() {
 
     $("#itemName").change(function() {
         $("#groupDiv").hide()
-        value = $("#itemName").attr("value");
+        value = $("#itemName").val();
+        // alert($("#itemName").attr("placeholder"))
+
         $.ajax({
             type: "GET",
             url: "getItems.py",
@@ -1863,7 +1865,7 @@ $(document).ready(function() {
     }
 
     /// работа доставки. автодополнение, выбор города ///
-    townS = $('#townSelect option:selected').attr('value')
+    townS = $('#townSelect option:selected').val()
 
     $("#destination").autocomplete({
         source: "getStreet.py?town=" + townS,
@@ -1879,7 +1881,7 @@ $(document).ready(function() {
 
     $("select").change(function() {
 
-        townS = $('#townSelect option:selected').attr('value')
+        townS = $('#townSelect option:selected').val()
         $("#destination").autocomplete("option", "source", "getStreet.py?town=" + townS)
     })
 
@@ -1932,7 +1934,7 @@ $(document).ready(function() {
             $("#delivery_cost").attr("name", d_price)
 
         }
-        $("#destination").attr('value', '');
+        $("#destination").val('');
     })
     $("#carry").change(function() {
         if($("#townSelect :selected").val() == "72000001") {
@@ -1958,7 +1960,8 @@ $(document).ready(function() {
         if($("#selfCarry").is(":checked")) {
             // alert(1)
             var totalCost = getTotalCost(0)
-
+            $(".withoutDelivery").show()
+            $(".withDelivery").hide()
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
             $("#SumDelivery").empty()
@@ -1970,7 +1973,8 @@ $(document).ready(function() {
         if($("#toDeliver").is(":checked")) {
             // alert(2)
             var totalCost = getTotalCost(1)
-
+            $(".withDelivery").show()
+            $(".withoutDelivery").hide()
             $("#SumAll").empty()
             $("#SumAll").append(totalCost)
             d_price = (d_price - 0).toFixed(2)

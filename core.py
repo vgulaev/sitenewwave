@@ -9,21 +9,18 @@ sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 from urllist import trimeturls
 import Cookie
+# from htmlmin.minify import html_minify
+import re
 
-debugmode = False
-if ((sys.platform) == "win32"):
-    #print ("")
-    #sys.stdout = open('temp.html', 'w')
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-else:
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-    
-print("<!DOCTYPE html>")
+# core_in_request = re.compile("/core\.py$")
+if os.environ['REQUEST_URI'] == "/core.py":
+    print "Status:301\nLocation: http://trimet.ru"
+elif "?page" in os.environ['REQUEST_URI']:
+    new_location = os.environ['REQUEST_URI'].split('?page=')[1]
+    print "Status:301\nLocation: http://trimet.ru/"+new_location
 
 def findpath(pagename):
-    result = "htmlstaticcontent/0001mainpage/"
+    result = "404"
     for element in trimeturls:
         if element.urlname == pagename:
             result = element.path  
@@ -103,10 +100,9 @@ def makecontent(path):
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
 
-    
-
-
+    #print(unicode(soup))
     print(soup.prettify("utf-8"))
+    #print(html_minify(soup.prettify("utf-8")))
 
 
 
@@ -122,6 +118,9 @@ form = cgi.FieldStorage()
 
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
+    if pathtohtml == "404":
+        # print "Content-Type: text/html; charset=utf-8\n"
+        print "Status:307\nLocation: http://trimet.ru/404.py\n"
 else:
     if ((sys.platform) == "win32"): 
         #string for debug
@@ -130,5 +129,17 @@ else:
         #at server always use main page 
         pathtohtml = "htmlstaticcontent/0001mainpage/"
 
+# Редирект должен осуществляться до вывода чего либо на страницу
+debugmode = False
+if ((sys.platform) == "win32"):
+    #print ("")
+    #sys.stdout = open('temp.html', 'w')
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
+else:
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
+    
+print("<!DOCTYPE html>")
+
 makecontent(pathtohtml)
-#print("Hello!!!");

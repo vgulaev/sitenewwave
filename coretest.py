@@ -1,4 +1,4 @@
-#!/web/tdymkru/python/bin/python2.6
+#!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 import sys,os
@@ -17,3 +17,8 @@ else:
 print("<!DOCTYPE html>")
 
 print("test")
+
+from htmlmin.minify import html_minify
+html = '<html>    <body>Hello world</body>    </html>'
+minified_html = html_minify(html)
+print(minified_html)

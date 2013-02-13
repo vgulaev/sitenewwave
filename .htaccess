@@ -6,8 +6,12 @@ RewriteEngine on
 RewriteRule ^1cengine/site/ - [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^index.html core.py [L]
+RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1 [L,R=301]
 RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
+
+RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
+RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
 
 ErrorDocument 404 /404.py
 
@@ -16,4 +20,11 @@ ErrorDocument 404 /404.py
  </IfModule>
 <IfModule mod_charset.c>
  AddHandler fastcgi-script .fcgi
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpeg "access plus 14 day"
+  ExpiresByType image/gif "access plus 14 day"
+  ExpiresByType image/png "access plus 14 day"
 </IfModule>

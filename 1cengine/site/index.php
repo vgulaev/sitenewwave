@@ -53,12 +53,13 @@ $template_string = str_replace("</html>", "", $template_string);
 
 echo $template_string;
 
-if(isset($_GET["ref"])){
-    if(strstr($_GET["ref"], "кастом")!=false){
+// Более не нужный кусок кода
+// if(isset($_GET["ref"])){
+//     if(strstr($_GET["ref"], "кастом")!=false){
 
-        header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
-    }
-}
+//         header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
+//     }
+// }
 
 ?>
 
