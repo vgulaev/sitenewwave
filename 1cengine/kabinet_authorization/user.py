@@ -47,7 +47,7 @@ class User():
                 WHERE `users`.`email`='"""+email+"""' AND `users`.`passwdhash`='"""+passwd+"""'
             """)
 
-        print row
+        # print row
 
         if row.__len__() > 0:
             self.uid = row[0][0]
