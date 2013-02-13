@@ -23,7 +23,7 @@ def show_orders():
     if user_lib.__main__("check_SID()") == True:
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
         sid = cookie["sid"].value
-        print sid
+        # print sid
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         python_lib_name2 = "get_orders_list"
         get_orders_list_lib = imp.load_source(python_lib_name2, _PATH_+"/"+python_lib_name2+".py")
