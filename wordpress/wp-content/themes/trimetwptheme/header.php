@@ -10,7 +10,7 @@
  */
 ?><!DOCTYPE html>
 <?php
-    $wwwdir = "C:/Users/Administrator/workspace/sitenewwave/";
+    $wwwdir = "/web/trimetru/site/www";
     $doc = new DOMDocument();
     libxml_use_internal_errors(true);
     $doc->loadHTMLFile($wwwdir."/locate/ru/templates/mainpage_template.html");
