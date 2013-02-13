@@ -1,5 +1,8 @@
-body {
+#header {
 	text-align: center;
+    font: 62%/1.5 Arial, Helvetica, sans-serif;    
+	background: none repeat scroll 0% 0% rgb(255, 255, 255);
+	color: rgb(72, 72, 72);
 }
 
 body, blockquote, input, select, textarea, form, fieldset, table, td, ul, ol, p {
@@ -11,17 +14,8 @@ body, a img, fieldset, form {
 	border: 0px solid;
 }
 
-body {
-	background: none repeat scroll 0% 0% rgb(255, 255, 255);
-	color: rgb(72, 72, 72);
-}
-
 a, a:link, a:visited, a:hover, a:active {
 	color: rgb(45, 54, 148);
-}
-
-p {
-	margin: 0px 0px 1.4em;
 }
 
 ul {
@@ -29,14 +23,10 @@ ul {
 	padding: 0.8em 0px;
 }
 
-ul li, ul ul li, ul ul ul li {
+header ul li, header ul ul li, header ul ul ul li {
 	background: url("/img/p1.gif") no-repeat scroll 0px 0.9em transparent;
 	list-style-type: none;
 	padding: 2px 0px 2px 1.9em;
-}
-
-body {
-	font: 62%/1.5 Arial, Helvetica, sans-serif;
 }
 
 #obj-mmenu ul {
@@ -107,7 +97,7 @@ body {
 	background: url("img/sprite.png") no-repeat scroll -12px -32px transparent;
 }
 
-header {
+#main-trimet-header {
 	background-attachment: scroll;
 	background-clip: border-box;
 	background-color: white;
@@ -130,12 +120,12 @@ header {
 	margin: 0px auto;
 }
 
-header .box {
+body header .box {
 	clear: both;
 	width: 100%;
 }
 
-header #logo {
+body header #logo {
 	display: block;
 	position: absolute;
 	left: 0px;

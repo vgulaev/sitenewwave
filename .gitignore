@@ -168,6 +168,7 @@ googlehostedservice.htmlexample.db
 ## ignore default output
 #############
 temp.html
+temp.php
 
 #############
 ## standarts lib
@@ -237,5 +238,14 @@ download/files/
 ## do not track blog engines
 ############
 
-wordpress/
+wordpress/*.*
+wordpress/wp-admin/
+wordpress/wp-includes/
+wordpress/wp-content/*.*
+wordpress/wp-content/plugins
+wordpress/wp-content/themes/*.*
+wordpress/wp-content/themes/twentyeleven
+wordpress/wp-content/themes/twentytwelve
+wordpress/wp-content/uploads
+
 blog/
