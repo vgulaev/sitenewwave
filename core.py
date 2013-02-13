@@ -13,11 +13,12 @@ import Cookie
 import re
 
 # core_in_request = re.compile("/core\.py$")
-if os.environ['REQUEST_URI'] == "/core.py":
-    print "Status:301\nLocation: http://trimet.ru"
-elif "?page" in os.environ['REQUEST_URI']:
-    new_location = os.environ['REQUEST_URI'].split('?page=')[1]
-    print "Status:301\nLocation: http://trimet.ru/"+new_location
+if "dev" not in os.environ["SERVER_NAME"]:
+    if os.environ['REQUEST_URI'] == "/core.py":
+        print "Status:301\nLocation: http://trimet.ru"
+    elif "?page" in os.environ['REQUEST_URI']:
+        new_location = os.environ['REQUEST_URI'].split('?page=')[1]
+        print "Status:301\nLocation: http://trimet.ru/"+new_location
 
 def findpath(pagename):
     result = "404"
