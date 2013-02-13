@@ -1,7 +1,7 @@
-#!c:/Python27/python.exe
+#!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
-# -- #!/web/trimetru/python/bin/python2.6
+# -- #!c:/Python27/python.exe
 import sys, os
 import cgi
 import cgitb; cgitb.enable()
@@ -12,7 +12,7 @@ import Cookie
 # from htmlmin.minify import html_minify
 import re
 
-debugmode = True
+debugmode = False
 # core_in_request = re.compile("/core\.py$")
 if (debugmode == False):
     if os.environ['REQUEST_URI'] == "/core.py":
@@ -31,11 +31,11 @@ def findpath(pagename):
 def makecontent(path):
     # print path
     soup = BeautifulSoup(open("locate/ru/templates/mainpage_template.html"))
-    # if (debugmode == True):
-        # soup.html.noscript.extract()
-        # nodes = soup.html.body("script")
-        # for currentelement in nodes:
-            # currentelement.extract()
+    if (debugmode == True):
+        soup.html.noscript.extract()
+        nodes = soup.html.body("script")
+        for currentelement in nodes:
+            currentelement.extract()
     soupForImport = BeautifulSoup(open(path + "index.html"))
     # print soupForImport
     soupFooter = BeautifulSoup(open("locate/ru/templates/mainfooter_template.html"))
