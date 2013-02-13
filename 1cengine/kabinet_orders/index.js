@@ -9,6 +9,8 @@ $(document).ready( function(){
         })
 
     })  
+    $.datepicker.setDefaults( $.datepicker.regional[ "ru-RU" ] )
+    $(".dateInput").datepicker()
 
 })
 

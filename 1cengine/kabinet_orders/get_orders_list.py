@@ -39,7 +39,10 @@ def get_orders_list(UID):
     result = client.service.OrderLists(UID,None,None)
 
     listOrder = """
-        
+         
+        <div class="dateChooser">
+            Показать заказы в период: <input type="textarea" class="dateInput" /> - <input type="textarea" class="dateInput" />
+        </div>
     """
 
     listOrder = listOrder + """

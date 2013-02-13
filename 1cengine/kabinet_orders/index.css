@@ -48,3 +48,25 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	float:left;
 	padding-left: 3px;
 }
+.dateChooser{
+	margin-left:20px;
+}
+.dateInput{
+	width:100px;
+	margin-right:10px;
+	margin-left:10px;
+}
+.ui-datepicker{
+	background-color:white;
+}
+.ui-datepicker-calendar td{
+	padding:10px;
+	margin:10px;
+	border:1px dotted gray;
+}
+.ui-datepicker-calendar td:hover{
+	background-color:rgb(45, 54, 148);
+}
+.ui-datepicker-calendar td:hover a{
+	color:white;
+}
