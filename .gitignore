@@ -245,5 +245,6 @@ wordpress/wp-content/plugins
 wordpress/wp-content/themes/*.*
 wordpress/wp-content/themes/twentyeleven
 wordpress/wp-content/themes/twentytwelve
+wordpress/wp-content/uploads
 
 blog/
