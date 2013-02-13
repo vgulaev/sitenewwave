@@ -31,7 +31,7 @@ $(document).ready( function (){
     }
 
     function newUser(){
-        $(".passwdRepeatTr").show()
+        
         passwd = $(".passwdInput").val()
         passwdRepeat = $(".passwdInputRepeat").val()
         email = $(".emailInput").val()
@@ -52,9 +52,12 @@ $(document).ready( function (){
 
             });
             // alert(is_email_valid)
-            if(is_email_valid=="False"){
+            if(is_email_valid.indexOf("False")!=-1){
                 alert('Пользователь уже существует')
+                $(".emailInput").css("outline","1px solid red")
             } else {
+                $(".emailInput").css("outline","None")
+                $(".passwdRepeatTr").show()
                 if(passwd==passwdRepeat){
                     passwd = hex_sha256(passwd)
                     $(".passwdInput").val(passwd) 
