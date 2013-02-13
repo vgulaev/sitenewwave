@@ -186,9 +186,9 @@ class User():
     def test_session(self):
         # print 0
         if self.check_SID():
-            return "Passed"
+            return ""
         else:
-            return "Failed"
+            return ""
 
 
     def authorize(self):
@@ -204,7 +204,7 @@ class User():
                     if not "Произошла ошибка" in uid1c:    
                         self.insert_1c_uid(uid, uid1c)
                     return """ 
-                        <p>Authorized</p>
+                        <body>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.removeCookie("sid",{ expires: 30, path: '/'});
@@ -214,33 +214,35 @@ class User():
                                     window.location = "/kabinet/authorization/"
                                 })
                         </script>
+                        </body>
                     """
                 else:
                     return """
-                        <p>No such user</p>
+                        <body>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                 $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
+                        </body>
                     """
                     
             else:
                 return """
-                    <p>No email</p>
+                    <body>
                     <script type="text/javascript">
                             $(document).ready( function(){
                                     // $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
-                    
+                    </body>
                 """
         else:
             uid = self.new_user(email,passwd)
             if uid != False:
                 c = self.set_session(uid)
                 return """ 
-                        <p>User created</p>
+                        
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.removeCookie("sid",{ expires: 30, path: '/'});
@@ -253,7 +255,7 @@ class User():
                     """
             else:
                 return """
-                    <p>User exists</p>
+                    
                     <script type="text/javascript">
                         $(document).ready( function(){
                                 alert('Пользователь уже существует!')

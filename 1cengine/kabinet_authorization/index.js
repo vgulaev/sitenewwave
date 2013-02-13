@@ -61,7 +61,7 @@ $(document).ready( function (){
                 if(passwd==passwdRepeat){
                     passwd = hex_sha256(passwd)
                     $(".passwdInput").val(passwd) 
-                    // $("#regForm").submit()
+                    $("#regForm").submit()
                 } else {
                     $(".passwdInputRepeat").css("outline","1px solid red")
                 }    
