@@ -11,9 +11,9 @@
 ?><!DOCTYPE html>
 <?php
     $wwwdir = "/web/trimetru/site/www";
-    if (gethostname() == "REZVIY") {
+    /**if (gethostname() == "REZVIY") {
         $wwwdir = "c:/Users/Administrator/workspace/sitenewwave";
-    }
+    }*/
     
     $doc = new DOMDocument();
     libxml_use_internal_errors(true);
