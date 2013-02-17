@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
 	$.oSlideshow = function(options) {
 		$.extend($.oSlideshow.conf, options || {});
 		this.oImage = ($.oSlideshow.conf['imageContSelector']) ? $($.oSlideshow.conf['imageContSelector']) : {};
@@ -86,3 +86,13 @@ function toggleTabs(){
 	$("div#catalog-tab1, div#catalog-tab2, li.closeLiButton, li.helpLiButton").toggle()
 	return false
 }
+
+function loadnews() {
+    var ul = document.createElement("ul");
+    $(ul).load('/getnews.php');
+    $(".obj-news").append(ul);
+}
+
+$(document).ready(function() {
+	loadnews();
+})
