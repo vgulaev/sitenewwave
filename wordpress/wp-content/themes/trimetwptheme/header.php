@@ -11,6 +11,10 @@
 ?><!DOCTYPE html>
 <?php
     $wwwdir = "/web/trimetru/site/www";
+    if (gethostname() == "REZVIY") {
+        $wwwdir = "c:/Users/Administrator/workspace/sitenewwave";
+    }
+    
     $doc = new DOMDocument();
     libxml_use_internal_errors(true);
     $doc->loadHTMLFile($wwwdir."/locate/ru/templates/mainpage_template.html");
