@@ -11,5 +11,8 @@
         echo '<li><span>'.$recent["post_date"].'</span><a href="' . get_permalink($recent["ID"]) . '" title="Look '.esc_attr($recent["post_title"]).'" >' .   $recent["post_title"].'</a> </li> ';
         }
         $k = $k + 1;
+        if( $k >= 5 ){
+            break; // Больше пяти новостей смотрится уже плохо и не красиво
+        }
 	}
 ?>
