@@ -57,6 +57,8 @@ for dirname in dirList:
             if link_array[link]>0:
                 print link, " : ", link_array[link]
 
+                html_file_string.replace(link, link+' rel="nofollow"', 1)
+
         
         # p6 = re.compile("/upload[\w\-\s_/\.]+jpg|/upload[\w\-\s_/\.]+png|/upload[\w\-\s_/\.]+gif|/upload[\w\-\s_/\.]+ico")
 
@@ -73,8 +75,8 @@ for dirname in dirList:
         #         print path, " --> ", img
 
 
-        # html_file_name = filename
-        # html_file = open(html_file_name,'w')
+        html_file_name = filename
+        html_file = open(html_file_name,'w')
 
-        # html_file.write(html_file_string)
-        # html_file.close()
+        html_file.write(html_file_string)
+        html_file.close()
