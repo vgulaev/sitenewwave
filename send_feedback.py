@@ -13,32 +13,32 @@ from email.mime.text import MIMEText
 form = cgi.FieldStorage()
 
 if form.has_key("from"):
-	from_sender = form["from"].value
+    from_sender = form["from"].value
 else:
-	from_sender = ""
+    from_sender = ""
 
 if form.has_key("message"):
-	from_message = form["message"].value
+    from_message = form["message"].value
 else:
-	from_message = ""
+    from_message = ""
 
 if form.has_key("name"):
-	from_name = form["name"].value
+    from_name = form["name"].value
 else:
-	from_name = ""
+    from_name = ""
 
 text = """Пришло сообщение с сайта trimet.ru\n
-		Пользователь указал адрес почты: """+from_sender+"""\n
-		Представился как: """+from_name+"""\n
-		Его сообщение: \n """+from_message+"""
-	"""
+Пользователь указал адрес почты: """+from_sender+"""\n
+Представился как: """+from_name+"""\n
+Его сообщение: \n """+from_message+"""
+"""
 
 # text = "This is test text for py sending function"
-msg = MIMEText(text)
+msg = MIMEText(text, "", "utf-8")
 
 sender = "webmaster@tdymk.ru"
 receiver = "elf607@ya.ru"
-msg['Subject'] = 'testing..'
+msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
 msg['To'] = receiver
 
