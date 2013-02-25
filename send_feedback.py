@@ -36,7 +36,7 @@ text = """Пришло сообщение с сайта trimet.ru\n
 # text = "This is test text for py sending function"
 msg = MIMEText(text, "", "utf-8")
 
-sender = "webmaster@tdymk.ru"
+sender = "webmaster@trimet.ru"
 receiver = "elf607@ya.ru"
 msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
