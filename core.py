@@ -12,8 +12,13 @@ import Cookie
 # from htmlmin.minify import html_minify
 import re
 
+debugmode = False
 # core_in_request = re.compile("/core\.py$")
+
 if "dev" not in os.environ["SERVER_NAME"]:
+    debugmode = True
+    
+if (debugmode == False):
     if os.environ['REQUEST_URI'] == "/core.py":
         print "Status:301\nLocation: http://trimet.ru"
     elif "?page" in os.environ['REQUEST_URI']:
@@ -131,7 +136,7 @@ else:
         pathtohtml = "htmlstaticcontent/0001mainpage/"
 
 # Редирект должен осуществляться до вывода чего либо на страницу
-debugmode = False
+
 if ((sys.platform) == "win32"):
     #print ("")
     #sys.stdout = open('temp.html', 'w')

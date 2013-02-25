@@ -1,24 +1,12 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
-import sys,os
+
 import cgi
-import cgitb; cgitb.enable()
-sys.path.insert(0, os.path.expanduser('~/site/python'))
-from bs4 import BeautifulSoup
+import sys, os
+#from flup.server.fcgi import WSGIServer
 
-if ((sys.platform) == "win32"):
-    print ("")
-    sys.stdout = open('temp.html', 'w')
-else:
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-    
-print("<!DOCTYPE html>")
+print ("Content-Type: text/html; charset=utf-8")
+print ("")
 
-print("test")
-
-from htmlmin.minify import html_minify
-html = '<html>    <body>Hello world</body>    </html>'
-minified_html = html_minify(html)
-print(minified_html)
+cgi.print_environ()

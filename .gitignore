@@ -168,6 +168,7 @@ googlehostedservice.htmlexample.db
 ## ignore default output
 #############
 temp.html
+temp.php
 
 #############
 ## standarts lib
@@ -203,10 +204,11 @@ google08c306b085ecc151.html
 ## track only usefull content from afedorov
 #############
 
-!afedorov/*.py
-!afedorov/images/*
-!afedorov/img/*
-afedorov/
+# !afedorov/
+# !afedorov/*.py
+afedorov/images/*
+afedorov/img/*
+# afedorov/
 
 #############
 ## do not track csv files
@@ -237,5 +239,15 @@ download/files/
 ## do not track blog engines
 ############
 
-wordpress/
+wordpress/*.*
+wordpress/wp-admin/
+wordpress/wp-includes/
+wordpress/wp-content/*.*
+wordpress/wp-content/plugins
+wordpress/wp-content/themes/*.*
+wordpress/wp-content/themes/twentyeleven
+wordpress/wp-content/themes/twentytwelve
+wordpress/wp-content/uploads
+wordpress/wp-content/languages
+
 blog/
