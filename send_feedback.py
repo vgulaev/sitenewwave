@@ -45,5 +45,9 @@ msg['To'] = receiver
 # Send the message via our own SMTP server, but don't include the
 # envelope header.
 s = smtplib.SMTP('localhost')
-s.sendmail(sender, [receiver], msg.as_string())
+try:
+    s.sendmail(sender, [receiver], msg.as_string())
+    print "True"
+except:
+    print "False"
 s.quit()
