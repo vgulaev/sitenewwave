@@ -6,6 +6,8 @@ import smtplib
 import cgi
 import cgitb; cgitb.enable()
 
+print ("Content-Type: text/html; charset=utf-8")
+print ("")
 
 # Import the email modules we'll need
 from email.mime.text import MIMEText
