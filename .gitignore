@@ -251,3 +251,9 @@ wordpress/wp-content/uploads
 wordpress/wp-content/languages
 
 blog/
+
+############
+## hide email adresses
+############
+
+mail_addresses.py

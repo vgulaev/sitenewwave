@@ -6,6 +6,8 @@ import smtplib
 import cgi
 import cgitb; cgitb.enable()
 
+import mail_addresses
+
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
 
@@ -39,7 +41,7 @@ text = """Пришло сообщение с сайта trimet.ru\n
 msg = MIMEText(text, "", "utf-8")
 
 sender = "webmaster@trimet.ru"
-receiver = "elf607@ya.ru"
+receiver = [market_mail, admin_mail1, boss_mail]
 msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
 msg['To'] = receiver
