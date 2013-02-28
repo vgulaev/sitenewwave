@@ -6,7 +6,7 @@ import smtplib
 import cgi
 import cgitb; cgitb.enable()
 
-import mail_addresses
+from mail_addresses import *
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
@@ -41,16 +41,16 @@ text = """Пришло сообщение с сайта trimet.ru\n
 msg = MIMEText(text, "", "utf-8")
 
 sender = "webmaster@trimet.ru"
-receiver = [market_mail, admin_mail1, boss_mail]
+receiver = [market_mail, admin_mail1, admin_mail2, boss_mail]
 msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
-msg['To'] = receiver
+msg['To'] =  ', '.join( receiver )
 
 # Send the message via our own SMTP server, but don't include the
 # envelope header.
 s = smtplib.SMTP('localhost')
 try:
-    s.sendmail(sender, [receiver], msg.as_string())
+    s.sendmail(sender, receiver, msg.as_string())
     print "True"
 except:
     print "False"
