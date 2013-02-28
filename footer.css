@@ -100,3 +100,7 @@
     white-space: nowrap;
 }
 
+#cards a{
+    width:120px;
+    margin:3px;
+}
