@@ -1,4 +1,4 @@
-#!/web/trimetru/python/bin/python2.6
+#!/web/tdymkru/python/bin/python2.6
 # -*- coding:utf-8 -*-
 
 import sys, os
