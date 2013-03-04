@@ -41,7 +41,7 @@ text = """Пришло сообщение с сайта trimet.ru\n
 msg = MIMEText(text, "", "utf-8")
 
 sender = "webmaster@trimet.ru"
-receiver = [market_mail, admin_mail1, admin_mail2, boss_mail]
+receiver = [main_mail]
 msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
 msg['To'] =  ', '.join( receiver )
