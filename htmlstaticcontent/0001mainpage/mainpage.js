@@ -94,5 +94,5 @@ function loadnews() {
 }
 
 $(document).ready(function() {
-	loadnews();
+	// loadnews();
 })
