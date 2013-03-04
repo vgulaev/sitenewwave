@@ -371,6 +371,7 @@ echo $template_string;
     </tr>
     <tr>
         <td id="leftTrBottomTd">
+            <p><a href="http://trimet.ru/banking/">Правила онлайн оплаты</a></p>
             <p><a href="http://trimet.ru/1cengine/site/howmakeorder.php">Как выписать счёт?</a></p>
             <p><a href="http://trimet.ru/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
         </td>
