@@ -15,7 +15,7 @@ import re
 debugmode = False
 # core_in_request = re.compile("/core\.py$")
 
-if "dev" not in os.environ["SERVER_NAME"]:
+if "dev" in os.environ["SERVER_NAME"]:
     debugmode = True
     
 if (debugmode == False):
