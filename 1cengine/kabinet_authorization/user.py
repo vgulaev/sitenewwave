@@ -242,7 +242,7 @@ class User():
             if uid != False:
                 c = self.set_session(uid)
                 return """ 
-                        
+                        <body>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.removeCookie("sid",{ expires: 30, path: '/'});
@@ -252,16 +252,18 @@ class User():
                                     window.location = "/kabinet/authorization/"
                                 })
                         </script>
+                        </body>
                     """
             else:
                 return """
-                    
+                    <body>
                     <script type="text/javascript">
                         $(document).ready( function(){
                                 alert('Пользователь уже существует!')
                                 // window.location = "/kabinet/authorization/"
                             })
                     </script>
+                    </body>
                 """
 
 
