@@ -3,7 +3,7 @@
 </IfModule>
 
 RewriteEngine on
-RewriteRule ^1cengine/ - [L]
+RewriteRule ^1cengine/site/ - [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^index.html core.py [L]

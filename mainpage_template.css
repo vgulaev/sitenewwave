@@ -61,7 +61,7 @@ header ul li, header ul ul li, header ul ul ul li {
 	background: none repeat scroll 0% 0% transparent;
 	float: left;
 	margin: 0px;
-	padding: 0px 19px 10px;
+	padding: 0px 17px 10px !important;
 	white-space: nowrap;
 }
 

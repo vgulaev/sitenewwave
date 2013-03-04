@@ -14,6 +14,10 @@ import re
 
 debugmode = False
 # core_in_request = re.compile("/core\.py$")
+
+if "dev" not in os.environ["SERVER_NAME"]:
+    debugmode = True
+    
 if (debugmode == False):
     if os.environ['REQUEST_URI'] == "/core.py":
         print "Status:301\nLocation: http://trimet.ru"
@@ -27,6 +31,13 @@ def findpath(pagename):
         if element.urlname == pagename:
             result = element.path  
     return(result)
+
+def insertcontent(path):
+    try:
+        soupForInsert = BeautifulSoup(open(path))
+        return soupForInsert
+    except:
+        return BeautifulSoup("")
 
 def makecontent(path):
     # print path
@@ -66,7 +77,26 @@ def makecontent(path):
     # set title
     title = soupForImport.find("title")
     soup.html.head.title.replaceWith(title)
-    
+
+    # loading python script
+    nodes = soupForImport.html.find_all("pythonscript")
+    # print nodes.__len__()
+    for currentelement in nodes:
+        python_lib_name = currentelement.contents[0].split("|")[0].split("{")[1]
+        python_method_name = currentelement.contents[0].split("|")[1].split("}")[0]
+        
+        import imp
+        python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
+        
+        r = python_lib.__main__(python_method_name)
+
+        if r != None:
+            python_replace = BeautifulSoup(r)
+        else:
+            python_replace = BeautifulSoup("<html><body></body></html>")
+
+        currentelement.replaceWith(python_replace.html.body)
+
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
@@ -75,11 +105,22 @@ def makecontent(path):
     # add footer
     node = soupFooter.find("footer", {"id": "footer"})
     soup.html.body.append(node)
+
     #print(unicode(soup))
     print(soup.prettify("utf-8"))
     #print(html_minify(soup.prettify("utf-8")))
 
+
+
+if os.environ.get('REQUEST_METHOD','') == "POST":
+    # print os.environ.get('REQUEST_METHOD','')
+    raw_post = sys.stdin.read()
+    # print raw_post
+
+    os.environ["POST_DATA"] = raw_post
+
 form = cgi.FieldStorage()
+# print os.environ.get('REQUEST_METHOD','')
 
 if form.has_key("page"):
     pathtohtml = findpath(form["page"].value)
