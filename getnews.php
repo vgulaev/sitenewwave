@@ -1,7 +1,7 @@
 <?php
     require_once("wordpress/wp-load.php");
     //echo "Hello";
-    $args = array( 'numberposts' => '5', 'post_type' => 'post', 'post_status' => 'publish' );
+    $args = array( 'numberposts' => '6', 'post_type' => 'post', 'post_status' => 'publish' );
 	$recent_posts = wp_get_recent_posts( $args );
 	$k = 0;
     foreach( $recent_posts as $recent ){
