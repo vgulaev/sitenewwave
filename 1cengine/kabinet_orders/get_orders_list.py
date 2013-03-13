@@ -91,7 +91,7 @@ def get_orders_list(UID):
 
     orders = ""
     for order in result[2][0]:
-        orders = """
+        orders = orders + """
             <div class="orderItem """+odd+""" ">
                 <div>
                     <span class="openOrderDownload">"""+str(order[3])+"""</span>
@@ -106,7 +106,7 @@ def get_orders_list(UID):
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать заказ в формате ods"> ods </a>
                 </p>
             </div>
-        """ + orders
+        """
         
         if odd=="odd":
             odd=""
