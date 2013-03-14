@@ -20,6 +20,12 @@
     $json_string = fread($fp, filesize("seotags.json"));
     fclose($fp);
 
+    // echo $tags_obj->Ооло->title;
+
+    if($tags_obj->ололо==""){
+        echo "nya";
+    }
+
     $tags_obj=json_decode($json_string);
     // echo $json_string;
     // print_r($tags_obj);
@@ -29,5 +35,7 @@
     echo "<li>" . $tags_obj->Арматура->description . "</li>";
     echo "<li>" . $tags_obj->Арматура->text . "</li>";
     echo "</ul>";
+
+    echo $tags_obj->Ооло;
 
 ?>

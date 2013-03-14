@@ -18,6 +18,8 @@ fclose($fp);
 
 $titleTemplate = '<title> Тримет </title>';
 $keywordsTemplate = '"металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока" />';
+$descriptionTemplate = '"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн" />';
+$description = $descriptionTemplate;
 
 if(isset($_GET["ref"])){
     $ntitle = str_replace("\\\"", "\"",$_GET["ref"]);
@@ -45,8 +47,21 @@ if(isset($_GET["ref"])){
     // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
 }
 
+if(isset($_GET["catalog"])){
+    $fp = fopen("seotags.json","r");
+    $json_string = fread($fp, filesize("seotags.json"));
+    fclose($fp);
+    $tag = $_GET["catalog"];
+    $tags_obj = json_decode($json_string);
+    if($tags_obj->$tag->title!=""){
+        $title = '<title> ' . $tags_obj->$tag->title . ' </title>';
+        $description = '"' . $tags_obj->$tag->description . '" />'; 
+    } 
+}
+
 $template_string = str_replace($titleTemplate, $title, $template_string); 
 $template_string = str_replace($keywordsTemplate, $keywords, $template_string); 
+$template_string = str_replace($descriptionTemplate, $description, $template_string);
 $template_string = str_replace("</body>", "", $template_string); 
 $template_string = str_replace("</html>", "", $template_string); 
 
