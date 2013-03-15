@@ -142,7 +142,7 @@ echo $template_string;
                     </a>
                 </p>
 
-                <div id="tags">
+                <div id="tags" <?php if($_GET["catalog"]!=""){ echo 'style="display:none;"'; } ?> >
                     <table class="tagTab" style="font-size:16px">
                         <tr>
                             <td class="iRefTd armaTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>

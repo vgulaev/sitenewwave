@@ -18,6 +18,13 @@ RewriteRule ^catalog/besshovnye-truby/$ 1cengine/site/?catalog=Бесшовны�
 RewriteRule ^catalog/kvadrat/$ 1cengine/site/?catalog=Квадрат$1 [L]
 RewriteRule ^catalog/ugolok/$ 1cengine/site/?catalog=Угол$1 [L]
 RewriteRule ^catalog/krug/$ 1cengine/site/?catalog=Круг$1 [L]
+RewriteRule ^catalog/list/$ 1cengine/site/?catalog=Лист$1 [L]
+RewriteRule ^catalog/trubi-bu/$ 1cengine/site/?catalog=трубы\%20бу$1 [L]
+RewriteRule ^catalog/profilnye-truby/$ 1cengine/site/?catalog=профильные\%20трубы$1 [L]
+RewriteRule ^catalog/otsinkovannye-truby/$ 1cengine/site/?catalog=оцинкованные\%20трубы$1 [L]
+RewriteRule ^catalog/setka-kladochnaya/$ 1cengine/site/?catalog=сетка\%20кладочная$1 [L]
+RewriteRule ^catalog/setka-rabitsa/$ 1cengine/site/?catalog=Сетка\%20рабица$1 [L]
+RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=балка\%20двутавровая$1 [L]
 
 RewriteRule ^index.html core.py [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1 [L,R=301]
