@@ -38,13 +38,9 @@ if(isset($_GET["ref"])){
 
     $keywords = '"'.$keywordsString.'" />';
     
-    // $APPLICATION->SetPageProperty("keywords", "".$_GET["ref"].", купить, тримет, тюмень");
-    // $APPLICATION->SetPageProperty("description", "Купить ".$_GET["ref"]." в компании Тримет");
 } else {
     $title = '<title> Купить Online </title>';
     $keywords = $keywordsTemplate;
-    // $APPLICATION->SetPageProperty("keywords", "металлопрокат, профнастил, металлосайдинг, купить, онлайн, тюмень, арматура, балка, швеллер, трубы, угол, штрипс, квадрат, круг, лист, проволока");
-    // $APPLICATION->SetPageProperty("description", "Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн");
 }
 
 if(isset($_GET["catalog"])){
@@ -52,6 +48,9 @@ if(isset($_GET["catalog"])){
     $json_string = fread($fp, filesize("seotags.json"));
     fclose($fp);
     $tag = $_GET["catalog"];
+    $tag = str_replace(" ", "_", $tag);
+    $tag = str_replace("%20", "_", $tag);
+
     $tags_obj = json_decode($json_string);
     if($tags_obj->$tag->title!=""){
         $title = '<title> ' . $tags_obj->$tag->title . ' </title>';
@@ -68,14 +67,6 @@ $template_string = str_replace("</html>", "", $template_string);
 
 echo $template_string;
 
-// Более не нужный кусок кода
-// if(isset($_GET["ref"])){
-//     if(strstr($_GET["ref"], "кастом")!=false){
-
-//         header( 'Refresh: 0; url=http://trimet.ru/404.html?ref='.urlencode($_GET["ref"]).'' );
-//     }
-// }
-
 ?>
 
 <div id="main2">
@@ -86,11 +77,10 @@ echo $template_string;
 
 <script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.blockUI.js'> </script>
 <script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.cookie.js'> </script>
+<script type="text/javascript" src='/1cengine/site/js/modern_uiJs.js'> </script>
 
-<script type="text/javascript" src='js/modern_uiJs.js'> </script>
 
-
-<link rel="stylesheet" type="text/css" href="modern_style.css" />
+<link rel="stylesheet" type="text/css" href="/1cengine/site/modern_style.css" />
 
 <h1 style="font-size:14px;display:none">Продажа металлопроката, профнастила и металлосайдинга онлайн в Тюмени и Тюменской Области</h1>
 
@@ -100,7 +90,6 @@ echo $template_string;
 
             <div id='showBasketSpan'>
                 <p><a href='Показать%20заказ' title='Заказ' id='tabBasket' onClick='return false'>Показать заказ (<span class='basketCount'>0</span>)</a></p>
-                <!-- <p><a href="javascript:showGroups()" title="Показать группы товаров">Показать группы товаров</a></p> -->
                 <p style="display:none;"><a href="http://trimet.ru/1cengine/productinformation/cataloginformation/index_products.php" title="Просмотреть индекс каталога товаров">Индекс</a></p>
                 <p>Скачать прайс:
                     <ul>
