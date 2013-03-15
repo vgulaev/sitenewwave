@@ -116,7 +116,7 @@ echo $template_string;
         <td id="mainTr" rowspan="2">
             <div id="pTableContentTab">
                 <div id="searchDiv">
-                    <input id="itemName" placeholder="Введите здесь интересующий вас товар" />
+                    <input id="itemName" placeholder="Введите здесь интересующий вас товар" <?php if($_GET["catalog"]!=""){ echo 'value="'.$_GET["catalog"].'"'; } ?> />
                     <div id="searchButton">Найти</div>
                 </div><br />
                 <a href="javascript:showGroups()" title="Показать группы товаров"><div id="showGroupsDiv">Показать группы</div></a>
@@ -127,6 +127,10 @@ echo $template_string;
                             if($_GET["ref"]!=""){
                                 $_GET["term"]=$_GET["ref"];
                                 $_GET["strict"]="yes";
+                                require_once("getItems.php");
+                            }
+                            if($_GET["catalog"]!=""){
+                                $_GET["term"]=$_GET["catalog"];
                                 require_once("getItems.php");
                             }
                         ?>
