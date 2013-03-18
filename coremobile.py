@@ -13,3 +13,13 @@ print ("Content-Type: text/html; charset=utf-8")
 print ("")
 
 print("Hello!!!")
+
+def mobile_detect():
+    print("<br/>")
+    print(((os.environ['HTTP_USER_AGENT'].find("Android") > -1) or (os.environ['HTTP_USER_AGENT'].find("Mobile") > -1)))
+    print("<br/>")
+    print(os.environ['HTTP_USER_AGENT'])
+
+print(mobile_detect())
+
+#cgi.print_environ()
