@@ -12,7 +12,7 @@ from urllist import trimeturls
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
 
-print("Hello!!!")
+#print("Hello!!!")
 
 def mobile_detect():
     print("<br/>")
@@ -20,6 +20,8 @@ def mobile_detect():
     print("<br/>")
     print(os.environ['HTTP_USER_AGENT'])
 
-print(mobile_detect())
+#print(mobile_detect())
 
 #cgi.print_environ()
+soup = BeautifulSoup(open("m/index.html"))
+print(soup.prettify("utf-8"))
