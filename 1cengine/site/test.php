@@ -30,7 +30,7 @@
     // echo $json_string;
     // print_r($tags_obj);
     echo "<ul>Арматура";
-    echo "<li>" . $tags_obj->Арматура->url . "</li>";
+    echo "<li>" . $tags_obj->Арматура_12->url . "</li>";
     echo "<li>" . $tags_obj->Арматура->title . "</li>";
     echo "<li>" . $tags_obj->Арматура->description . "</li>";
     echo "<li>" . $tags_obj->Арматура->text . "</li>";
