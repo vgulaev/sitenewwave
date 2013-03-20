@@ -67,6 +67,7 @@ class User():
 
             self.uid = self.cursor.lastrowid
             user_1c = user_1c_lib.User1C()
+            user_1c.register_user_1c(email,passwd)
             # print user_1c.register_user_1c(email,passwd)
             return self.uid 
             # self.generate_SID(self.uid)

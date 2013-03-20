@@ -137,7 +137,7 @@ echo $template_string;
                     </table>
                 </div>
                 <p>
-                    <a id="showAll" <?php if($_GET["catalog"]==""){ echo 'style="display:none;"'; } ?> href="Все%20результаты" onClick="return false">
+                    <a id="showAll" <?php if($_GET["catalog"]==""){ echo 'style="display:none;"'; } ?>prstat -s rss href="Все%20результаты" onClick="return false">
                         Показать все результаты
                     </a>
                 </p>
