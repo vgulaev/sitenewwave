@@ -197,6 +197,7 @@ class User():
             if email != False:
                 uid = self.check_user(email,passwd)
                 # print passwd
+                print uid
                 if uid != False:
                     c=self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
