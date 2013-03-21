@@ -213,7 +213,7 @@ class User():
                                     // $.cookie("sid", "",{ expires: 30, path: '/'})
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
-                                    // window.location = "/kabinet/authorization/"
+                                    window.location = "/kabinet/orders/"
                                 })
                         </script>
                         </body>
@@ -243,6 +243,11 @@ class User():
             uid = self.new_user(email,passwd)
             if uid != False:
                 c = self.set_session(uid)
+                user_1c = user_1c_lib.User1C()
+                uid1c = user_1c.authorize_user_1c(email,passwd)
+                print uid1c
+                if not "Произошла ошибка" in uid1c:    
+                    self.insert_1c_uid(uid, uid1c)
                 return """ 
                         <body>
                         <script type="text/javascript">
