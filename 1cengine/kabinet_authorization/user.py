@@ -256,7 +256,17 @@ class User():
                                     // $.cookie("sid", "",{ expires: 30, path: '/'})
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
-                                    window.location = "/kabinet/authorization/"
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/send_feedback.py",
+                                        async: true,
+                                        data: "from=webmaster@trimet.ru&name=Регистрация%2fпользователей&message=Зарегистрировался%2fновый%2fпользователь%2fс%2fемейлом%2f"""+email+""" ",
+                                        success: function(html) {
+                                            return false
+                                        }
+
+                                    });
+                                    window.location = "/kabinet/orders/"
                                 })
                         </script>
                         </body>
