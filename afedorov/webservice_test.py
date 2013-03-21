@@ -74,6 +74,17 @@ def create_1c_user_test():
 
     return result
 
+def authorize_user_1c_test():
+    client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
+    client.set_options(cache=DocumentCache())
+
+    email = "q1"
+    passwd = "8e35c2cd3b"
+
+    result = client.service.Authorize(email,passwd[:10],"")
+
+    return result
 
 
-print create_1c_user_test()
+
+print authorize_user_1c_test()

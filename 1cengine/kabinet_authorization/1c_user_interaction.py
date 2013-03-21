@@ -50,7 +50,7 @@ class User1C():
         client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
         client.set_options(cache=DocumentCache())
 
-        result = client.service.Authorize(email,passwd[:10],"")
+        result = client.service.Authorize(email,passwd,"")
 
         return result
 
