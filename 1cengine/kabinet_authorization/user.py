@@ -260,7 +260,7 @@ class User():
                                         type: "POST",
                                         url: "/send_feedback.py",
                                         async: true,
-                                        data: "from=webmaster@trimet.ru&name=Регистрация%2fпользователей&message=Зарегистрировался%2fновый%2fпользователь%2fс%2fемейлом%2f"""+email+""" ",
+                                        data: "from=webmaster@trimet.ru&name=Регистрация%20пользователей&message=Зарегистрировался%20новый%20пользователь%20с%20емейлом%20"""+email+""" ",
                                         success: function(html) {
                                             return false
                                         }
