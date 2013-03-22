@@ -163,7 +163,7 @@ function getItemChar(hash) {
     ret = ''
     $.ajax({
         type: "POST",
-        url: "getItemChar.php",
+        url: "get_item_char.py",
         async: false,
         data: "item_hash=" + hash,
         success: function(html) {
