@@ -182,7 +182,7 @@ def showItemByHash(hash, char, count,rezka):
             <td class='itemNdsKfTd'>18%</td>
             <td class='itemNdsSumTd'></td>
             <td class='itemSumTd'></td>
-            <td class='itemRezlaTd' style='display:none'>"""+rezk+"""</td></tr>
+            <td class='itemRezlaTd' style='display:none'>"""+rezka+"""</td></tr>
         """
 
         print cell
