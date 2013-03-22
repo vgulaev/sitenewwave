@@ -33,7 +33,7 @@ def get_item_char(item_hash, hash_pointer):
 get = cgi.FieldStorage()
 
 if "item_hash" in get:
-    i_hash = get["item_hash"]
+    i_hash = get["item_hash"].value
 else:
     i_hash = ""
 
