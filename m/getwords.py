@@ -39,38 +39,24 @@ class Words(Base):
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
 
-print ("Hello!!!")
-
 str_conection_to_MySQL = 'mysql+mysqldb://root:mysql@127.0.0.1/WordsBase?charset=utf8'
 #engine = create_engine('sqlite:///new.db')
 
 context = etree.iterparse("D:/Bases/_Ert/words.xml")
 engine = create_engine(str_conection_to_MySQL)
 
-metadata = MetaData(bind=engine)
-metadata.reflect() 
-
-print(metadata.tables.keys())
-
-Base.metadata.drop_all(engine)
-Base.metadata.create_all(engine)
-
 Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-def make_record_in_base_table_words(act, elem):
-    dbrecord = Words(elem.get("fullname"), elem.get("id1C"), elem.get("value"), elem.get("order"))
-    session.add(dbrecord)
+q = session.query(Words)
 
-i = 0
-for action, elem in context:
-    if elem.tag == u"Word":
-        make_record_in_base_table_words(action, elem)
-        print i
-        i = i + 1
-    else:
-        print "cant make eq"
+q = q.filter(Words.order == 1)
 
-session.commit()
-session.close()
+q = q.group_by(Words.value).all()
+
+result = "";
+for el in q:
+    result = result + el.value + " " 
+
+print result.lstrip().encode("utf-8")
