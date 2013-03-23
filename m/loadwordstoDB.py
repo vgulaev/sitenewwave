@@ -13,6 +13,8 @@ from sqlalchemy import MetaData, Column, Integer, String
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+from lxml import etree
 #from secrets import str_conection_to_MySQL
 
 Base = declarative_base()
@@ -20,9 +22,9 @@ Base = declarative_base()
 class Words(Base):
     __tablename__ = 'words'
     id = Column(Integer, primary_key=True)
-    id1C = Column(String(250))
-    fullname = Column(String(250))
-    value = Column(String(250))
+    id1C = Column(String(250, collation = "utf8_general_ci"))
+    fullname = Column(String(250, collation = "utf8_general_ci"))
+    value = Column(String(250, collation = "utf8_general_ci"))
     order = Column(Integer)
     def __init__(self, fullname, id1C, value, order):
         self.fullname = fullname
@@ -39,9 +41,10 @@ print ("")
 
 print ("Hello!!!")
 
-str_conection_to_MySQL = 'mysql+mysqldb://root:mysql@127.0.0.1/WordsBase'
+str_conection_to_MySQL = 'mysql+mysqldb://root:mysql@127.0.0.1/WordsBase?charset=utf8'
 #engine = create_engine('sqlite:///new.db')
 
+context = etree.iterparse("D:/Bases/_Ert/words.xml")
 engine = create_engine(str_conection_to_MySQL)
 
 metadata = MetaData(bind=engine)
@@ -55,3 +58,19 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
+
+def make_record_in_base_table_words(act, elem):
+    dbrecord = Words(elem.get("fullname"), elem.get("id1C"), elem.get("value"), elem.get("order"))
+    session.add(dbrecord)
+
+i = 0
+for action, elem in context:
+    if elem.tag == u"Word":
+        make_record_in_base_table_words(action, elem)
+        print i
+        i = i + 1
+    else:
+        print "cant make eq"
+
+session.commit()
+session.close()
