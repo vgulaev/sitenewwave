@@ -31,3 +31,53 @@ class ArticlesNames(Base):
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class Dictionary(Base):
+    __tablename__ = 'Dictionary'
+    id = Column(Integer, primary_key=True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"))
+    PartOfSpeech = Column(String(250, collation = "utf8_general_ci"))
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, PartOfSpeech, naimenovanie):
+        self.ssylka = ssylka
+        self.PartOfSpeech = PartOfSpeech
+        self.naimenovanie = naimenovanie
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class NamingRules(Base):
+    __tablename__ = 'NamingRules'
+    id = Column(Integer, primary_key=True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"))
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, naimenovanie):
+        self.ssylka = ssylka
+        self.naimenovanie = naimenovanie
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class NamingRulesshemanazvaniya(Base):
+    __tablename__ = 'NamingRulesshemanazvaniya'
+    id = Column(Integer, primary_key=True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"))
+    chastrechi = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, chastrechi):
+        self.ssylka = ssylka
+        self.chastrechi = chastrechi
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)        
+
+class nomenklatura(Base):
+    __tablename__ = 'nomenklatura'
+    id = Column(Integer, primary_key=True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"))
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, naimenovanie):
+        self.ssylka = ssylka
+        self.naimenovanie = naimenovanie
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)        

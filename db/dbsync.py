@@ -14,7 +14,7 @@ from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from dbclasses1c import Base, ArticlesNames
+from dbclasses1c import Base, ArticlesNames, Dictionary, NamingRules, NamingRulesshemanazvaniya, nomenklatura
 #from secrets import str_conection_to_MySQL
 
 print ("Content-Type: text/html; charset=utf-8")
@@ -37,6 +37,34 @@ nodes = soup.find_all("Record")
 
 for currentelement in nodes:
     dbrecord = ArticlesNames(currentelement.Article["Value"], currentelement.PartOfSpeech["Value"], currentelement.Order["Value"], currentelement.Word["Value"])
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/Dictionary.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = Dictionary(currentelement.ssylka["Value"], currentelement.PartOfSpeech["Value"], currentelement.naimenovanie["Value"])
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/NamingRules.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = NamingRules(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"])
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/NamingRulesshemanazvaniya.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = NamingRulesshemanazvaniya(currentelement.ssylka["Value"], currentelement.chastrechi["Value"])
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/nomenklatura.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = nomenklatura(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"])
     session.add(dbrecord)
 
 session.commit()
