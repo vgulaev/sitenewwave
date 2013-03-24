@@ -1,7 +1,35 @@
-﻿querycondition = function (){
+﻿queryconditionfield = function () {
+
+    this.show = function(){
+    $("#queryconditionfield").empty();
+    //alert($("#querycondition").val());
+    $.ajax({
+		type : "POST",
+		url : "/m/getnamingrulesshemanazvaniya.py",
+		async : true,
+		data : {
+			"ssylka" : $("#querycondition").val()
+			//"orderindex" : selectid.intid
+		},
+		success : function(html) {
+            var optionsforapend = JSON.parse(html);
+            for (var el in optionsforapend.records) {
+                $("#queryconditionfield").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide"> Назад </a></li>');
+            }
+            $("#queryconditionfield").listview("refresh");
+		}
+	});
+    }
+}
+
+querycondition = function (){
     this.show = function(){
     $("#querycondition").empty();
     $("#querycondition").append('<option value="clear">Выберите группу товаров</option>');
+    
+    $("#querycondition").change(function() {
+        (new queryconditionfield).show();
+        });
     
     $.ajax({
 		type : "POST",
@@ -12,14 +40,10 @@
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
-            optionsforapend = html.split(" ");
-            for (el in optionsforapend) {
-                if ($.trim(optionsforapend[el]) != "") {
-                    $("#querycondition").append('<option value="clear">' + optionsforapend[el] +'</option>');
-                }
-                ;
+            var optionsforapend = JSON.parse(html);
+            for (var el in optionsforapend.records) {
+                $("#querycondition").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
             }
-            
 		}
 	});
     
