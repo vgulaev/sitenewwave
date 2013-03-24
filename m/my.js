@@ -1,4 +1,41 @@
-﻿$(document).delegate('#assortiment', 'pageshow', function () {
+﻿querycondition = function (){
+    this.show = function(){
+    $("#querycondition").empty();
+    $("#querycondition").append('<option value="clear">Выберите группу товаров</option>');
+    
+    $.ajax({
+		type : "POST",
+		url : "/m/getnamingrules.py",
+		async : true,
+		data : {
+			//"fullnamecondition" : fullnamecondition,
+			//"orderindex" : selectid.intid
+		},
+		success : function(html) {
+            optionsforapend = html.split(" ");
+            for (el in optionsforapend) {
+                if ($.trim(optionsforapend[el]) != "") {
+                    $("#querycondition").append('<option value="clear">Выберите группу товаров</option>');
+                }
+                ;
+            }
+            
+		}
+	});
+    
+    }
+}
+
+nomenklaturalist = function (){
+    
+    this.show = function(){
+    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">Более 1000 вариантов</a></li>');
+    $("#nomenklaturalist").listview("refresh");
+    //alert("Hello");
+    }
+}
+
+$(document).delegate('#assortiment', 'pageshow', function () {
     //Your code for each page load here
     //alert("Hello");
     doSomething();
@@ -20,8 +57,11 @@ function filled_options_from_string(html) {
 
 function doSomething() {
     //alert("Hello!!!");
-    
-	$.mobile.showPageLoadingMsg();
+    $.mobile.showPageLoadingMsg();
+    (new nomenklaturalist()).show();
+    (new querycondition()).show();
+    $.mobile.hidePageLoadingMsg();
+	/*$.mobile.showPageLoadingMsg();
     $.ajax({
 		type : "POST",
 		url : "/m/getwords.py",
@@ -34,7 +74,7 @@ function doSomething() {
 			filled_options_from_string(html);
             //$("#outputass").html(html);
 		}
-	});
+	});*/
     //$.mobile.pageLoading(); 
     //$("#outputass").html("Good!!!");
     
