@@ -57,7 +57,7 @@ soup = BeautifulSoup(open("D:/_Del/NamingRulesshemanazvaniya.xml"), "xml")
 nodes = soup.find_all("Record")
 
 for currentelement in nodes:
-    dbrecord = NamingRulesshemanazvaniya(currentelement.ssylka["Value"], currentelement.chastrechi["Value"])
+    dbrecord = NamingRulesshemanazvaniya(currentelement.ssylka["Value"], currentelement.chastrechi["Value"], currentelement.DefaultValue["Value"])
     session.add(dbrecord)
 
 soup = BeautifulSoup(open("D:/_Del/nomenklatura.xml"), "xml")

@@ -15,7 +15,7 @@
             optionsforapend = html.split(" ");
             for (el in optionsforapend) {
                 if ($.trim(optionsforapend[el]) != "") {
-                    $("#querycondition").append('<option value="clear">Выберите группу товаров</option>');
+                    $("#querycondition").append('<option value="clear">' + optionsforapend[el] +'</option>');
                 }
                 ;
             }
@@ -29,6 +29,7 @@
 nomenklaturalist = function (){
     
     this.show = function(){
+    $("#nomenklaturalist").empty();
     $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">Более 1000 вариантов</a></li>');
     $("#nomenklaturalist").listview("refresh");
     //alert("Hello");

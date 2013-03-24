@@ -63,9 +63,11 @@ class NamingRulesshemanazvaniya(Base):
     id = Column(Integer, primary_key=True)
     ssylka = Column(String(250, collation = "utf8_general_ci"))
     chastrechi = Column(String(250, collation = "utf8_general_ci"))
-    def __init__(self, ssylka, chastrechi):
+    DefaultValue = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, chastrechi, DefaultValue):
         self.ssylka = ssylka
         self.chastrechi = chastrechi
+        self.DefaultValue = DefaultValue
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)        
