@@ -1,6 +1,13 @@
-﻿function filled_options_from_string(html) {
+﻿$(document).delegate('#assortiment', 'pageshow', function () {
+    //Your code for each page load here
+    //alert("Hello");
+    doSomething();
+});
+
+function filled_options_from_string(html) {
 	optionsforapend = html.split(" ");
 	addedIndex = 0;
+    $("#WordList").empty();
 	for (el in optionsforapend) {
 		if ($.trim(optionsforapend[el]) != "") {
 			$("#WordList").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend[el] + '</a></li>');
@@ -8,12 +15,14 @@
 		;
 	}
     $("#WordList").listview("refresh");
+    $.mobile.hidePageLoadingMsg();
 }
 
 function doSomething() {
     //alert("Hello!!!");
     
-	$.ajax({
+	$.mobile.showPageLoadingMsg();
+    $.ajax({
 		type : "POST",
 		url : "/m/getwords.py",
 		async : true,
@@ -25,7 +34,8 @@ function doSomething() {
 			filled_options_from_string(html);
             //$("#outputass").html(html);
 		}
-	})
+	});
+    //$.mobile.pageLoading(); 
     //$("#outputass").html("Good!!!");
     
     //$("#WordList").html('<li data-theme="c" data-icon="arrow-l"><a href="#Main" data-transition="slide"> Арматура </a></li>');
