@@ -23,10 +23,23 @@ print ("")
 str_conection_to_MySQL = 'mysql+mysqldb://root:mysql@127.0.0.1/DB1C?charset=utf8'
 #engine = create_engine('sqlite:///new.db')
 
-context = etree.iterparse("D:/_Del/ArticlesNames.xml")
 engine = create_engine(str_conection_to_MySQL)
 
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
+
+Session = sessionmaker(bind=engine)
+Session.configure(bind=engine)
+session = Session()
+
+soup = BeautifulSoup(open("D:/_Del/ArticlesNames.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = ArticlesNames(currentelement.Article["Value"], currentelement.PartOfSpeech["Value"], currentelement.Order["Value"], currentelement.Word["Value"])
+    session.add(dbrecord)
+
+session.commit()
+session.close()
 
 print ("Hello")
