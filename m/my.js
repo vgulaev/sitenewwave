@@ -12,9 +12,23 @@
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
+            $("#queryconditionfields").empty();
             var optionsforapend = JSON.parse(html);
             for (var el in optionsforapend.records) {
-                $("#queryconditionfield").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide"> Назад </a></li>');
+                var select = document.createElement('select');
+                select.setAttribute("name", optionsforapend.records[el].chastrechi);
+                select.setAttribute("id", optionsforapend.records[el].chastrechi);
+                
+                $("#queryconditionfields").append(select);
+                
+                $("#"+optionsforapend.records[el].chastrechi).append('<option value="clear"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
+                //$("#queryconditionfields").append('<select name="' +  + ' id="' + 'fdfdf' + '"></select>');
+                
+                /*var myselect = $("select#"+optionsforapend.records[el].chastrechi);
+                myselect[0].selectedIndex = 0;
+                myselect.selectmenu("refresh");
+                //.val("clear").selectmenu("refresh", true);*/
+                $(".selector").selectmenu( "refresh" );
             }
             $("#queryconditionfield").listview("refresh");
 		}

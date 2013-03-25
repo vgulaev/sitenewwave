@@ -15,7 +15,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from lxml import etree
-from dbclasses1c import Base, NamingRulesshemanazvaniya
+from dbclasses1c import Base, NamingRulesshemanazvaniya, PartOfSpeech
 #from secrets import str_conection_to_MySQL
 
 def JSONfield(name, value):
@@ -35,17 +35,21 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-q = session.query(NamingRulesshemanazvaniya)
+q = session.query(NamingRulesshemanazvaniya, PartOfSpeech)
 
 q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
+q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
+
+q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
+
+q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
 
 q = q.all()
 
 result = "{\"records\":[";
 for el in q:
-    result = result + "{" + JSONfield("chastrechi", el.chastrechi) + ", " +  JSONfield("ssylka", el.ssylka) + " },"
-    #result = result + "{" \"naimenovanie\": \"" + el.naimenovanie + "\" },"
+    result = result + "{" + JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie) + " },"
 
 result = result[:-1] + "]}";
-print(form["ssylka"])
+#print(form["ssylka"])
 print(result.lstrip().encode("utf-8"))
