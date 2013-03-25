@@ -131,7 +131,7 @@ function showGroups() {
     $.blockUI({
         message: $("#tags")
     });
-
+    $(".blockMsg").draggable();
 
 }
 
