@@ -16,10 +16,8 @@ from sqlalchemy.orm import sessionmaker
 
 from lxml import etree
 from dbclasses1c import Base, NamingRulesshemanazvaniya, PartOfSpeech
+from wsfunction import JSONfield, JSONwrap
 #from secrets import str_conection_to_MySQL
-
-def JSONfield(name, value):
-    return "\"" + name + "\":\"" + value + "\""
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
@@ -37,19 +35,25 @@ session = Session()
 
 q = session.query(NamingRulesshemanazvaniya, PartOfSpeech)
 
-q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
-q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
+#q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
+#q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
 
-q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
+#q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
 
 q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
 
 q = q.all()
 
-result = "{\"records\":[";
-for el in q:
-    result = result + "{" + JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie) + " },"
+result = "{" + JSONwrap("count") + ":"
+result = result + JSONwrap(str(len(q))) + ","
 
-result = result[:-1] + "]}";
+if (len(q) < 200):
+	result = result + JSONwrap("records") + ":["
+	for el in q:
+		result = result + "{" + JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + " },"
+	
+	result = result[:-1] + "],"
+
+result = result[:-1] + "}";
 #print(form["ssylka"])
 print(result.lstrip().encode("utf-8"))
