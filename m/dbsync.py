@@ -64,7 +64,7 @@ soup = BeautifulSoup(open("D:/_Del/nomenklatura.xml"), "xml")
 nodes = soup.find_all("Record")
 
 for currentelement in nodes:
-    dbrecord = nomenklatura(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"])
+    dbrecord = nomenklatura(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"], currentelement.praviloformirovaniyanazvaniya["Value"])
     session.add(dbrecord)
 
 soup = BeautifulSoup(open("D:/_Del/PartOfSpeech.xml"), "xml")

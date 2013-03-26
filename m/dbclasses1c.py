@@ -79,9 +79,11 @@ class nomenklatura(Base):
     id = Column(Integer, primary_key=True)
     ssylka = Column(String(250, collation = "utf8_general_ci"))
     naimenovanie = Column(String(250, collation = "utf8_general_ci"))
-    def __init__(self, ssylka, naimenovanie):
+    praviloformirovaniyanazvaniya = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, naimenovanie, praviloformirovaniyanazvaniya):
         self.ssylka = ssylka
         self.naimenovanie = naimenovanie
+        self.praviloformirovaniyanazvaniya = praviloformirovaniyanazvaniya
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)
