@@ -50,7 +50,7 @@ msg['To'] =  ', '.join( receiver )
 # envelope header.
 s = smtplib.SMTP('localhost')
 try:
-    s.sendmail(sender, receiver, msg.as_string())
+    s.sendmail(sender, receiver, msg)
     print "True"
 except:
     print "False"
