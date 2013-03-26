@@ -38,19 +38,25 @@ text = """Пришло сообщение с сайта trimet.ru\n
 """
 
 # text = "This is test text for py sending function"
-msg = MIMEText(text, "", "utf-8")
+# msg = MIMEText(text, "", "utf-8")
 
 sender = "webmaster@trimet.ru"
 receiver = [main_mail]
-msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
-msg['From'] = sender
-msg['To'] =  ', '.join( receiver )
+# msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
+# msg['From'] = sender
+# msg['To'] =  ', '.join( receiver )
+
+msg = """ 
+	From: """+sender+"""\r\n
+	To: """+', '.join( receiver )+"""\r\n\r\n
+	"""+text+"""
+"""
 
 # Send the message via our own SMTP server, but don't include the
 # envelope header.
 s = smtplib.SMTP('localhost')
 try:
-    s.sendmail(sender, receiver, msg.as_string())
+    s.sendmail(sender, receiver, msg
     print "True"
 except:
     print "False"
