@@ -48,7 +48,8 @@ receiver = [main_mail]
 
 msg = """ 
 	From: """+sender+"""\r\n
-	To: """+', '.join( receiver )+"""\r\n\r\n
+	To: """+', '.join( receiver )+"""\r\n
+	Subject: """+Отзыв/вопрос с trimet.ru+"""\r\n
 	"""+text+"""
 """
 
