@@ -1,6 +1,11 @@
 ﻿function doSomething2() {
-	alert("Hello");
+	//alert("Hello");
 	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
+	
+	var r =	$("#queryconditionfields > select");
+	
+	l = 0;
+		
     $.ajax({
 		type : "POST",
 		url : "/m/getqueryresult.py",

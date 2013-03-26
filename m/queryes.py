@@ -26,3 +26,9 @@ def getquerybyname(session, form, queryname):
 		q = q.group_by(ArticlesNames.Article)
 		
 	return q
+
+def resultbyname(el, queryname):
+	if (queryname == "get_words_by_filter"):
+		r = JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article)
+		
+	return r

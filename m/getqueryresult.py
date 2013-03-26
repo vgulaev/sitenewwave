@@ -35,20 +35,21 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-q = getquerybyname(session, form, "get_words_by_filter")
-
-q = q.all()
-
-result = "{" + JSONwrap("count") + ":"
-result = result + JSONwrap(str(len(q))) + ","
-
-if (len(q) < 200):
-	result = result + JSONwrap("records") + ":["
-	for el in q:
-		result = result + "{" + JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article) + " },"
+if form.has_key("queryname"):
+	queryname = form["queryname"].value
+	q = getquerybyname(session, form, queryname)
+	q = q.all()
+	result = "{" + JSONwrap("count") + ":"
+	result = result + JSONwrap(str(len(q))) + ","
+	if (len(q) < 200):
+		result = result + JSONwrap("records") + ":["
+		for el in q:
+			result = result + "{" + resultbyname(el, queryname) + " },"
+		
+		result = result[:-1] + "],"
+	result = result[:-1] + "}";
+	#print(form["ssylka"])
+else:
+	result = "{}";
 	
-	result = result[:-1] + "],"
-
-result = result[:-1] + "}";
-#print(form["ssylka"])
-print(result.lstrip().encode("utf-8"))
+print(result.lstrip().encode("utf-8"))	
