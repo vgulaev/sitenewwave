@@ -39,6 +39,7 @@ querycondition = function (){
     $("#NamingRules").change(function() {
         $.mobile.showPageLoadingMsg();
         (new queryconditionfield).show();
+		(new nomenklaturalist()).show();
         $.mobile.hidePageLoadingMsg();
         });
     
@@ -66,34 +67,28 @@ nomenklaturalist = function (){
     this.show = function(){
     $("#nomenklaturalist").empty();
     
+	var datafilters = {
+	"NamingRules" : $("#NamingRules").val()
+	};
+
     $.ajax({
 		type : "POST",
 		url : "/m/getnomenklatura.py",
 		async : true,
-		data : {
-			"NamingRules" : $("#NamingRules").val()
-			//"orderindex" : selectid.intid
-		},
+		data : datafilters,
 		success : function(html) {
             var optionsforapend = JSON.parse(html);
-            /*for (var el in optionsforapend.records) {
-                var select = document.createElement('select');
-                select.setAttribute("name", optionsforapend.records[el].chastrechi);
-                select.setAttribute("id", optionsforapend.records[el].chastrechi);
-                
-                $("#queryconditionfields").append(select);
-                
-                $("#"+optionsforapend.records[el].chastrechi).append('<option value="clear"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
-                
-                $("#queryconditionfields").trigger("create");
-                
-            }*/
-            //$("#queryconditionfield").listview("refresh");
+			if (optionsforapend.count < 30) {
+			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+			}
+			else {
+			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+			}
+			$("#nomenklaturalist").listview("refresh");
 		}
 	});
     
-    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">Более 1000 вариантов</a></li>');
-    $("#nomenklaturalist").listview("refresh");
+    
     //alert("Hello");
     }
 }

@@ -9,10 +9,10 @@ sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import MetaData, Column, Integer, String
+from sqlalchemy import MetaData, Column, ForeignKey, Integer, String
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 Base = declarative_base()
 
@@ -23,6 +23,8 @@ class ArticlesNames(Base):
     PartOfSpeech = Column(String(250, collation = "utf8_general_ci"))
     Order = Column(Integer)
     Word = Column(String(250, collation = "utf8_general_ci"))
+	#Article_NamingRules = Column(String(250, collation = "utf8_general_ci"), ForeignKey("NamingRules.ssylka"))
+	#NamingRules = relationship("NamingRules")
     def __init__(self, Article, PartOfSpeech, Order, Word):
         self.Article = Article
         self.PartOfSpeech = PartOfSpeech
@@ -51,6 +53,7 @@ class NamingRules(Base):
     id = Column(Integer, primary_key=True)
     ssylka = Column(String(250, collation = "utf8_general_ci"))
     naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+	#child = relationship("ArticlesNames", uselist=False, backref="NamingRules")
     def __init__(self, ssylka, naimenovanie):
         self.ssylka = ssylka
         self.naimenovanie = naimenovanie

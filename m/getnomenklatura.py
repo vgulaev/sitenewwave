@@ -15,7 +15,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from lxml import etree
-from dbclasses1c import Base, NamingRulesshemanazvaniya, PartOfSpeech
+from dbclasses1c import Base, ArticlesNames, nomenklatura
 from wsfunction import JSONfield, JSONwrap
 #from secrets import str_conection_to_MySQL
 
@@ -33,15 +33,21 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
-q = session.query(NamingRulesshemanazvaniya, PartOfSpeech)
+q = session.query(ArticlesNames, nomenklatura)
 
-#q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
+q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
+
+if form.has_key("NamingRules"):
+	if (form["NamingRules"].value <> "null"):
+		q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
+		#r = ""
+
 #q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
-
 #q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
 
-q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
+#q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
 
+q = q.group_by(ArticlesNames.Article)
 q = q.all()
 
 result = "{" + JSONwrap("count") + ":"
@@ -50,7 +56,7 @@ result = result + JSONwrap(str(len(q))) + ","
 if (len(q) < 200):
 	result = result + JSONwrap("records") + ":["
 	for el in q:
-		result = result + "{" + JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + " },"
+		result = result + "{" + JSONfield("Article", el.nomenklatura.naimenovanie) + " },"
 	
 	result = result[:-1] + "],"
 
