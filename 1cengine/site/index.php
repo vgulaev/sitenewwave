@@ -1,5 +1,4 @@
 <?php session_start(); ?>
-<!DOCTYPE html>
 <?php
 require_once('mobile.inc.php');
 $m = new Mobile_Detect();
@@ -11,7 +10,9 @@ if( $m->isMobile() ){
     }
     
 }
-
+?>
+<!DOCTYPE html>
+<?php
 $fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
 $template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 fclose($fp);
