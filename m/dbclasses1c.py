@@ -64,13 +64,15 @@ class NamingRulesshemanazvaniya(Base):
     ssylka = Column(String(250, collation = "utf8_general_ci"))
     chastrechi = Column(String(250, collation = "utf8_general_ci"))
     DefaultValue = Column(String(250, collation = "utf8_general_ci"))
-    def __init__(self, ssylka, chastrechi, DefaultValue):
+    nomerstroki = Column(Integer)
+    def __init__(self, ssylka, chastrechi, DefaultValue, nomerstroki):
         self.ssylka = ssylka
         self.chastrechi = chastrechi
         self.DefaultValue = DefaultValue
+        self.nomerstroki = nomerstroki
     
     def __repr__(self):
-        return "<User('%s','%s')>" % (self.fullname, self.id1C)        
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
 
 class nomenklatura(Base):
     __tablename__ = 'nomenklatura'
@@ -82,4 +84,16 @@ class nomenklatura(Base):
         self.naimenovanie = naimenovanie
     
     def __repr__(self):
-        return "<User('%s','%s')>" % (self.fullname, self.id1C)        
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class PartOfSpeech(Base):
+    __tablename__ = 'PartOfSpeech'
+    id = Column(Integer, primary_key=True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"))
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, naimenovanie):
+        self.ssylka = ssylka
+        self.naimenovanie = naimenovanie
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
