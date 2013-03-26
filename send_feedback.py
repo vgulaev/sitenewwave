@@ -37,14 +37,15 @@ text = """Пришло сообщение с сайта trimet.ru\n
 Его сообщение: \n """+from_message+"""
 """
 
-# text = "This is test text for py sending function"
-msg = MIMEText(text, "", "utf-8")
+msg = MIMEText(text, "plain", "utf-8")
 
 sender = "webmaster@trimet.ru"
 receiver = [main_mail]
 msg['Subject'] = 'Отзыв/вопрос с trimet.ru'
 msg['From'] = sender
 msg['To'] =  ', '.join( receiver )
+
+# msg = "From: "+sender+"\r\nTo: "+', '.join( receiver )+"\r\nSubject: "+"Отзыв/вопрос с trimet.ru"+"\r\n"+text
 
 # Send the message via our own SMTP server, but don't include the
 # envelope header.
