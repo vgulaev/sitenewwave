@@ -1,4 +1,24 @@
-﻿queryconditionfield = function () {
+﻿function doSomething2() {
+	alert("Hello");
+	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
+    $.ajax({
+		type : "POST",
+		url : "/m/getqueryresult.py",
+		async : true,
+		data : {
+			"queryname" : "get_words_by_filter",
+			//"orderindex" : selectid.intid
+		},
+		success : function(html) {
+            var optionsforapend = JSON.parse(html);
+            for (var el in optionsforapend.records) {
+                $("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
+            }
+		}
+	});
+}
+
+queryconditionfield = function () {
 
     this.show = function(){
     $("#queryconditionfields").empty();
@@ -13,18 +33,21 @@
 		},
 		success : function(html) {
             var optionsforapend = JSON.parse(html);
+			var selectsforfilingbyajax = new Array();
             for (var el in optionsforapend.records) {
                 var select = document.createElement('select');
                 select.setAttribute("name", optionsforapend.records[el].chastrechi);
                 select.setAttribute("id", optionsforapend.records[el].chastrechi);
-                
                 $("#queryconditionfields").append(select);
-                
-                $("#"+optionsforapend.records[el].chastrechi).append('<option value="clear"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
-                
-                $("#queryconditionfields").trigger("create");
-                
+                $("#"+optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
+                $('select').selectmenu();
+				
+				selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
+				//$("#queryconditionfields").trigger("create");
             }
+			
+			for (var el in selectsforfilingbyajax) {
+			}
             //$("#queryconditionfield").listview("refresh");
 		}
 	});
