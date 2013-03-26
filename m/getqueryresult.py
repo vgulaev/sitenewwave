@@ -6,6 +6,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
+import json
 from bs4 import BeautifulSoup
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -51,5 +52,17 @@ if form.has_key("queryname"):
 	#print(form["ssylka"])
 else:
 	result = "{}";
+
+if 	form.has_key("filters"):	
+	filters = form["filters"].value;
+	#po = JSONDecoder(filters);
+	result = result + " == " + filters
+	#for el in filters:
+		#result = result + " == " + str(el)
+	#for form["filters"].value
 	
+r = json.loads('{"eeabd8c1-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c2-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c3-9498-11e2-b2ec-e569e5e79087":"null"}')
+for el in r:
+	print(el)
+	print(el)
 print(result.lstrip().encode("utf-8"))	

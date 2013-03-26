@@ -1,24 +1,33 @@
-﻿function doSomething2() {
+﻿waitnomenklaturaanswer = false;
+
+function doSomething2() {
 	//alert("Hello");
+	//
 	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
-	
-	var r =	$("#queryconditionfields > select");
+	var filters = {};
+	var r =	$("#queryconditionfields").find("select").each(function () {
+		filters[this.id] = this.value;
+	});
 	
 	l = 0;
-		
+	alert(JSON.stringify({"hello":"word"}));
     $.ajax({
 		type : "POST",
 		url : "/m/getqueryresult.py",
 		async : true,
+		traditional: true,
 		data : {
 			"queryname" : "get_words_by_filter",
+			"curentfield": "eeabd8c3-9498-11e2-b2ec-e569e5e79087",
+			"filters": JSON.stringify(filters)
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
-            var optionsforapend = JSON.parse(html);
-            for (var el in optionsforapend.records) {
-                $("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
-            }
+            alert(html);
+			//var optionsforapend = JSON.parse(html);
+            //for (var el in optionsforapend.records) {
+                //$("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
+            //}
 		}
 	});
 }
@@ -99,7 +108,9 @@ nomenklaturalist = function (){
 	"NamingRules" : $("#NamingRules").val()
 	};
 
-    $.ajax({
+	if (waitnomenklaturaanswer == false) {
+    waitnomenklaturaanswer = true;
+	$.ajax({
 		type : "POST",
 		url : "/m/getnomenklatura.py",
 		async : true,
@@ -115,8 +126,10 @@ nomenklaturalist = function (){
 			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
 			}
 			$("#nomenklaturalist").listview("refresh");
+			waitnomenklaturaanswer = false;
 		}
 	});
+	}
     
     
     //alert("Hello");
