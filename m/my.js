@@ -79,7 +79,9 @@ nomenklaturalist = function (){
 		success : function(html) {
             var optionsforapend = JSON.parse(html);
 			if (optionsforapend.count < 30) {
-			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+				for (var el in optionsforapend.records) {
+					$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+					}
 			}
 			else {
 			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');

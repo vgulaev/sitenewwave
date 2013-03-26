@@ -56,7 +56,7 @@ result = result + JSONwrap(str(len(q))) + ","
 if (len(q) < 200):
 	result = result + JSONwrap("records") + ":["
 	for el in q:
-		result = result + "{" + JSONfield("Article", el.nomenklatura.naimenovanie) + " },"
+		result = result + "{" + JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article) + " },"
 	
 	result = result[:-1] + "],"
 
