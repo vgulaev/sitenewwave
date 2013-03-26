@@ -1,18 +1,17 @@
 ﻿queryconditionfield = function () {
 
     this.show = function(){
-    $("#queryconditionfield").empty();
+    $("#queryconditionfields").empty();
     //alert($("#querycondition").val());
     $.ajax({
 		type : "POST",
 		url : "/m/getnamingrulesshemanazvaniya.py",
 		async : true,
 		data : {
-			"ssylka" : $("#querycondition").val()
+			"ssylka" : $("#NamingRules").val()
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
-            $("#queryconditionfields").empty();
             var optionsforapend = JSON.parse(html);
             for (var el in optionsforapend.records) {
                 var select = document.createElement('select');
@@ -24,16 +23,9 @@
                 $("#"+optionsforapend.records[el].chastrechi).append('<option value="clear"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
                 
                 $("#queryconditionfields").trigger("create");
-                //$("#"+optionsforapend.records[el].chastrechi).selectmenu();
-                //$("#queryconditionfields").append('<select name="' +  + ' id="' + 'fdfdf' + '"></select>');
-                
-                /*var myselect = $("select#"+optionsforapend.records[el].chastrechi);
-                myselect[0].selectedIndex = 0;
-                myselect.selectmenu("refresh");
-                //.val("clear").selectmenu("refresh", true);*/
                 
             }
-            $("#queryconditionfield").listview("refresh");
+            //$("#queryconditionfield").listview("refresh");
 		}
 	});
     }
@@ -41,10 +33,10 @@
 
 querycondition = function (){
     this.show = function(){
-    $("#querycondition").empty();
-    $("#querycondition").append('<option value="clear">Выберите группу товаров</option>');
+    $("#NamingRules").empty();
+    $("#NamingRules").append('<option value="null">Выберите группу товаров</option>');
     
-    $("#querycondition").change(function() {
+    $("#NamingRules").change(function() {
         $.mobile.showPageLoadingMsg();
         (new queryconditionfield).show();
         $.mobile.hidePageLoadingMsg();
@@ -61,7 +53,7 @@ querycondition = function (){
 		success : function(html) {
             var optionsforapend = JSON.parse(html);
             for (var el in optionsforapend.records) {
-                $("#querycondition").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
+                $("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
             }
 		}
 	});
@@ -73,6 +65,33 @@ nomenklaturalist = function (){
     
     this.show = function(){
     $("#nomenklaturalist").empty();
+    
+    $.ajax({
+		type : "POST",
+		url : "/m/getnomenklatura.py",
+		async : true,
+		data : {
+			"NamingRules" : $("#NamingRules").val()
+			//"orderindex" : selectid.intid
+		},
+		success : function(html) {
+            var optionsforapend = JSON.parse(html);
+            /*for (var el in optionsforapend.records) {
+                var select = document.createElement('select');
+                select.setAttribute("name", optionsforapend.records[el].chastrechi);
+                select.setAttribute("id", optionsforapend.records[el].chastrechi);
+                
+                $("#queryconditionfields").append(select);
+                
+                $("#"+optionsforapend.records[el].chastrechi).append('<option value="clear"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
+                
+                $("#queryconditionfields").trigger("create");
+                
+            }*/
+            //$("#queryconditionfield").listview("refresh");
+		}
+	});
+    
     $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">Более 1000 вариантов</a></li>');
     $("#nomenklaturalist").listview("refresh");
     //alert("Hello");
@@ -128,10 +147,4 @@ function doSomething() {
 
 $(document).ready(function() {
 	$("#output").html("Hello!!!");
-
-    //doSomething();
-    /*$("#ButtonEx").click(function(e){
-    alert("Hello!!!");
-    //$("#output").html("Hello!!!");
-    })*/
 })
