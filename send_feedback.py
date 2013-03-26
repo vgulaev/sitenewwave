@@ -46,7 +46,7 @@ receiver = [main_mail]
 # msg['From'] = sender
 # msg['To'] =  ', '.join( receiver )
 
-msg = "From: "+sender+"\r\nTo: "+', '.join( receiver )+"\r\nSubject: "+"Отзыв/вопрос с trimet.ru"+"\r\n"+text
+msg = "From: "+sender+"\r\nTo: "+', '.join( receiver )+"\r\nSubject: "+"Отзыв/вопрос с trimet.ru"+"\r\n"+text.encode("utf-8")
 
 # Send the message via our own SMTP server, but don't include the
 # envelope header.
