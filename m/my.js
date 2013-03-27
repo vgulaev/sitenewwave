@@ -10,7 +10,7 @@ function doSomething2() {
 	});
 	
 	l = 0;
-	alert(JSON.stringify({"hello":"word"}));
+	//alert(JSON.stringify({"hello":"word"}));
     $.ajax({
 		type : "POST",
 		url : "/m/getqueryresult.py",
@@ -18,12 +18,12 @@ function doSomething2() {
 		traditional: true,
 		data : {
 			"queryname" : "get_words_by_filter",
-			"curentfield": "eeabd8c3-9498-11e2-b2ec-e569e5e79087",
+			"curentfield": "bd1b34a7-9537-11e2-b2ec-e569e5e79087",
 			"filters": JSON.stringify(filters)
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
-            alert(html);
+            //alert(html);
 			//var optionsforapend = JSON.parse(html);
             //for (var el in optionsforapend.records) {
                 //$("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');

@@ -19,7 +19,7 @@ from lxml import etree
 from dbclasses1c import Base, ArticlesNames, nomenklatura
 from wsfunction import JSONfield, JSONwrap
 
-from queryes import getquerybyname
+from queryes import getquerybyname, resultbyname
 #from secrets import str_conection_to_MySQL
 
 print ("Content-Type: text/html; charset=utf-8")
@@ -36,8 +36,11 @@ Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
 
+form = {"queryname" : {"value":"get_words_by_filter"}}
+
 if form.has_key("queryname"):
-	queryname = form["queryname"].value
+	#queryname = form["queryname"].value
+	queryname = "get_words_by_filter"
 	q = getquerybyname(session, form, queryname)
 	q = q.all()
 	result = "{" + JSONwrap("count") + ":"
@@ -53,16 +56,17 @@ if form.has_key("queryname"):
 else:
 	result = "{}";
 
-if 	form.has_key("filters"):	
-	filters = form["filters"].value;
+#if 	form.has_key("filters"):	
+	#filters = form["filters"].value;
 	#po = JSONDecoder(filters);
-	result = result + " == " + filters
+	#result = result + " == " + filters
 	#for el in filters:
 		#result = result + " == " + str(el)
 	#for form["filters"].value
 	
-r = json.loads('{"eeabd8c1-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c2-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c3-9498-11e2-b2ec-e569e5e79087":"null"}')
-for el in r:
-	print(el)
-	print(el)
-print(result.lstrip().encode("utf-8"))	
+#r = json.loads('{"eeabd8c1-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c2-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c3-9498-11e2-b2ec-e569e5e79087":"null"}')
+#for el in r:
+	#print(el)
+	#print(el)
+#result = str(q)
+print(result.lstrip().encode("utf-8"))
