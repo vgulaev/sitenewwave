@@ -21,8 +21,8 @@ from wsfunction import JSONfield, JSONwrap
 
 def getquerybyname(session, form, queryname):
 	if (queryname == "get_words_by_filter"):
-		#curentfield = form["curentfield"].value;
-		curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087"
+		curentfield = form["curentfield"].value
+		#curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087"
 		#q = session.query(nomenklatura).subquery()
 		q = session.query(ArticlesNames, Dictionary).join(Dictionary, ArticlesNames.Word == Dictionary.ssylka)
 		q = q.filter(ArticlesNames.PartOfSpeech == curentfield)

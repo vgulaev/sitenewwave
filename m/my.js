@@ -1,6 +1,6 @@
 ﻿waitnomenklaturaanswer = false;
 
-function doSomething2() {
+function loadoptionstoselectors(curentfield) {
 	//alert("Hello");
 	//
 	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
@@ -9,25 +9,26 @@ function doSomething2() {
 		filters[this.id] = this.value;
 	});
 	
-	l = 0;
-	//alert(JSON.stringify({"hello":"word"}));
-    $.ajax({
+	//curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087";
+	$("#"+curentfield).empty();
+	$("#"+curentfield).append('<option value="null"> Уточните:'+ $("#"+curentfield).attr('name') + '</option>')
+	$.ajax({
 		type : "POST",
 		url : "/m/getqueryresult.py",
 		async : true,
-		traditional: true,
+		//traditional: true,
 		data : {
 			"queryname" : "get_words_by_filter",
-			"curentfield": "bd1b34a7-9537-11e2-b2ec-e569e5e79087",
+			"curentfield": curentfield,
 			"filters": JSON.stringify(filters)
 			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
-            //alert(html);
-			//var optionsforapend = JSON.parse(html);
-            //for (var el in optionsforapend.records) {
-                //$("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
-            //}
+			//alert(html);
+			var optionsforapend = JSON.parse(html);
+			for (var el in optionsforapend.records) {
+				$("#"+curentfield).append('<option value="' + optionsforapend.records[el].ssylka+ '">' + optionsforapend.records[el].naimenovanie +'</option>');
+			}
 		}
 	});
 }
@@ -50,7 +51,7 @@ queryconditionfield = function () {
 			var selectsforfilingbyajax = new Array();
             for (var el in optionsforapend.records) {
                 var select = document.createElement('select');
-                select.setAttribute("name", optionsforapend.records[el].chastrechi);
+                select.setAttribute("name", optionsforapend.records[el].naimenovanie);
                 select.setAttribute("id", optionsforapend.records[el].chastrechi);
                 $("#queryconditionfields").append(select);
                 $("#"+optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:'+ optionsforapend.records[el].naimenovanie + '</option>');
@@ -61,6 +62,7 @@ queryconditionfield = function () {
             }
 			
 			for (var el in selectsforfilingbyajax) {
+				loadoptionstoselectors(selectsforfilingbyajax[el]);
 			}
             //$("#queryconditionfield").listview("refresh");
 		}
