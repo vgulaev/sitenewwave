@@ -6,6 +6,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
+import json
 from bs4 import BeautifulSoup
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -37,12 +38,22 @@ def getquerybyname(session, form, queryname):
 		# q = session.query(q)
 		# q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
 		# q = q.group_by(ArticlesNames.Article)
+	elif (queryname == "get_nomenklatura"):
+		q = session.query(ArticlesNames, nomenklatura)
+		q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
+		if form.has_key("filters"):
+			filters = json.load(form["filters"].value)
+		if form.has_key("NamingRules"):
+			if (form["NamingRules"].value <> "null"):
+				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
+		q = q.group_by(ArticlesNames.Article)
 		
 	return q
 
 def resultbyname(el, queryname):
 	if (queryname == "get_words_by_filter"):
-		#r = JSONfield("naimenovanie", "tetete")
 		r = JSONfield("naimenovanie", el.Dictionary.naimenovanie) + ", " + JSONfield("ssylka", el.Dictionary.ssylka)
+	elif (queryname == "get_nomenklatura"):
+		r = JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article)
 		
 	return r

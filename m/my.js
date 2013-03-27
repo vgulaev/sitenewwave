@@ -1,14 +1,19 @@
 ﻿waitnomenklaturaanswer = false;
 
-function loadoptionstoselectors(curentfield) {
-	//alert("Hello");
-	//
-	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
+function getfilters() {
 	var filters = {};
 	var r =	$("#queryconditionfields").find("select").each(function () {
 		filters[this.id] = this.value;
 	});
 	
+	return(filters);
+}
+
+function loadoptionstoselectors(curentfield) {
+	//alert("Hello");
+	//
+	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
+	var filters = getfilters();
 	//curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087";
 	$("#"+curentfield).empty();
 	$("#"+curentfield).append('<option value="null"> Уточните:'+ $("#"+curentfield).attr('name') + '</option>')
@@ -59,11 +64,15 @@ queryconditionfield = function () {
 				
 				selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
 				//$("#queryconditionfields").trigger("create");
-            }
+				
+				$("#"+optionsforapend.records[el].chastrechi).change(function() {
+					(new nomenklaturalist()).show();
+				});
+            };
 			
 			for (var el in selectsforfilingbyajax) {
 				loadoptionstoselectors(selectsforfilingbyajax[el]);
-			}
+			};
             //$("#queryconditionfield").listview("refresh");
 		}
 	});
@@ -104,43 +113,41 @@ querycondition = function (){
 nomenklaturalist = function (){
     
     this.show = function(){
-    $("#nomenklaturalist").empty();
-    
-	var datafilters = {
-	"NamingRules" : $("#NamingRules").val()
-	};
+		$("#nomenklaturalist").empty();
+		
+		var datafilters = {
+		"queryname" : "get_nomenklatura",
+		"filters": JSON.stringify(getfilters()),
+		"NamingRules" : $("#NamingRules").val()
+		};
 
-	if (waitnomenklaturaanswer == false) {
-    waitnomenklaturaanswer = true;
-	$.ajax({
-		type : "POST",
-		url : "/m/getnomenklatura.py",
-		async : true,
-		data : datafilters,
-		success : function(html) {
-            var optionsforapend = JSON.parse(html);
-			if (optionsforapend.count < 30) {
-				for (var el in optionsforapend.records) {
-					$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+		if (waitnomenklaturaanswer == false) {
+			waitnomenklaturaanswer = true;
+			$.ajax({
+				type : "POST",
+				url : "/m/getqueryresult.py",
+				async : true,
+				data : datafilters,
+				success : function(html) {
+					var optionsforapend = JSON.parse(html);
+					if (optionsforapend.count < 30) {
+						for (var el in optionsforapend.records) {
+							$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+							}
 					}
-			}
-			else {
-			$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
-			}
-			$("#nomenklaturalist").listview("refresh");
-			waitnomenklaturaanswer = false;
+					else {
+					$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+					}
+					$("#nomenklaturalist").listview("refresh");
+					waitnomenklaturaanswer = false;
+				}
+			});
 		}
-	});
-	}
-    
-    
     //alert("Hello");
     }
 }
 
 $(document).delegate('#assortiment', 'pageshow', function () {
-    //Your code for each page load here
-    //alert("Hello");
     doSomething();
 });
 
@@ -164,20 +171,6 @@ function doSomething() {
     (new nomenklaturalist()).show();
     (new querycondition()).show();
     $.mobile.hidePageLoadingMsg();
-	/*$.mobile.showPageLoadingMsg();
-    $.ajax({
-		type : "POST",
-		url : "/m/getwords.py",
-		async : true,
-		data : {
-			//"fullnamecondition" : fullnamecondition,
-			//"orderindex" : selectid.intid
-		},
-		success : function(html) {
-			filled_options_from_string(html);
-            //$("#outputass").html(html);
-		}
-	});*/
     //$.mobile.pageLoading(); 
     //$("#outputass").html("Good!!!");
     

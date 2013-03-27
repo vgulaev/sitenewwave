@@ -52,21 +52,7 @@ if form.has_key("queryname"):
 		
 		result = result[:-1] + "],"
 	result = result[:-1] + "}";
-	#print(form["ssylka"])
 else:
 	result = "{}";
 
-#if 	form.has_key("filters"):	
-	#filters = form["filters"].value;
-	#po = JSONDecoder(filters);
-	#result = result + " == " + filters
-	#for el in filters:
-		#result = result + " == " + str(el)
-	#for form["filters"].value
-	
-#r = json.loads('{"eeabd8c1-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c2-9498-11e2-b2ec-e569e5e79087":"null","eeabd8c3-9498-11e2-b2ec-e569e5e79087":"null"}')
-#for el in r:
-	#print(el)
-	#print(el)
-#result = str(q)
 print(result.lstrip().encode("utf-8"))
