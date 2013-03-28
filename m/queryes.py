@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, Column, Integer, String
 
-from sqlalchemy import create_engine, and_
+from sqlalchemy import create_engine, and_, or_
 from sqlalchemy.orm import sessionmaker, aliased
 
 from lxml import etree
@@ -42,7 +42,22 @@ def getquerybyname(session, form, queryname):
 		q = session.query(ArticlesNames, nomenklatura)
 		q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
 		if form.has_key("filters"):
-			filters = json.load(form["filters"].value)
+			filters = json.loads(form["filters"].value)
+			addfilters = False
+			conditions = []
+			for el in filters:
+				#print(filters[el])
+				if (filters[el] <> "null"):
+					addfilters = True
+					conditions.append(and_(ArticlesNames.PartOfSpeech == el, ArticlesNames.Word == filters[el]))
+			if (addfilters):
+				#print(str(or_(*conditions)))
+				#print(len(conditions))
+				q = q.filter(or_(*conditions))
+				#q = q.filter(ArticlesNames.PartOfSpeech == el)
+				#print(q)
+			#print(el)
+			#print(form["filters"].value)
 		if form.has_key("NamingRules"):
 			if (form["NamingRules"].value <> "null"):
 				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
