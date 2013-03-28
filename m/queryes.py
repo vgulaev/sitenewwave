@@ -11,9 +11,9 @@ from bs4 import BeautifulSoup
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import MetaData, Column, Integer, String
-
-from sqlalchemy import create_engine, and_, or_
+from sqlalchemy import create_engine, and_, or_, func
 from sqlalchemy.orm import sessionmaker, aliased
+#from sqlalchemy.sql.functions import 
 
 from lxml import etree
 from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, Dictionary
@@ -39,11 +39,11 @@ def getquerybyname(session, form, queryname):
 		# q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
 		# q = q.group_by(ArticlesNames.Article)
 	elif (queryname == "get_nomenklatura"):
+		addfilters = False
 		q = session.query(ArticlesNames, nomenklatura)
 		q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
 		if form.has_key("filters"):
 			filters = json.loads(form["filters"].value)
-			addfilters = False
 			conditions = []
 			for el in filters:
 				#print(filters[el])
@@ -51,8 +51,6 @@ def getquerybyname(session, form, queryname):
 					addfilters = True
 					conditions.append(and_(ArticlesNames.PartOfSpeech == el, ArticlesNames.Word == filters[el]))
 			if (addfilters):
-				#print(str(or_(*conditions)))
-				#print(len(conditions))
 				q = q.filter(or_(*conditions))
 				#q = q.filter(ArticlesNames.PartOfSpeech == el)
 				#print(q)
@@ -62,6 +60,10 @@ def getquerybyname(session, form, queryname):
 			if (form["NamingRules"].value <> "null"):
 				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
 		q = q.group_by(ArticlesNames.Article)
+		
+		if (addfilters):
+			q = q.having(func.count(ArticlesNames.Order) == len(conditions))
+			#print(q)
 		
 	return q
 
