@@ -85,13 +85,13 @@ querycondition = function (){
     $("#NamingRules").append('<option value="null">Выберите группу товаров</option>');
     
     $("#NamingRules").change(function() {
-        $.mobile.showPageLoadingMsg();
+        //$.mobile.showPageLoadingMsg();
         (new queryconditionfield).show();
 		(new nomenklaturalist()).show();
-        $.mobile.hidePageLoadingMsg();
+        //$.mobile.hidePageLoadingMsg();
         });
     
-    $.ajax({
+	$.ajax({
 		type : "POST",
 		url : "/m/getnamingrules.py",
 		async : true,
@@ -132,7 +132,7 @@ nomenklaturalist = function (){
 					var optionsforapend = JSON.parse(html);
 					if (optionsforapend.count < 30) {
 						for (var el in optionsforapend.records) {
-							$("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+							$("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
 							}
 					}
 					else {
@@ -162,15 +162,12 @@ function filled_options_from_string(html) {
 		;
 	}
     $("#WordList").listview("refresh");
-    $.mobile.hidePageLoadingMsg();
 }
 
 function doSomething() {
     //alert("Hello!!!");
-    $.mobile.showPageLoadingMsg();
     (new nomenklaturalist()).show();
     (new querycondition()).show();
-    $.mobile.hidePageLoadingMsg();
     //$.mobile.pageLoading(); 
     //$("#outputass").html("Good!!!");
     

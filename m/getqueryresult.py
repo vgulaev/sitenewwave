@@ -45,7 +45,7 @@ if form.has_key("queryname"):
 	q = q.all()
 	result = "{" + JSONwrap("count") + ":"
 	result = result + JSONwrap(str(len(q))) + ","
-	if (len(q) < 100):
+	if (len(q) < 100)and(0 < len(q)):
 		result = result + JSONwrap("records") + ":["
 		for el in q:
 			result = result + "{" + resultbyname(el, queryname) + " },"
