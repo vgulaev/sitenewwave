@@ -1,4 +1,7 @@
-﻿waitnomenklaturaanswer = false;
+waitnomenklaturaanswer = false;
+curentselector = "";
+a = "";
+ddfdf = "dfdfD3"
 
 function getfilters() {
 	var filters = {};
@@ -9,14 +12,14 @@ function getfilters() {
 	return(filters);
 }
 
-function loadoptionstoselectors(curentfield) {
+function load_options_to_selectors(curentfield) {
 	//alert("Hello");
 	//
 	//eeabd8c3-9498-11e2-b2ec-e569e5e79087
 	var filters = getfilters();
 	//curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087";
 	$("#"+curentfield).empty();
-	$("#"+curentfield).append('<option value="null"> Уточните:'+ $("#"+curentfield).attr('name') + '</option>')
+	$("#"+curentfield).append('<option value="null">Уточните:'+ $("#"+curentfield).attr('name') + '</option>')
 	$.ajax({
 		type : "POST",
 		url : "/m/getqueryresult.py",
@@ -25,6 +28,7 @@ function loadoptionstoselectors(curentfield) {
 		data : {
 			"queryname" : "get_words_by_filter",
 			"curentfield": curentfield,
+			"NamingRules": $("#NamingRules").val(),
 			"filters": JSON.stringify(filters)
 			//"orderindex" : selectid.intid
 		},
@@ -38,18 +42,16 @@ function loadoptionstoselectors(curentfield) {
 	});
 }
 
-queryconditionfield = function () {
-
-    this.show = function(){
+function create_filter_selectors() {
     $("#queryconditionfields").empty();
-    //alert($("#querycondition").val());
-    $.ajax({
+    
+	$.ajax({
 		type : "POST",
-		url : "/m/getnamingrulesshemanazvaniya.py",
+		url : "/m/getqueryresult.py",
 		async : true,
 		data : {
+			"queryname" : "get_filter_selectors",
 			"ssylka" : $("#NamingRules").val()
-			//"orderindex" : selectid.intid
 		},
 		success : function(html) {
             var optionsforapend = JSON.parse(html);
@@ -63,31 +65,36 @@ queryconditionfield = function () {
                 $('select').selectmenu();
 				
 				selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
-				//$("#queryconditionfields").trigger("create");
 				
 				$("#"+optionsforapend.records[el].chastrechi).change(function() {
 					(new nomenklaturalist()).show();
+					curentselector = this.id;
+					$("#queryconditionfields").find("select").each(function (index, domEle) {
+						//domEle.id <> curentid
+						if (domEle.id != curentselector) {
+							load_options_to_selectors(domEle.id);
+						};
+					});
 				});
             };
 			
 			for (var el in selectsforfilingbyajax) {
-				loadoptionstoselectors(selectsforfilingbyajax[el]);
+				load_options_to_selectors(selectsforfilingbyajax[el]);
 			};
             //$("#queryconditionfield").listview("refresh");
 		}
 	});
-    }
 }
 
-querycondition = function (){
-    this.show = function(){
+function load_NamingRules(){
     $("#NamingRules").empty();
     $("#NamingRules").append('<option value="null">Выберите группу товаров</option>');
     
     $("#NamingRules").change(function() {
         //$.mobile.showPageLoadingMsg();
-        (new queryconditionfield).show();
-		(new nomenklaturalist()).show();
+		create_filter_selectors();
+        //(new queryconditionfield).show();
+		//(new nomenklaturalist()).show();
         //$.mobile.hidePageLoadingMsg();
         });
     
@@ -106,11 +113,9 @@ querycondition = function (){
             }
 		}
 	});
-    
-    }
 }
 
-nomenklaturalist = function (){
+load_nomenklatura_list = function (){
     
     this.show = function(){
 		$("#nomenklaturalist").empty();
@@ -147,10 +152,6 @@ nomenklaturalist = function (){
     }
 }
 
-$(document).delegate('#assortiment', 'pageshow', function () {
-    doSomething();
-});
-
 function filled_options_from_string(html) {
 	optionsforapend = html.split(" ");
 	addedIndex = 0;
@@ -159,21 +160,26 @@ function filled_options_from_string(html) {
 		if ($.trim(optionsforapend[el]) != "") {
 			$("#WordList").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend[el] + '</a></li>');
 		}
-		;
 	}
     $("#WordList").listview("refresh");
 }
 
-function doSomething() {
-    //alert("Hello!!!");
-    (new nomenklaturalist()).show();
-    (new querycondition()).show();
+/*function doSomething() {
+    load_NamingRules();
+	//alert("Hello!!!");
+    //(new nomenklaturalist()).show();
+    //(new querycondition()).show();
     //$.mobile.pageLoading(); 
     //$("#outputass").html("Good!!!");
     
     //$("#WordList").html('<li data-theme="c" data-icon="arrow-l"><a href="#Main" data-transition="slide"> Арматура </a></li>');
     //$("#WordList").listview("refresh");
-}
+}*/
+
+$(document).delegate('#assortiment', 'pageshow', function () {
+    //doSomething();
+	load_NamingRules();
+});
 
 $(document).ready(function() {
 	$("#output").html("Hello!!!");

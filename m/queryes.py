@@ -16,18 +16,42 @@ from sqlalchemy.orm import sessionmaker, aliased
 #from sqlalchemy.sql.functions import 
 
 from lxml import etree
-from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, Dictionary
+from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, Dictionary, NamingRules, NamingRulesshemanazvaniya
 from wsfunction import JSONfield, JSONwrap
 #from secrets import str_conection_to_MySQL
 
 def getquerybyname(session, form, queryname):
 	if (queryname == "get_words_by_filter"):
+		addfilters = False
 		curentfield = form["curentfield"].value
 		#curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087"
-		#q = session.query(nomenklatura).subquery()
-		q = session.query(ArticlesNames, Dictionary).join(Dictionary, ArticlesNames.Word == Dictionary.ssylka)
+		q = session.query(ArticlesNames)
+		if form.has_key("filters"):
+			filters = json.loads(form["filters"].value)
+			conditions = []
+			#print("have")
+			for el in filters:
+				#print((filters[el] <> "null"))
+				if ((filters[el] <> "null")and(el <> curentfield)):
+					addfilters = True
+					conditions.append(and_(ArticlesNames.PartOfSpeech == el, ArticlesNames.Word == filters[el]))
+			
+			if (addfilters):
+				q = q.filter(or_(*conditions))
+				q = q.having(func.count(ArticlesNames.Order) == len(conditions))
+				
+		q = q.group_by(ArticlesNames.Article)
+		
+		subq = q.subquery()
+		#print(len(q.all()))
+		adalias = aliased(ArticlesNames, subq)
+		
+		q = session.query(ArticlesNames, Dictionary).join(adalias, adalias.Article == ArticlesNames.Article).join(Dictionary, ArticlesNames.Word == Dictionary.ssylka)
 		q = q.filter(ArticlesNames.PartOfSpeech == curentfield)
 		q = q.group_by(Dictionary.naimenovanie, Dictionary.ssylka)
+		if form.has_key("NamingRules"):
+			if (form["NamingRules"].value <> "null"):
+				q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka).filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
 		# aliased_1 = aliased(ArticlesNames)
 		# aliased_2 = aliased(ArticlesNames)
 		# q = q.outerjoin(aliased_1, and_(nomenklatura.ssylka == aliased_1.Article, aliased_1.Article == "ddd"))
@@ -56,15 +80,21 @@ def getquerybyname(session, form, queryname):
 				#print(q)
 			#print(el)
 			#print(form["filters"].value)
-		if form.has_key("NamingRules"):
-			if (form["NamingRules"].value <> "null"):
-				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
 		q = q.group_by(ArticlesNames.Article)
 		
 		if (addfilters):
 			q = q.having(func.count(ArticlesNames.Order) == len(conditions))
-			#print(q)
-		
+
+		if form.has_key("NamingRules"):
+			if (form["NamingRules"].value <> "null"):
+				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
+	elif (queryname == "get_filter_selectors"):
+		q = session.query(NamingRulesshemanazvaniya, PartOfSpeech)
+		q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
+		q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
+		q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
+		q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
+
 	return q
 
 def resultbyname(el, queryname):
@@ -72,5 +102,7 @@ def resultbyname(el, queryname):
 		r = JSONfield("naimenovanie", el.Dictionary.naimenovanie) + ", " + JSONfield("ssylka", el.Dictionary.ssylka)
 	elif (queryname == "get_nomenklatura"):
 		r = JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article)
+	elif (queryname == "get_filter_selectors"):
+		r = JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie)
 		
 	return r
