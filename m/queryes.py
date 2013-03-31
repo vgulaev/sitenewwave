@@ -88,6 +88,7 @@ def getquerybyname(session, form, queryname):
 		if form.has_key("NamingRules"):
 			if (form["NamingRules"].value <> "null"):
 				q = q.filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
+		q = q.order_by(nomenklatura.naimenovanie)
 	elif (queryname == "get_filter_selectors"):
 		q = session.query(NamingRulesshemanazvaniya, PartOfSpeech)
 		q = q.filter(NamingRulesshemanazvaniya.ssylka == form["ssylka"].value)
