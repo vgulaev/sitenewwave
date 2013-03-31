@@ -16,8 +16,11 @@ function load_options_to_selectors(curentfield) {
     //eeabd8c3-9498-11e2-b2ec-e569e5e79087
     var filters = getfilters();
     //curentfield = "bd1b34a7-9537-11e2-b2ec-e569e5e79087";
-    $("#" + curentfield).empty();
-    $("#" + curentfield).append('<option value="null">Уточните:' + $("#" + curentfield).attr('name') + '</option>')
+    //$("#" + curentfield).empty();
+    //$("#" + curentfield).empty();
+    if ($("#" + curentfield).find("option").length == 0) {
+        $("#" + curentfield).append('<option value="null">Уточните:' + $("#" + curentfield).attr('name') + '</option>')
+    }
     $.ajax({
         type: "POST",
         url: "/m/getqueryresult.py",
@@ -33,9 +36,23 @@ function load_options_to_selectors(curentfield) {
         success: function (html) {
             //alert(html);
             var optionsforapend = JSON.parse(html);
+			var curentselector = $("#" + curentfield);
+			curentselector.find("option").each(function (index, domEle) {
+				if (domEle.value != "null"){
+					domEle.setAttribute("delete", "true");
+				}
+			});
             for (var el in optionsforapend.records) {
-                $("#" + curentfield).append('<option value="' + optionsforapend.records[el].ssylka + '">' + optionsforapend.records[el].naimenovanie + '</option>');
+				//$("#" + curentfield).find('[value$="87c4db69-969c-11e2-b2ec-e569e5e79087"]')
+				var optionforcheck = curentselector.find('[value$="' + optionsforapend.records[el].ssylka + '"]');
+				if (optionforcheck.length > 0) {
+					optionforcheck[0].setAttribute("delete", "fasle");
+				} else {
+					curentselector.append('<option value="' + optionsforapend.records[el].ssylka + '">' + optionsforapend.records[el].naimenovanie + '</option>');
+				}
             }
+			curentselector.find('[delete$=true]').remove();
+			//$("#" + curentfield).
         }
     });
 }
