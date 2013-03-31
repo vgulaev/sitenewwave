@@ -142,13 +142,17 @@
 
             </li>
         </ul>
-        <!--a id=" ButtonEx" data-role="button" href="#page1" onclick="doSomething(); return false" rel="external"> Button </a-->
-        <select id="NamingRules" name="select-choice-1">
-            <option value="null">Выберите группу товаров</option>
-        </select>
-		<fieldset id="queryconditionfields" data-role="controlgroup">
-		<!--div id="queryconditionfields"></div-->
-		</fieldset>
+        <div id = "filters">
+			<select id="NamingRules" name="select-choice-1">
+				<option value="null">Выберите группу товаров</option>
+			</select>
+			<fieldset id="queryconditionfields" data-role="controlgroup">
+			<!--div id="queryconditionfields"></div-->
+			</fieldset>
+		</div>
+		<div id = "div_button_show_filters" style="display:none">
+			<a id="Button_show_filters" data-role="button" href="#page1" onclick="show_filters(); return false" rel="external">Показать фильтры</a>
+		</div>
         <ul id="nomenklaturalist" data-role="listview" data-divider-theme="b" data-inset="true"></ul>
 		<!--a id=" ButtonEx" data-role="button" href="#page1" onclick="doSomething2(); return false" rel="external"> Button </a-->
     </div>

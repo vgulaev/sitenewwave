@@ -1,5 +1,11 @@
 waitnomenklaturaanswer = false;
 curentselector = "";
+ajaxcount = 0;
+
+function show_filters() {
+	$("#filters").show();
+	$("#div_button_show_filters").hide();
+}
 
 function getfilters() {
     var filters = {};
@@ -153,6 +159,8 @@ function load_nomenklatura_list() {
                     for (var el in optionsforapend.records) {
                         $("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
                     }
+					$("#filters").hide();
+					$("#div_button_show_filters").show();
                 } else {
                     $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
                 }
@@ -190,6 +198,27 @@ function filled_options_from_string(html) {
 $(document).delegate('#assortiment', 'pageshow', function () {
     //doSomething();
     load_NamingRules();
+});
+
+$(document).ajaxComplete(function(event,request, settings) {
+   ajaxcount = ajaxcount - 1;
+   
+   if (ajaxcount == 0) {
+	$.mobile.hidePageLoadingMsg();
+   }
+ });
+ 
+$(document).ajaxSend(function() {
+	$.mobile.loading( 'show', {
+		text: "Идет загрузка...",
+		textVisible: true
+		//theme: theme,
+		//textonly: textonly,
+		//html: html
+	});
+	//$.mobile.showPageLoadingMsg( "b", "Дождитесь пожалуйста загрузки", true );
+	ajaxcount = ajaxcount + 1;
+  //$( ".log" ).text( "Triggered ajaxSend handler." );
 });
 
 $(document).ready(function () {
