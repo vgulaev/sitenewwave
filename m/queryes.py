@@ -2,22 +2,21 @@
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 # --  #!/web/trimetru/python/bin/python2.6
-import sys, os
+from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, \
+	Dictionary, NamingRules, NamingRulesshemanazvaniya
+from sqlalchemy import MetaData, Column, Integer, String, and_, or_, func
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, aliased
+from wsfunction import JSONfield, JSONwrap
 import cgi
+import json
+import sys
+import os
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
-import json
-from bs4 import BeautifulSoup
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import MetaData, Column, Integer, String
-from sqlalchemy import create_engine, and_, or_, func
-from sqlalchemy.orm import sessionmaker, aliased
 #from sqlalchemy.sql.functions import 
 
-from lxml import etree
-from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, Dictionary, NamingRules, NamingRulesshemanazvaniya
-from wsfunction import JSONfield, JSONwrap
 #from secrets import str_conection_to_MySQL
 
 def getquerybyname(session, form, queryname):
@@ -58,10 +57,7 @@ def getquerybyname(session, form, queryname):
 		# q = q.outerjoin(aliased_2, and_(nomenklatura.ssylka == aliased_2.Article, aliased_2.Article == "ddd"))
 		# q = q.filter(aliased_1.Article == "")
 		#q = q.join(ArticlesNames, nomenklatura.ssylka == ArticlesNames.Article)
-		# q = session.query(q).subquery()
-		# q = session.query(q)
 		# q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka)
-		# q = q.group_by(ArticlesNames.Article)
 	elif (queryname == "get_nomenklatura"):
 		addfilters = False
 		q = session.query(ArticlesNames, nomenklatura)

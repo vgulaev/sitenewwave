@@ -19,10 +19,10 @@ Base = declarative_base()
 class ArticlesNames(Base):
     __tablename__ = 'ArticlesNames'
     id = Column(Integer, primary_key=True)
-    Article = Column(String(250, collation = "utf8_general_ci"))
-    PartOfSpeech = Column(String(250, collation = "utf8_general_ci"))
+    Article = Column(String(250, collation = "utf8_general_ci"), index = True)
+    PartOfSpeech = Column(String(250, collation = "utf8_general_ci"), index = True)
     Order = Column(Integer)
-    Word = Column(String(250, collation = "utf8_general_ci"))
+    Word = Column(String(250, collation = "utf8_general_ci"), index = True)
 	#Article_NamingRules = Column(String(250, collation = "utf8_general_ci"), ForeignKey("NamingRules.ssylka"))
 	#NamingRules = relationship("NamingRules")
     def __init__(self, Article, PartOfSpeech, Order, Word):
@@ -80,9 +80,9 @@ class NamingRulesshemanazvaniya(Base):
 class nomenklatura(Base):
     __tablename__ = 'nomenklatura'
     id = Column(Integer, primary_key=True)
-    ssylka = Column(String(250, collation = "utf8_general_ci"))
-    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
-    praviloformirovaniyanazvaniya = Column(String(250, collation = "utf8_general_ci"))
+    ssylka = Column(String(250, collation = "utf8_general_ci"), index = True)
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"), index = True)
+    praviloformirovaniyanazvaniya = Column(String(250, collation = "utf8_general_ci"), index = True)
     def __init__(self, ssylka, naimenovanie, praviloformirovaniyanazvaniya):
         self.ssylka = ssylka
         self.naimenovanie = naimenovanie
