@@ -37,9 +37,9 @@ class ArticlesNames(Base):
 class Dictionary(Base):
     __tablename__ = 'Dictionary'
     id = Column(Integer, primary_key=True)
-    ssylka = Column(String(250, collation = "utf8_general_ci"))
-    PartOfSpeech = Column(String(250, collation = "utf8_general_ci"))
-    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    ssylka = Column(String(250, collation = "utf8_general_ci"), index = True, unique=True)
+    PartOfSpeech = Column(String(250, collation = "utf8_general_ci"), index = True)
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"), index = True)
     def __init__(self, ssylka, PartOfSpeech, naimenovanie):
         self.ssylka = ssylka
         self.PartOfSpeech = PartOfSpeech
@@ -80,7 +80,7 @@ class NamingRulesshemanazvaniya(Base):
 class nomenklatura(Base):
     __tablename__ = 'nomenklatura'
     id = Column(Integer, primary_key=True)
-    ssylka = Column(String(250, collation = "utf8_general_ci"), index = True)
+    ssylka = Column(String(250, collation = "utf8_general_ci"), index = True, unique=True)
     naimenovanie = Column(String(250, collation = "utf8_general_ci"), index = True)
     praviloformirovaniyanazvaniya = Column(String(250, collation = "utf8_general_ci"), index = True)
     def __init__(self, ssylka, naimenovanie, praviloformirovaniyanazvaniya):
