@@ -10,8 +10,8 @@
         <!--link rel="stylesheet" href="m/my.css" /-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <!--script src="https://s3.amazonaws.com/codiqa-cdn/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script-->
-        <!-- <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script> -->
-        <script src="lib/frameworks/jquerymobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+        <!-- // <script src="lib/frameworks/jquerymobile/1.3.0/jquery.mobile-1.3.0.min.js"></script> -->
         <!-- User-generated css -->
         <style>
         </style>
@@ -83,8 +83,8 @@
 while (have_posts()) {
     the_post();
     // print '<div class="post" id="post-' . get_the_ID() . '">';
-    if(isset($_GET["page"])){
-        $page = '?page='.$_GET["page"];
+    if(isset($_GET["paged"])){
+        $page = '?paged='.$_GET["paged"];
     } else {
         $page = '';
     }
