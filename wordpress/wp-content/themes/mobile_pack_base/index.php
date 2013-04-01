@@ -62,11 +62,15 @@
         <?php 
         print '<p class="navigation">';
         // print '<li data-theme="c">';
+        print '<span style="float:left;">';
         next_posts_link(__('Предыдущие', 'wpmp'));
+        print '</span>';
         // print '</li>';
 
         // print '<li data-theme="c">';
+        print '<span style="float:right;">';
         previous_posts_link(__('Следующие', 'wpmp'));
+        print '</span>';
         // print '</li>';
         print '</p>';
         ?>
