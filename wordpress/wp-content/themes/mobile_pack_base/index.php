@@ -1,4 +1,3 @@
-<?php // get_header(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -84,6 +83,7 @@
 while (have_posts()) {
     the_post();
     // print '<div class="post" id="post-' . get_the_ID() . '">';
+
     print '<div data-role="page" id="article'.get_the_ID().'">';
     ?>
 
