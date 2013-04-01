@@ -83,12 +83,8 @@
 while (have_posts()) {
     the_post();
     // print '<div class="post" id="post-' . get_the_ID() . '">';
-    if(isset($_GET["paged"])){
-        $page = '?paged='.$_GET["paged"];
-    } else {
-        $page = '';
-    }
-    print '<div data-role="page" id="article'.$page.get_the_ID().'">';
+
+    print '<div data-role="page" id="article'.get_the_ID().'">';
     ?>
 
     <div data-role="content">
