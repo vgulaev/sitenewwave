@@ -59,7 +59,17 @@
             } 
             ?>
         </ul>
+        <?php 
+        print '<p class="navigation">';
+        // print '<li data-theme="c">';
+        next_posts_link(__('Предыдущие', 'wpmp'));
+        // print '</li>';
 
+        // print '<li data-theme="c">';
+        previous_posts_link(__('Следующие', 'wpmp'));
+        // print '</li>';
+        print '</p>';
+        ?>
         
     </div>
 </div>
@@ -77,6 +87,10 @@ while (have_posts()) {
         <?php 
             print '<h1>' . get_the_title() . '</h1>';
             print get_the_content(); 
+            print '<p class="metadata">'. get_the_time('F jS, Y') . ' by ' . get_the_author() . '</p>';
+            the_category(', ');
+            edit_post_link('Edit', ' | ', '');
+            comments_template();
         ?>
 
         <ul data-role="listview" data-divider-theme="b" data-inset="true">
