@@ -1,4 +1,5 @@
 waitnomenklaturaanswer = false;
+wait_create_filter_selectors = false;
 curentselector = "";
 ajaxcount = 0;
 
@@ -64,47 +65,50 @@ function load_options_to_selectors(curentfield) {
 }
 
 function create_filter_selectors() {
-    $("#queryconditionfields").empty();
+	if (wait_create_filter_selectors == false) {
+		wait_create_filter_selectors = true;
+		$("#queryconditionfields").empty();
+		$.ajax({
+			type: "POST",
+			url: "/m/getqueryresult.py",
+			async: true,
+			data: {
+				"queryname": "get_filter_selectors",
+					"ssylka": $("#NamingRules").val()
+			},
+			success: function (html) {
+				var optionsforapend = JSON.parse(html);
+				var selectsforfilingbyajax = new Array();
+				for (var el in optionsforapend.records) {
+					var select = document.createElement('select');
+					select.setAttribute("name", optionsforapend.records[el].naimenovanie);
+					select.setAttribute("id", optionsforapend.records[el].chastrechi);
+					$("#queryconditionfields").append(select);
+					$("#" + optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:' + optionsforapend.records[el].naimenovanie + '</option>');
+					$('select').selectmenu();
 
-    $.ajax({
-        type: "POST",
-        url: "/m/getqueryresult.py",
-        async: true,
-        data: {
-            "queryname": "get_filter_selectors",
-                "ssylka": $("#NamingRules").val()
-        },
-        success: function (html) {
-            var optionsforapend = JSON.parse(html);
-            var selectsforfilingbyajax = new Array();
-            for (var el in optionsforapend.records) {
-                var select = document.createElement('select');
-                select.setAttribute("name", optionsforapend.records[el].naimenovanie);
-                select.setAttribute("id", optionsforapend.records[el].chastrechi);
-                $("#queryconditionfields").append(select);
-                $("#" + optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:' + optionsforapend.records[el].naimenovanie + '</option>');
-                $('select').selectmenu();
+					selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
 
-                selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
-
-                $("#" + optionsforapend.records[el].chastrechi).change(function () {
-                    load_nomenklatura_list();
-                    curentselector = this.id;
-                    $("#queryconditionfields").find("select").each(function (index, domEle) {
-						//domEle.id <> curentid
-						if (domEle.id != curentselector) {
-							load_options_to_selectors(domEle.id);
-						};
+					$("#" + optionsforapend.records[el].chastrechi).change(function () {
+						load_nomenklatura_list();
+						curentselector = this.id;
+						$("#queryconditionfields").find("select").each(function (index, domEle) {
+							//domEle.id <> curentid
+							if (domEle.id != curentselector) {
+								load_options_to_selectors(domEle.id);
+							};
+						});
 					});
-                });
-            };
+				};
 
-            for (var el in selectsforfilingbyajax) {
-                load_options_to_selectors(selectsforfilingbyajax[el]);
-            };
-            //$("#queryconditionfield").listview("refresh");
-        }
-    });
+				for (var el in selectsforfilingbyajax) {
+					load_options_to_selectors(selectsforfilingbyajax[el]);
+				};
+				wait_create_filter_selectors = false;
+				//$("#queryconditionfield").listview("refresh");
+			}
+		});
+	}
 }
 
 function load_NamingRules() {
@@ -157,12 +161,12 @@ function load_nomenklatura_list() {
                 var optionsforapend = JSON.parse(html);
                 if (optionsforapend.count < 30) {
                     for (var el in optionsforapend.records) {
-                        $("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+                        $("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a href="#nomenklatura_element" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
                     }
 					$("#filters").hide();
 					$("#div_button_show_filters").show();
                 } else {
-                    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+                    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#nomenklatura_element" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
                 }
                 $("#nomenklaturalist").listview("refresh");
                 waitnomenklaturaanswer = false;
