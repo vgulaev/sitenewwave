@@ -6,7 +6,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>My prj</title>
-		<link rel="stylesheet" href="https://s3.amazonaws.com/codiqa-cdn/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="lib/frameworks/jquerymobile/1.3.0/jquery.mobile-1.3.0.min.css"/>
 		<!--link rel="stylesheet" href="m/my.css" /-->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<!--script src="https://s3.amazonaws.com/codiqa-cdn/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script-->
@@ -159,16 +159,46 @@
 <div data-role="page" id="nomenklatura_element">
 	<div data-role="content">
         <ul data-role="listview" data-divider-theme="b" data-inset="true">
-            <li data-theme="c" data-icon="arrow-l">	<a href="#assortiment" data-transition="slide">Назад </a>
+            <li data-theme="c" data-icon="arrow-l"><a href="#assortiment" data-transition="slide">Назад </a>
             </li>
         </ul>
 		<fieldset data-role="controlgroup" data-type="horizontal">
-			<span>
-				Раз раз
-			</span>
-			<span>
-				Два Два
-			</span>
+			<b><span id="nomenklatura_naimenovanie">
+			</span></b>
+			<div id = "rundwalzen">
+				<div class="ui-grid-b">
+					<div class="ui-block-a">
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<label for="textinput1">
+									Метры
+								</label>
+								<input name="" id="kolichecnvo_metrov" placeholder="" value="" type="number">
+							</fieldset>
+						</div>
+					</div>
+					<div class="ui-block-b">
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<label for="textinput2">
+									Тонны
+								</label>
+								<input name="" id="kolichecnvo_tonn" placeholder="" value="" type="number">
+							</fieldset>
+						</div>
+					</div>
+					<div class="ui-block-c">
+						<div data-role="fieldcontain">
+							<fieldset data-role="controlgroup">
+								<label for="textinput3">
+									Штуки
+								</label>
+								<input name="" id="kolichecnvo_shtuk" placeholder="" value="" type="number">
+							</fieldset>
+						</div>
+					</div>
+				</div>
+			</div>
 		</fieldset>
 	</div>
 </div>

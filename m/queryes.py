@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 # --  #!/web/trimetru/python/bin/python2.6
-from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, \
-	Dictionary, NamingRules, NamingRulesshemanazvaniya
+from dbclasses1c import Base, ArticlesNames, nomenklatura, PartOfSpeech, Dictionary, NamingRules, NamingRulesshemanazvaniya, harakteristikinomenklatury
 from sqlalchemy import MetaData, Column, Integer, String, and_, or_, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, aliased
@@ -47,10 +46,12 @@ def getquerybyname(session, form, queryname):
 		
 		q = session.query(ArticlesNames, Dictionary).join(adalias, adalias.Article == ArticlesNames.Article).join(Dictionary, ArticlesNames.Word == Dictionary.ssylka)
 		q = q.filter(ArticlesNames.PartOfSpeech == curentfield)
-		q = q.group_by(Dictionary.naimenovanie, Dictionary.ssylka)
+		q = q.group_by(Dictionary.naimenovanie, Dictionary.ssylka, Dictionary.Order)
 		if form.has_key("NamingRules"):
 			if (form["NamingRules"].value <> "null"):
 				q = q.join(nomenklatura, ArticlesNames.Article == nomenklatura.ssylka).filter(nomenklatura.praviloformirovaniyanazvaniya == form["NamingRules"].value)
+
+		q = q.order_by(Dictionary.Order)
 		# aliased_1 = aliased(ArticlesNames)
 		# aliased_2 = aliased(ArticlesNames)
 		# q = q.outerjoin(aliased_1, and_(nomenklatura.ssylka == aliased_1.Article, aliased_1.Article == "ddd"))
@@ -91,7 +92,14 @@ def getquerybyname(session, form, queryname):
 		q = q.filter(NamingRulesshemanazvaniya.DefaultValue == "00000000-0000-0000-0000-000000000000")
 		q = q.outerjoin(PartOfSpeech, NamingRulesshemanazvaniya.chastrechi == PartOfSpeech.ssylka)
 		q = q.order_by(NamingRulesshemanazvaniya.nomerstroki)
+	elif (queryname == "get_vesvkilogramah"):
+		#print("Hey!!!")
+		vladelets = form["vladelets"].value;
+		#vladelets = "76b96b74-d29e-11df-a323-00155dc20a16"
+		q = session.query(func.max(harakteristikinomenklatury.vesvkilogramah))
+		q = q.filter(harakteristikinomenklatury.vladelets == vladelets)
 
+	#print(queryname)
 	return q
 
 def resultbyname(el, queryname):
@@ -101,5 +109,7 @@ def resultbyname(el, queryname):
 		r = JSONfield("Article", el.nomenklatura.naimenovanie) + ", " + JSONfield("ssylka", el.ArticlesNames.Article)
 	elif (queryname == "get_filter_selectors"):
 		r = JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie)
-		
+	elif (queryname == "get_vesvkilogramah"):
+		r = JSONfield("vesvkilogramah", str(el[0]))
+
 	return r

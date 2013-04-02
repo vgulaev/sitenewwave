@@ -35,7 +35,7 @@ session = Session()
 
 if form.has_key("queryname"):
 	queryname = form["queryname"].value
-	#queryname = "get_words_by_filter"
+	#queryname = "get_vesvkilogramah"
 	q = getquerybyname(session, form, queryname)
 	q = q.all()
 	result = "{" + JSONwrap("count") + ":"
