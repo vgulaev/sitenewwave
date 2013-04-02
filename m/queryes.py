@@ -96,8 +96,9 @@ def getquerybyname(session, form, queryname):
 		#print("Hey!!!")
 		vladelets = form["vladelets"].value;
 		#vladelets = "76b96b74-d29e-11df-a323-00155dc20a16"
-		q = session.query(func.max(harakteristikinomenklatury.vesvkilogramah))
+		q = session.query(harakteristikinomenklatury)
 		q = q.filter(harakteristikinomenklatury.vladelets == vladelets)
+		q = q.order_by(harakteristikinomenklatury.vesvkilogramah.desc())
 
 	#print(queryname)
 	return q
@@ -110,6 +111,6 @@ def resultbyname(el, queryname):
 	elif (queryname == "get_filter_selectors"):
 		r = JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie)
 	elif (queryname == "get_vesvkilogramah"):
-		r = JSONfield("vesvkilogramah", str(el[0]))
+		r = JSONfield("ssylka", el.ssylka) + ", " + JSONfield("naimenovanie", el.naimenovanie) + ", " + JSONfield("vesvkilogramah", str(el.vesvkilogramah)) + ", " + JSONfield("kratnostedinitsy", str(el.kratnostedinitsy))
 
 	return r

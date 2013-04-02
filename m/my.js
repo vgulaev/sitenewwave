@@ -159,29 +159,18 @@ function load_nomenklatura_page(el) {
             //alert(html);
             var optionsforapend = JSON.parse(html);
 			
-			if (optionsforapend.count > 0) {
-				$("#nomenklatura_naimenovanie").attr("vesvkilogramah", optionsforapend.records[0].vesvkilogramah);
-				$("#kolichecnvo_metrov").val(1);
-				recalculate_prokat("kolichecnvo_metrov");
-				//$("kolichecnvo_metrov").onchange();
+			$("#harakteristikinomenklatury_list").empty();			
+			for (var el in optionsforapend.records) {
+				$("#harakteristikinomenklatury_list").append('<option value="' + optionsforapend.records[el].ssylka + '">шт: ' + optionsforapend.records[el].naimenovanie + '</option>');
 			}
-			/*var curentselector = $("#" + curentfield);
-			curentselector.find("option").each(function (index, domEle) {
-				if (domEle.value != "null"){
-					domEle.setAttribute("delete", "true");
-				}
-			});
-            for (var el in optionsforapend.records) {
-				//$("#" + curentfield).find('[value$="87c4db69-969c-11e2-b2ec-e569e5e79087"]')
-				var optionforcheck = curentselector.find('[value$="' + optionsforapend.records[el].ssylka + '"]');
-				if (optionforcheck.length > 0) {
-					optionforcheck[0].setAttribute("delete", "fasle");
-				} else {
-					curentselector.append('<option value="' + optionsforapend.records[el].ssylka + '">' + optionsforapend.records[el].naimenovanie + '</option>');
-				}
-            }
-			curentselector.find('[delete$=true]').remove();
-			//$("#" + curentfield).*/
+			$('#harakteristikinomenklatury_list option').eq(0).attr('selected', 'selected');
+			//$("#harakteristikinomenklatury_list").val(optionsforapend.records[0].ssylka);
+			//$("#harakteristikinomenklatury_list").selectmenu();
+			/*if (optionsforapend.count > 0) {
+				$("#nomenklatura_naimenovanie").attr("vesvkilogramah", optionsforapend.records[0].vesvkilogramah);
+				//$("#kolichecnvo_metrov").val(1);
+				recalculate_prokat("kolichecnvo_metrov");
+			}*/
         }
     });
 }
