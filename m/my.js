@@ -1,4 +1,5 @@
 waitnomenklaturaanswer = false;
+wait_create_filter_selectors = false;
 curentselector = "";
 ajaxcount = 0;
 
@@ -64,47 +65,50 @@ function load_options_to_selectors(curentfield) {
 }
 
 function create_filter_selectors() {
-    $("#queryconditionfields").empty();
+	if (wait_create_filter_selectors == false) {
+		wait_create_filter_selectors = true;
+		$("#queryconditionfields").empty();
+		$.ajax({
+			type: "POST",
+			url: "/m/getqueryresult.py",
+			async: true,
+			data: {
+				"queryname": "get_filter_selectors",
+					"ssylka": $("#NamingRules").val()
+			},
+			success: function (html) {
+				var optionsforapend = JSON.parse(html);
+				var selectsforfilingbyajax = new Array();
+				for (var el in optionsforapend.records) {
+					var select = document.createElement('select');
+					select.setAttribute("name", optionsforapend.records[el].naimenovanie);
+					select.setAttribute("id", optionsforapend.records[el].chastrechi);
+					$("#queryconditionfields").append(select);
+					$("#" + optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:' + optionsforapend.records[el].naimenovanie + '</option>');
+					$('select').selectmenu();
 
-    $.ajax({
-        type: "POST",
-        url: "/m/getqueryresult.py",
-        async: true,
-        data: {
-            "queryname": "get_filter_selectors",
-                "ssylka": $("#NamingRules").val()
-        },
-        success: function (html) {
-            var optionsforapend = JSON.parse(html);
-            var selectsforfilingbyajax = new Array();
-            for (var el in optionsforapend.records) {
-                var select = document.createElement('select');
-                select.setAttribute("name", optionsforapend.records[el].naimenovanie);
-                select.setAttribute("id", optionsforapend.records[el].chastrechi);
-                $("#queryconditionfields").append(select);
-                $("#" + optionsforapend.records[el].chastrechi).append('<option value="null"> Уточните:' + optionsforapend.records[el].naimenovanie + '</option>');
-                $('select').selectmenu();
+					selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
 
-                selectsforfilingbyajax.push(optionsforapend.records[el].chastrechi);
-
-                $("#" + optionsforapend.records[el].chastrechi).change(function () {
-                    load_nomenklatura_list();
-                    curentselector = this.id;
-                    $("#queryconditionfields").find("select").each(function (index, domEle) {
-						//domEle.id <> curentid
-						if (domEle.id != curentselector) {
-							load_options_to_selectors(domEle.id);
-						};
+					$("#" + optionsforapend.records[el].chastrechi).change(function () {
+						load_nomenklatura_list();
+						curentselector = this.id;
+						$("#queryconditionfields").find("select").each(function (index, domEle) {
+							//domEle.id <> curentid
+							if (domEle.id != curentselector) {
+								load_options_to_selectors(domEle.id);
+							};
+						});
 					});
-                });
-            };
+				};
 
-            for (var el in selectsforfilingbyajax) {
-                load_options_to_selectors(selectsforfilingbyajax[el]);
-            };
-            //$("#queryconditionfield").listview("refresh");
-        }
-    });
+				for (var el in selectsforfilingbyajax) {
+					load_options_to_selectors(selectsforfilingbyajax[el]);
+				};
+				wait_create_filter_selectors = false;
+				//$("#queryconditionfield").listview("refresh");
+			}
+		});
+	}
 }
 
 function load_NamingRules() {
@@ -137,6 +141,40 @@ function load_NamingRules() {
     });
 }
 
+function load_nomenklatura_page(el) {
+	var ssylka_id = $(el).attr("id");
+	$("#nomenklatura_naimenovanie").html($(el).text());
+	$("#nomenklatura_naimenovanie").attr("ssylka", ssylka_id);
+	
+    $.ajax({
+        type: "POST",
+        url: "/m/getqueryresult.py",
+        async: true,
+        //traditional: true,
+        data: {
+            "queryname": "get_vesvkilogramah",
+			"vladelets": ssylka_id
+        },
+        success: function (html) {
+            //alert(html);
+            var optionsforapend = JSON.parse(html);
+			
+			$("#harakteristikinomenklatury_list").empty();			
+			for (var el in optionsforapend.records) {
+				$("#harakteristikinomenklatury_list").append('<option value="' + optionsforapend.records[el].ssylka + '">шт: ' + optionsforapend.records[el].naimenovanie + '</option>');
+			}
+			$('#harakteristikinomenklatury_list option').eq(0).attr('selected', 'selected');
+			//$("#harakteristikinomenklatury_list").val(optionsforapend.records[0].ssylka);
+			//$("#harakteristikinomenklatury_list").selectmenu();
+			/*if (optionsforapend.count > 0) {
+				$("#nomenklatura_naimenovanie").attr("vesvkilogramah", optionsforapend.records[0].vesvkilogramah);
+				//$("#kolichecnvo_metrov").val(1);
+				recalculate_prokat("kolichecnvo_metrov");
+			}*/
+        }
+    });
+}
+
 function load_nomenklatura_list() {
     $("#nomenklaturalist").empty();
 
@@ -157,12 +195,12 @@ function load_nomenklatura_list() {
                 var optionsforapend = JSON.parse(html);
                 if (optionsforapend.count < 30) {
                     for (var el in optionsforapend.records) {
-                        $("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a href="#Main" data-transition="slide">' + optionsforapend.records[el].Article + '</a></li>');
+                        $("#nomenklaturalist").append('<li data-theme="c" data-icon="arrow-r"><a id = "' + optionsforapend.records[el].ssylka + '"href="#nomenklatura_element" data-transition="slide" onclick="load_nomenklatura_page(this)">' + optionsforapend.records[el].Article + '</a></li>');
                     }
 					$("#filters").hide();
 					$("#div_button_show_filters").show();
                 } else {
-                    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#Main" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
+                    $("#nomenklaturalist").append('<li data-theme="c" data-icon="alert"><a href="#nomenklatura_element" data-transition="slide">' + optionsforapend.count + ' вариантов, уточните условия</a></li>');
                 }
                 $("#nomenklaturalist").listview("refresh");
                 waitnomenklaturaanswer = false;
@@ -221,6 +259,18 @@ $(document).ajaxSend(function() {
   //$( ".log" ).text( "Triggered ajaxSend handler." );
 });
 
+function recalculate_prokat(mainfield) {
+	if (mainfield == "kolichecnvo_metrov") {
+		var t = ($("#kolichecnvo_metrov").val() * $("#nomenklatura_naimenovanie").attr("vesvkilogramah") / 1000).toFixed(3);
+		$("#kolichecnvo_tonn").val(t);
+		$("#kolichecnvo_shtuk").val("");
+		$("#kolichecnvo_shtuk").attr("placeholder", "--")
+	};
+};
+
 $(document).ready(function () {
     $("#output").html("Hello!!!");
-})
+	$('#kolichecnvo_metrov').bind('input', function() {
+		recalculate_prokat("kolichecnvo_metrov");
+	});	
+});

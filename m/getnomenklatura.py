@@ -20,6 +20,6 @@ f = ["dfds" , "dfdf"]
 
 f.append("dffd")
 
-print(len(f))
+print(len("eeabd8c1-9498-11e2-b2ec-e569e5e79087"))
 	
 print("Hello")
