@@ -5,6 +5,7 @@ Template Name: Gallery Template
 ?>
 
 <?php get_header(); ?>
+<div id="primary" class="site-content">
 	<div id="container">
 		<div role="main" id="content">
 			<h1 class="home_page_title"><?php the_title(); ?></h1>
@@ -104,5 +105,6 @@ Template Name: Gallery Template
 					<?php } ?>
 		</div>
 	</div>
+</div>
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<div id="primary" class="site-content">
 	<div id="container">
 		<div role="main" id="content">
 			<?php 
@@ -87,6 +88,7 @@
 				} ?>
 			</div>
 		</div>
+	</div>
 	<?php get_sidebar(); ?>
 	<script type="text/javascript">
 		(function($){
