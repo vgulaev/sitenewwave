@@ -147,15 +147,15 @@ function load_price(){
         async: true,
         data: {
             "queryname": "get_price",
-            "ssylka": $("#nomenklatura_naimenovanie").attr("ssylka");
-            "harakteristika": $("#nomenklatura_naimenovanie").
+            "nomenklatura": $("#nomenklatura_naimenovanie").attr("ssylka"),
+            "harakteristika": $("#nomenklatura_naimenovanie").val()
             //"orderindex" : selectid.intid
         },
         success: function (html) {
             var optionsforapend = JSON.parse(html);
-            for (var el in optionsforapend.records) {
+            /*for (var el in optionsforapend.records) {
                 $("#NamingRules").append('<option value="' + optionsforapend.records[el].ssylka + '">' + optionsforapend.records[el].naimenovanie + '</option>');
-            }
+            }*/
         }
     });
 }
