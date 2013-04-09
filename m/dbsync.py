@@ -14,7 +14,7 @@ from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from dbclasses1c import Base, ArticlesNames, Dictionary, NamingRules, NamingRulesshemanazvaniya, nomenklatura, PartOfSpeech, harakteristikinomenklatury
+from dbclasses1c import Base, ArticlesNames, Dictionary, NamingRules, NamingRulesshemanazvaniya, nomenklatura, PartOfSpeech, harakteristikinomenklatury, tsenynomenklatury, vidytsen
 #from secrets import str_conection_to_MySQL
 
 print ("Content-Type: text/html; charset=utf-8")
@@ -31,6 +31,13 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 Session.configure(bind=engine)
 session = Session()
+
+soup = BeautifulSoup(open("D:/_Del/nomenklatura.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = nomenklatura(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"], currentelement.praviloformirovaniyanazvaniya["Value"])
+    session.add(dbrecord)
 
 soup = BeautifulSoup(open("D:/_Del/ArticlesNames.xml"), "xml")
 nodes = soup.find_all("Record")
@@ -60,13 +67,6 @@ for currentelement in nodes:
     dbrecord = NamingRulesshemanazvaniya(currentelement.ssylka["Value"], currentelement.chastrechi["Value"], currentelement.DefaultValue["Value"], currentelement.nomerstroki["Value"])
     session.add(dbrecord)
 
-soup = BeautifulSoup(open("D:/_Del/nomenklatura.xml"), "xml")
-nodes = soup.find_all("Record")
-
-for currentelement in nodes:
-    dbrecord = nomenklatura(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"], currentelement.praviloformirovaniyanazvaniya["Value"])
-    session.add(dbrecord)
-
 soup = BeautifulSoup(open("D:/_Del/PartOfSpeech.xml"), "xml")
 nodes = soup.find_all("Record")
 
@@ -79,6 +79,20 @@ nodes = soup.find_all("Record")
 
 for currentelement in nodes:
     dbrecord = harakteristikinomenklatury(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"], currentelement.vladelets["Value"], float(currentelement.kratnostedinitsy["Value"]), float(currentelement.vesvkilogramah["Value"]), float(currentelement.koeffitsientgost["Value"]))
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/tsenynomenklatury.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = tsenynomenklatury(currentelement.nomenklatura["Value"], currentelement.vidtseny["Value"], currentelement.harakteristika["Value"], float(currentelement.tsena["Value"]))
+    session.add(dbrecord)
+
+soup = BeautifulSoup(open("D:/_Del/vidytsen.xml"), "xml")
+nodes = soup.find_all("Record")
+
+for currentelement in nodes:
+    dbrecord = vidytsen(currentelement.ssylka["Value"], currentelement.naimenovanie["Value"])
     session.add(dbrecord)
 
 session.commit()

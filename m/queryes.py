@@ -111,6 +111,6 @@ def resultbyname(el, queryname):
 	elif (queryname == "get_filter_selectors"):
 		r = JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie)
 	elif (queryname == "get_vesvkilogramah"):
-		r = JSONfield("ssylka", el.ssylka) + ", " + JSONfield("naimenovanie", el.naimenovanie) + ", " + JSONfield("vesvkilogramah", str(el.vesvkilogramah)) + ", " + JSONfield("kratnostedinitsy", str(el.kratnostedinitsy))
+		r = JSONfield("ssylka", el.ssylka) + ", " + JSONfield("naimenovanie", el.naimenovanie) + ", " + JSONfield("vesvkilogramah", str(el.vesvkilogramah)) + ", " + JSONfield("kratnostedinitsy", str(el.kratnostedinitsy)) + ", " + JSONfield("koeffitsientgost", str(el.koeffitsientgost))
 
 	return r
