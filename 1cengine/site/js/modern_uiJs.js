@@ -359,7 +359,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
             mesDiv += '<table class="popUpTab" name="' + edIzm + '"><tr><td>Цена за пог. метр:</td><td class="TNPrice" name="' + prices + '">' + TN + '</td><td><input class="pUi itemPLengthInput" value="0" name="2" oname="2" /> пог. метр</td></tr>';
             mesDiv += '<tr><td>за кв. метр:</td><td class="SMPrice" name="' + smK + '">' + SM + '</td><td><input class="pUi itemSQuareInput" name="' + smK + '" /> кв. метр</td></tr>';
-            mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">' + TN + '</td><td><input class="pUi itemPCountInput" name="' + itemKf + '" value="0" /> листов</td></tr>';
+            mesDiv += '<tr><td>за лист:</td><td class="pPCPrice">' + ( TN * 2 ) + '</td><td><input class="pUi itemPCountInput" name="' + itemKf + '" value="0" /> листов</td></tr>';
             mesDiv += '</table>';
 
             mesDiv += '<div>Итого: <span id="popUpSpanItog"></span> руб.</div>'
