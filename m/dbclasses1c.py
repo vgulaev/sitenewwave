@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import MetaData, Column, ForeignKey, Integer, String, Float
+from sqlalchemy import MetaData, Column, ForeignKey, ForeignKeyConstraint, Integer, String, Float
 from sqlalchemy.dialects.mysql import DOUBLE
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
@@ -25,9 +25,7 @@ class ArticlesNames(Base):
     PartOfSpeech = Column(String(ssylka_len, collation = "utf8_general_ci"), index = True)
     Order = Column(Integer)
     Word = Column(String(ssylka_len, collation = "utf8_general_ci"), index = True)
-    #Word = Column(String(250, collation = "utf8_general_ci"), ForeignKey("nomenklatura.ssylka"), index = True)
-    #Article_NamingRules = Column(String(250, collation = "utf8_general_ci"), ForeignKey("NamingRules.ssylka"))
-    #NamingRules = relationship("NamingRules")
+    #ForeignKeyConstraint(["Article"], ["nomenklatura.ssylka"])
     def __init__(self, Article, PartOfSpeech, Order, Word):
         self.Article = Article
         self.PartOfSpeech = PartOfSpeech
@@ -58,7 +56,6 @@ class NamingRules(Base):
     #id = Column(Integer, primary_key=True)
     ssylka = Column(String(ssylka_len, collation = "utf8_general_ci"), primary_key=True)
     naimenovanie = Column(String(250, collation = "utf8_general_ci"))
-    #child = relationship("ArticlesNames", uselist=False, backref="NamingRules")
     def __init__(self, ssylka, naimenovanie):
         self.ssylka = ssylka
         self.naimenovanie = naimenovanie
@@ -127,3 +124,29 @@ class harakteristikinomenklatury(Base):
     
     def __repr__(self):
         return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class tsenynomenklatury(Base):
+    __tablename__ = 'tsenynomenklatury'
+    id = Column(Integer, primary_key=True)
+    nomenklatura = Column(String(ssylka_len, collation = "utf8_general_ci"), index=True)
+    vidtseny = Column(String(ssylka_len, collation = "utf8_general_ci"), index=True)
+    harakteristika = Column(String(ssylka_len, collation = "utf8_general_ci"), index=True)
+    tsena = Column(DOUBLE)
+    def __init__(self, nomenklatura, vidtseny, harakteristika, tsena):
+        self.nomenklatura = nomenklatura
+        self.vidtseny = vidtseny
+        self.harakteristika = harakteristika
+        self.tsena = tsena
+    
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)
+
+class vidytsen(Base):
+    __tablename__ = 'vidytsen'
+    ssylka = Column(String(ssylka_len, collation = "utf8_general_ci"), primary_key=True)
+    naimenovanie = Column(String(250, collation = "utf8_general_ci"))
+    def __init__(self, ssylka, naimenovanie):
+        self.ssylka = ssylka
+        self.naimenovanie = naimenovanie
+    def __repr__(self):
+        return "<User('%s','%s')>" % (self.fullname, self.id1C)        

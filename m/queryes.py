@@ -99,7 +99,15 @@ def getquerybyname(session, form, queryname):
 		q = session.query(harakteristikinomenklatury)
 		q = q.filter(harakteristikinomenklatury.vladelets == vladelets)
 		q = q.order_by(harakteristikinomenklatury.vesvkilogramah.desc())
-
+	elif (queryname == "get_price"):
+		#print("Hey!!!")
+		ssylka = form["nomenklatura"].value;
+		harakteristika = form["harakteristika"].value;
+		#vladelets = "76b96b74-d29e-11df-a323-00155dc20a16"
+		q = session.query(tsenynomenklatury)
+		q = q.filter(tsenynomenklatury.nomenklatura == ssylka)
+		q = q.filter(tsenynomenklatury.harakteristika == harakteristika)
+		#q = q.order_by(harakteristikinomenklatury.vesvkilogramah.desc())
 	#print(queryname)
 	return q
 
@@ -111,6 +119,8 @@ def resultbyname(el, queryname):
 	elif (queryname == "get_filter_selectors"):
 		r = JSONfield("chastrechi", el.NamingRulesshemanazvaniya.chastrechi) + ", " +  JSONfield("ssylka", el.NamingRulesshemanazvaniya.ssylka) + ", "+ JSONfield("naimenovanie", el.PartOfSpeech.naimenovanie)
 	elif (queryname == "get_vesvkilogramah"):
-		r = JSONfield("ssylka", el.ssylka) + ", " + JSONfield("naimenovanie", el.naimenovanie) + ", " + JSONfield("vesvkilogramah", str(el.vesvkilogramah)) + ", " + JSONfield("kratnostedinitsy", str(el.kratnostedinitsy))
+		r = JSONfield("ssylka", el.ssylka) + ", " + JSONfield("naimenovanie", el.naimenovanie) + ", " + JSONfield("vesvkilogramah", str(el.vesvkilogramah)) + ", " + JSONfield("kratnostedinitsy", str(el.kratnostedinitsy)) + ", " + JSONfield("koeffitsientgost", str(el.koeffitsientgost))
+	elif (queryname == "get_price"):
+		r = JSONfield("tsena", el.tsena)
 
 	return r
