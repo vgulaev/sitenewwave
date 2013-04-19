@@ -8,6 +8,7 @@ import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
 import json
+from pymongo import MongoClient
 
 from github import GitHub
 
@@ -18,4 +19,14 @@ print("hello!!!")
 
 gh = GitHub()
 
-print(gh.repos("vgulaev")("trimet_it").issues.get())
+issuesdict = gh.repos("vgulaev")("trimet_it").issues.get(sort="created", filter="all")
+
+client = MongoClient()
+
+db = client['trimet_issues']
+
+posts = db.issues
+
+posts.insert(issuesdict)
+
+print(issuesdict[0].number)
