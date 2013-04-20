@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
 import json
-from pymongo import MongoClient
+from pymongo import *
 from github import GitHub
 from secrets import github_username, github_password
 
@@ -26,7 +26,10 @@ client = MongoClient()
 db = client['trimet_issues']
 posts = db.issues
 
-for i in range(1, issuesdict[0].number+1):
+issues_in_db = posts.find().sort("number", direction = DESCENDING)
+print(issues_in_db[0]["number"])
+
+for i in range(issues_in_db[0]["number"] + 1, issuesdict[0].number+1):
 	currentissue = gh.repos("vgulaev")("trimet_it").issues(i).get()
 	posts.insert(currentissue)
 	print(i)
