@@ -4,29 +4,29 @@
 import cgi
 import sys
 import os
-import cgitb; cgitb.enable()
+#import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
 import json
 from pymongo import MongoClient
-
 from github import GitHub
+from secrets import github_username, github_password
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
     
 print("hello!!!")
 
-gh = GitHub()
+gh = GitHub(username=github_username, password=github_password)
 
 issuesdict = gh.repos("vgulaev")("trimet_it").issues.get(sort="created", filter="all")
+print(issuesdict[0].number)
 
 client = MongoClient()
-
 db = client['trimet_issues']
-
 posts = db.issues
 
-posts.insert(issuesdict)
-
-print(issuesdict[0].number)
+for i in range(1, issuesdict[0].number+1):
+	currentissue = gh.repos("vgulaev")("trimet_it").issues(i).get()
+	posts.insert(currentissue)
+	print(i)
