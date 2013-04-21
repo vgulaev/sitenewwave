@@ -26,25 +26,17 @@ posts = db.issues
 
 #issues_in_db = posts.find().sort("number", direction = DESCENDING)
 
-issues_in_db = posts.aggregate( [
+issues_in_db = posts.aggregate([
 	{"$group" : {
 	"_id": {
-		"login" : "$assignee.login", 
-		"date_of_created" : "$created_at"},
-	#"date_of_created:": { "$substr" : SON(["$created_at", 0, 10])},
-	#"date_of_created": "$created_at",
+		#"login" : "$assignee.login", 
+		"date_of_created" : { "$substr" : ["$created_at", 0, 10]}},
 	"task_count": { "$sum" : 1}}
 	}
-#	{"$project" :
-#		{
-#		"assignee.login": 1}}
+	,{"$sort": SON([("_id.date_of_created", 1)])}
 ])
 
 pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(issues_in_db)
-#print(SON([("count", -1), ("_id", -1)]))
-#print(json.dumps(issues_in_db[0], sort_keys=True, indent=4, separators=(',', ': ')))
-
-#print(type(issues_in_db[0]))
 
 print('</pre></body></html>')
