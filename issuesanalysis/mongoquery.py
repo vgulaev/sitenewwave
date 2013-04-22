@@ -1,4 +1,4 @@
-#!c:/Python27/python.exe
+﻿#!c:/Python27/python.exe
 # -*- coding: utf-8 -*-
 # This Python file uses the following encoding: utf-8
 import cgi
@@ -12,31 +12,28 @@ from bson.son import SON
 import pprint
 
 from pymongo import *
+from mongoparameters import *
 from github import GitHub
 from secrets import github_username, github_password
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
     
-print('<!DOCTYPE html><html lang="ru"><body><pre>')
+#print('<!DOCTYPE html><html lang="ru"><body><pre>')
 
 client = MongoClient()
 db = client['trimet_issues']
 posts = db.issues
 
 #issues_in_db = posts.find().sort("number", direction = DESCENDING)
+queryname = "taskclosed"
 
-issues_in_db = posts.aggregate([
-	{"$group" : {
-	"_id": {
-		#"login" : "$assignee.login", 
-		"date_of_created" : { "$substr" : ["$created_at", 0, 10]}},
-	"task_count": { "$sum" : 1}}
-	}
-	,{"$sort": SON([("_id.date_of_created", 1)])}
-])
+form = cgi.FieldStorage()
+if form.has_key("queryname"):
+	queryname = form["queryname"].value
 
-pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(issues_in_db)
+issues_in_db = posts.aggregate(getparameterforquery(queryname))
 
-print('</pre></body></html>')
+print(json.dumps(issues_in_db))
+
+#print('</pre></body></html>')

@@ -1,24 +1,15 @@
-<html>
+﻿<html>
   <head>
-	<script type="text/javascript" src="lib/frameworks/jquery/2.0.0/jquery-2.0.0.js"></script>
+	<script type="text/javascript" src="/sitenewwave/lib/frameworks/jquery/2.0.0/jquery-2.0.0.js"></script>
 	<script type="text/javascript" src="githubanalysis.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(getdata());
-
-        var options = {
-          title: 'Company Performance'
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+      google.load("visualization", "1", {packages:["corechart", "table"]});
+      google.setOnLoadCallback(drawChart);	
     </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="chart_div" style="width: 1300px; height: 500px;"></div>
+	<div id="table" style="width: 900px; height: 500px;"></div>
   </body>
 </html>
