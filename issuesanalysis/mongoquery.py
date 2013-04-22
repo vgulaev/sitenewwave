@@ -12,12 +12,9 @@ from bson.son import SON
 import pprint
 
 from pymongo import *
+from mongoparameters import *
 from github import GitHub
 from secrets import github_username, github_password
-
-#sys.setdefaultencoding('utf-8')
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
@@ -30,24 +27,8 @@ posts = db.issues
 
 #issues_in_db = posts.find().sort("number", direction = DESCENDING)
 
-issues_in_db = posts.aggregate([
-	{"$group" : {
-	"_id": {
-		#"login" : "$assignee.login", 
-		"date_of_created" : { "$substr" : ["$created_at", 0, 10]}},
-	"task_count": { "$sum" : 1}}
-	}
-	,{"$sort": SON([("_id.date_of_created", 1)])}
-])
+issues_in_db = posts.aggregate(getparameterforquery("taskcreated"))
 
-pp = pprint.PrettyPrinter(indent=4)
-#pp.pprint(issues_in_db)
-#sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
-
-#print sys.stdout.encoding
-
-#issues_in_db.encode('utf-8')
 print(json.dumps(issues_in_db))
 
-#print(issues_in_db)
 #print('</pre></body></html>')
