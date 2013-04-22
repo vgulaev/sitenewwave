@@ -26,8 +26,13 @@ db = client['trimet_issues']
 posts = db.issues
 
 #issues_in_db = posts.find().sort("number", direction = DESCENDING)
+queryname = "taskclosed"
 
-issues_in_db = posts.aggregate(getparameterforquery("taskcreated"))
+form = cgi.FieldStorage()
+if form.has_key("queryname"):
+	queryname = form["queryname"].value
+
+issues_in_db = posts.aggregate(getparameterforquery(queryname))
 
 print(json.dumps(issues_in_db))
 

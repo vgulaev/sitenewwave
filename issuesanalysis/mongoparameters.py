@@ -13,5 +13,15 @@ def getparameterforquery(queryname):
 			}
 			,{"$sort": SON([("_id.date_of_created", 1)])}
 			]
+	elif (queryname == "taskclosed"):
+		prm = [
+			{ "$match" : { "state" : "closed"}},
+			{"$group" : {
+			"_id": {
+				"date_of_created" : { "$substr" : ["$closed_at", 0, 10]}},
+			"task_count": { "$sum" : 1}}
+			}
+			,{"$sort": SON([("_id.date_of_created", 1)])}
+			]	
 	
 	return prm;
