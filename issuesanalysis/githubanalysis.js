@@ -1,7 +1,7 @@
 ﻿function getdata(){
 
 	data_for_chart = [];
-	data_for_chart.push(["Day", "Поступило задач", "Закрыто задач"]);
+	data_for_chart.push(["Day", "Поступило задач", "Закрыто задач", "Задач открытых"]);
 
     $.ajax({
         type: "POST",
@@ -17,7 +17,7 @@
 			data_for_chart.push(["2015", 15]);*/
 			//data = [];
 			for (var el in objdata.result){
-				data_for_chart.push([objdata.result[el]._id.date_of_created, objdata.result[el].task_count, 0]);
+				data_for_chart.push([objdata.result[el]._id.date_of_created, objdata.result[el].task_count, 0, 3]);
 			}
         }
     });
@@ -33,7 +33,7 @@
         success: function (html) {
             var objdata = JSON.parse(html);
 			for (var el in objdata.result){
-				data_for_chart.push([objdata.result[el]._id.date_of_created, 0, objdata.result[el].task_count]);
+				data_for_chart.push([objdata.result[el]._id.date_of_created, 0, objdata.result[el].task_count, 3]);
 			}
         }
     });
@@ -53,8 +53,10 @@ function drawChart() {
 	var result = google.visualization.data.group(
 		data,
 		[0],
-		[{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'},
-		{'column': 2, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
+		[
+        {'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'},
+		{'column': 2, 'aggregation': google.visualization.data.sum, 'type': 'number'},
+        {'column': 3, 'aggregation': google.visualization.data.sum, 'type': 'number'}]
 	);
 	
     var options = {

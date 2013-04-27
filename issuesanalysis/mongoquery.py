@@ -26,14 +26,30 @@ db = client['trimet_issues']
 posts = db.issues
 
 #issues_in_db = posts.find().sort("number", direction = DESCENDING)
-queryname = "taskclosed"
+queryname = "taskopened"
+q = [];
 
 form = cgi.FieldStorage()
 if form.has_key("queryname"):
 	queryname = form["queryname"].value
 
-issues_in_db = posts.aggregate(getparameterforquery(queryname))
+if (queryname == "taskcreated")or(queryname == "taskclosed"):
+    issues_in_db = posts.aggregate(getparameterforquery(queryname))
+    q = json.dumps(issues_in_db)
+elif (queryname == "taskopened"):
+    issues_in_db1 = posts.aggregate(getparameterforquery("taskcreated"))
+    issues_in_db2 = posts.aggregate(getparameterforquery("taskclosed"))
+    t = issues_in_db1["result"] + issues_in_db2["result"]
+    days = set(map(lambda x: x["_id"]["date_of_created"], t))
+    d1 = list(days)
+    
+    curs = posts.find({"created_at": {"$lte" : d1[0]}});
+    
+    print(curs.count())
+    print(d1[0])
+     
+    #len(issues_in_db1)
 
-print(json.dumps(issues_in_db))
+print(days)
 
 #print('</pre></body></html>')
