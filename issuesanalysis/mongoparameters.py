@@ -25,3 +25,5 @@ def getparameterforquery(queryname):
 			]	
 	
 	return prm;
+
+#print(getparameterforquery("taskcreated"))

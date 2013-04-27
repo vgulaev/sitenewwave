@@ -4,7 +4,7 @@
 import cgi
 import sys
 import os
-import cgitb; cgitb.enable()
+#import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
 import json

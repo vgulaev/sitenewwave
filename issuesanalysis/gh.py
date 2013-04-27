@@ -20,6 +20,7 @@ print("hello!!!")
 gh = GitHub(username=github_username, password=github_password)
 
 issuesdict = gh.repos("vgulaev")("trimet_it").issues.get(sort="created", filter="all")
+
 print(issuesdict[0].number)
 
 client = MongoClient()
@@ -27,9 +28,14 @@ db = client['trimet_issues']
 posts = db.issues
 
 issues_in_db = posts.find().sort("number", direction = DESCENDING)
-print(issues_in_db[0]["number"])
 
-for i in range(issues_in_db[0]["number"] + 1, issuesdict[0].number+1):
+if db['issues'].count() > 0:
+    print(issues_in_db[0]["number"])
+    i_from = issues_in_db[0]["number"] + 1
+else:
+    i_from = 1
+
+for i in range(i_from, issuesdict[0].number+1):
 	currentissue = gh.repos("vgulaev")("trimet_it").issues(i).get()
 	posts.insert(currentissue)
 	print(i)
