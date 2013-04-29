@@ -1,4 +1,4 @@
-#!/web/trimetru/python/bin/python2.6
+#!/usr/bin/python2.7
 #-*- coding:utf-8 -*-
 
 
@@ -8,29 +8,11 @@ import cgitb; cgitb.enable()
 import urllib2
 import re
 
+import datetime
+
 
 print ("Content-Type: text/html; charset=utf-8")
 print ("")
-
-print """
-    <style>
-        td{
-            
-            /*border-right: 1px dotted gray;*/
-            padding: 5px 25px 5px;
-            /*border-bottom: 1px dotted gray;*/
-            background-color:#faeedd;
-        }
-        tr.open{
-            font-size:11px;
-            color:#45161c;
-        }
-        tr.closed{
-            font-size:10px;
-            color:#1f4037;
-        }
-    </style>
-"""
 
 
 tpl = """<?xml version='1.0' encoding='utf-8'?>
@@ -84,14 +66,26 @@ query_array = ['металлочерепица', 'швеллер', 'лист р�
     'трубы оцинкованные','балка','купить металлопрокат','продажа металлопроката',
     'металлопрокат ','металлопрокат тюмень','продажа профнастила']
 
-print "<table>"
+
+current_time = str(datetime.datetime.now())
+current_time = current_time.split(".")[0]
+current_time_array = current_time.split(" ")
+current_date = current_time_array[0]
+current_date_array = current_date.split("-")
+current_date = current_date_array[2]+"."+current_date_array[1]+"."+current_date_array[0]
+
+current_time = current_date+" "+current_time_array[1]
+
 result_total = 0
 for query in query_array:
     result = yxml(query, "trimet.ru")
     if result[0] == 0:
         result[0] = 100
-    result_total = result_total + result[0]
-    print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
+    
+    file_object = open("/var/www/trimetru/www/yandex/"+query+".csv","a")
+    file_object.write(current_time+","+str(result[0])+"\n")
+    file_object.close()
+    # print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
 
-print "<tr><td>TOTAL</td><td> : </td><td>"+str(result_total)+"</td><td></td></tr>"
-print "</table>"
+# print "<tr><td>TOTAL</td><td> : </td><td>"+str(result_total)+"</td><td></td></tr>"
+# print "</table>"

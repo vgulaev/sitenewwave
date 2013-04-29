@@ -138,6 +138,7 @@ function showGroups() {
 /// показать товары группы ///
 
 function showGroup2(groupName) {
+    groupName = groupName.replace("+"," ")
     $("#itemName").val(groupName)
     $("#itemName").change()
     $.unblockUI()
@@ -1786,6 +1787,7 @@ $(document).ready(function() {
     $("#itemName").change(function() {
         $("#groupDiv").hide()
         value = $("#itemName").val();
+        value = value.replace("+"," ");
         // alert($("#itemName").attr("placeholder"))
 
         $.ajax({
@@ -1836,6 +1838,7 @@ $(document).ready(function() {
     /// Разбор GET-параметров ///
     var squery = String(document.location).replace(/\%2F/g, "\\")
     var squery = String(document.location).replace(/\s\s/g, "\s")
+    // var squery = String(document.location).replace(/\+/g, "\s")
     if(squery.split("?", 2)[1]) {
         parts = squery.split("?", 2)[1].split("&");
         GET = {};
