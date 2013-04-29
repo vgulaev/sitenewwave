@@ -17,7 +17,7 @@
 			data_for_chart.push(["2015", 15]);*/
 			//data = [];
 			for (var el in objdata.result){
-				data_for_chart.push([objdata.result[el]._id.date_of_created, objdata.result[el].task_count, 0, 3]);
+				data_for_chart.push([objdata.result[el]._id.date_of_created, objdata.result[el].task_count, 0, 0]);
 			}
         }
     });
@@ -33,7 +33,23 @@
         success: function (html) {
             var objdata = JSON.parse(html);
 			for (var el in objdata.result){
-				data_for_chart.push([objdata.result[el]._id.date_of_created, 0, objdata.result[el].task_count, 3]);
+				data_for_chart.push([objdata.result[el]._id.date_of_created, 0, objdata.result[el].task_count, 0]);
+			}
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "mongoquery.py",
+        async: false,
+        //traditional: true,
+        data: {
+            "queryname": "taskopened"
+        },
+        success: function (html) {
+            var objdata = JSON.parse(html);
+			for (var el in objdata.result){
+				data_for_chart.push([objdata.result[el]._id.date_of_created, 0, 0, objdata.result[el].task_count]);
 			}
         }
     });
