@@ -67,7 +67,7 @@ query_array = ['металлочерепица', 'швеллер', 'лист р�
     'металлопрокат ','металлопрокат тюмень','продажа профнастила']
 
 
-current_time = datetime.datetime.now()
+current_time = str(datetime.datetime.now())
 current_time = current_time.split(".")[0]
 current_time_array = current_time.split(" ")
 current_date = current_time_array[0]
