@@ -83,7 +83,7 @@ for query in query_array:
         result[0] = 100
     
     file_object = open("/var/www/trimetru/www/yandex/"+query+".csv","a")
-    file_object.write(current_time+","+result[0])
+    file_object.write(current_time+","+str(result[0]))
 
     # print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
 
