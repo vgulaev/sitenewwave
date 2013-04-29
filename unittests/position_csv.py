@@ -72,7 +72,7 @@ current_time = current_time.split(".")[0]
 current_time_array = current_time.split(" ")
 current_date = current_time_array[0]
 current_date_array = current_date.split("-")
-current_date = current_date_array[2]+"."+current_date_array[1]+"."=current_date_array[0]
+current_date = current_date_array[2]+"."+current_date_array[1]+"."+current_date_array[0]
 
 current_time = current_date+" "+current_time_array[1]
 
