@@ -51,7 +51,7 @@ def yxml(request, url):
     место в выдаче"""
     j = 1
     doc_tpl = tpl.replace("{KEY}", request)
-    for i in xrange(30):
+    for i in xrange(10):
         doc = doc_tpl.replace("{NUM}", str(i))
         conn = urllib2.Request("http://xmlsearch.yandex.ru/xmlsearch?user=Elf607&key=03.13977823:e95167db7719613bbe9c579e723e3c66&lr=55", doc)
         data = urllib2.urlopen(conn)
@@ -85,8 +85,13 @@ query_array = ['металлочерепица', 'швеллер', 'лист р�
     'металлопрокат ','металлопрокат тюмень','продажа профнастила']
 
 print "<table>"
+result_total = 0
 for query in query_array:
     result = yxml(query, "trimet.ru")
+    if result[0] == 0:
+        result[0] = 100
+    result_total = result_total + result[0]
     print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
 
+print "<tr><td>TOTAL</td><td> : </td><td>"+str(result_total)+"</td><td></td></tr>"
 print "</table>"
