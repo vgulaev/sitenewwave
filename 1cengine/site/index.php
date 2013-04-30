@@ -79,6 +79,7 @@ echo $template_string;
 <script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.blockUI.js'> </script>
 <script type="text/javascript" src='/lib/frameworks/jqrequired/jquery.cookie.js'> </script>
 <script type="text/javascript" src='/1cengine/site/js/modern_uiJs.js'> </script>
+<script type="text/javascript" src='/1cengine/site/js/modern_ui_goods_handler.js'> </script>
 
 
 <link rel="stylesheet" type="text/css" href="/1cengine/site/modern_style.css" />
