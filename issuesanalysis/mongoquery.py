@@ -43,13 +43,18 @@ elif (queryname == "taskopened"):
     days = set(map(lambda x: x["_id"]["date_of_created"], t))
     d1 = list(days)
     
-    curs = posts.find({"created_at": {"$lte" : d1[0]}});
+    del issues_in_db1["result"][:]
     
-    print(curs.count())
-    print(d1[0])
-     
-    #len(issues_in_db1)
+    def get_count(x):
+        t = posts.find({"created_at": {"$lte" : x},
+                        "$or": [{"closed_at": {"$gt": x}}, {"closed_at": {"$type" : 10}}]
+                        }).count()
+        return t
+    
+    map(lambda x: issues_in_db1["result"].append({u"_id": {u"date_of_created": x}, u"task_count": get_count(x)}), d1)
+    
+    q = json.dumps(issues_in_db1)
 
-print(days)
+print(q)
 
 #print('</pre></body></html>')
