@@ -182,6 +182,7 @@ echo $template_string;
                     <div class="activeDiv" id="switchOrderDiv">Товары</div>
                     <div class="inactiveDiv" id="switchDeliveryDiv">Доставка</div>
                     <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
+                    <div class="inactiveDiv" id="switchPaymentDiv">Оплатить заказ</div>
                     <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
                 </div>
                 <div id="orderDiv">
@@ -375,6 +376,10 @@ echo $template_string;
                     <a href="javascript:createOrder()" style="text-decoration:none;"><div id="sendOrderButton">Оформить</div></a>
 
                     <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
+                </div>
+
+                <div id="paymentDiv">
+                    Здесь будет оплата
                 </div>
             </div>
         </td>

@@ -79,9 +79,11 @@ $(function() {
         $("#orderDiv").show()
         $("#deliveryDiv").hide()
         $("#notificationDiv").hide()
+        $("#paymentDiv").hide()
         $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").show()
         return false
@@ -90,9 +92,11 @@ $(function() {
         $("#deliveryDiv").show()
         $("#orderDiv").hide()
         $("#notificationDiv").hide()
+        $("#paymentDiv").hide()
         $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").hide()
     })
@@ -100,14 +104,29 @@ $(function() {
         $("#notificationDiv").show()
         $("#deliveryDiv").hide()
         $("#orderDiv").hide()
-        $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")
+        $("#paymentDiv").hide()
+        $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")  
+        $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
+
+        $("#showNDSlabel").hide()
+    })
+
+    $("#switchPaymentDiv").click( function(){
+        $("#paymentDiv").show()
+        $("#notificationDiv").hide()
+        $("#deliveryDiv").hide()
+        $("#orderDiv").hide()
+        $("#paymentDiv").removeClass("inactiveDiv").addClass("activeDiv")
+        $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").hide()
     })
-
-
+    /// REWRITE IT PLEASE!!! ///
+    /// into one function ///
 });
 
 /// показать группы товаров ///
