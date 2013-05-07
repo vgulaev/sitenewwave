@@ -83,7 +83,7 @@ $(function() {
         $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#switchPaymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").show()
         return false
@@ -96,7 +96,7 @@ $(function() {
         $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#switchPaymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").hide()
     })
@@ -108,7 +108,7 @@ $(function() {
         $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")  
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#paymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
+        $("#switchPaymentDiv").removeClass("activeDiv").addClass("inactiveDiv")
 
         $("#showNDSlabel").hide()
     })
@@ -118,7 +118,7 @@ $(function() {
         $("#notificationDiv").hide()
         $("#deliveryDiv").hide()
         $("#orderDiv").hide()
-        $("#paymentDiv").removeClass("inactiveDiv").addClass("activeDiv")
+        $("#switchPaymentDiv").removeClass("inactiveDiv").addClass("activeDiv")
         $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
         $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")

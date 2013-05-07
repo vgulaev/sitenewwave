@@ -137,10 +137,11 @@ function openItem(hash, edIzm, prices, stock, c) {
 /// всплывающее окно товара с редактированием ///
 
 function showModalItem(hash, edIzm, prices, stock, c) {
-
+    
     if(c == undefined) {
         c = "n"
     }
+    alert('nya')
     var mesDiv = '';
     $('tr[id="' + hash + '"]').each(function() {
 
@@ -301,7 +302,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
     })
 
-
+    alert("double-nya")
 
     $.blockUI({
         message: mesDiv
@@ -1082,7 +1083,7 @@ function modern_editItem(hash) {
     edIzm = $('tr[name="' + hash + '"]').find(".itemEdIzmTd").attr("name")
     prices = $('tr[name="' + hash + '"]').find(".itemPriceTd").attr("name")
     stock = "1"
-
+    // alert("half-nya")
     // alert(1)
     showModalItem(hash, edIzm, prices, stock, "c")
     // alert(3)

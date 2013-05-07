@@ -27,7 +27,8 @@ def show_orders():
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         python_lib_name2 = "get_orders_list"
         get_orders_list_lib = imp.load_source(python_lib_name2, _PATH_+"/"+python_lib_name2+".py")
-        
+        # print uid_1c
+        # print get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
         try:
             data = get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
             # data = get_orders_list_lib.__main__("get_orders_list('b266ce1a-60d7-4725-b572-f1aa3282995f')")

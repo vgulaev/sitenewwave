@@ -229,7 +229,10 @@ if from_hash == True:
     hash = get["hash"].value
     char = get["char"].value
     count = get["count"].value
-    rezka = get["rezka"].value
+    if "rezka" in get:
+        rezka = get["rezka"].value
+    else:
+        rezka = ""
     showItemByHash(hash, char, count,rezka)
 else:
     res = showItems(req)
