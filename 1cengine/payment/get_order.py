@@ -90,13 +90,13 @@ def get_order(UID):
 
 
 
-    result_table = result_table + "<tr><td></td><td></td><td></td><td><strong>Итого: </strong></td><td>"+result[5]+"</td></tr>"
+    result_table = result_table + "<tr><td></td><td></td><td></td><td><strong>Итого: </strong></td><td>"+result[5]+"<input style='display:none' name=\"PurchaseAmt\" type=\"text\" id=\"PurchaseAmt\"  value=\""+result[5].replace(" ","").replace(",",".")+"\" /></td></tr>"
     # print "-----", "<br />"
     # print result[3], "<br />"
     # print result[4], "<br />"
 
 
-    return result_table
+    return result_table + "</table>"
 
 
 def __main__(funct_name):
