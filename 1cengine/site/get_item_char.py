@@ -24,6 +24,7 @@ def get_item_char(item_hash, hash_pointer):
 
     connector.dbClose()
 
+    # r_string = "fail"
     for row in r:
         r_string = str(row[0])+"|"+str(row[1])+"|"+str(row[2])
         print r_string

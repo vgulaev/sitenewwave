@@ -3,6 +3,7 @@
 
 import sys, os
 import cgi
+import imp
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
@@ -52,39 +53,49 @@ def get_order(UID):
 
     result = client.service.GetOrders(UID)
 
-    print result, "<br />"
-    print "-----", "<br />"
+    result_table = "<table>"
+    result_table = result_table + "<caption>" + result[3] + "</caption>"
+    result_table = result_table + "<tr><th>Номенклатура</th><th>Количество шт.</th><th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
 
-    print result[0], "<br />"
-    print result[1], "<br />"
-    # print result[2], "<br />"
-    print "------", "<br />"
-    print result[2][0][0][0], "<br />"
-    print result[2][0][0][1], "<br />"
-    print result[2][0][0][2], "<br />"
-    print result[2][0][0][3], "<br />"
-    print result[2][0][0][4], "<br />"
-    print result[2][0][0][5], "<br />"
-    print result[2][0][0][6], "<br />"
-    # print result[2][0][0][7], "<br />"
-    print "-----", "<br />"
-    print result[3], "<br />"
-    print result[4], "<br />"
-    print result[5], "<br />"
+    # print result, "<br />"
+    # print "-----", "<br />"
 
-    # if result == "Well":
-    #     order_file_path = _CURRENT_ADDRESS_.replace("/DemoTrimet/ws/", "/download/") + UID + ".html"
+    # print result[0], "<br />"
+    # print result[1], "<br />"
+    
+    
+    for good in result [2][0]:
+        result_table = result_table + "<tr>"
+        
+        # print "------", "<br />"
+        # print good[0], "<br />" ### Характеристика
+        # print good[1], "<br />"
+        # print good[2], "<br />"
+        # print good[3], "<br />" ### Номенклатура
+        # print good[4], "<br />"
 
-    # import urllib2
-    # response = urllib2.urlopen(order_file_path)
-    # html = response.read()
+        lib_path = os.path.abspath('1cengine/payment/')
+        sys.path.append(lib_path)
+        python_lib_name = "get_item_name"
+        get_item_name_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
 
-    # from bs4 import BeautifulSoup
-    # import re
+        result_table = result_table + "<td>" + get_item_name_lib.get_item_name(good[0],good[3]) + "</td>"
+        result_table = result_table + "<td>" + good[1] + "</td>"
+        result_table = result_table + "<td>" + good[2] + "</td>"
+        result_table = result_table + "<td>" + good[4] + "</td>"
+        item_sum = float(good[4]) * float(good[2])
+        overall_sum = overall_sum + item_sum
+        result_table = result_table + "<td>" + str(item_sum) + "</td>"
+        result_table = result_table + "</tr>"
 
-    # soup = BeautifulSoup(''.join(html))
 
-    return result
+
+    # print "-----", "<br />"
+    # print result[3], "<br />"
+    # print result[4], "<br />"
+
+
+    return result_table
 
 
 def __main__(funct_name):
