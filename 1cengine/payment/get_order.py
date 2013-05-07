@@ -22,7 +22,7 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -62,7 +62,7 @@ def get_order(UID):
 
     # print result[0], "<br />"
     # print result[1], "<br />"
-    
+    # overall_sum = 0
     
     for good in result [2][0]:
         result_table = result_table + "<tr>"
@@ -83,13 +83,14 @@ def get_order(UID):
         result_table = result_table + "<td>" + good[1] + "</td>"
         result_table = result_table + "<td>" + good[2] + "</td>"
         result_table = result_table + "<td>" + good[4] + "</td>"
-        item_sum = float(good[4]) * float(good[2])
-        overall_sum = overall_sum + item_sum
-        result_table = result_table + "<td>" + str(item_sum) + "</td>"
+        # item_sum = float(good[4]) * float(good[2])
+        # overall_sum = overall_sum + item_sum
+        result_table = result_table + "<td>" + good[6] + "</td>"
         result_table = result_table + "</tr>"
 
 
 
+    result_table = result_table + "<tr><td></td><td></td><td></td><td><strong>Итого: </strong></td><td>"+result[5]+"</td></tr>"
     # print "-----", "<br />"
     # print result[3], "<br />"
     # print result[4], "<br />"
