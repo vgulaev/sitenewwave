@@ -59,61 +59,22 @@
         <input type="checkbox" name="City" id="City"  value="Y" checked="checked" />
         <input type="checkbox" name="Address" id="Address"  value="Y" checked="checked" />
         <input type="checkbox" name="Phone" id="Phone"  value="Y" /> 
-    </div>
-    <table style="display:none" width="550" border="1" cellpadding="0" cellspacing="0" bordercolor="#660033">
-            <tr>
-              <td width="13%">Ключ в формате Base64</td>
-              <td colspan="2"><label>
-                
-              </label></td>
-              <td width="17%" rowspan="2">
-                <input type="button" name="base_to_hex" id="base_to_hex" value="Base64ToHex" onclick="javascript: BTH();" />
-                <input type="button" name="hex_to_base" id="hex_to_base" value="HexToBase64" onclick="javascript: HTB();"/>          </td>
-            </tr>
-            <tr>
-              <td>Ключ в формате Hex</td>
-              <td colspan="2"><input name="key_h" type="text" id="key_h"  /></td>
-              </tr>
+    
 
-            <tr>
-              <td rowspan="3">Временное окно</td>
-              <td colspan="2"><label>
-                <input type="checkbox" name="use_time_window" id="use_time_window" />
-              Использовать временное окно</label></td>
-              <td rowspan="3">&nbsp;</td>
-            </tr>
-            <tr>
-              <td width="33%"><p>Значение в секундах</p></td>
-              <td width="37%"><input name="Window" type="text" id="window_val"  /></td>
-            </tr>
-            <tr>
-              <td>Текущее время</td>
-              <td><input name="Time" type="text" id="time_val"  /></td>
-            </tr>
-            <tr>
-              <td>Параметр Options</td>
-              <td colspan="2"><label>
-                <input name="Options" type="text" id="Options" />
-              </label></td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>Контольная строка</td>
-              <td colspan="2"><input name="control_string" type="text" id="control_string"  /></td>
-              <td><input type="button" name="compute_result" id="compute_result" value="Вычислить строку" onClick="javascript: ComputeCString();"/></td>
-            </tr>
-            <tr>
-              <td>HMAC для отправки</td>
-              <td colspan="2"><input name="HMAC" type="text" id="HMAC" />
-                <label></label></td>
-              <td><input type="button" name="gen_hmac" id="gen_hmac" value="HMAC Base64" onclick="javascript:GENb64();"/><input type="button" name="gen_hmac" id="gen_hmac" value="HMAC Hex"  onclick="javascript:GENhex();" /></td>
-            </tr>
-          </table>
-                    
+        <input name="key_h" type="text" id="key_h"  />
+        <input type="checkbox" name="use_time_window" id="use_time_window" />
+        <input name="Window" type="text" id="window_val"  /></td>
+        <input name="Time" type="text" id="time_val"  /></td>
+        <input name="Options" type="text" id="Options" />
+        <input name="control_string" type="text" id="control_string"  /></td>
+        <input name="HMAC" type="text" id="HMAC" />
+            
+    </div>  
+              
 <pythonscript>
         {template|show_order()}
 </pythonscript>
-      <input type="submit" name="SubmitName" value="Создать платеж" />
+      
     </form>
 </div></div>
 

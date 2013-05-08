@@ -142,6 +142,7 @@ def get_order(UID):
             result_table = result_table + """
                 <input style="display:none" name="key_b" type="text" id="key_b"  
                 value=\""""+get_new_secret_key()+"""\"/>
+                <input type="submit" name="SubmitName" value="Создать платеж" />
             """
 
             # get_new_secret_key()

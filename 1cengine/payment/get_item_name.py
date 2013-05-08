@@ -14,7 +14,7 @@ def get_item_name(item_hash, parent_hash):
 
     # print item_hash, " | ", parent_hash
     r = connector.dbExecute("""
-            SELECT `name`
+            SELECT `display_name`
             FROM `offers`
             WHERE `hash` = '""" + item_hash + """' AND `father_hash` = '""" + parent_hash + """'
         """)
