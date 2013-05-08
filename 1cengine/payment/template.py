@@ -25,6 +25,8 @@ def show_order():
         if page_array.__len__() == 2:
             uid = page_array[1]
             # print uid
+        else:
+            uid = None
     else:
         uid = None
 
