@@ -16,29 +16,17 @@ def show_order():
     python_lib_name = "get_order"
     order_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
 
-    post = {}
-
-    if "POST_DATA" in os.environ:
-        raw_post = os.environ["POST_DATA"]
-    else:
-        raw_post = sys.stdin.read()
-
-    if raw_post != "":
-        pre_post = raw_post.split("&")
-        # print pre_post
-        for variables in pre_post:
-            # print variables
-            key_var = str(variables).split("=")
-            # print key_var
-            post[key_var[0]] = key_var[1]
 
     get = cgi.FieldStorage()
-    print get
-    if "uid" in get:
-        uid = get["uid"].value
-        print uid
+    # print get
+    if "page" in get:
+        page = get["page"].value
+        page_array = page.split("/")
+        if page_array.__len__() == 2:
+            uid = page_array[1]
+            # print uid
     else:
-        uid = "f4801240-b7a3-11e2-af3e-00163e25bdbe"
+        uid = None
 
     return order_lib.get_order(uid)
     
