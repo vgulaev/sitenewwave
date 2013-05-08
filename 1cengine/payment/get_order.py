@@ -30,6 +30,56 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+def translit(letter):
+    ru_en_dict = {
+        "а" :  "a",
+        "б" :  "b",
+        "в" :  "v",
+        "г" :  "g",
+        "д" :  "d",
+        "е" :  "e",
+        "ё" :  "yo",
+        "ж" :  "zh",
+        "з" :  "z",
+        "и" :  "i",
+        "й" :  "j",
+        "к" :  "k",
+        "л" :  "l",
+        "м" :  "m",
+        "н" :  "n",
+        "о" :  "o",
+        "п" :  "p",
+        "р" :  "r",
+        "с" :  "s",
+        "т" :  "t",
+        "у" :  "u",
+        "ф" :  "f",
+        "х" :  "x",
+        "ц" :  "cz",
+        "ч" :  "ch",
+        "ш" :  "sh",
+        "щ" :  "shh",
+        "ъ" :  "``",
+        "ы" :  "y'",
+        "ь" :  "`",
+        "э" :  "e`",
+        "ю" :  "yu",
+        "я" :  "ya",
+        "0" :  "0",
+        "1" :  "1",
+        "2" :  "2",
+        "3" :  "3",
+        "4" :  "4",
+        "5" :  "5",
+        "6" :  "6",
+        "7" :  "7",
+        "8" :  "8",
+        "9" :  "9"
+    }
+
+    letter = letter.lower().encode('utf-8')
+    return ru_en_dict[letter].upper()
+
 def get_order(UID):
     post = {}
 
@@ -54,7 +104,13 @@ def get_order(UID):
     result = client.service.GetOrders(UID)
 
     result_table = "<table>"
-    result_table = result_table + "<caption>" + result[3] + "</caption>"
+    result_table = result_table + "<caption>" + result[3]
+    order_number = ""
+    for letter in result[3]:
+        order_number = order_number + translit(letter)
+    result_table = result_table + """
+        <input style="display:none" name="PurchaseDesc" type="text" id="PurchaseDesc"  value=\""""+order_number+"""\" />
+    """  + "</caption>"
     result_table = result_table + "<tr><th>Номенклатура</th><th>Количество шт.</th><th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
 
     # print result, "<br />"
@@ -90,7 +146,15 @@ def get_order(UID):
 
 
 
-    result_table = result_table + "<tr><td></td><td></td><td></td><td><strong>Итого: </strong></td><td>"+result[5]+"<input style='display:none' name=\"PurchaseAmt\" type=\"text\" id=\"PurchaseAmt\"  value=\""+result[5].replace(" ","").replace(",",".")+"\" /></td></tr>"
+    overall_sum = ''.join(result[5].split())
+    overall_sum_array = overall_sum.split(",")
+    overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
+    # print overall_sum
+    result_table = result_table + """
+    <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
+    </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
+     id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr>
+    """
     # print "-----", "<br />"
     # print result[3], "<br />"
     # print result[4], "<br />"
