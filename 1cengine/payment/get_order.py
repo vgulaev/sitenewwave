@@ -23,7 +23,8 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -108,7 +109,7 @@ def get_order(UID):
     client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
     client.set_options(cache=DocumentCache())
 
-    
+
 
     result = client.service.GetOrders(UID)
 
@@ -150,7 +151,7 @@ def get_order(UID):
         result_table = result_table + "<td>" + good[4] + "</td>"
         # item_sum = float(good[4]) * float(good[2])
         # overall_sum = overall_sum + item_sum
-        result_table = result_table + "<td>" + good[6] + "</td>"
+        result_table = result_table + "<td>" + good[7] + "</td>"
         result_table = result_table + "</tr>"
 
 
