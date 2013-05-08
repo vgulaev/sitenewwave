@@ -29,7 +29,9 @@ def findpath(pagename):
     result = "404"
     for element in trimeturls:
         if element.urlname == pagename:
-            result = element.path  
+            result = element.path
+        elif "*" in element.urlname and element.urlname.replace("*","") in pagename:
+            result = element.path
     return(result)
 
 def insertcontent(path):
