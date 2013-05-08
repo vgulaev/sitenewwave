@@ -3,6 +3,7 @@
 
 import sys, os
 import cgi
+
 import imp
 import cgitb; cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
@@ -22,7 +23,7 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -74,32 +75,40 @@ def translit(letter):
         "6" :  "6",
         "7" :  "7",
         "8" :  "8",
-        "9" :  "9"
+        "9" :  "9",
+        " " :  " "
     }
 
     letter = letter.lower().encode('utf-8')
     return ru_en_dict[letter].upper()
 
+def get_new_secret_key():
+    from grab import Grab
+    from secrets import banking
+    
+    g = Grab()
+    g.setup(url="https://e-commerce.raiffeisen.ru/portal/mrchtrnvw/trn_xml.jsp")
+    g.setup(connect_timeout=5, timeout=5)
+    g.setup(post={
+        'xICBSXPProxy.ReqType'      :   '100',
+        'xICBSXPProxy.Version'      :   '05.00',
+        'xICBSXPProxy.UserName'     :   banking["login"],
+        'xICBSXPProxy.UserPassword' :   banking["passwd"],
+        'MerchantID'                :   banking["merchant_id"]
+        })
+
+    g.request()
+
+    return g.xpath_text('//value')
+
+
 def get_order(UID):
-    post = {}
-
-    if "POST_DATA" in os.environ:
-        raw_post = os.environ["POST_DATA"]
-    else:
-        raw_post = sys.stdin.read()
-
-    if raw_post != "":
-        pre_post = raw_post.split("&")
-        # print pre_post
-        for variables in pre_post:
-            # print variables
-            key_var = str(variables).split("=")
-            # print key_var
-            post[key_var[0]] = key_var[1]
+    
 
     client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
     client.set_options(cache=DocumentCache())
 
+    
 
     result = client.service.GetOrders(UID)
 
@@ -113,14 +122,14 @@ def get_order(UID):
     """  + "</caption>"
     result_table = result_table + "<tr><th>Номенклатура</th><th>Количество шт.</th><th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
 
-    # print result, "<br />"
+    print result, "<br />"
     # print "-----", "<br />"
 
     # print result[0], "<br />"
     # print result[1], "<br />"
     # overall_sum = 0
     
-    for good in result [2][0]:
+    for good in result[2][0]:
         result_table = result_table + "<tr>"
         
         # print "------", "<br />"
@@ -153,14 +162,20 @@ def get_order(UID):
     result_table = result_table + """
     <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
     </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
-     id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr>
+     id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr></table>
     """
     # print "-----", "<br />"
     # print result[3], "<br />"
     # print result[4], "<br />"
 
+    result_table = result_table + """
+        <input style="display:none" name="key_b" type="text" id="key_b"  
+        value=\""""+get_new_secret_key()+"""\"/>
+    """
 
-    return result_table + "</table>"
+    # get_new_secret_key()
+
+    return result_table
 
 
 def __main__(funct_name):

@@ -6,8 +6,10 @@
 
     <title>Оплата заказа</title>
     <link rel="stylesheet" type="text/css" href="index.css" media="all" />
-    <script src="index.js"></script>
+    
     <script type="text/javascript" src="/lib/frameworks/raf_sha256.js"> </script>
+    <script src="index.js"></script>
+
 </head>
 <body>
 
@@ -58,11 +60,11 @@
         <input type="checkbox" name="Address" id="Address"  value="Y" checked="checked" />
         <input type="checkbox" name="Phone" id="Phone"  value="Y" /> 
     </div>
-    <table width="550" border="1" cellpadding="0" cellspacing="0" bordercolor="#660033">
+    <table style="display:none" width="550" border="1" cellpadding="0" cellspacing="0" bordercolor="#660033">
             <tr>
               <td width="13%">Ключ в формате Base64</td>
               <td colspan="2"><label>
-                <input name="key_b" type="text" id="key_b"  value="adz2dvZ7g0e9dDr/RHx/uez4/0jcG2I+ymjw3XEuriU="/>
+                
               </label></td>
               <td width="17%" rowspan="2">
                 <input type="button" name="base_to_hex" id="base_to_hex" value="Base64ToHex" onclick="javascript: BTH();" />
@@ -107,12 +109,11 @@
               <td><input type="button" name="gen_hmac" id="gen_hmac" value="HMAC Base64" onclick="javascript:GENb64();"/><input type="button" name="gen_hmac" id="gen_hmac" value="HMAC Hex"  onclick="javascript:GENhex();" /></td>
             </tr>
           </table>
-    <input type="submit" name="SubmitName" value="Создать платеж" />
                     
 <pythonscript>
         {template|show_order()}
 </pythonscript>
-
+      <input type="submit" name="SubmitName" value="Создать платеж" />
     </form>
 </div></div>
 
