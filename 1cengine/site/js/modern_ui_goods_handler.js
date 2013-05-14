@@ -141,7 +141,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
     if(c == undefined) {
         c = "n"
     }
-    alert('nya')
+    // alert('nya')
     var mesDiv = '';
     $('tr[id="' + hash + '"]').each(function() {
 
@@ -302,7 +302,7 @@ function showModalItem(hash, edIzm, prices, stock, c) {
 
     })
 
-    alert("double-nya")
+    // alert("double-nya")
 
     $.blockUI({
         message: mesDiv
