@@ -48,9 +48,9 @@ $text_seo = "";
 
 if(isset($_GET["catalog"])){
     // echo 1;
-    $fp = fopen("/home/saur/web/sitenewwave/1cengine/site/seotags.json","r");
+    $fp = fopen("seotags.json","r");
     // echo $fp;
-    $json_string = fread($fp, filesize("/home/saur/web/sitenewwave/1cengine/site/seotags.json"));
+    $json_string = fread($fp, filesize("seotags.json"));
     fclose($fp);
     $tag = $_GET["catalog"];
     $tag = str_replace(" ", "_", $tag);
