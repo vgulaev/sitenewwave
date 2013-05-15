@@ -401,3 +401,7 @@ div.blockUI{
 .itemCharInput{
 	width:40px !important;
 }
+
+#seotext{
+	display:none;
+}
