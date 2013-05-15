@@ -44,18 +44,29 @@ if(isset($_GET["ref"])){
     $keywords = $keywordsTemplate;
 }
 
+$text_seo = "";
+
 if(isset($_GET["catalog"])){
-    $fp = fopen("seotags.json","r");
-    $json_string = fread($fp, filesize("seotags.json"));
+    // echo 1;
+    $fp = fopen("/home/saur/web/sitenewwave/1cengine/site/seotags.json","r");
+    // echo $fp;
+    $json_string = fread($fp, filesize("/home/saur/web/sitenewwave/1cengine/site/seotags.json"));
     fclose($fp);
     $tag = $_GET["catalog"];
     $tag = str_replace(" ", "_", $tag);
     $tag = str_replace("%20", "_", $tag);
-
+    // echo $json_string;
     $tags_obj = json_decode($json_string);
+    // echo $tags_obj;
+    // $text_seo = $json_string; 
     if($tags_obj->$tag->title!=""){
         $title = '<title> ' . $tags_obj->$tag->title . ' </title>';
-        $description = '"' . $tags_obj->$tag->description . '" />'; 
+        $description = '"' . $tags_obj->$tag->description . '" />';
+        // print_r($tags_obj->$tag->text);
+        if(isset($tags_obj->$tag->text)){
+            // echo 2;
+            $text_seo = $tags_obj->$tag->text;
+        } 
     } 
 }
 
@@ -67,6 +78,8 @@ $template_string = str_replace("</html>", "", $template_string);
 
 
 echo $template_string;
+
+echo $text_seo;
 
 ?>
 
