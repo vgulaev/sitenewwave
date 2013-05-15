@@ -970,3 +970,7 @@ tr.iHeader{
 	border:1px solid gray;
 	padding-right:0;
 }
+
+#seotext{
+	display:none;
+}
