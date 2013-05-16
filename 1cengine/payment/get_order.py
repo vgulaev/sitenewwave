@@ -95,79 +95,81 @@ def get_order(UID):
     
     if UID != None:
 
-        
-        
-        client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
-        client.set_options(cache=DocumentCache())
-
-
-
-        result = client.service.GetOrders(UID)
-
-        result_table = "<table>"
-        result_table = result_table + "<caption>" + result[3]
-        order_number = ""
-        for letter in result[3]:
-            order_number = order_number + translit(letter)
-        result_table = result_table + """
-            <input style="display:none" name="PurchaseDesc" type="text" id="PurchaseDesc"  value=\""""+order_number+"""\" />
-        """  + "</caption>"
-        result_table = result_table + "<tr><th>Номенклатура</th><th>Количество шт.</th><th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
-
-        # print result, "<br />"
-        # print "-----", "<br />"
-
-        # print result[0], "<br />"
-        # print result[1], "<br />"
-        # overall_sum = 0
-        
-        for good in result[2][0]:
-            result_table = result_table + "<tr>"
+        try:
             
-            # print "------", "<br />"
-            # print good[0], "<br />" ### Характеристика
-            # print good[1], "<br />"
-            # print good[2], "<br />"
-            # print good[3], "<br />" ### Номенклатура
-            # print good[4], "<br />"
-
-            lib_path = os.path.abspath('1cengine/payment/')
-            sys.path.append(lib_path)
-            python_lib_name = "get_item_name"
-            get_item_name_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
-
-            result_table = result_table + "<td>" + get_item_name_lib.get_item_name(good[0],good[3]) + "</td>"
-            result_table = result_table + "<td>" + good[1] + "</td>"
-            result_table = result_table + "<td>" + good[2] + "</td>"
-            result_table = result_table + "<td>" + good[4] + "</td>"
-            # item_sum = float(good[4]) * float(good[2])
-            # overall_sum = overall_sum + item_sum
-            result_table = result_table + "<td>" + good[7] + "</td>"
-            result_table = result_table + "</tr>"
+            client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
+            client.set_options(cache=DocumentCache())
 
 
 
-        overall_sum = ''.join(result[5].split())
-        overall_sum_array = overall_sum.split(",")
-        overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
-        # print overall_sum
-        result_table = result_table + """
-        <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
-        </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
-         id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr></table>
-        """
-        # print "-----", "<br />"
-        # print result[3], "<br />"
-        # print result[4], "<br />"
+            result = client.service.GetOrders(UID)
 
-        result_table = result_table + """
-            <input style="display:none" name="key_b" type="text" id="key_b"  
-            value=\""""+get_new_secret_key()+"""\"/>
-            <input type="submit" name="SubmitName" value="Создать платеж" />
-        """
+            result_table = "<table>"
+            result_table = result_table + "<caption>" + result[3]
+            order_number = ""
+            for letter in result[3]:
+                order_number = order_number + translit(letter)
+            result_table = result_table + """
+                <input style="display:none" name="PurchaseDesc" type="text" id="PurchaseDesc"  value=\""""+order_number+"""\" />
+            """  + "</caption>"
+            result_table = result_table + "<tr><th>Номенклатура</th><th>Количество шт.</th><th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
 
-        # get_new_secret_key()
+            # print result, "<br />"
+            # print "-----", "<br />"
 
+            # print result[0], "<br />"
+            # print result[1], "<br />"
+            # overall_sum = 0
+            
+            for good in result[2][0]:
+                result_table = result_table + "<tr>"
+                
+                # print "------", "<br />"
+                # print good[0], "<br />" ### Характеристика
+                # print good[1], "<br />"
+                # print good[2], "<br />"
+                # print good[3], "<br />" ### Номенклатура
+                # print good[4], "<br />"
+
+                lib_path = os.path.abspath('1cengine/payment/')
+                sys.path.append(lib_path)
+                python_lib_name = "get_item_name"
+                get_item_name_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+
+                result_table = result_table + "<td>" + get_item_name_lib.get_item_name(good[0],good[3]) + "</td>"
+                result_table = result_table + "<td>" + good[1] + "</td>"
+                result_table = result_table + "<td>" + good[2] + "</td>"
+                result_table = result_table + "<td>" + good[4] + "</td>"
+                # item_sum = float(good[4]) * float(good[2])
+                # overall_sum = overall_sum + item_sum
+                result_table = result_table + "<td>" + good[7] + "</td>"
+                result_table = result_table + "</tr>"
+
+
+
+            overall_sum = ''.join(result[5].split())
+            overall_sum_array = overall_sum.split(",")
+            overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
+            # print overall_sum
+            result_table = result_table + """
+            <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
+            </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
+             id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr></table>
+            """
+            # print "-----", "<br />"
+            # print result[3], "<br />"
+            # print result[4], "<br />"
+
+            result_table = result_table + """
+                <input style="display:none" name="key_b" type="text" id="key_b"  
+                value=\""""+get_new_secret_key()+"""\"/>
+                <input type="submit" name="SubmitName" value="Создать платеж" />
+            """
+
+            # get_new_secret_key()
+
+        except:
+            result_table = "<p>Не правильный идентификатор заказа</p>"
         
     else:
         result_table = "<p>Не задан идентификатор заказа</p>"
