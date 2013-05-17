@@ -131,18 +131,19 @@ def get_order(UID):
                 # print good[3], "<br />" ### Номенклатура
                 # print good[4], "<br />"
 
-                lib_path = os.path.abspath('1cengine/payment/')
-                sys.path.append(lib_path)
-                python_lib_name = "get_item_name"
-                get_item_name_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+                # lib_path = os.path.abspath('1cengine/payment/')
+                # sys.path.append(lib_path)
+                # python_lib_name = "get_item_name"
+                # get_item_name_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
 
-                result_table = result_table + "<td>" + get_item_name_lib.get_item_name(good[0],good[3]) + "</td>"
+                result_table = result_table + "<td>" + good[8] + "</td>"
                 result_table = result_table + "<td>" + good[1] + "</td>"
                 result_table = result_table + "<td>" + good[2] + "</td>"
                 result_table = result_table + "<td>" + good[4] + "</td>"
                 # item_sum = float(good[4]) * float(good[2])
                 # overall_sum = overall_sum + item_sum
                 result_table = result_table + "<td>" + good[7] + "</td>"
+                # result_table = result_table + "<td>" + good[8] + "</td>"
                 result_table = result_table + "</tr>"
 
 
