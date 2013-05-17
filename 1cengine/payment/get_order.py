@@ -23,6 +23,8 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
+
+
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
 _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
@@ -92,12 +94,20 @@ def get_new_secret_key():
     return response.find("value").text
     
 def get_order(UID):
+
+    ### cache cleaning code
+    # import os
+    # import shutil
+    # from tempfile import gettempdir as tmp
+    # shutil.rmtree(os.path.join(tmp(), 'suds'), True)
     
     if UID != None:
 
         try:
             
             client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
+            
+            # client.set_options(cache=None)
             client.set_options(cache=DocumentCache())
 
 
