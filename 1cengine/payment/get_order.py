@@ -123,7 +123,7 @@ def get_order(UID):
 
         try:
 
-            result_table = "<table>"
+            result_table = "<table class='checkoutTable'>"
             result_table = result_table + "<caption>" + result[3]
             order_number = ""
             for letter in result[3]:
@@ -170,7 +170,7 @@ def get_order(UID):
             # print result[5]
             overall_sum = ''.join(result[5].split(" "))
             overall_sum_array = overall_sum.split(",")
-            # print overall_sum_array
+            # print overall_sum_array.__len__()
             if overall_sum_array.__len__() > 1:
                 overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
             else:

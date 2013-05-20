@@ -107,3 +107,7 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	vertical-align:middle;
 	font-size:16px;
 }
+
+.checkoutTable td:last-child{
+	text-align:right;
+}
