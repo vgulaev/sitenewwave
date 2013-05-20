@@ -166,21 +166,21 @@ def get_order(UID):
                 result_table = result_table + "</tr>"
 
 
+            # print result[5][-3:]
+            # print result[5][:-3][-3:]
+            # print result[5][:-3][:-3][-3:]
+            # print result[5][:-3][:-3][:-3][-3:]
 
-            # print result[5]
-            # overall_sum = str(result[5]).split(" ")
-            # print overall_sum
-            # overall_sum_array = overall_sum.split(",")
-            # # print overall_sum_array.__len__()
-            # if overall_sum_array.__len__() > 1:
-            #     overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
-            # else:
-            #     overall_sum = overall_sum_array[0] + ".00"
-            # # print overall_sum
-            # display_sum = result[5]
+            display_sum = result[5][:-3][:-3][:-3][-3:]
+            display_sum = display_sum + "&nbsp;" + result[5][:-3][:-3][-3:]
+            display_sum = display_sum + "&nbsp;" + result[5][:-3][-3:]
+            display_sum = display_sum + result[5][-3:]
+
+            # print display_sum
+
             result_table = result_table + """
             <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
-            </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
+            </td><td>"""+display_sum+"""<input style="display:none" name="PurchaseAmt" type="text"
              id="PurchaseAmt"  value=\""""+result[5]+"""\" /></td></tr></table>
             """
             # print "-----", "<br />"
