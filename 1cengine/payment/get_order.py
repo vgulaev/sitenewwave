@@ -103,16 +103,25 @@ def get_order(UID):
     
     if UID != None:
 
+            
+        client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
+        
+        # client.set_options(cache=None)
+        client.set_options(cache=DocumentCache())
+
         try:
-            
-            client = Client(_CURRENT_ADDRESS_+'OrderKlient.1cws?wsdl', location = _CURRENT_ADDRESS_+"OrderKlient.1cws")
-            
-            # client.set_options(cache=None)
-            client.set_options(cache=DocumentCache())
-
-
-
             result = client.service.GetOrders(UID)
+        except:
+            return "<p>Ошибка в работе с веб сервисом</p>"
+
+        
+        if result[3].strip().__len__() != 0:
+            pass
+        else:
+            return "<p>Не существующий номер заказа</p>"
+        # print result[3]
+
+        try:
 
             result_table = "<table>"
             result_table = result_table + "<caption>" + result[3]
@@ -158,9 +167,14 @@ def get_order(UID):
 
 
 
-            overall_sum = ''.join(result[5].split())
+            # print result[5]
+            overall_sum = ''.join(result[5].split(" "))
             overall_sum_array = overall_sum.split(",")
-            overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
+            # print overall_sum_array
+            if overall_sum_array.__len__() > 1:
+                overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
+            else:
+                overall_sum = overall_sum_array[0] + ".00"
             # print overall_sum
             result_table = result_table + """
             <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
@@ -180,7 +194,7 @@ def get_order(UID):
             # get_new_secret_key()
 
         except:
-            result_table = "<p>Не правильный идентификатор заказа</p>"
+            result_table = "<p>Что то пошло не так</p>"
         
     else:
         result_table = "<p>Не задан идентификатор заказа</p>"
