@@ -168,18 +168,20 @@ def get_order(UID):
 
 
             # print result[5]
-            overall_sum = ''.join(result[5].split(" "))
-            overall_sum_array = overall_sum.split(",")
-            # print overall_sum_array.__len__()
-            if overall_sum_array.__len__() > 1:
-                overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
-            else:
-                overall_sum = overall_sum_array[0] + ".00"
+            # overall_sum = str(result[5]).split(" ")
             # print overall_sum
+            # overall_sum_array = overall_sum.split(",")
+            # # print overall_sum_array.__len__()
+            # if overall_sum_array.__len__() > 1:
+            #     overall_sum = overall_sum_array[0] + "." + overall_sum_array[1].ljust(2,"0")
+            # else:
+            #     overall_sum = overall_sum_array[0] + ".00"
+            # # print overall_sum
+            # display_sum = result[5]
             result_table = result_table + """
             <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
             </td><td>"""+result[5]+"""<input style="display:none" name="PurchaseAmt" type="text"
-             id="PurchaseAmt"  value=\""""+overall_sum+"""\" /></td></tr></table>
+             id="PurchaseAmt"  value=\""""+result[5]+"""\" /></td></tr></table>
             """
             # print "-----", "<br />"
             # print result[3], "<br />"
