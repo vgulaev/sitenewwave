@@ -19,6 +19,7 @@ def report_success():
     import Cookie
 
     cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+    print cookie
     if cookie.has_key("uid"):
         uid = cookie["uid"].value
     else:
