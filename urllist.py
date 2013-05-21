@@ -65,3 +65,5 @@ trimeturls.append(urltype("kabinet/authorization", "1cengine/kabinet_authorizati
 
 trimeturls.append(urltype("payment", "1cengine/payment/"))
 trimeturls.append(urltype("payment/*", "1cengine/payment/"))
+
+trimeturls.append(urltype("payment/success", "1cengine/payment_success/"))

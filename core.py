@@ -81,11 +81,10 @@ def makecontent(path):
     soup.html.head.title.replaceWith(title)
 
     #set meta tags
-    meta_tags = soupForImport.find_all("meta")
-    for meta in meta_tags:
-        if meta.has_key("name") and meta["name"] == "description":
-            meta_for_replace = soup.find("meta", { "name" : "description" })
-            meta_for_replace.replaceWith(meta)
+    meta = soupForImport.find("meta", { "name" : "description" })
+    if meta != None:
+        meta_for_replace = soup.find("meta", { "name" : "description" })
+        meta_for_replace.replaceWith(meta)
 
     # loading python script
     nodes = soupForImport.html.find_all("pythonscript")
