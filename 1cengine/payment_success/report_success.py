@@ -130,7 +130,7 @@ def report_1c(uid):
     # except:
     #     return False
 
-    print result
-    return "SUCCESS"
+    # print result
+    return "Платёж успешно зачислен"
 
 # print ask_bank("54ed5a9b-bdfe-11e2-be6a-00163e25bdbe")
