@@ -191,7 +191,34 @@ def get_order(UID):
                 <input style="display:none" name="key_b" type="text" id="key_b"  
                 value=\""""+get_new_secret_key()+"""\"/>
                 <input type="submit" name="SubmitName" value="Создать платеж" />
+                <script type="text/javascript">
+                    $(document).ready( function(){
+                        $.removeCookie("uid",{ expires: 1, path: '/'});
+                        $.cookie("uid",\""""+str(UID)+"""\",{ expires: 1, path: '/'})
+                    })
+                 </script>
             """
+
+            # import Cookie
+            # expiration = datetime.datetime.now() + datetime.timedelta(days=30)
+            # cookie = Cookie.SimpleCookie()
+            # cookie["uid"] = UID
+            # # cookie["uid"]["domain"] = ".sitenewwave.dev"
+            # cookie["uid"]["path"] = "/"
+            # cookie["uid"]["expires"] = expiration.strftime("%a, %d-%b-%Y %H:%M:%S PST")
+            # print cookie.output()
+
+
+            # result_table = result_table + """
+            #     <script type="text/javascript">
+            #         $(document).ready( function(){
+            #                 $.removeCookie("uid",{ expires: 30, path: '/'});
+            #                 $.cookie("uid",\""""+str(UID)+"""\",{ expires: 30, path: '/'})
+            #                 // alert('"""+str(c)+"""')
+            #             })
+            #     </script>
+
+            # """
 
             # get_new_secret_key()
 

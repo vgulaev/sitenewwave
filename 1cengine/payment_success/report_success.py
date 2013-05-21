@@ -83,6 +83,7 @@ def ask_bank(uid):
 
     return order_row
 
+
 ### функция будет измененна и/или выкинута на задворки истории
 ### в случае, если мы передаем уид как идентификатор заказа ..
 def get_order_number(uid):
@@ -103,8 +104,12 @@ def get_order_number(uid):
         return False
 
 def report_1c(uid):
-    order_row = ask_bank(uid)
-    order_array = order_row.split("|")
+
+    if uid != None:
+        order_row = ask_bank(uid)
+        order_array = order_row.split("|")
+    else:
+        return "FAIL"
     
 
     if order_array[5] == "Y":
