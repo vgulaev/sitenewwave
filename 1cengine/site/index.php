@@ -79,7 +79,7 @@ $template_string = str_replace("</html>", "", $template_string);
 
 echo $template_string;
 
-echo $text_seo;
+
 
 ?>
 
@@ -156,6 +156,7 @@ echo $text_seo;
                     <a id="showAll" <?php if($_GET["catalog"]==""){ echo 'style="display:none;"'; } ?>prstat -s rss href="Все%20результаты" onClick="return false">
                         Показать все результаты
                     </a>
+                    <?php echo $text_seo; ?>
                 </p>
 
                 <div id="tags" <?php if($_GET["catalog"]!=""){ echo 'style="display:none;"'; } ?> >
