@@ -161,6 +161,7 @@ echo $template_string;
 
                 <div id="tags" <?php if($_GET["catalog"]!=""){ echo 'style="display:none;"'; } ?> >
                     <table class="tagTab" style="font-size:16px">
+                        
                         <tr>
                             <td class="iRefTd armaTagTd"><a href="/catalog/armatura/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>
                             <td class="iRefTd listTagTd"><a href="/catalog/list/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); showGroup2('Лист'); return false;"><div class="listTagDiv"></div><span><strong>Лист</strong></span></a></td>
