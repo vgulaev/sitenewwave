@@ -126,7 +126,7 @@ def report_1c(uid):
 
 
     # try:
-    result = client.service.CreatePaymentOrder(uid,order_array[4])
+    result = client.service.CreatePaymentOrder(uid,order_array[4].replace(" ",""))
     # except:
     #     return False
 
