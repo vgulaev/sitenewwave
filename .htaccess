@@ -6,6 +6,7 @@ RewriteEngine on
 RewriteRule ^1cengine/site/ - [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
+RewriteRule ^1cengine/py_scripts/ - [L]
 
 RewriteRule ^catalog/armatura/$ 1cengine/site/?catalog=Арматура$1 [L]
 RewriteRule ^catalog/armatura-12/$ 1cengine/site/?catalog=Арматура\%2012$1 [L]
