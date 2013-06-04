@@ -31,7 +31,14 @@ def show_order():
         uid = None
 
     return order_lib.get_order(uid)
+
+def show_loader():
+    import  random
+    loader_list = ["379","285","377","382","385"]
     
+    loader_str = "<img src='/1cengine/payment/"+random.choice(loader_list)+".png' />"
+
+    return loader_str
 
 def __main__(funkt):
     return eval(funkt)
