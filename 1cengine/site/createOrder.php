@@ -39,8 +39,10 @@ $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
 
+
 $orderStringArray = split(';', $orderString);
 $GoodsList["СтрокиТаблицы"] = array();
+$sumOverall = 0;
 
 foreach($orderStringArray as $orderItem){
 
@@ -52,6 +54,7 @@ foreach($orderStringArray as $orderItem){
 		$GoodsRow["КоличествоВес"] = $orderItemArray[3];
 		$GoodsRow["Цена"] = $orderItemArray[4];
 		
+    $sumOverall = $sumOverall + $orderItemArray[4];
 		array_push($GoodsList["СтрокиТаблицы"], $GoodsRow); 
 	}	
 	
@@ -60,6 +63,7 @@ foreach($orderStringArray as $orderItem){
 
 
 $OrderFromSite["Товар"] = $GoodsList;
+$OrderFromSite["ИтоговаяСумма"] = "ДА";
 
 $params["XDTOStructure"] = $OrderFromSite;
 
