@@ -131,6 +131,33 @@ class Index_Page():
 
         return footer
 
+    def compose_content_temlplate(self):
+        if self.content_template == "":
+            return BeautifulSoup("<html><body></body></html>")
+
+        content = BeautifulSoup(self.content_template)
+
+        #### loading python script ####
+        py_nodes = content.find_all("pythonscript")
+
+        for current_element in py_nodes:
+            python_lib_name = current_element.contents[0].split("{")[1].split("}")[0]
+#            python_method_name = current_element.contents[0].split("|")[1].split("}")[0]
+            
+            import template
+            r = eval(python_lib_name)
+#            python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
+#            
+#            r = python_lib.__main__(python_method_name)
+#
+            if r != None:
+                # python_replace = BeautifulSoup(r)
+                current_element.replaceWith(r)
+            else:
+               current_element.extract()
+
+        return content
+
 
     def show_page(self):
         page = BeautifulSoup("<html><head></head><body class=\"page-main\"></body></html>")
@@ -138,8 +165,11 @@ class Index_Page():
         self.head_template = self.load_template_from_file("templates/head.tpl.html")
         self.header_template = self.load_template_from_file("templates/header.tpl.html")
         self.footer_template = self.load_template_from_file("templates/footer.tpl.html")
+        self.content_template = self.load_template_from_file("templates/content.tpl.html")
 
         self.js_list = [
+            "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js",
+            "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/modern_uiJs.js",
@@ -150,15 +180,17 @@ class Index_Page():
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
-            "/1cengine/site/modern_style.css" 
+            "/1cengine/new_site/css/modern_style.css" 
         ]
 
         head = self.compose_head_temlplate()
         header = self.compose_header_temlplate()
+        content = self.compose_content_temlplate()
         footer = self.compose_footer_temlplate()
 
         page.head.append(head)
         page.append(header)
+        page.append(content)
         page.append(footer)
 
         print page.prettify("utf-8")
