@@ -6,11 +6,16 @@ from bs4 import BeautifulSoup
 form = cgi.FieldStorage()
 
 def set_title():
+    soup = BeautifulSoup()
+    title_tag = soup.new_tag("title")
     
     if form.has_key("ref"):
-        return form["ref"].value+" купить онлайн | Тримет ООО "
+        title_string = form["ref"].value+" купить онлайн | Тримет ООО " 
     else:
-        return "Купить Online"
+        title_string = "Купить Online"
+
+    title_tag.append(title_string)
+    return title_tag
 
 
 def set_keywords():
