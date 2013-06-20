@@ -233,3 +233,9 @@ def get_order(UID):
 
 def __main__(funct_name):
     return eval(funct_name)
+
+
+get = cgi.FieldStorage()
+
+if "funkt" in get:
+    __main__(get["funkt"].value)
