@@ -13,10 +13,12 @@ soup = BeautifulSoup()
 
 
 class ResultTable():
-    def __init__(self):
+    def __init__(self, req, rtype):
         self.group_list = []
+        self.req = req
+        self.rtype = rtype
 
-    def getItems(self, req, type):
+    def get_items(self):
 
 
         connector = myDBC("goods")
@@ -24,23 +26,20 @@ class ResultTable():
 
         condition = "WHERE "
 
-        if type == "strict":
-            condition = condition + "CONCAT(display_name, ' ', char_name) LIKE '%"+req+"%' AND "
+        if self.rtype == "strict":
+            condition = condition + "CONCAT(display_name, ' ', char_name) LIKE '%"+self.req+"%' AND "
 
             limit = "LIMIT 1"
 
         else:
-            reqArray = req.split(" ")
+            reqArray = self.req.split(" ")
             for reqWord in reqArray:
                 if reqWord.__len__()>1:
                     condition = condition + "`offers`.`name` LIKE '%"+reqWord+"%' AND "
                 else:
                     condition = condition + "`offers`.`name` LIKE '% "+reqWord+"%' AND "
 
-            if "show_all" in get:
-                limit = ""
-            else :
-                limit = "ORDER BY `offers`.`stock` DESC LIMIT 20"
+            limit = "ORDER BY `offers`.`stock` DESC LIMIT 20"
 
         r = connector.dbExecute("""
                 SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
@@ -53,6 +52,22 @@ class ResultTable():
 
         return r
 
+    def  compose_table(self):
+        result_table_tag = soup.new_tag("table")
+
+        result_table_tag["id"] = "tableRes"
+
+        parent_array = []
+        for row in r:
+            if not row[4] in parent_array:
+                parent_array.append(row[4])
+
+                group = ItemGroup(row[4],row[3])
+
+                result_table_tag.append(group.compose_header())
+
+        item = Item(row[0],row[1],row[2],row[5],row[7],row[6],row[8])
+        result_table_tag.append(item.compose_item())
 
 
 
@@ -63,7 +78,7 @@ class ItemGroup():
         self.price_type_string = price_type_string
 
     def compose_price_types(self):
-        price_type_array = price_type_string.split("|")
+        price_type_array = self.price_type_string.split("|")
 
         price_tag_array = []
 
@@ -108,9 +123,102 @@ class ItemGroup():
         return header_tag
 
 class Item():
-    def __inti__(self, name, char):
+    def __init__(self, name, char, price_string, item_hash, parent_hash, ed_izm, stock):
         self.name = name
         self.char = char
+        self.price_string = price_string
+        self.item_hash = item_hash
+        self.parent_hash = parent_hash
+        self.ed_izm = ed_izm
+
+        if stock == 0:
+            self.stock = "Под заказ"
+            self.stockSchema = "http://schema.org/PreOrder"
+        else:
+            self.stock = "В наличии"
+            self.stockSchema = "http://schema.org/InStock"
+
+    def compose_price(self):
+        price_array = self.price_string.split("|")
+        
+        price_tag_array = []
+
+        for price in price_array:
+            if price != "":
+                price_item_tag = soup.new_tag("td")
+
+                if price_array.index(price) != price_array.__len__() - 1:
+                    price_item_tag["class"] = "price itemPrice"+str(price_array.index(price))
+                    span_tag = soup.new_tag("span")
+                    span_tag.append(price)
+
+                    price_item_tag.append(span_tag)
+
+                else:
+                   price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)) 
+                   price_item_tag["itemprop"] = "offers"
+                   price_item_tag["itemscope itemtype"] = "http://schema.org/Offer"
+
+                   span_tag = soup.new_tag("span")
+                   span_tag["itemprop"] = "price"
+                   price_item_tag.append(span_tag)
+
+                   meta_tag = soup.new_tag("meta")
+                   meta_tag["itemprop"] = "priceCurrency"
+                   meta_tag["content"] = "RUB"
+                   price_item_tag.append(meta_tag)
+
+                   span_availability_tag = soup.new_tag("span")
+                   span_availability_tag["style"] = "display:none"
+                   span_availability_tag["itemprop"] = "availability"
+                   span_availability_tag["href"] = self.stockSchema
+                   span_availability_tag.append(self.stock)
+                   price_item_tag(span_availability_tag)
+
+                   #### div compozing ####
+                   div_tag = soup.new_tag("div")
+                   div_tag["style"] = "display:none"
+                   div_tag["itemprop"] = "seller"
+                   div_tag["itemscope itemtype"] = "http://schema.org/Organization"
+
+                   span_shop_tag = soup.new_tag("span")
+                   span_shop_tag["itemprop"] = "name"
+                   span_shop_tag.append("Тримет ООО")
+                   div_tag.append(span_shop_tag)
+
+                   div_postal_tag = soup.new_tag("div")
+                   div_postal_tag["itemprop"] = "address"
+                   div_postal_tag["itemscope itemtype"] = "http://schema.org/PostalAddress"
+
+                   span_sa_tag = soup.new_tag("span")
+                   span_sa_tag["itemprop"] = "streetAddress"
+                   span_sa_tag.append("ул. Республики, 278 а, строение 1")
+                   div_postal_tag.append(span_sa_tag)
+
+                   span_pc_tag = soup.new_tag("span")
+                   span_pc_tag["itemprop"] = "postalCode"
+                   span_pc_tag.append("625014")
+                   div_postal_tag.append(span_pc_tag)
+
+                   span_al_tag = soup.new_tag("span")
+                   span_al_tag["itemprop"] = "addressLocality"
+                   span_al_tag.append("Тюмень, Россия")
+                   div_postal_tag.append(span_al_tag)
+
+                   div_tag.append(div_postal_tag)
+
+                   span_phone_tag = soup.new_tag("span")
+                   span_phone_tag["itemprop"] = "telephone"
+                   span_phone_tag.append("+7 (3452) 520-670")
+                   div_tag.append(span_phone_tag)
+
+                   #### div compozed ####
+
+                   price_item_tag.append(div_tag)
+
+                price_tag_array.append(price_item_tag)
+
+            return price_tag_array
 
 
 def getItems(req):
@@ -150,6 +258,8 @@ def getItems(req):
     connector.dbClose()
 
     return r
+
+
 
 def showItems(req):
 
