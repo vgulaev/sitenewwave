@@ -16,6 +16,46 @@ class ResultTable():
     def __init__(self):
         self.group_list = []
 
+    def getItems(self, req, type):
+
+
+        connector = myDBC("goods")
+        connector.dbConnect()
+
+        condition = "WHERE "
+
+        if type == "strict":
+            condition = condition + "CONCAT(display_name, ' ', char_name) LIKE '%"+req+"%' AND "
+
+            limit = "LIMIT 1"
+
+        else:
+            reqArray = req.split(" ")
+            for reqWord in reqArray:
+                if reqWord.__len__()>1:
+                    condition = condition + "`offers`.`name` LIKE '%"+reqWord+"%' AND "
+                else:
+                    condition = condition + "`offers`.`name` LIKE '% "+reqWord+"%' AND "
+
+            if "show_all" in get:
+                limit = ""
+            else :
+                limit = "ORDER BY `offers`.`stock` DESC LIMIT 20"
+
+        r = connector.dbExecute("""
+                SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
+                `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
+                FROM `offers`, `groups` 
+                """+condition+""" `offers`.`parent_hash`=`groups`.`hash` """+limit+"""
+            """)
+
+        connector.dbClose()
+
+        return r
+
+
+
+
 class ItemGroup():
     def __init__(self, name, price_type_string):
         self.item_list = []
@@ -67,6 +107,10 @@ class ItemGroup():
 
         return header_tag
 
+class Item():
+    def __inti__(self, name, char):
+        self.name = name
+        self.char = char
 
 
 def getItems(req):
