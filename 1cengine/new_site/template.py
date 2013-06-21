@@ -55,15 +55,18 @@ def set_search_value():
     return input_search_item
 
 def set_search_results():
-    if form.has_key("ref"):
-        # form["term"] = form["ref"].value.decode("utf-8")
-
-        lib_path = os.path.abspath('../py_scripts/')
+    lib_path = os.path.abspath('../py_scripts/')
         sys.path.append(lib_path)
 
         # print lib_path
         import imp
-        get_items_cl = imp.load_source("get_items_cl", lib_path+"/get_items_cl"+".py")
-        get = "strict"
-        return get_items_cl.showItems(form["ref"].value)
+        get_items_bs = imp.load_source("get_items_cl", lib_path+"/get_items_bs"+".py")
+
+    if form.has_key("ref"):
+        # form["term"] = form["ref"].value.decode("utf-8")
+  
+        return get_items_bs.showItems(form["ref"].value, "strict")
         # r = python_lib.__main__(python_method_name)
+
+    elif fom.has_key("catalog"):
+        return get_items_bs.showItems(form["ref"].value, "catalog")
