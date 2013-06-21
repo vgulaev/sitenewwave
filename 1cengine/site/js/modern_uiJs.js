@@ -512,7 +512,7 @@ $(document).ready(function() {
         value = $("#itemName").val()
         $.ajax({
             type: "GET",
-            url: "get_items.py",
+            url: "/1cengine/site/get_items.py",
             async: false,
             data: "term=" + encodeURIComponent(value) + "&show_all=true",
             success: function(html) {
@@ -535,7 +535,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "GET",
-            url: "get_items.py",
+            url: "/1cengine/site/get_items.py",
             async: false,
             data: "term=" + encodeURIComponent(value) + "",
             success: function(html) {
@@ -614,7 +614,7 @@ $(document).ready(function() {
     townS = $('#townSelect option:selected').val()
 
     $("#destination").autocomplete({
-        source: "get_street.py?town=" + townS,
+        source: "/1cengine/site/get_street.py?town=" + townS,
         delay: 10,
         minChars: 2,
         matchSubset: 1,
@@ -628,7 +628,7 @@ $(document).ready(function() {
     $("select").change(function() {
 
         townS = $('#townSelect option:selected').val()
-        $("#destination").autocomplete("option", "source", "get_street.py?town=" + townS)
+        $("#destination").autocomplete("option", "source", "/1cengine/site/get_street.py?town=" + townS)
     })
 
     $("#townSelect").change(function() {
