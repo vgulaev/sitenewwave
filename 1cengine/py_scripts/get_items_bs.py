@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 
 from secrets import *
 
+soup = BeautifulSoup()
+
 
 class ResultTable():
     def __init__(self):
@@ -33,6 +35,7 @@ class ItemGroup():
                 price_header_tag.append(price+"<br />")
 
                 span_tag = soup.new_tag("span")
+
                 if price_type_array.index(price) == 0:
                     span_tag.append("Цена <font color=\"red\">Я</font>ндекса")
                 else:
@@ -45,8 +48,6 @@ class ItemGroup():
         return price_tag_array
         
     def compose_header(self):
-        soup = BeautifulSoup()
-
         header_tag = soup.new_tag("tr")
 
         header_tag["class"] = "iHeader"
