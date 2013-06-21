@@ -146,6 +146,12 @@ function showGroup2(groupName) {
     return false;
 }
 
+/// переход в каталог
+function goToHell(href){
+    // alert(href)
+    window.location.href(href)
+}
+
 /// поиск товара по наименованию ///
 
 function searchItem2(item) {
