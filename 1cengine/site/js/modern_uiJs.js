@@ -520,6 +520,7 @@ $(document).ready(function() {
 
                 $(html).appendTo("#tableRes")
                 $("#showAll").hide();
+                $("#seotext").remove()
             }
 
         });
@@ -532,6 +533,8 @@ $(document).ready(function() {
         value = $("#itemName").val();
         value = value.replace("+"," ");
         // alert($("#itemName").attr("placeholder"))
+
+        $("#seotext").remove()
 
         $.ajax({
             type: "GET",
