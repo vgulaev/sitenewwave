@@ -69,6 +69,7 @@ class ResultTable():
         item = Item(row[0],row[1],row[2],row[5],row[7],row[6],row[8])
         result_table_tag.append(item.compose_item())
 
+        
 
 
 class ItemGroup():
@@ -140,8 +141,16 @@ class Item():
             self.stockSchema = "http://schema.org/InStock"
             self.stocked = True
 
-    def getRAL(rKey):
-        ralArray = {
+        ral = row[0].split("RAL ")
+        if ral.__len__()>1:
+            r_key = ral[1].split(" ")
+            self.ral_color = get_RAL(r_key[0])
+        else:
+            self.ral_color = ""
+
+
+    def get_RAL(r_key):
+        ral_array = {
             '1014':'#DFCEA1',
             '3003':'#870A24',
             '3005':'#581E29',
@@ -159,8 +168,8 @@ class Item():
             '1018':'#F1CF44',
             '3009':'#703731'
         }
-        if rKey in ralArray:
-            return ralArray[rKey]
+        if r_key in ral_array:
+            return ral_array[r_key]
         else:
             return '#000000'
 
@@ -291,9 +300,31 @@ class Item():
 
         #### FINISHED name&buy td composing ####
 
+        #### char td composing ####
 
+        item_char_tag = soup.new_tag("td")
+        item_char_tag["name"] = self.char
+        item_char_tag["class"] = "itemChar"
+        item_char_tag["itemprop"] = "model"
 
+        if self.ral_color == "":
+            item_char_tag.append(self.char)
+        else:
+            item_char_tag["style"] = "background-color:"+self.ral_color;
+            item_char_span_tag = soup.new_tag("span")
+            item_char_span_tag["style"] = "color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;"
 
+            item_char_span_tag.append(self.char)
+            item_char_tag.append(item_char_span_tag)
+
+        item_tag.append(item_char_tag)
+
+        #### FINISHED char td composing ####
+
+        for item_price_tag in self.compose_price:
+            item_tag.append(item_price_tag)
+
+        return item_tag
 
 
 def getItems(req):
