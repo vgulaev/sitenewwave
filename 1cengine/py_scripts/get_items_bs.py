@@ -94,7 +94,7 @@ class ItemGroup():
                 if price_type_array.index(price) == 0:
                     span_tag.append("Цена <font color=\"red\">Я</font>ндекса")
                 else:
-                    span_tag.append("Цена")
+                    span_tag.append(u"Цена")
 
                 price_header_tag.append(span_tag)
 
@@ -132,11 +132,37 @@ class Item():
         self.ed_izm = ed_izm
 
         if stock == 0:
-            self.stock = "Под заказ"
+            self.stock = u"Под заказ"
             self.stockSchema = "http://schema.org/PreOrder"
+            self.stocked = False
         else:
-            self.stock = "В наличии"
+            self.stock = u"В наличии"
             self.stockSchema = "http://schema.org/InStock"
+            self.stocked = True
+
+    def getRAL(rKey):
+        ralArray = {
+            '1014':'#DFCEA1',
+            '3003':'#870A24',
+            '3005':'#581E29',
+            '3011':'#791F24',
+            '5002':'#162E7B',
+            '5005':'#004389',
+            '5021':'#00747D',
+            '6002':'#276230',
+            '6005':'#0E4438',
+            '6029':'#006F43',
+            '7004':'#999A9F',
+            '8017':'#45302B',
+            '9002':'#DADBD5',
+            '9003':'#F8F9FB',
+            '1018':'#F1CF44',
+            '3009':'#703731'
+        }
+        if rKey in ralArray:
+            return ralArray[rKey]
+        else:
+            return '#000000'
 
     def compose_price(self):
         price_array = self.price_string.split("|")
@@ -218,7 +244,56 @@ class Item():
 
                 price_tag_array.append(price_item_tag)
 
-            return price_tag_array
+        return price_tag_array
+
+    def compose_item(self):
+        item_tag = soup.new_tag("tr")
+        item_tag["class"] = "item"
+        item_tag["id"] = self.item_hash+":"+self.parent_hash
+        item_tag["itemscope itemtype"] = "http://schema.org/Product"
+
+        #### name&buy td composing ####
+
+        item_name_tag = soup.new_tag("td")
+        item_name_tag["name"] = self.name
+        item_name_tag["class"] = "itemName"
+
+        item_name_span_tag = soup.new_tag("span")
+        item_name_span_tag["itemprop"] = "name"
+        item_name_span_tag.append(self.name)
+        item_name_tag.append(item_name_span_tag)
+
+        item_buy_span_tag = soup.new_tag("span")
+        item_buy_span_tag["class"] = "buySpan"
+
+        item_buy_a_tag = soup.new_tag("a")
+        if self.stocked:
+            item_buy_a_tag["class"] = "bItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
+                        openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
+                            '"""+self.ed_izm+"', '"+self.char+"""','1'); 
+                        return false"""
+            item_buy_a_tag.append(u"купить")
+        else:
+            item_buy_a_tag["class"] = "oItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
+                        openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
+                            '"""+self.ed_izm+"', '"+self.char+"""','0'); 
+                        return false"""
+            item_buy_a_tag.append(u"заказать")
+
+        item_buy_span_tag.append(item_buy_a_tag)
+        item_name_tag.append(item_buy_span_tag)
+
+        item_tag.append(item_name_tag)
+
+        #### FINISHED name&buy td composing ####
+
+
+
+
 
 
 def getItems(req):
