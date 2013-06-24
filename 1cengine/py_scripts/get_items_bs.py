@@ -58,6 +58,9 @@ class ResultTable():
         result_table_tag["id"] = "tableRes"
 
         parent_array = []
+
+        r = self.get_items()
+
         for row in r:
             if not row[4] in parent_array:
                 parent_array.append(row[4])
@@ -66,10 +69,12 @@ class ResultTable():
 
                 result_table_tag.append(group.compose_header())
 
-        item = Item(row[0],row[1],row[2],row[5],row[7],row[6],row[8])
-        result_table_tag.append(item.compose_item())
+            item = Item(row[0],row[1],row[2],row[5],row[7],row[6],row[8])
+            result_table_tag.append(item.compose_item())
 
-        
+        return result_table_tag
+
+
 
 
 class ItemGroup():
@@ -88,14 +93,14 @@ class ItemGroup():
                 price_header_tag = soup.new_tag("td")
                 price_header_tag["class"] = "priceHeader"
 
-                price_header_tag.append(price+"<br />")
+                price_header_tag.append(price.decode("utf-8")+"<br />")
 
                 span_tag = soup.new_tag("span")
 
                 if price_type_array.index(price) == 0:
                     span_tag.append("Цена <font color=\"red\">Я</font>ндекса")
                 else:
-                    span_tag.append(u"Цена")
+                    span_tag.append("Цена")
 
                 price_header_tag.append(span_tag)
 
@@ -109,7 +114,7 @@ class ItemGroup():
         header_tag["class"] = "iHeader"
 
         header_name_tag = soup.new_tag("td")
-        header_name_tag.append("<strong>"+name+"</strong>")
+        header_name_tag.append("<strong>"+self.name.decode("utf-8")+"</strong>")
         header_tag.append(header_name_tag)
 
         header_size_tag = soup.new_tag("td")
@@ -133,15 +138,15 @@ class Item():
         self.ed_izm = ed_izm
 
         if stock == 0:
-            self.stock = u"Под заказ"
+            self.stock = "Под заказ"
             self.stockSchema = "http://schema.org/PreOrder"
             self.stocked = False
         else:
-            self.stock = u"В наличии"
+            self.stock = "В наличии"
             self.stockSchema = "http://schema.org/InStock"
             self.stocked = True
 
-        ral = row[0].split("RAL ")
+        ral = self.name.split("RAL ")
         if ral.__len__()>1:
             r_key = ral[1].split(" ")
             self.ral_color = get_RAL(r_key[0])
@@ -183,14 +188,14 @@ class Item():
                 price_item_tag = soup.new_tag("td")
 
                 if price_array.index(price) != price_array.__len__() - 1:
-                    price_item_tag["class"] = "price itemPrice"+str(price_array.index(price))
+                    price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)).decode("utf-8")
                     span_tag = soup.new_tag("span")
                     span_tag.append(price)
 
                     price_item_tag.append(span_tag)
 
                 else:
-                   price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)) 
+                   price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)).decode("utf-8")
                    price_item_tag["itemprop"] = "offers"
                    price_item_tag["itemscope itemtype"] = "http://schema.org/Offer"
 
@@ -269,7 +274,7 @@ class Item():
 
         item_name_span_tag = soup.new_tag("span")
         item_name_span_tag["itemprop"] = "name"
-        item_name_span_tag.append(self.name)
+        item_name_span_tag.append(self.name.decode("utf-8"))
         item_name_tag.append(item_name_span_tag)
 
         item_buy_span_tag = soup.new_tag("span")
@@ -278,20 +283,20 @@ class Item():
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
             item_buy_a_tag["class"] = "bItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
+            item_buy_a_tag["href"] = "Добавить в корзину"
+            item_buy_a_tag["onClick"] = """yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
                             '"""+self.ed_izm+"', '"+self.char+"""','1'); 
                         return false"""
-            item_buy_a_tag.append(u"купить")
+            item_buy_a_tag.append("купить")
         else:
             item_buy_a_tag["class"] = "oItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
+            item_buy_a_tag["href"] = "Добавить в корзину"
+            item_buy_a_tag["onClick"] = """yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
-                            '"""+self.ed_izm+"', '"+self.char+"""','0'); 
+                            '"""+self.ed_izm.decode("utf-8")+"', '"+self.char.decode("utf-8")+"""','0'); 
                         return false"""
-            item_buy_a_tag.append(u"заказать")
+            item_buy_a_tag.append("заказать")
 
         item_buy_span_tag.append(item_buy_a_tag)
         item_name_tag.append(item_buy_span_tag)
@@ -308,196 +313,22 @@ class Item():
         item_char_tag["itemprop"] = "model"
 
         if self.ral_color == "":
-            item_char_tag.append(self.char)
+            item_char_tag.append(self.char.decode("utf-8"))
         else:
             item_char_tag["style"] = "background-color:"+self.ral_color;
             item_char_span_tag = soup.new_tag("span")
             item_char_span_tag["style"] = "color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;"
 
-            item_char_span_tag.append(self.char)
+            item_char_span_tag.append(self.char.decode("utf-8"))
             item_char_tag.append(item_char_span_tag)
 
         item_tag.append(item_char_tag)
 
         #### FINISHED char td composing ####
 
-        for item_price_tag in self.compose_price:
+        for item_price_tag in self.compose_price():
             item_tag.append(item_price_tag)
 
         return item_tag
 
-
-def getItems(req):
-
-    get = "strict"
-
-    connector = myDBC("goods")
-    connector.dbConnect()
-
-    condition = "WHERE "
-
-    if "strict" in get:
-        condition = condition + "CONCAT(display_name, ' ', char_name) LIKE '%"+req+"%' AND "
-
-        limit = "LIMIT 1"
-
-    else:
-        reqArray = req.split(" ")
-        for reqWord in reqArray:
-            if reqWord.__len__()>1:
-                condition = condition + "`offers`.`name` LIKE '%"+reqWord+"%' AND "
-            else:
-                condition = condition + "`offers`.`name` LIKE '% "+reqWord+"%' AND "
-
-        if "show_all" in get:
-            limit = ""
-        else :
-            limit = "ORDER BY `offers`.`stock` DESC LIMIT 20"
-
-    r = connector.dbExecute("""
-            SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
-            `offers`.`price_type`, `groups`.`name`, `offers`.`hash`, `offers`.`edIzm`, `offers`.`father_hash`, `offers`.`stock`
-            FROM `offers`, `groups` 
-            """+condition+""" `offers`.`parent_hash`=`groups`.`hash` """+limit+"""
-        """)
-
-    connector.dbClose()
-
-    return r
-
-
-
-def showItems(req):
-
-    r = getItems(req)
-
-    soup = BeautifulSoup()
-    result_table_tag = soup.new_tag("table")
-
-    result_table_tag["id"] = "tableRes"
-
-    # result_table = "<table id=\"tableRes\">"
-
-    parentArray = []
-    for row in r:
-
-        ral = row[0].split("RAL ")
-        if ral.__len__()>1:
-            rKey = ral[1].split(" ")
-            ralColor = getRAL(rKey[0])
-        else:
-            ralColor = ""
-
-        if not row[4] in parentArray:
-            parentArray.append(row[4])
-
-            header_tag = soup.new_tag("tr")
-
-            header_tag["class"] = "iHeader"
-
-            header_name_tag = soup.new_tag("td")
-            header_name_tag.append("<strong>"+row[4]+"</strong>")
-
-            result_table = result_table + '<tr class="iHeader"><td><strong>'+row[4]+'</strong></td><td>Размер</td>'
-            priceTypeArray = row[3].split("|")
-            i=0
-
-            for priceType in priceTypeArray:
-                if priceType != '':
-                    if i == 0:
-                        result_table = result_table + '<td class="priceHeader">'+priceType+'<br /><span>Цена <font color="red">Я</font>ндекса</span></td>'
-                    else:
-                        result_table = result_table + '<td class="priceHeader">'+priceType+'<br /><span>Цена</span></td>'
-                    i = i + 1
-                        
-            result_table = result_table + '</tr>'
-
-        priceArray = row[2].split("|")
-
-        rt = '''
-            <tr class="item" id="'''+row[5]+':'+row[7]+'''" itemscope itemtype="http://schema.org/Product">
-                <td name="'''+row[0]+'''" class="itemName" >
-                <span itemprop="name">'''+row[0]+'''</span>   
-                    <span class="buySpan">
-            '''
-
-        if not row[8] == 0:
-            rt = rt + """<a class="bItem" href="Добавить в корзину" 
-                    onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
-                        openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""', '1'); 
-                        return false">купить</a>
-                    </span></td>""" 
-            stock = "В наличии"
-            stockSchema = 'href="http://schema.org/InStock"'
-        else:
-            rt = rt + """<a class="oItem" href="Добавить в корзину" 
-                    onClick="yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
-                        openItem('"""+row[5]+":"+row[7]+"', '"+row[6]+"', '"+row[2]+"""','0'); 
-                        return false">заказать</a>
-                    </span></td>"""
-            stock = "Под заказ"
-            stockSchema = 'href="http://schema.org/PreOrder"'
-            
-        if not ralColor == "":
-            rt = rt + '<td name="'+row[1]+'" class="itemChar" itemprop="model" style="background-color:'+ralColor+';"><span style="color:#cfcfcf;text-shadow: 1px 1px 2px black, 0 0 1em grey;">'+row[1]+'</span></td>'
-        else:
-            rt = rt + '<td name="'+row[1]+'" class="itemChar" itemprop="model">'+row[1]+'</td>'
-        
-
-        
-        paLength = priceArray.__len__() - 1
-        j = 0
-        for price in priceArray:
-            if price != "":
-                if j == paLength:
-                    rt = rt + '''<td class="price itemPrice'''+str(j)+'''" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            <span itemprop="price">'''+str(price)+'''</span>
-                            <meta itemprop="priceCurrency" content="RUB" />
-                            <span style="display:none;" itemprop="availability" '''+stockSchema+'>'+stock+'''</span>
-                            <div style="display:none;" itemprop="seller" itemscope itemtype="http://schema.org/Organization">
-                                <span itemprop="name">Тримет ООО</span>
-                                <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">ул. Республики, 278 а, строение 1</span>
-                                    <span itemprop="postalCode">625014</span>
-                                    <span itemprop="addressLocality">Тюмень, Россия</span> 
-                                </div>
-                                <span itemprop="telephone">+7 (3452) 520-670</span>
-                            </div>
-                        </td>'''
-                else:
-                    rt = rt + '<td class="price itemPrice'+str(j)+'"><span>'+str(price)+'</span></td>'
-                        
-                j = j + 1
-
-        rt = rt + '</tr>'
-
-        result_table = result_table + rt + "</table>"
-
-    return result_table
-        # print "<li>",row[0], " ", row[1],"</li>"
-
-
-def getRAL(rKey):
-    ralArray = {
-        '1014':'#DFCEA1',
-        '3003':'#870A24',
-        '3005':'#581E29',
-        '3011':'#791F24',
-        '5002':'#162E7B',
-        '5005':'#004389',
-        '5021':'#00747D',
-        '6002':'#276230',
-        '6005':'#0E4438',
-        '6029':'#006F43',
-        '7004':'#999A9F',
-        '8017':'#45302B',
-        '9002':'#DADBD5',
-        '9003':'#F8F9FB',
-        '1018':'#F1CF44',
-        '3009':'#703731'
-    }
-    if rKey in ralArray:
-        return ralArray[rKey]
-    else:
-        return '#000000'
 
