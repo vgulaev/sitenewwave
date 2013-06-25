@@ -70,7 +70,7 @@ def set_search_results():
         return result_table.compose_table()
         # r = python_lib.__main__(python_method_name)
 
-    elif fom.has_key("catalog"):
+    elif form.has_key("catalog"):
         result_table = get_items_bs.ResultTable(form["catalog"].value, "catalog")
   
         return result_table.compose_table()

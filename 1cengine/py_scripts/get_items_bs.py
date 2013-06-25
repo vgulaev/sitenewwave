@@ -93,14 +93,14 @@ class ItemGroup():
                 price_header_tag = soup.new_tag("td")
                 price_header_tag["class"] = "priceHeader"
 
-                price_header_tag.append(price.decode("utf-8")+"<br />")
+                price_header_tag.append(BeautifulSoup(price.decode("utf-8")+"<br />"))
 
                 span_tag = soup.new_tag("span")
 
                 if price_type_array.index(price) == 0:
-                    span_tag.append("Цена <font color=\"red\">Я</font>ндекса")
+                    span_tag.append(BeautifulSoup(u"Цена <font color=\"red\">Я</font>ндекса"))
                 else:
-                    span_tag.append("Цена")
+                    span_tag.append(u"Цена")
 
                 price_header_tag.append(span_tag)
 
@@ -114,11 +114,11 @@ class ItemGroup():
         header_tag["class"] = "iHeader"
 
         header_name_tag = soup.new_tag("td")
-        header_name_tag.append("<strong>"+self.name.decode("utf-8")+"</strong>")
+        header_name_tag.append(BeautifulSoup("<strong>"+self.name.decode("utf-8")+"</strong>"))
         header_tag.append(header_name_tag)
 
         header_size_tag = soup.new_tag("td")
-        header_size_tag.append("Размер")
+        header_size_tag.append(u"Размер")
         header_tag.append(header_size_tag)
 
         price_tag_array = self.compose_price_types()
@@ -184,23 +184,25 @@ class Item():
         price_tag_array = []
 
         for price in price_array:
+            # print "}"+price+"{"
             if price != "":
                 price_item_tag = soup.new_tag("td")
 
                 if price_array.index(price) != price_array.__len__() - 1:
-                    price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)).decode("utf-8")
+                    price_item_tag["class"] = "price itemPrice"+str(price_array.index(price))
                     span_tag = soup.new_tag("span")
                     span_tag.append(price)
 
                     price_item_tag.append(span_tag)
 
                 else:
-                   price_item_tag["class"] = "price itemPrice"+str(price_array.index(price)).decode("utf-8")
+                   price_item_tag["class"] = "price itemPrice"+str(price_array.index(price))
                    price_item_tag["itemprop"] = "offers"
                    price_item_tag["itemscope itemtype"] = "http://schema.org/Offer"
 
                    span_tag = soup.new_tag("span")
                    span_tag["itemprop"] = "price"
+                   span_tag.append(price)
                    price_item_tag.append(span_tag)
 
                    meta_tag = soup.new_tag("meta")
@@ -212,7 +214,7 @@ class Item():
                    span_availability_tag["style"] = "display:none"
                    span_availability_tag["itemprop"] = "availability"
                    span_availability_tag["href"] = self.stockSchema
-                   span_availability_tag.append(self.stock)
+                   span_availability_tag.append(self.stock.decode("utf-8"))
                    price_item_tag(span_availability_tag)
 
                    #### div compozing ####
@@ -223,7 +225,7 @@ class Item():
 
                    span_shop_tag = soup.new_tag("span")
                    span_shop_tag["itemprop"] = "name"
-                   span_shop_tag.append("Тримет ООО")
+                   span_shop_tag.append(u"Тримет ООО")
                    div_tag.append(span_shop_tag)
 
                    div_postal_tag = soup.new_tag("div")
@@ -232,7 +234,7 @@ class Item():
 
                    span_sa_tag = soup.new_tag("span")
                    span_sa_tag["itemprop"] = "streetAddress"
-                   span_sa_tag.append("ул. Республики, 278 а, строение 1")
+                   span_sa_tag.append(u"ул. Республики, 278 а, строение 1")
                    div_postal_tag.append(span_sa_tag)
 
                    span_pc_tag = soup.new_tag("span")
@@ -242,7 +244,7 @@ class Item():
 
                    span_al_tag = soup.new_tag("span")
                    span_al_tag["itemprop"] = "addressLocality"
-                   span_al_tag.append("Тюмень, Россия")
+                   span_al_tag.append(u"Тюмень, Россия")
                    div_postal_tag.append(span_al_tag)
 
                    div_tag.append(div_postal_tag)
@@ -269,7 +271,7 @@ class Item():
         #### name&buy td composing ####
 
         item_name_tag = soup.new_tag("td")
-        item_name_tag["name"] = self.name
+        item_name_tag["name"] = self.name.decode("utf-8")
         item_name_tag["class"] = "itemName"
 
         item_name_span_tag = soup.new_tag("span")
@@ -282,21 +284,21 @@ class Item():
 
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
-            item_buy_a_tag["class"] = "bItem"
-            item_buy_a_tag["href"] = "\ДОБАВИТЬ в корзину"
-            item_buy_a_tag["onClick"] = """yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
+            item_buy_a_tag["class"] = u"bItem"
+            item_buy_a_tag["href"] = u"ДОБАВИТЬ в корзину"
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
-                            '"""+self.ed_izm+"', '"+self.char+"""','1'); 
+                            '"""+self.ed_izm.decode("utf-8")+"', '"+self.char.decode("utf-8")+"""','1'); 
                         return false"""
-            item_buy_a_tag.append("купить")
+            item_buy_a_tag.append(u"купить")
         else:
             item_buy_a_tag["class"] = "oItem"
-            item_buy_a_tag["href"] = "Добавить в корзину"
-            item_buy_a_tag["onClick"] = """yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'заказать'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
                             '"""+self.ed_izm.decode("utf-8")+"', '"+self.char.decode("utf-8")+"""','0'); 
                         return false"""
-            item_buy_a_tag.append("заказать")
+            item_buy_a_tag.append(u"заказать")
 
         item_buy_span_tag.append(item_buy_a_tag)
         item_name_tag.append(item_buy_span_tag)
@@ -308,7 +310,7 @@ class Item():
         #### char td composing ####
 
         item_char_tag = soup.new_tag("td")
-        item_char_tag["name"] = self.char
+        item_char_tag["name"] = self.char.decode("utf-8")
         item_char_tag["class"] = "itemChar"
         item_char_tag["itemprop"] = "model"
 
@@ -332,3 +334,14 @@ class Item():
         return item_tag
 
 
+# g = ResultTable("Арматура","catalog")
+# print g.compose_table().prettify()
+
+# str_class = "йцукен"
+
+# tag = soup.new_tag("div")
+# tag["id"] = u"ня"
+# tag["class"] = str_class.decode("utf-8")
+# tag.append(u"зы")
+
+# print tag.prettify("utf-8")
