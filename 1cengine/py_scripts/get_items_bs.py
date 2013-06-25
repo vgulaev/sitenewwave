@@ -93,14 +93,15 @@ class ItemGroup():
                 price_header_tag = soup.new_tag("td")
                 price_header_tag["class"] = "priceHeader"
 
-                price_header_tag.append(BeautifulSoup(price.decode("utf-8")+"<br />"))
+                price_header_tag.string = price.decode("utf-8")
+                price_header_tag.append(BeautifulSoup("<br />"))
 
                 span_tag = soup.new_tag("span")
 
                 if price_type_array.index(price) == 0:
                     span_tag.append(BeautifulSoup(u"Цена <font color=\"red\">Я</font>ндекса"))
                 else:
-                    span_tag.append(u"Цена")
+                    span_tag.string = u"Цена"
 
                 price_header_tag.append(span_tag)
 
