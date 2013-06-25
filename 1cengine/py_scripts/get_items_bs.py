@@ -283,7 +283,7 @@ class Item():
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
             item_buy_a_tag["class"] = "bItem"
-            item_buy_a_tag["href"] = "Добавить в корзину"
+            item_buy_a_tag["href"] = "\Добавить в корзину"
             item_buy_a_tag["onClick"] = """yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
                             '"""+self.ed_izm+"', '"+self.char+"""','1'); 
