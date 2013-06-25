@@ -99,7 +99,8 @@ class ItemGroup():
                 span_tag = soup.new_tag("span")
 
                 if price_type_array.index(price) == 0:
-                    span_tag.append(BeautifulSoup(u"Цена <font color=\"red\">Я</font>ндекса"))
+                    span_tag.string = u"Цена "
+                    span_tag.append(BeautifulSoup("<font color=\"red\">Я</font>ндекса"))
                 else:
                     span_tag.string = u"Цена"
 
@@ -286,7 +287,7 @@ class Item():
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
             item_buy_a_tag["class"] = u"bItem"
-            item_buy_a_tag["href"] = u"ДОБАВИТЬ в корзину"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
             item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal('onBuyLinkPressed', 'купить'); 
                         openItem('"""+self.item_hash+":"+self.parent_hash+"""', 
                             '"""+self.ed_izm.decode("utf-8")+"', '"+self.char.decode("utf-8")+"""','1'); 

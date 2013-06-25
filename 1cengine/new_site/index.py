@@ -193,7 +193,8 @@ class Index_Page():
         page.append(content)
         page.append(footer)
 
-        print page.prettify("utf-8")
+        print str(page)
+        # print page.prettify("utf-8", formatter="minimal")
 
 
             
