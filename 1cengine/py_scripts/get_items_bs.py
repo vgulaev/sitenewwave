@@ -151,12 +151,12 @@ class Item():
         ral = self.name.split("RAL ")
         if ral.__len__()>1:
             r_key = ral[1].split(" ")
-            self.ral_color = get_RAL(r_key[0])
+            self.ral_color = self.get_RAL(r_key[0])
         else:
             self.ral_color = ""
 
 
-    def get_RAL(r_key):
+    def get_RAL(self,r_key):
         ral_array = {
             '1014':'#DFCEA1',
             '3003':'#870A24',
