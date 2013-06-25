@@ -5,8 +5,9 @@ from bs4 import BeautifulSoup
 
 form = cgi.FieldStorage()
 
+soup = BeautifulSoup()
+
 def set_title():
-    soup = BeautifulSoup()
     title_tag = soup.new_tag("title")
     
     if form.has_key("ref"):
@@ -19,7 +20,6 @@ def set_title():
 
 
 def set_keywords():
-    soup = BeautifulSoup()
     key_tag = soup.new_tag("meta")
     key_tag["name"] = "keywords"
 
@@ -31,7 +31,6 @@ def set_keywords():
     return key_tag
 
 def set_description():
-    soup = BeautifulSoup()
     description_tag = soup.new_tag("meta")
     description_tag["name"] = "description"
     description_tag["content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
@@ -39,7 +38,6 @@ def set_description():
     return description_tag
 
 def set_search_value():
-    soup = BeautifulSoup()
     input_search_item = soup.new_tag("input")
     input_search_item["id"] = "itemName"
     input_search_item["placeholder"] = u"Введите здесь интересующий вас товар"
@@ -74,3 +72,15 @@ def set_search_results():
         result_table = get_items_bs.ResultTable(form["catalog"].value, "catalog")
   
         return result_table.compose_table()
+
+
+def set_show_all_result():
+    a_tag = soup.new_tag("a")
+    a_tag["id"] = "showAll"
+    a_tag["href"] = u"Все результаты"
+    a_tag["onClick"] = "return false"
+    a_tag.string = u"Показать все результаты"
+    if form.has_key("ref"):
+        a_tag["style"] = "display:none"
+
+    return a_tag
