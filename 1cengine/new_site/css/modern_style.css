@@ -280,6 +280,9 @@ tr.iHeader{
 	width:100%;
 	font-size:10px;
 }
+.priceHeader{
+	text-align: center;
+}
 .buySpan a{
 	color:white;
 	text-decoration: none;
@@ -973,4 +976,5 @@ tr.iHeader{
 
 #seotext{
 	/*display:none;*/
+	font-size: 10px;
 }

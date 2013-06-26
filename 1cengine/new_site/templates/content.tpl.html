@@ -49,52 +49,23 @@
                 <a href="javascript:showGroups()" title="Показать группы товаров"><div id="showGroupsDiv">Показать группы</div></a>
                 <span id="hollowResult"></span>
                 <div id="qRes">
-                    <table id="tableRes">
-
                         <pythonscript>
                             {template.set_search_results()}
                         </pythonscript>
-                        
-                    </table>
                 </div>
                 <p>
                     <pythonscript>
                         {template.set_show_all_result()}
                     </pythonscript>
                     <?php echo $text_seo; ?>
+                    <pythonscript>
+                        {template.show_seo_text()}
+                    </pythonscript>
                 </p>
 
-                <div id="tags" <?php if($_GET["catalog"]!=""){ echo 'style="display:none;"'; } ?> >
-                    <table class="tagTab" style="font-size:16px">
-                        
-                        <tr>
-                            <td class="iRefTd armaTagTd"><a href="/catalog/armatura/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>
-                            <td class="iRefTd listTagTd"><a href="/catalog/list/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); showGroup2('Лист'); return false;"><div class="listTagDiv"></div><span><strong>Лист</strong></span></a></td>
-                            <td class="iRefTd shvellerTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); showGroup2('Швеллер'); return false;"><div class="shvellerTagDiv"></div><span><strong>Швеллер</strong></span></a></td>
-                        </tr>
-                        <tr>
-                            <td class="iRefTd balkaTagTd"><a href="/catalog/balka-dvutavrovaya/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); showGroup2('Балка'); return false;"><div class="balkaTagDiv"></div><span><strong>Балка</strong></span></a></td>
-                            <td class="iRefTd trubaTagTd"><a href="/catalog/truba/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); showGroup2('Труба'); return false;"><div class="trubaTagDiv"></div><span><strong>Труба</strong></span></a></td>
-                            <td class="iRefTd profnastilTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); showGroup2('Профнастил'); return false;"><div class="profnastilTagDiv"></div><span><strong>Профнастил</strong></span></a></td>
-                        </tr>
-                        <tr>
-                            <td class="iRefTd kvadratTagTd"><a href="/catalog/kvadrat/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); showGroup2('Квадрат'); return false;"><div class="kvadratTagDiv"></div><span><strong>Квадрат</strong></span></a></td>
-                            <td class="iRefTd provolokaTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); showGroup2('Проволока'); return false;"><div class="provolokaTagDiv"></div><span><strong>Проволока</strong></span></a></td>
-                            <td class="iRefTd ugolTagTd"><a href="/catalog/ugolok/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); showGroup2('Угол'); return false;"><div class="ugolTagDiv"></div><span><strong>Угол</strong></span></a></td>
-                        </tr>
-                        <tr>
-                            <td class="iRefTd krugTagTd"><a href="/catalog/krug/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); showGroup2('Круг'); return false;"><div class="krugTagDiv"></div><span><strong>Круг</strong></span></a></td>
-                            <td class="iRefTd metallosaidingTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); showGroup2('Металлосайдинг'); return false;"><div class="metallosadingTagDiv"></div><span><strong>Металлосайдинг</strong></span></a></td>
-                            <td class="iRefTd shtripsTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); showGroup2('Штрипс'); return false;"><div class="shtripsTagDiv"></div><span><strong>Штрипс</strong></span></a></td>
-                        </tr>
-                        <tr>
-                            <td class="iRefTd metallocherepicaTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлочерепица'); showGroup2('Металлочерепица'); return false;"><div class="metallocherepicaTagDiv"></div><span><strong>Металлочерепица</strong></span></a></td>
-                        </tr>
-                        
-                    </table>
-                    
-                </div>
-
+                <pythonscript>
+                    {template.set_tags_div()}
+                </pythonscript>
             </div>
             <div id="basketDiv" style="display:none">
                 <span id="basketCaption">Заказ покупателя</span>

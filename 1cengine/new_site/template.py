@@ -7,11 +7,26 @@ form = cgi.FieldStorage()
 
 soup = BeautifulSoup()
 
+if form.has_key("catalog"):
+    json_file_name = "templates/seotags.json"
+    json_file = open(json_file_name,"r")
+    json_string = json_file.read()
+    json_file.close()
+
+    import json
+    seo_tags = json.loads(json_string)
+
+    seo_tag_exists = seo_tags.has_key(form["catalog"].value.decode("utf-8"))
+
+    # print seo_tags.has_key(form["catalog"].value.decode("utf-8"))
+
 def set_title():
     title_tag = soup.new_tag("title")
     
     if form.has_key("ref"):
         title_string = form["ref"].value+" купить онлайн | Тримет ООО " 
+    elif seo_tag_exists:
+        title_string = seo_tags[form["catalog"].value.decode("utf-8")]["title"]
     else:
         title_string = "Купить Online"
 
@@ -33,7 +48,10 @@ def set_keywords():
 def set_description():
     description_tag = soup.new_tag("meta")
     description_tag["name"] = "description"
-    description_tag["content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
+    if seo_tag_exists:
+        description_tag["content"] = seo_tags[form["catalog"].value.decode("utf-8")]["description"]
+    else:
+        description_tag["content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
 
     return description_tag
 
@@ -80,7 +98,23 @@ def set_show_all_result():
     a_tag["href"] = u"Все результаты"
     a_tag["onClick"] = "return false"
     a_tag.string = u"Показать все результаты"
-    if form.has_key("ref"):
+    if not form.has_key("catalog"):
         a_tag["style"] = "display:none"
 
     return a_tag
+
+def set_tags_div():
+    path_to_table = "templates/groups.tpl.html"
+    tag_div = soup.new_tag("div")
+    tag_div["id"] = "tags"
+
+    tag_div.append(BeautifulSoup(open(path_to_table)))
+
+    if form.has_key("catalog"):
+        tag_div["style"] = "display:none"
+
+    return tag_div
+
+def show_seo_text():
+    if seo_tag_exists and seo_tags[form["catalog"].value.decode("utf-8")].has_key("text"):
+        return BeautifulSoup(seo_tags[form["catalog"].value.decode("utf-8")]["text"])
