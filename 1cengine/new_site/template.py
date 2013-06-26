@@ -7,6 +7,8 @@ form = cgi.FieldStorage()
 
 soup = BeautifulSoup()
 
+seo_tag_exists = False
+
 if form.has_key("catalog"):
     json_file_name = "templates/seotags.json"
     json_file = open(json_file_name,"r")

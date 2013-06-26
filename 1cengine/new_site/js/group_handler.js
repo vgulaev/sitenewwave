@@ -23,6 +23,18 @@ function showGroups() {
 
 }
 
+
+/// показать товары группы ///
+
+function showGroup2(groupName) {
+    groupName = groupName.replace("+"," ")
+    $("#itemName").val(groupName)
+    $("#itemName").change()
+    $.unblockUI()
+
+    return false;
+}
+
 $("#popUpOrderClose").click(function() {
         $.unblockUI()
     })
