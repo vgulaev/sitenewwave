@@ -16,3 +16,22 @@ background: none repeat scroll 0% 0% rgb(179, 179, 179) !important;}
     cursor: text;
     padding: 0px 0px 1px;
 }
+#content_menu{
+
+    /*background: none repeat scroll 0% 0% transparent !important;*/
+    margin: 0px 0px 0.4em !important;
+    padding: 4px 13px;
+    float: left;
+    position: relative;
+    text-align: left;
+
+
+}
+
+#content_menu a{
+	text-decoration: none;
+    border-bottom: 1px dotted;
+    color: rgb(45, 54, 148) !important;
+    font-size: 0.86em;
+    line-height: 1.73;
+}
