@@ -53,6 +53,13 @@ trimeturls.append(urltype("services/metalwork", "htmlstaticcontent/020_services_
 trimeturls.append(urltype("services/storage", "htmlstaticcontent/023_services_storage_/"))
 trimeturls.append(urltype("services/delivery", "htmlstaticcontent/021_services_delivery_/"))
 trimeturls.append(urltype("services/weighing", "htmlstaticcontent/022_services_weighing_/"))
+trimeturls.append(urltype("services/metalwork/gaz_rezka", "htmlstaticcontent/048_services_metalwork_gaz_rezka_/"))
+trimeturls.append(urltype("services/metalwork/pravka_buht", "htmlstaticcontent/049_services_metalwork_pravka_buht_/"))
+trimeturls.append(urltype("services/metalwork/rubka_listov", "htmlstaticcontent/050_services_metalwork_rubka_listov_/"))
+trimeturls.append(urltype("services/metalwork/mech_rezka", "htmlstaticcontent/051_services_metalwork_mech_rezka_/"))
+trimeturls.append(urltype("services/metalwork/lentopil_rezka", "htmlstaticcontent/052_services_metalwork_lentopil_rezka_/"))
+trimeturls.append(urltype("services/metalwork/plazma_rezka", "htmlstaticcontent/053_services_metalwork_plazma_rezka_/"))
+
 
 trimeturls.append(urltype("suppliers", "htmlstaticcontent/005_suppliers_/"))
 
