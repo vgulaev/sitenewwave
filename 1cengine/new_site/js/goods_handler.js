@@ -16,7 +16,7 @@ function getItemChar(hash) {
     ret = ''
     $.ajax({
         type: "POST",
-        url: "get_item_char.py",
+        url: "/1cengine/py_scripts/get_item_char.py",
         async: false,
         data: "item_hash=" + hash,
         success: function(html) {
@@ -1239,7 +1239,7 @@ function setModernItem(hash, char, count, rezka) {
     // alert(1);
     $.ajax({
         type: "POST",
-        url: "get_items.py",
+        url: "/1cengine/py_scripts/get_items.py",
         async: false,
         data: "from_hash=true&hash=" + hash + "&char=" + char + "&count=" + count + "&rezka=" + rezka + "",
         success: function(html) {
@@ -1274,3 +1274,77 @@ function setModernItem(hash, char, count, rezka) {
         }
     });
 }
+
+
+/// Вывод товаров по запросу ///
+$("#itemName").focus();
+
+$("#showAll").click(function() {
+    value = $("#itemName").val()
+    $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items.py",
+        async: false,
+        data: "term=" + encodeURIComponent(value) + "&show_all=true",
+        success: function(html) {
+            $("#tableRes").empty()
+
+            $(html).appendTo("#tableRes")
+            $("#showAll").hide();
+        }
+
+    });
+})
+
+tmOutId = 0
+
+$("#itemName").change(function() {
+    $("#groupDiv").hide()
+    value = $("#itemName").val();
+    value = value.replace("+"," ");
+    // alert($("#itemName").attr("placeholder"))
+
+    $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items.py",
+        async: false,
+        data: "term=" + encodeURIComponent(value) + "",
+        success: function(html) {
+            $("#tableRes").empty()
+
+            $(html).appendTo("#tableRes")
+            if($(".item").length >= 1) {
+
+                $("#tags").hide();
+                $("#showGroupsDiv").show()
+                $('#hollowResult').empty()
+            } else {
+                $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
+                // $('#myCanvasContainer').show();
+                $('#tags').show();
+                $("#showGroupsDiv").hide()
+            }
+            if($(".item").length == 20) {
+                $("#showAll").show();
+                // $('#hollowResult').empty()
+            } else {
+                $("#showAll").hide();
+                // $('#hollowResult').empty()
+            }
+
+        }
+
+    });
+
+})
+
+$("#itemName").keyup(function() {
+
+    keyEvent = this;
+    window.clearTimeout(tmOutId);
+    tmOutId = window.setTimeout(
+
+    function() {
+        $(keyEvent).change();
+    }, 1000);
+});
