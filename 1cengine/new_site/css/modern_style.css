@@ -576,14 +576,14 @@ tr.iHeader{
 .profnastilImageBase{
 	width:100px;
 	height:128px;
-	background-image:url('profnastilSampleBase.gif');
+	background-image:url('../images/profnastilSampleBase.gif');
 	float:left;
 	margin-right:7px;
 }
 .profnastilImageAdd2, .profnastilImageAdd3, .profnastilImageAdd4, .profnastilImageAdd5, .profnastilImageAdd6{
 	width:68px;
 	height:128px;
-	background-image:url('profnastilSampleAdd.gif');
+	background-image:url('../images/profnastilSampleAdd.gif');
 	float:left;
 	margin-left:-30px;
 	display:none;
@@ -713,7 +713,7 @@ tr.iHeader{
 }
 
 .scrollTop{  
-    background:url("arrows2.png") 0 0 no-repeat;  
+    background:url("images/arrows2.png") 0 0 no-repeat;  
     display:block; width:50px; height:50px;  
     position:fixed; top:30%; left:30%;  
     z-index:2000;  
@@ -814,7 +814,7 @@ tr.iHeader{
 .armaImage{
 	height:55px;
 	width:35px;
-	background-image: url('armatura.gif');
+	background-image: url('../images/armatura.gif');
 	background-repeat: no-repeat;
 	float:left;
 	margin-left:-15px;
@@ -822,7 +822,7 @@ tr.iHeader{
 .armaImageU{
 	height:55px;
 	width:35px;
-	background-image: url('armatura-u.gif');
+	background-image: url('../images/armatura-u.gif');
 	background-repeat: no-repeat;
 	float:left;
 	margin-left:-15px;
@@ -849,7 +849,7 @@ tr.iHeader{
 .armaTagDiv{
 	width:50px;
 	height:36px;
-	background-image: url('images/armatura.png');
+	background-image: url('../images/armatura.png');
 	background-position: 50px 36px;
 	float:left;
 }
@@ -859,84 +859,84 @@ tr.iHeader{
 .listTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/list_stalnoy.png');
+	background-image:url('../images/list_stalnoy.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .shvellerTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/shveller.png');
+	background-image:url('../images/shveller.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .balkaTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/balka_dvutavrovaya.png');
+	background-image:url('../images/balka_dvutavrovaya.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .trubaTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/truba_1.png');
+	background-image:url('../images/truba_1.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .profnastilTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/profnastil.png');
+	background-image:url('../images/profnastil.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .kvadratTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/kvadratu.png');
+	background-image:url('../images/kvadratu.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .provolokaTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/provoloka.png');
+	background-image:url('../images/provoloka.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .ugolTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/ugolok_stalnoy.png');
+	background-image:url('../images/ugolok_stalnoy.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .krugTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/krugi.png');
+	background-image:url('../images/krugi.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .metallosadingTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/metallosaiding.png');
+	background-image:url('../images/metallosaiding.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .shtripsTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/shtrips.png');
+	background-image:url('../images/shtrips.png');
 	background-position: 50px 36px;
 	float:left;
 }
 .metallocherepicaTagDiv{
 	width:50px;
 	height:36px;
-	background-image:url('images/cherepica.png');
+	background-image:url('../images/cherepica.png');
 	background-position: 50px 36px;
 	float:left;
 }
