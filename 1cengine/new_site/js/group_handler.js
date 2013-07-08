@@ -36,8 +36,8 @@ function showGroup2(groupName) {
 }
 
 $("#popUpOrderClose").click(function() {
-        $.unblockUI()
-    })
+    $.unblockUI()
+})
 
 /// Попап наименований групп ///
 $("td.iRefTd").mouseenter(function() {

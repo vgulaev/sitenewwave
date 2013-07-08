@@ -49,3 +49,44 @@ function htmlspecialchars_decode(string, quote_style) {
 function isValidEmail(str) {
     return(str.indexOf(".") > 2) && (str.indexOf("@") > 0);
 }
+
+
+/// Обработка куки ///
+if($.cookie("basket") != undefined) {
+    eval($.cookie("basket"))
+}
+
+$.cookie("basket", null)
+
+
+/// Разбор GET-параметров ///
+var squery = String(document.location).replace(/\%2F/g, "\\")
+var squery = String(document.location).replace(/\s\s/g, "\s")
+// var squery = String(document.location).replace(/\+/g, "\s")
+if(squery.split("?", 2)[1]) {
+    parts = squery.split("?", 2)[1].split("&");
+    GET = {};
+    for(i = 0; i < parts.length; i++) {
+        curr = parts[i].split('=');
+        GET[curr[0]] = curr[1];
+    }
+    if(GET['ref'] != undefined) {
+        searchItem2(decodeURI(GET['ref']))
+        $('#myCanvasContainer').hide();
+        $('#tags').hide();
+    }
+
+
+    if(GET['catalog'] != undefined) {
+        showGroup2(decodeURI(GET['catalog']))
+        $('#myCanvasContainer').hide();
+        $('#tags').hide();
+    }
+
+    if(GET['linkUID'] != undefined) {
+        openLink(GET['linkUID'], GET['type'])
+    }
+    if(GET['uid'] != undefined) {
+        getOrder(decodeURI(GET['uid']))
+    }
+}
