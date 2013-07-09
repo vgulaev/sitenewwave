@@ -61,7 +61,7 @@ def get_functions(path, files=None):
                 name = name + char
             elif read_name == 1 and char == "(":
                 function_struct[name] = {}
-                print name
+                # print name
                 stocked_name = name
                 name = ""
                 read_name = 0
@@ -95,7 +95,7 @@ def get_functions(path, files=None):
                 first_bracket = 0
 
             elif read_function == 1 and bracket_open == 0:
-                function_struct[stocked_name]["function"] = function_text.replace("\n","")
+                function_struct[stocked_name]["function"] = function_text
                 # print function_text
                 function_text = ""
                 # name = ""
@@ -120,13 +120,75 @@ def get_functions(path, files=None):
                 # leftover = leftover + stack
                 stack = ""
 
+def sort_functions():
+    function_list = list(function_struct)
+
+
+    for x in function_struct:
+        # print "function " + x + function_struct[x]["parameters"]
+        if "function" in function_struct[x]:
+            function_struct[x]["ref"] = []
+            for function_name in function_list:
+                if function_name+"(" in function_struct[x]["function"]:
+                    function_struct[x]["ref"].append(function_name)
+
+            print x, " || ", function_struct[x]["ref"]
+
+    result_list = function_list
+
+    while 1:
+        changed = 0
+        for x in function_list:
+            if "ref" in function_struct[x]:
+                if function_struct[x]["ref"].__len__() > 0:
+                    for y in function_struct[x]["ref"]:
+                        if result_list.index(y) > result_list.index(x):
+                            result_list.insert(result_list.index(y)+1, result_list.pop(result_list.index(x)))
+                            changed = 1
+                        else:
+                            result_list.insert(-1, result_list.pop(result_list.index(x)))
+        if changed == 0:
+            break
+    
+    print "====================================="
+
+    for x in result_list:
+        if "ref" in function_struct[x]:
+            print x, " || ", function_struct[x]["ref"]
+
+    return result_list
+
+
+def compose_js(output):
+    function_part = ""
+    leftover_part = ""
+
+    for x in function_list:
+        function_part = function_part + "\nfunction " + x + function_struct[x]["parameters"]
+        if "function" in function_struct[x]:
+            function_part = function_part + function_struct[x]["function"]
+        if "leftover" in function_struct[x]:
+            leftover_part = leftover_part + function_struct[x]["leftover"]
+
+    output_file = open(output, "w+")
+    output_file.write("$(document).ready(function() {\n")
+
+    output_file.write(function_part)
+    output_file.write(leftover_part)
+
+    output_file.write("})")
+    output_file.close()
+
             
 
 get_functions("../new_site/js/")
+function_list = sort_functions()
+compose_js("../new_site/js/modern_ui.js")
 
-for x in function_struct:
-    if "leftover" in function_struct[x]: 
-        print function_struct[x]["leftover"]
+
+
+
+
 # print function_struct
 
 # merge_javascript("../new_site/js/", "../new_site/js/modern_ui.js")
