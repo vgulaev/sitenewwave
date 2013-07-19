@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 
 print "Content-Type: text/html; charset=utf-8\n"
+print "<!DOCTYPE html>"
 
 # print "hello"
 
@@ -75,7 +76,7 @@ class Index_Page():
             head.head.append(style_tag)
 
 
-        return head
+        return head.head
 
     def compose_header_temlplate(self):
         if self.header_template == "":
@@ -102,7 +103,7 @@ class Index_Page():
             else:
                current_element.extract()
 
-        return header
+        return header.header
 
     def compose_footer_temlplate(self):
         if self.footer_template == "":
@@ -129,7 +130,7 @@ class Index_Page():
             else:
                current_element.extract()
 
-        return footer
+        return footer.footer
 
     def compose_content_temlplate(self):
         if self.content_template == "":
@@ -156,7 +157,7 @@ class Index_Page():
             else:
                current_element.extract()
 
-        return content
+        return content.div
 
 
     def show_page(self):
@@ -187,10 +188,10 @@ class Index_Page():
         content = self.compose_content_temlplate()
         footer = self.compose_footer_temlplate()
 
-        page.head.append(head)
-        page.append(header)
-        page.append(content)
-        page.append(footer)
+        page.head.replaceWith(head)
+        page.body.append(header)
+        page.body.append(content)
+        page.body.append(footer)
 
         print str(page)
         # print page.prettify("utf-8", formatter="minimal")

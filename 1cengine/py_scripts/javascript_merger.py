@@ -171,9 +171,11 @@ def compose_js(output):
             leftover_part = leftover_part + function_struct[x]["leftover"]
 
     output_file = open(output, "w+")
-    output_file.write("$(document).ready(function() {\n")
 
     output_file.write(function_part)
+    output_file.write("$(document).ready(function() {\n")
+
+    
     output_file.write(leftover_part)
 
     output_file.write("})")

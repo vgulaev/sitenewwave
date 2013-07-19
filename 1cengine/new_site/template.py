@@ -115,7 +115,7 @@ def set_tags_div():
     if form.has_key("catalog"):
         tag_div["style"] = "display:none"
 
-    return tag_div
+    return tag_div.table
 
 def show_seo_text():
     if seo_tag_exists and seo_tags[form["catalog"].value.decode("utf-8")].has_key("text"):
