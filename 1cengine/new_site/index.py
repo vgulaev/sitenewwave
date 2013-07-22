@@ -173,7 +173,8 @@ class Index_Page():
             "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
-            "/1cengine/new_site/js/modern_ui.js",
+            "/1cengine/new_site/js/modern_uiJs.js",
+            "/1cengine/new_site/js/modern_ui-goods_handler.js",
             "/lib/frameworks/raf_sha256.js"
         ]
 
