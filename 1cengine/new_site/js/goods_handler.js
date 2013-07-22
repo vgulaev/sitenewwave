@@ -1306,13 +1306,13 @@ $("#itemName").change(function() {
 
     $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_items.py",
+        url: "/1cengine/py_scripts/get_items_bs.py",
         async: false,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
             $("#tableRes").empty()
 
-            $(html).appendTo("#tableRes")
+            $(html).appendTo("#qRes")
             if($(".item").length >= 1) {
 
                 $("#tags").hide();

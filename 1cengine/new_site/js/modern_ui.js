@@ -1,4 +1,3 @@
-$(document).ready(function() {
 
 function isValidEmail(str) {
     return(str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -104,7 +103,7 @@ function setModalLength() {
 
     $(".pPCPrice").html(PC)
 }
-function showGroups() {
+function showGroups(){
 
     $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100; //ускоряем появление
@@ -241,7 +240,7 @@ function getItemChar(hash) {
     });
     return ret
 }
-function showGroup2(groupName) {
+function showGroup2(groupName){
     groupName = groupName.replace("+"," ")
     $("#itemName").val(groupName)
     $("#itemName").change()
@@ -249,7 +248,7 @@ function showGroup2(groupName) {
 
     return false;
 }
-function getTotalCost(d){}
+function getTotalCost(d)
 function searchItem2(item) {
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -1523,7 +1522,8 @@ function openItem(hash, edIzm, prices, stock, c) {
         showModalItem(hash, edIzm, prices, stock, c)
     }
 
-}/// стрелочка промотать вверх страницы ///
+}$(document).ready(function() {
+/// стрелочка промотать вверх страницы ///
 $(function() {
     
     
@@ -1869,13 +1869,13 @@ $("#itemName").change(function() {
 
     $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_items.py",
+        url: "/1cengine/py_scripts/get_items_bs.py",
         async: false,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
             $("#tableRes").empty()
 
-            $(html).appendTo("#tableRes")
+            $(html).appendTo("#qRes")
             if($(".item").length >= 1) {
 
                 $("#tags").hide();

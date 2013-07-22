@@ -763,6 +763,7 @@ tr.iHeader{
 	/*font-size:18px;*/
 	/*font-weight:normal;*/
 	width:700px;
+	float:left;
 }
 
 .tagTab td{

@@ -1,6 +1,6 @@
 /// показать группы товаров ///
 
-function showGroups() {
+function showGroups(){
 
     $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100; //ускоряем появление
@@ -26,7 +26,7 @@ function showGroups() {
 
 /// показать товары группы ///
 
-function showGroup2(groupName) {
+function showGroup2(groupName){
     groupName = groupName.replace("+"," ")
     $("#itemName").val(groupName)
     $("#itemName").change()

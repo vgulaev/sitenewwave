@@ -1,4 +1,3 @@
-$(function() {
 
     $("#tabBasket").click(function() {
 
@@ -47,6 +46,3 @@ $(function() {
 
         $("#showNDSlabel").hide()
     })
-    /// REWRITE IT PLEASE!!! ///
-    /// into one function ///
-});

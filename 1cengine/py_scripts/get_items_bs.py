@@ -336,6 +336,14 @@ class Item():
         return item_tag
 
 
+form = cgi.FieldStorage()
+if form.has_key("term"):
+
+    result_table = ResultTable(form["term"].value, "catalog")
+    
+    print "Content-Type: text/html; charset=utf-8\n"
+    print str(result_table.compose_table())
+
 # g = ResultTable("Арматура","catalog")
 # print g.compose_table().prettify()
 

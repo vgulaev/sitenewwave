@@ -110,12 +110,12 @@ def set_tags_div():
     tag_div = soup.new_tag("div")
     tag_div["id"] = "tags"
 
-    tag_div.append(BeautifulSoup(open(path_to_table)))
+    tag_div.append(BeautifulSoup(open(path_to_table)).table)
 
     if form.has_key("catalog"):
         tag_div["style"] = "display:none"
 
-    return tag_div.table
+    return tag_div
 
 def show_seo_text():
     if seo_tag_exists and seo_tags[form["catalog"].value.decode("utf-8")].has_key("text"):
