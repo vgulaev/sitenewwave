@@ -174,7 +174,7 @@ class Index_Page():
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/new_site/js/modern_uiJs.js",
-            "/1cengine/new_site/js/modern_ui-goods_handler.js",
+            "/1cengine/new_site/js/modern_ui_goods_handler.js",
             "/lib/frameworks/raf_sha256.js"
         ]
 

@@ -200,7 +200,7 @@ function sendOrder(orderString) {
 
     $.ajax({
         type: "POST",
-        url: "createOrder.php",
+        url: "/1cengine/php_scripts/createOrder.php",
         async: true,
         data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name,
         success: function(html) {
@@ -277,7 +277,7 @@ function createOrder() {
 function getOrder(uid) {
     $.ajax({
         type: "POST",
-        url: "getOrder.php",
+        url: "/1cengine/php_scripts/getOrder.php",
         data: "uid=" + uid + "",
         success: function(html) {
 
@@ -364,7 +364,7 @@ function parseOrder(order) {
 function openLink(linkUID, type) {
     $.ajax({
         type: "POST",
-        url: "getfilelink.php",
+        url: "/1cengine/php_scripts/getfilelink.php",
         async: false,
         data: "linkUID=" + linkUID + "&type=" + type + "",
         success: function(html) {
@@ -510,9 +510,9 @@ $(document).ready(function() {
             async: false,
             data: "term=" + encodeURIComponent(value) + "&show_all=true",
             success: function(html) {
-                $("#tableRes").empty()
+                $("#qRes").html(html)
 
-                $(html).appendTo("#tableRes")
+                // $(html).appendTo("#tableRes")
                 $("#showAll").hide();
             }
 
@@ -533,9 +533,9 @@ $(document).ready(function() {
             async: false,
             data: "term=" + encodeURIComponent(value) + "",
             success: function(html) {
-                $("#tableRes").empty()
+                $("#qRes").html(html)
 
-                $(html).appendTo("#tableRes")
+                // $(html).appendTo("#tableRes")
                 if($(".item").length >= 1) {
 
                     $("#tags").hide();
