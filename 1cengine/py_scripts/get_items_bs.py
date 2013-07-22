@@ -19,7 +19,7 @@ class ResultTable():
         self.req = req
         self.rtype = rtype
     
-    def get_items(self):
+    def get_items(self,item_limit):
 
 
         connector = myDBC("goods")
@@ -40,7 +40,7 @@ class ResultTable():
                 else:
                     condition = condition + "`offers`.`name` LIKE '% "+reqWord+"%' AND "
 
-            limit = "ORDER BY `offers`.`stock` DESC LIMIT 20"
+            limit = "ORDER BY `offers`.`stock` DESC LIMIT "+str(item_limit)
 
         r = connector.dbExecute("""
                 SELECT `offers`.`display_name`, `offers`.`char_name`, `offers`.`price`, 
@@ -53,14 +53,14 @@ class ResultTable():
 
         return r
 
-    def  compose_table(self):
+    def  compose_table(self, limit=20):
         result_table_tag = soup.new_tag("table")
 
         result_table_tag["id"] = "tableRes"
 
         parent_array = []
 
-        r = self.get_items()
+        r = self.get_items(limit)
 
         for row in r:
             if not row[4] in parent_array:
@@ -341,9 +341,13 @@ form = cgi.FieldStorage()
 if form.has_key("term"):
 
     result_table = ResultTable(form["term"].value, "catalog")
-    
-    print "Content-Type: text/html; charset=utf-8\n"
-    print str(result_table.compose_table())
+
+    if form.has_key("show_all"):
+        print "Content-Type: text/html; charset=utf-8\n"
+        print str(result_table.compose_table(231))
+    else:
+        print "Content-Type: text/html; charset=utf-8\n"
+        print str(result_table.compose_table())
 
 # g = ResultTable("Арматура","catalog")
 # print g.compose_table().prettify()
