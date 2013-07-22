@@ -1,5 +1,11 @@
 #-*- coding:utf-8 -*-
 
+###
+# Not working fully correctly
+# Or javascript files must be
+# Formated with specail rules
+###
+
 import sys,os
 
 function_struct = {}
