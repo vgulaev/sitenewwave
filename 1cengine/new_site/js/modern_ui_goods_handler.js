@@ -1014,7 +1014,7 @@ function modern_addItem(hash, edIzm, prices) {
             cell += "<td class='itemNameTd'>" + $(this).find(".itemName").attr("name");
             cell += '<span class="delEdSpan">';
             cell += '<a href="Убрать из корзины" onClick="delModernItem(\'' + hash + '\'); return false">X</a>';
-            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="edit.png" /></a></span></td>';
+            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="images/edit.png" /></a></span></td>';
 
             cell += "<td class='itemCharTd' name='" + ochar + "'>" + char + "</td>";
 
