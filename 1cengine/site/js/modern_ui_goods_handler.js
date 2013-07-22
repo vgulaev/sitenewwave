@@ -1014,7 +1014,9 @@ function modern_addItem(hash, edIzm, prices) {
             cell += "<td class='itemNameTd'>" + $(this).find(".itemName").attr("name");
             cell += '<span class="delEdSpan">';
             cell += '<a href="Убрать из корзины" onClick="delModernItem(\'' + hash + '\'); return false">X</a>';
-            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="images/edit.png" /></a></span></td>';
+
+            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="/1cengine/site/edit.png" /></a></span></td>';
+
 
             cell += "<td class='itemCharTd' name='" + ochar + "'>" + char + "</td>";
 
@@ -1227,7 +1229,9 @@ function setModernItem(hash, char, count, rezka) {
     // alert(1);
     $.ajax({
         type: "POST",
+
         url: "/1cengine/py_scripts/get_items_bs.py",
+
         async: false,
         data: "from_hash=true&hash=" + hash + "&char=" + char + "&count=" + count + "&rezka=" + rezka + "",
         success: function(html) {

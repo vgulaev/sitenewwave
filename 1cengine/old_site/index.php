@@ -163,22 +163,22 @@ echo $template_string;
                     <table class="tagTab" style="font-size:16px">
                         
                         <tr>
-                            <td class="iRefTd armaTagTd"><a href="/catalog/armatura/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); showGroup2('Арматура'); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>
-                            <td class="iRefTd listTagTd"><a href="/catalog/list/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); showGroup2('Лист'); return false;"><div class="listTagDiv"></div><span><strong>Лист</strong></span></a></td>
+                            <td class="iRefTd armaTagTd"><a href="/catalog/armatura/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Арматура'); goToHell('/catalog/armatura/); return false;"><div class="armaTagDiv"></div><span><strong>Арматура</strong></span></a></td>
+                            <td class="iRefTd listTagTd"><a href="/catalog/list/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Лист'); goToHell('/catalog/list/'); return false;"><div class="listTagDiv"></div><span><strong>Лист</strong></span></a></td>
                             <td class="iRefTd shvellerTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Швеллер'); showGroup2('Швеллер'); return false;"><div class="shvellerTagDiv"></div><span><strong>Швеллер</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td class="iRefTd balkaTagTd"><a href="/catalog/balka-dvutavrovaya/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); showGroup2('Балка'); return false;"><div class="balkaTagDiv"></div><span><strong>Балка</strong></span></a></td>
-                            <td class="iRefTd trubaTagTd"><a href="/catalog/truba/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); showGroup2('Труба'); return false;"><div class="trubaTagDiv"></div><span><strong>Труба</strong></span></a></td>
+                            <td class="iRefTd balkaTagTd"><a href="/catalog/balka-dvutavrovaya/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Балка'); goToHell('/catalog/balka-dvutavrovaya/'); return false;"><div class="balkaTagDiv"></div><span><strong>Балка</strong></span></a></td>
+                            <td class="iRefTd trubaTagTd"><a href="/catalog/truba/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Труба'); goToHell('/catalog/truba/'); return false;"><div class="trubaTagDiv"></div><span><strong>Труба</strong></span></a></td>
                             <td class="iRefTd profnastilTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Профнастил'); showGroup2('Профнастил'); return false;"><div class="profnastilTagDiv"></div><span><strong>Профнастил</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td class="iRefTd kvadratTagTd"><a href="/catalog/kvadrat/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); showGroup2('Квадрат'); return false;"><div class="kvadratTagDiv"></div><span><strong>Квадрат</strong></span></a></td>
+                            <td class="iRefTd kvadratTagTd"><a href="/catalog/kvadrat/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Квадрат'); goToHell('/catalog/kvadrat/'); return false;"><div class="kvadratTagDiv"></div><span><strong>Квадрат</strong></span></a></td>
                             <td class="iRefTd provolokaTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Проволока'); showGroup2('Проволока'); return false;"><div class="provolokaTagDiv"></div><span><strong>Проволока</strong></span></a></td>
-                            <td class="iRefTd ugolTagTd"><a href="/catalog/ugolok/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); showGroup2('Угол'); return false;"><div class="ugolTagDiv"></div><span><strong>Угол</strong></span></a></td>
+                            <td class="iRefTd ugolTagTd"><a href="/catalog/ugolok/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Угол'); goToHell('/catalog/ugolok/'); return false;"><div class="ugolTagDiv"></div><span><strong>Угол</strong></span></a></td>
                         </tr>
                         <tr>
-                            <td class="iRefTd krugTagTd"><a href="/catalog/krug/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); showGroup2('Круг'); return false;"><div class="krugTagDiv"></div><span><strong>Круг</strong></span></a></td>
+                            <td class="iRefTd krugTagTd"><a href="/catalog/krug/" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Круг'); goToHell('/catalog/krug/'); return false;"><div class="krugTagDiv"></div><span><strong>Круг</strong></span></a></td>
                             <td class="iRefTd metallosaidingTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Металлосайдинг'); showGroup2('Металлосайдинг'); return false;"><div class="metallosadingTagDiv"></div><span><strong>Металлосайдинг</strong></span></a></td>
                             <td class="iRefTd shtripsTagTd"><a href="#" onclick="yaCounter15882208.reachGoal('onCloudLinkPressed', 'Штрипс'); showGroup2('Штрипс'); return false;"><div class="shtripsTagDiv"></div><span><strong>Штрипс</strong></span></a></td>
                         </tr>

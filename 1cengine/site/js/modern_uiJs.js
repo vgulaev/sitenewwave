@@ -146,6 +146,12 @@ function showGroup2(groupName) {
     return false;
 }
 
+/// переход в каталог
+function goToHell(href){
+    // alert(href)
+    window.location.href(href)
+}
+
 /// поиск товара по наименованию ///
 
 function searchItem2(item) {
@@ -506,7 +512,9 @@ $(document).ready(function() {
         value = $("#itemName").val()
         $.ajax({
             type: "GET",
+
             url: "/1cengine/py_scripts/get_items_bs.py",
+
             async: false,
             data: "term=" + encodeURIComponent(value) + "&show_all=true",
             success: function(html) {
@@ -514,6 +522,7 @@ $(document).ready(function() {
 
                 // $(html).appendTo("#tableRes")
                 $("#showAll").hide();
+                $("#seotext").remove()
             }
 
         });
@@ -527,9 +536,12 @@ $(document).ready(function() {
         value = value.replace("+"," ");
         // alert($("#itemName").attr("placeholder"))
 
+        $("#seotext").remove()
+
         $.ajax({
             type: "GET",
             url: "/1cengine/py_scripts/get_items_bs.py",
+
             async: false,
             data: "term=" + encodeURIComponent(value) + "",
             success: function(html) {
