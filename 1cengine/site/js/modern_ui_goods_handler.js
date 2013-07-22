@@ -1015,7 +1015,7 @@ function modern_addItem(hash, edIzm, prices) {
             cell += '<span class="delEdSpan">';
             cell += '<a href="Убрать из корзины" onClick="delModernItem(\'' + hash + '\'); return false">X</a>';
 
-            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="/1cengine/site/edit.png" /></a></span></td>';
+            cell += '<a href="#" onClick="modern_editItem(\'' + hash + '\'); return false"><img src="/1cengine/site/images/edit.png" /></a></span></td>';
 
 
             cell += "<td class='itemCharTd' name='" + ochar + "'>" + char + "</td>";
