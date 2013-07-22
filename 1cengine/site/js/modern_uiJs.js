@@ -737,7 +737,6 @@ $(document).ready(function() {
     })
 
     function getTotalCost(d) {
-        alert($("#delivery_cost").attr("name"))
         var d_price = $("#delivery_cost").attr("name").replace(/\s/g, "")
         var totalCost = $("#SumAll").attr("name")
         if(d == 1) {
