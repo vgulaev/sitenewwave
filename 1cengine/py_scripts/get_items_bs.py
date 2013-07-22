@@ -5,6 +5,7 @@
 import sys,os
 import cgi
 import cgitb; cgitb.enable()
+sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 
 from secrets import *
