@@ -14,15 +14,16 @@ lib_path = os.path.abspath('../py_scripts/')
 
 python_lib = imp.load_source("detect_mobile", lib_path+"/detect_mobile"+".py")
 
-if python_lib.detect():
+if python_lib.detect() == True:
     form = cgi.FieldStorage()
     if form.has_key("linkUID"):
-        
-        print "Status:307\nLocation: http://trimet/1cengine/pda_site?linkUID="+form["linkUID"].value
+        # print 1
+        print "Status:307\nLocation: http://trimet/1cengine/pda_site/qrorder.php?linkUID="+form["linkUID"].value
 
 
 print "Content-Type: text/html; charset=utf-8\n"
 print "<!DOCTYPE html>"
+
 
 # print "hello"
 

@@ -60,9 +60,9 @@ mobile_agent_list = [
 def detect():
 
     user_agent = os.environ["HTTP_USER_AGENT"].lower()
-
+    # print user_agent
     for agent in mobile_agent_list:
         if agent in user_agent:
             return True
-        else:
-            return False
+        
+    return False
