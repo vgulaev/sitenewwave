@@ -638,52 +638,58 @@ $(document).ready(function() {
     })
 
     $("#townSelect").change(function() {
+        // alert($("#townSelect :selected").val())
         if($("#townSelect :selected").val() != "72000001") {
             $("#carry [value='Длинномер']").attr("selected", "selected")
             $("#carry").attr("disabled", "disabled")
 
             $("#delivery_cost").empty()
             var d_price = $("#townSelect :selected").attr("price")
+            $("#delivery_cost").attr("name", d_price)
             if($("#selfCarry").is(":checked") == false) {
 
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
 
             }
             d_price = (d_price - 0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
             if($("#toDeliver").is(":checked")) {
-                $("#delivery_cost").append(d_price)
+                $("#delivery_cost").html(d_price)
                 $("#SumDelivery").html(d_price)
             }
-            $("#delivery_cost").attr("name", d_price)
+            
 
 
         } else if($("#townSelect :selected").val() == "72000001") {
+            
             $("#carry").removeAttr("disabled")
 
             if($("#carry :selected").val() == "--") {
                 $("#carry [value='Газель']").attr("selected", "selected")
             }
-
+            
             $("#delivery_cost").empty()
             var d_price = $("#carry :selected").attr("price")
+            $("#delivery_cost").attr("name", d_price)
             if($("#selfCarry").is(":checked") == false) {
 
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
             }
+            // alert(1)
             d_price = (d_price - 0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
             if($("#toDeliver").is(":checked")) {
-                $("#delivery_cost").append(d_price)
+                $("#delivery_cost").html(d_price)
                 $("#SumDelivery").html(d_price)
             }
-            $("#delivery_cost").attr("name", d_price)
+            
+            
 
         }
         $("#destination").val('');
@@ -692,17 +698,19 @@ $(document).ready(function() {
         if($("#townSelect :selected").val() == "72000001") {
             $("#delivery_cost").empty()
             var d_price = $("#carry :selected").attr("price")
+            $("#delivery_cost").html(d_price)
+            $("#delivery_cost").attr("name", d_price)
+
             if($("#selfCarry").is(":checked") == false) {
 
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
             }
             d_price = (d_price - 0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            $("#delivery_cost").append(d_price)
-            $("#delivery_cost").attr("name", d_price)
+            
             $("#SumDelivery").html(d_price)
         }
     })
@@ -714,24 +722,31 @@ $(document).ready(function() {
             var totalCost = getTotalCost(0)
             $(".withoutDelivery").show()
             $(".withDelivery").hide()
-            $("#SumAll").empty()
-            $("#SumAll").append(totalCost)
+            // $("#SumAll").empty()
+            $("#SumAll").html(totalCost)
             $("#SumDelivery").empty()
             $("#delivery_cost").empty()
         }
     })
     $("#toDeliver").change(function() {
+        // alert($("#townSelect :selected").val())
+        if($("#townSelect :selected").val() == "--"){
+            $("#townSelect [value='72000001']").attr("selected", "selected")
+            $("#townSelect").change()
+            // alert($("#delivery_cost"))
+        } 
+        
         var d_price = $("#delivery_cost").attr("name").replace(/\s/g, "")
         if($("#toDeliver").is(":checked")) {
             // alert(2)
             var totalCost = getTotalCost(1)
             $(".withDelivery").show()
             $(".withoutDelivery").hide()
-            $("#SumAll").empty()
-            $("#SumAll").append(totalCost)
+            // $("#SumAll").empty()
+            $("#SumAll").html(totalCost)
             d_price = (d_price - 0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            $("#delivery_cost").append(d_price)
+            $("#delivery_cost").html(d_price)
             $("#SumDelivery").html(d_price)
         }
     })
