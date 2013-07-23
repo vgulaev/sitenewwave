@@ -110,8 +110,11 @@ $(function() {
     /// into one function ///
 });
 
-/// показать группы товаров ///
 
+/**
+ * [показать группы товаров]
+ * @return {[type]} [description]
+ */
 function showGroups() {
 
     $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
@@ -135,8 +138,12 @@ function showGroups() {
 
 }
 
-/// показать товары группы ///
 
+/**
+ * [Показать группу товаров, соответствующую заданному наименованию]
+ * @param  {[string]} groupName [Наименование группы товаров]
+ * @return {[bool]}           [Всегда false]
+ */
 function showGroup2(groupName) {
     groupName = groupName.replace("+"," ")
     $("#itemName").val(groupName)
@@ -146,14 +153,23 @@ function showGroup2(groupName) {
     return false;
 }
 
-/// переход в каталог
+ 
+/**
+ * [переход в каталог]
+ * @param  {[type]} href [description]
+ * @return {[type]}      [description]
+ */
 function goToHell(href){
     // alert(href)
     window.location.href(href)
 }
 
-/// поиск товара по наименованию ///
 
+/**
+ * [ поиск товара по наименованию]
+ * @param  {[type]} item [description]
+ * @return {[type]}      [description]
+ */
 function searchItem2(item) {
     var squery = item.replace(/%2F/g, "/")
     var squery = squery.replace(/\s\s/g, " ")
@@ -164,8 +180,12 @@ function searchItem2(item) {
     //$("#itemName").change()
 }
 
-/// отправка заказа на сервер 1с ///
 
+/**
+ * [отправка заказа на сервер 1с]
+ * @param  {[type]} orderString [description]
+ * @return {[type]}             [description]
+ */
 function sendOrder(orderString) {
 
     if($('#selfCarry').is(':checked') == false) {
@@ -238,6 +258,10 @@ $("#sendOrderButtom").click(function() {
     createOrder()
 })
 
+/**
+ * [createOrder description]
+ * @return {[type]} [description]
+ */
 function createOrder() {
     if($("#emailInput").val() == "") {
         // $.unblockUI()
@@ -278,8 +302,12 @@ function createOrder() {
 
 }
 
-/// получить заказ клиента ///
 
+/**
+ * [получить заказ клиента]
+ * @param  {[type]} uid [description]
+ * @return {[type]}     [description]
+ */
 function getOrder(uid) {
     $.ajax({
         type: "POST",
@@ -294,8 +322,12 @@ function getOrder(uid) {
     });
 }
 
-/// парсер заказа для отображения заказа клиента ///
 
+/**
+ * [парсер заказа для отображения заказа клиента]
+ * @param  {[type]} order [description]
+ * @return {[type]}       [description]
+ */
 function parseOrder(order) {
 
     orderArray = order.split("||");
@@ -365,8 +397,13 @@ function parseOrder(order) {
     $("#tabBasket").click()
 }
 
-/// Открытие файла заказа ///
 
+/**
+ * [Открытие файла заказа]
+ * @param  {[type]} linkUID [description]
+ * @param  {[type]} type    [description]
+ * @return {[type]}         [description]
+ */
 function openLink(linkUID, type) {
     $.ajax({
         type: "POST",
@@ -383,6 +420,11 @@ function openLink(linkUID, type) {
 
 /// не могу найти референса к этому. по крайней мере ещё ///
 
+/**
+ * [getOrderFomat description]
+ * @param  {[type]} format [description]
+ * @return {[type]}        [description]
+ */
 function getOrderFomat(format) {
     var sendRow = '';
     $('tr.itemTr').each(function() {
