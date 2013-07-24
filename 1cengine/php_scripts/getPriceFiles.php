@@ -35,7 +35,7 @@ foreach($typeArray as $type){
 
 		fclose($file); 
 
-		$filenameOut = '../../download/files/price.'.$params['Type'];
+		$filenameOut = '/web/trimetru/site/www/download/files/price.'.$params['Type'];
 		$file = fopen($filenameOut, "w");
 		fwrite($file, $contents);
 		fclose($file);
