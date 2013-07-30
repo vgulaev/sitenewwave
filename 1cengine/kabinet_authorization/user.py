@@ -54,6 +54,21 @@ class User():
             # print row[0][0]
             return row[0][0]
         else:
+            return self.get_user_1c(email,passwd)
+
+    def get_user_1c(self,email,passwd):
+        user_1c = user_1c_lib.User1C()
+        uid1c = user_1c.authorize_user_1c(email,passwd)
+        # print uid1c
+    
+        if not "Произошла ошибка" in uid1c:
+            row = self.connector.dbExecute("""
+                INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
+                VALUE (Null,'"""+email+"""','"""+passwd+"""',"")
+            """)
+
+            return self.cursor.lastrowid
+        else:
             return False
 
     def new_user(self,email,passwd):
@@ -67,9 +82,10 @@ class User():
 
             self.uid = self.cursor.lastrowid
             user_1c = user_1c_lib.User1C()
-            user_1c.register_user_1c(email,passwd)
+            k = user_1c.register_user_1c(email,passwd)
+            # print "k:",k
             # print user_1c.register_user_1c(email,passwd)
-            return self.uid 
+            # return self.uid 
             # self.generate_SID(self.uid)
 
         else:
@@ -202,7 +218,7 @@ class User():
                     c=self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
                     uid1c = user_1c.authorize_user_1c(email,passwd)
-                    # print uid1c
+                    print uid1c
                     if not "Произошла ошибка" in uid1c:    
                         self.insert_1c_uid(uid, uid1c)
                     return """ 
@@ -213,12 +229,14 @@ class User():
                                     // $.cookie("sid", "",{ expires: 30, path: '/'})
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
                                     // alert('"""+str(c)+"""')
+                                    //alert('"""+uid1c+"""')
                                     window.location = "/kabinet/orders/"
                                 })
                         </script>
                         </body>
                     """
                 else:
+
                     return """
                         <body>
                         <script type="text/javascript">

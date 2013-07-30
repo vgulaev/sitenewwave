@@ -22,8 +22,11 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
+
+
 
 if "dev" in os.environ["SERVER_NAME"]:
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
@@ -43,15 +46,17 @@ class User1C():
         fullname = ""
 
         result = client.service.AddUser(email,passwd,email,fullname)
-
+        # print result
         return result
 
     def authorize_user_1c(self, email, passwd):
-        client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
+        # client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
+        client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
         client.set_options(cache=DocumentCache())
 
         result = client.service.Authorize(email,passwd,"")
 
+        # print result
         return result
 
 

@@ -60,7 +60,7 @@ function pass(){
 function openLink(linkUID, type) {
     $.ajax({
         type: "POST",
-        url: "/1cengine/site/getfilelink.php",
+        url: "/1cengine/php_scripts/getfilelink.php",
         async: false,
         data: "linkUID=" + linkUID + "&type=" + type + "",
         success: function(html) {
