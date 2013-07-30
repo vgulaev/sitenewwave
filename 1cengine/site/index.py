@@ -42,12 +42,14 @@ class Index_Page():
         template = template_file.read()
         template_file.close()
 
+        # print template
+
         return template
 
 
     def compose_head_temlplate(self):
         if self.head_template == "":
-            return BeautifulSoup("<html><head></head></html>")
+            return BeautifulSoup("<html><head></head></html>").head
 
         head = BeautifulSoup(self.head_template)
 

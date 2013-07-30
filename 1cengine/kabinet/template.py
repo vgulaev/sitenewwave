@@ -8,7 +8,7 @@ import imp
 import Cookie
 
 
-lib_path = os.path.abspath('1cengine/kabinet_authorization/')
+lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 

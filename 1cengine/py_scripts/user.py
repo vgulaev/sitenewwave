@@ -7,7 +7,7 @@ import cgitb; cgitb.enable()
 import Cookie, datetime, random
 import HTMLParser
 
-lib_path = os.path.abspath('../../')
+lib_path = os.path.abspath('../py_scripts/')
 sys.path.append(lib_path)
 
 _PATH_ = os.path.abspath(os.path.dirname(__file__))

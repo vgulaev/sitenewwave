@@ -5,7 +5,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 
-lib_path = os.path.abspath('1cengine/kabinet_authorization/')
+lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 
 def show_authorization_page():
@@ -29,6 +29,14 @@ def show_authorization_page():
         file_template.close()
         
         return template
+
+def authorize():
+    import imp
+    python_lib_name = "user"
+    user_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+
+    user = user_lib.User()
+    user.authorize()
 
 def __main__(funkt):
     return eval(funkt)

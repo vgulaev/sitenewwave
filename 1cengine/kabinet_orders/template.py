@@ -8,7 +8,7 @@ import imp
 import Cookie
 
 
-lib_path = os.path.abspath('1cengine/kabinet_authorization/')
+lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,7 +26,7 @@ def show_orders():
         # print sid
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         python_lib_name2 = "get_orders_list"
-        get_orders_list_lib = imp.load_source(python_lib_name2, _PATH_+"/"+python_lib_name2+".py")
+        get_orders_list_lib = imp.load_source(python_lib_name2, lib_path+"/"+python_lib_name2+".py")
         # print uid_1c
         # print get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
         try:
