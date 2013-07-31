@@ -306,29 +306,52 @@ class User():
     def who_am_i(self, sid):
         pass
 
-    def update_passwd(self, passwd):
-
+    def check_passwd(self, passwd):
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
         if cookie.has_key("sid"):
             sid = cookie["sid"].value
         else:
             return None
 
-        row = self.connector.dbExecute("""
-                    UPDATE `trimetru_users`.`users`
-                    SET `passwdhash` = '"""+passwd+"""'
-                    WHERE (
-                        SELECT `id_user` 
-                        FROM `trimetru_users`.`uids` 
-                        WHERE `sid`='"""+sid+"""' 
-                    ) = `id`
-                """)
+        row = self.connector.dbExecute(""" 
+                SELECT `passwdhash`
+                FROM `trimetru_users`.`users`
+                WHERE `passwdhash`='"""+passwd+"""'
+            """)
 
-        uid1c = self.get_1c_sid(sid)
+        if row.__len__() > 0:
+            return True
+        else:
+            return False
 
-        user1c = user_1c_lib.User1C()
+    def update_passwd(self, passwd, old_passwd):
 
-        user1c.change_passwd_1c(uid1c, passwd)
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        if cookie.has_key("sid"):
+            sid = cookie["sid"].value
+        else:
+            return "Что то пошло не так, попробуйте позже"
+
+        if self.check_passwd(old_passwd):
+            row = self.connector.dbExecute("""
+                        UPDATE `trimetru_users`.`users`
+                        SET `passwdhash` = '"""+passwd+"""'
+                        WHERE (
+                            SELECT `id_user` 
+                            FROM `trimetru_users`.`uids` 
+                            WHERE `sid`='"""+sid+"""' 
+                        ) = `id` AND `passwdhash`='"""+old_passwd+"""'
+                    """)
+
+            uid1c = self.get_1c_sid(sid)
+
+            user1c = user_1c_lib.User1C()
+
+            user1c.change_passwd_1c(uid1c, passwd)
+
+            return "Вы успешно сменили пароль!"
+        else:
+            return "Старый пароль указан неверно!"
 
     def change_passwd(self):
         # cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
@@ -336,11 +359,10 @@ class User():
         # print sid
         sid = self.check_SID()
         if sid == True:
-            
-            self.update_passwd(passwd)
-            return str(passwd)
+    
+            return self.update_passwd(passwd, old_passwd)
         else:
-            return "False"
+            return "Вы не злогинены Оо"
 
 
 def __main__(funkt=False):
@@ -407,6 +429,11 @@ if "passwd" in post:
     passwd = post["passwd"]
 else:
     passwd = False
+
+if "old_passwd" in post:
+    old_passwd = post["old_passwd"]
+else:
+    old_passwd = False
 
 if "newUser" in post:
     is_new = post["newUser"]
