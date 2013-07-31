@@ -42,7 +42,7 @@ $(document).ready( function (){
             is_email_valid = ""
             $.ajax({
                 type: "POST",
-                url: "/1cengine/kabinet_authorization/user.py",
+                url: "/1cengine/py_scripts/user.py",
                 async: false,
                 data: "email=" + email + "&funkt=is_valid_email("+email+")",
                 success: function(html) {

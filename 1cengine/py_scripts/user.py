@@ -218,44 +218,46 @@ class User():
                     c=self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
                     uid1c = user_1c.authorize_user_1c(email,passwd)
-                    print uid1c
+                    # print uid1c
                     if not "Произошла ошибка" in uid1c:    
                         self.insert_1c_uid(uid, uid1c)
+                    # print "nya"
+                    # print c
                     return """ 
-                        <body>
+                        <div>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.removeCookie("sid",{ expires: 30, path: '/'});
                                     // $.cookie("sid", "",{ expires: 30, path: '/'})
                                     $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
-                                    // alert('"""+str(c)+"""')
+                                    //alert('"""+str(c)+"""')
                                     //alert('"""+uid1c+"""')
                                     window.location = "/kabinet/orders/"
                                 })
                         </script>
-                        </body>
+                        </div>
                     """
                 else:
 
                     return """
-                        <body>
+                        <div>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                 $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
-                        </body>
+                        </div>
                     """
                     
             else:
                 return """
-                    <body>
+                    <div>
                     <script type="text/javascript">
                             $(document).ready( function(){
                                     // $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
-                    </body>
+                    </div>
                 """
         else:
             uid = self.new_user(email,passwd)
@@ -267,7 +269,7 @@ class User():
                 if not "Произошла ошибка" in uid1c:    
                     self.insert_1c_uid(uid, uid1c)
                 return """ 
-                        <body>
+                        <div>
                         <script type="text/javascript">
                             $(document).ready( function(){
                                     $.removeCookie("sid",{ expires: 30, path: '/'});
@@ -287,20 +289,58 @@ class User():
                                     window.location = "/kabinet/orders/"
                                 })
                         </script>
-                        </body>
+                        </div>
                     """
             else:
                 return """
-                    <body>
+                    <div>
                     <script type="text/javascript">
                         $(document).ready( function(){
                                 alert('Пользователь уже существует!')
                                 // window.location = "/kabinet/authorization/"
                             })
                     </script>
-                    </body>
+                    </div>
                 """
 
+    def who_am_i(self, sid):
+        pass
+
+    def update_passwd(self, passwd):
+
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        if cookie.has_key("sid"):
+            sid = cookie["sid"].value
+        else:
+            return None
+
+        row = self.connector.dbExecute("""
+                    UPDATE `trimetru_users`.`users`
+                    SET `passwdhash` = '"""+passwd+"""'
+                    WHERE (
+                        SELECT `id_user` 
+                        FROM `trimetru_users`.`uids` 
+                        WHERE `sid`='"""+sid+"""' 
+                    ) = `id`
+                """)
+
+        uid1c = self.get_1c_sid(sid)
+
+        user1c = user_1c_lib.User1C()
+
+        user1c.change_passwd_1c(uid1c, passwd)
+
+    def change_passwd(self):
+        # cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        # sid = cookie["sid"].value
+        # print sid
+        sid = self.check_SID()
+        if sid == True:
+            
+            self.update_passwd(passwd)
+            return str(passwd)
+        else:
+            return "False"
 
 
 def __main__(funkt=False):
@@ -320,6 +360,13 @@ def __main__(funkt=False):
         print ("Content-Type: text/html; charset=utf-8\n")
 
         q = user.is_valid_email(email)
+        print q
+
+    elif "change_passwd" in funkt:
+        print ("Content-Type: text/html; charset=utf-8\n")
+
+        q = user.change_passwd()
+
         print q
 
 

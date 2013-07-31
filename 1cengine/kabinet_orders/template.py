@@ -30,14 +30,14 @@ def show_orders():
         # print uid_1c
         # print get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
         try:
-            data = get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
+            data = "<div>"+get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")+"</div>"
             # data = get_orders_list_lib.__main__("get_orders_list('b266ce1a-60d7-4725-b572-f1aa3282995f')")
         except:
-            data = "Контрагент не назначен"
+            data = "<div>Контрагент не назначен</div>"
         
         return data
     else:
-        return "(("
+        return "<div>((</div>"
     
 
 def __main__(funkt):

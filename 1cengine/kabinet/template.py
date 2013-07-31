@@ -22,23 +22,24 @@ def authorized_redirect():
 
     if user_lib.__main__("check_SID()") == True:
         return """
-            <body>
+            <div>
             <script type="text/javascript">
                 $(document).ready( function(){
                         window.location = "/kabinet/orders/"
                     })
             </script>
-            </body>
+            </div>
         """
     else:
         return """
-            <body>
+            <div>
             <script type="text/javascript">
                 $(document).ready( function(){
+                    alert("nenene")
                         window.location = "/kabinet/authorization/"
                     })
             </script>
-            </body>
+            </div>
         """
     
 

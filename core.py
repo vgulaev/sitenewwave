@@ -100,10 +100,11 @@ def makecontent(path):
 
         if r != None:
             python_replace = BeautifulSoup(r)
+            currentelement.replaceWith(python_replace.div)
         else:
-            python_replace = BeautifulSoup("<html><body></body></html>")
+            current_element.extract()
 
-        currentelement.replaceWith(python_replace.html.body)
+        
 
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:

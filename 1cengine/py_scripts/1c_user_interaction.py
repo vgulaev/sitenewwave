@@ -59,6 +59,16 @@ class User1C():
         # print result
         return result
 
+    def change_passwd_1c(self, uid, new_passwd):
+        client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/Register.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/Register.1cws?")
+        client.set_options(cache=DocumentCache())
+
+        result = client.service.UpdateUser(uid,"Password",new_passwd)
+
+        # print result
+        return result
+
+
 
 def __main__(funkt=False):
     return eval(funkt)

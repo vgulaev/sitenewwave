@@ -25,7 +25,7 @@ def report_success():
     else:
         uid = None
 
-    return success_lib.report_1c(uid)
+    return "<div>"+success_lib.report_1c(uid)+"</div>"
     
 
 def __main__(funkt):

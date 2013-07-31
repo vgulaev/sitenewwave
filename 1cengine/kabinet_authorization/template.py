@@ -35,8 +35,10 @@ def authorize():
     python_lib_name = "user"
     user_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
 
-    user = user_lib.User()
-    user.authorize()
+    user = user_lib.__main__("authorize()")
+    # user.authorize()
+    # 
+    return user
 
 def __main__(funkt):
     return eval(funkt)

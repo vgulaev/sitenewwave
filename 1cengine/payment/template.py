@@ -36,7 +36,7 @@ def show_loader():
     import  random
     loader_list = ["379","285","377","382","385"]
     
-    loader_str = "<img src='/1cengine/payment/"+random.choice(loader_list)+".png' />"
+    loader_str = "<div><img src='/1cengine/payment/"+random.choice(loader_list)+".png' /></div>"
 
     return loader_str
 
