@@ -13,9 +13,9 @@ $(document).ready( function(){
                     data: "passwd=" + passwd + "&old_passwd=" + old_passwd + "&funkt=change_passwd()",
                     success: function(html) {
                         alert(html)
-                        $("#passwd_input").val() = ""
-                        $("#repeat_passwd_input").val() = ""
-                        $("#old_passwd_input").val() = ""
+                        $("#passwd_input").val("")
+                        $("#repeat_passwd_input").val("")
+                        $("#old_passwd_input").val("")
                     }
 
                 });    

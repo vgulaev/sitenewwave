@@ -53,13 +53,13 @@ def get_orders_list(UID):
 
     if "dateFrom" in post:
         if post["dateFrom"] != "":
-            date_from_array = post["dateFrom"].split("%2F")
+            date_from_array = post["dateFrom"].split(".")
             date_from = date_from_array[2]+"-"+date_from_array[1]+"-"+date_from_array[0]
             # print date_from
 
     if "dateTo" in post:
         if post["dateTo"] != "":
-            date_to_array = post["dateTo"].split("%2F")
+            date_to_array = post["dateTo"].split(".")
             date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
 
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
@@ -76,7 +76,7 @@ def get_orders_list(UID):
         <div class="dateChooser">
             <form method="POST" action="/kabinet/orders/" id="dateForm">
                 Показать заказы в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
-                <div class="datePickButton">Отправить запрос</div>
+                <div class="datePickButton">Обновить журнал</div>
             </form>
         </div>
     """

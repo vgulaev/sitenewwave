@@ -9,7 +9,27 @@ $(document).ready( function(){
         })
 
     })  
-    $.datepicker.setDefaults( $.datepicker.regional[ "ru-RU" ] )
+
+    $.datepicker.regional['ru'] = {clearText: 'Очистить', clearStatus: '',
+            
+            closeText: 'Закрыть', closeStatus: '',
+            prevText: '<Пред',  prevStatus: '',
+            nextText: 'След>', nextStatus: '',
+            currentText: 'Сегодня', currentStatus: '',
+            monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+            'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+            monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
+            'Июл','Авг','Сен','Окт','Ноя','Дек'],
+            monthStatus: '', yearStatus: '',
+            weekHeader: 'Не', weekStatus: '',
+            dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+            dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+            dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+            dayStatus: 'DD', dateStatus: 'D, M d',
+            dateFormat: 'dd.mm.yy', firstDay: 1, 
+            initStatus: '', isRTL: false};
+
+    $.datepicker.setDefaults( $.datepicker.regional[ "ru" ] )
     $(".dateInput").datepicker()
 
     // $("dateFrom").change( function(){ orderDate("up") })
@@ -23,18 +43,6 @@ function orderDate(way){
     if(way="up"){
         date_string_array = $(".dateFrom").val().split("/")
     }
-}
-
-function parseDate(input){
-    // alert(input)
-    if(typeof(input)=="string"){
-        var parts = input.split(".")    
-        return new Date(parts[0], parts[2], parts[1]-1)
-    }
-    
-    // alert(parts)
-
-    
 }
 
 function pass(){
