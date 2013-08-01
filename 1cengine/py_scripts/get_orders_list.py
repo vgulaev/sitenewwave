@@ -106,7 +106,7 @@ def get_orders_list(UID):
                     Скачать заказ: 
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать заказ в формате xls"> xls </a>
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать заказ в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать заказ в формате ods"> ods </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","ods")' title="Скачать заказ в формате ods"> ods </a>
                 </p>
             </div>
         """
