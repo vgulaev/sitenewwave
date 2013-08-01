@@ -62,9 +62,7 @@ def get_orders_list(UID):
             date_to_array = post["dateTo"].split("%2F")
             date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
 
-    # client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
-    client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
-
+    client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     client.set_options(cache=DocumentCache())
 
 
