@@ -29,7 +29,7 @@ function parseDate(input){
     // alert(input)
     if(typeof(input)=="string"){
         var parts = input.split(".")    
-        return new Date(parts[0], parts[1]-1, parts[2])
+        return new Date(parts[0], parts[2], parts[1]-1)
     }
     
     // alert(parts)
