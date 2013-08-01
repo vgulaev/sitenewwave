@@ -303,8 +303,23 @@ class User():
                     </div>
                 """
 
-    def who_am_i(self, sid):
-        pass
+    def who_am_i(self):
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        if cookie.has_key("sid"):
+            sid = cookie["sid"].value
+        else:
+            return None
+
+        row = self.connector.dbExecute("""
+                SELECT `email`
+                FROM `trimetru_users`.`users`, `trimetru_users`.`uids`
+                WHERE `users`.`id` = `uids`.`id_user` AND `uids`.`sid` = '"""+sid+"""'
+            """)
+
+        if row.__len__() > 0:
+            return row[0][0]
+        else:
+            return None
 
     def check_passwd(self, passwd):
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])

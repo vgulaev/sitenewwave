@@ -14,6 +14,21 @@ lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
+def compose_personal_part():
+    fieldset_tag = soup.new_tag("fieldset")
+    fieldset_tag["title"] = "Личные данные"
+    legend_tag = soup.new_tag("legend")
+    legend_tag.append("Личные данные")
+
+    fieldset_tag.append(legend_tag)
+
+    table_tag = soup.new_tag("table")
+    table_tag["id"] = "personal_tab"
+
+    #########
+    
+    
+
 
 def compose_password_part():
     fieldset_tag = soup.new_tag("fieldset")
