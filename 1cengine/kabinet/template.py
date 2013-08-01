@@ -35,7 +35,7 @@ def authorized_redirect():
             <div>
             <script type="text/javascript">
                 $(document).ready( function(){
-                    alert("nenene")
+                    
                         window.location = "/kabinet/authorization/"
                     })
             </script>
