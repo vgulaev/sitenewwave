@@ -105,3 +105,14 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	background-color: rgb(45, 54, 148);
 	color:white;
 }
+
+#wait_please{
+	/*height:100px;
+	width:200px;
+	*/margin-top:20px;
+	font-size:16px
+}
+#wait_please img{
+	margin-top:20px;
+	margin-bottom: 20px;
+}
