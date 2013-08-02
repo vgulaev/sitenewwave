@@ -58,6 +58,13 @@ function pass(){
     // alert(elements)
     $("#ordersContainer").empty()
     $("#ordersContainer").append(elements)
+
+    if( $(".date_arrow").attr("src") == "/1cengine/kabinet_orders/arrow_down.svg" ){
+        $(".date_arrow").attr("src","/1cengine/kabinet_orders/arrow_up.svg")
+    } else if( $(".date_arrow").attr("src") == "/1cengine/kabinet_orders/arrow_up.svg" ){
+        $(".date_arrow").attr("src","/1cengine/kabinet_orders/arrow_down.svg")
+    }
+
     $(".orderItem").click( function(){
         $(".orderDownload").hide()
         $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")

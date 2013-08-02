@@ -85,7 +85,7 @@ def get_orders_list(UID):
         <div class="orderListHeader">
             <span>Номер</span>
             <span>Сумма</span>
-            <span><a href="javascript:pass()">Дата</a></span>
+            <span><a href="javascript:pass()">Дата<img class="date_arrow" src="/1cengine/kabinet_orders/arrow_down.svg" /></a></span>
         </div>
         <div id="ordersContainer">
     """

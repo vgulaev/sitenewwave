@@ -130,3 +130,10 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	margin-top:20px;
 	margin-bottom: 20px;
 }
+.orderListHeader img{
+	margin-right:12px;
+	margin-left: 4px;
+	margin-top:5px;
+	width:14px;
+	height:14px;
+}
