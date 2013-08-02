@@ -2,9 +2,15 @@ $(document).ready( function(){
     /// Открытие ссылок для загрузки ///
     $(".orderItem").click( function(){
         $(".orderDownload").hide()
+        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
         // alert(0)
+        $(this).find(".ar_img").each( function(){
+            // alert("nya")
+            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
+        })
         $(this).find(".orderDownload").each( function(){
             // alert(1)
+            
             $(this).show()
         })
 
@@ -54,9 +60,14 @@ function pass(){
     $("#ordersContainer").append(elements)
     $(".orderItem").click( function(){
         $(".orderDownload").hide()
-        // alert(0)
+        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
+        
+        $(this).find(".ar_img").each( function(){
+            // alert("nya")
+            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
+        })
         $(this).find(".orderDownload").each( function(){
-            // alert(1)
+            
             $(this).show()
         })
 

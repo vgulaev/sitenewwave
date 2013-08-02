@@ -96,8 +96,13 @@ def get_orders_list(UID):
     for order in result[2][0]:
         orders = orders + """
             <div class="orderItem """+odd+""" ">
+            
                 <div>
-                    <span class="openOrderDownload">"""+str(order[3])+"""</span>
+
+                    <span class="openOrderDownload">
+                        <img class="ar_img" src="/1cengine/kabinet_orders/arrow.svg" />
+                        """+str(order[3])+"""            
+                    </span>
                     <span>"""+str(order[2])+"""</span>
                     <span class="orderDate">"""+str(order[1].split(" ")[0])+"""</span>
                 </div>
