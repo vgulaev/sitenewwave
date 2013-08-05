@@ -21,7 +21,8 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -62,13 +63,13 @@ def get_orders_list(UID):
             date_to_array = post["dateTo"].split("%2F")
             date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
 
-    # client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
-    client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
+    client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
+    # client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
 
     client.set_options(cache=DocumentCache())
 
 
-    result = client.service.ЖурналПлатежей(UID,date_from,date_to)
+    result = client.service.PaymentList(UID,date_from,date_to)
 
     # print "nya"
     # print result
