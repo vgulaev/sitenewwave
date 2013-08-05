@@ -22,8 +22,8 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
-# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 
@@ -50,8 +50,7 @@ class User1C():
         return result
 
     def authorize_user_1c(self, email, passwd):
-        # client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
-        client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
+        client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
         client.set_options(cache=DocumentCache())
 
         result = client.service.Authorize(email,passwd,"")
@@ -60,7 +59,7 @@ class User1C():
         return result
 
     def change_passwd_1c(self, uid, new_passwd):
-        client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/Register.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/Register.1cws?")
+        client = Client(_CURRENT_ADDRESS_+'Register.1cws?wsdl', location = _CURRENT_ADDRESS_+"Register.1cws?")
         client.set_options(cache=DocumentCache())
 
         result = client.service.UpdateUser(uid,"Password",new_passwd)
