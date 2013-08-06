@@ -5,6 +5,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 import imp
+import Cookie
 
 from bs4 import BeautifulSoup
 
@@ -19,7 +20,7 @@ def get_payments_list(uid):
     python_lib_name = "get_payments_list"
     payment_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
 
-    return payment_lib.get_orders_list(uid) 
+    return "<div>"+str(payment_lib.get_orders_list(uid))+"</div>" 
 
     return "<div>nya</div>"
 

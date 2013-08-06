@@ -107,7 +107,7 @@ function openLink(linkUID, type) {
 
     $.blockUI({
         message: "\
-        <div id='wait_please'>Ваш запрос обрабатывается, пожалуйста подождите<br />\
+        <div id='wait_please'>Ваш запрос обрабатывается, пожалуйста, подождите<br />\
             <img src='/1cengine/kabinet_orders/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
         </div>"
     });

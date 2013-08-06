@@ -54,13 +54,13 @@ def get_orders_list(UID):
 
     if "dateFrom" in post:
         if post["dateFrom"] != "":
-            date_from_array = post["dateFrom"].split("%2F")
+            date_from_array = post["dateFrom"].split(".")
             date_from = date_from_array[2]+"-"+date_from_array[1]+"-"+date_from_array[0]
             # print date_from
 
     if "dateTo" in post:
         if post["dateTo"] != "":
-            date_to_array = post["dateTo"].split("%2F")
+            date_to_array = post["dateTo"].split(".")
             date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
 
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
@@ -71,15 +71,17 @@ def get_orders_list(UID):
 
     result = client.service.PaymentList(UID,date_from,date_to)
 
+    # return result
+
     # print "nya"
     # print result
 
     listOrder = """
          
         <div class="dateChooser">
-            <form method="POST" action="/kabinet/orders/" id="dateForm">
+            <form method="POST" action="/kabinet/payment/" id="dateForm">
                 Показать заказы в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
-                <div class="datePickButton">Отправить запрос</div>
+                <div class="datePickButton">Обновить журнал</div>
             </form>
         </div>
     """
@@ -88,7 +90,7 @@ def get_orders_list(UID):
         <div class="orderListHeader">
             <span>Номер</span>
             <span>Сумма</span>
-            <span><a href="javascript:pass()">Дата</a></span>
+            <span><a href="javascript:pass()">Дата<img class="date_arrow" src="/1cengine/kabinet_orders/arrow_down.svg" /></a></span>
         </div>
         <div id="ordersContainer">
     """
@@ -100,16 +102,18 @@ def get_orders_list(UID):
         orders = orders + """
             <div class="orderItem """+odd+""" ">
                 <div>
-                    <span class="openOrderDownload">"""+str(order[3])+"""</span>
+                    <span class="openOrderDownload">
+                    <img class="ar_img" src="/1cengine/kabinet_orders/arrow.svg" />
+                    """+str(order[3])+"""</span>
                     <span>"""+str(order[2])+"""</span>
                     <span class="orderDate">"""+str(order[1].split(" ")[0])+"""</span>
                 </div>
 
                 <p class="orderDownload">
-                    Скачать заказ: 
-                    <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать заказ в формате xls"> xls </a>
-                    <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать заказ в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать заказ в формате ods"> ods </a>
+                    Скачать платежное поручение: 
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать поручение в формате xls"> xls </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать поручение в формате pdf"> pdf </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать поручение в формате ods"> ods </a>
                 </p>
             </div>
         """
