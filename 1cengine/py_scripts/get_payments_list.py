@@ -113,7 +113,7 @@ def get_orders_list(UID):
                     Скачать платежное поручение: 
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать поручение в формате xls"> xls </a>
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать поручение в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(\""""+str(order[0])+"""\","odf")' title="Скачать поручение в формате ods"> ods </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","ods")' title="Скачать поручение в формате ods"> ods </a>
                 </p>
             </div>
         """
