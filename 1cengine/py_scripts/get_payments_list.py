@@ -66,7 +66,8 @@ def get_orders_list(UID):
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     # client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
 
-    client.set_options(cache=DocumentCache())
+    client.set_options(cache=None)
+    # client.set_options(cache=DocumentCache())
 
 
     result = client.service.PaymentList(UID,date_from,date_to)
