@@ -104,13 +104,18 @@ def get_orders_list(UID):
             <div class="orderItem """+odd+""" ">
                 <div>
                     <span class="openOrderDownload">
-
+                        <img class="ar_img" src="/1cengine/kabinet_orders/arrow.svg" />
                     """+str(order[3])+"""</span>
                     <span>"""+str(order[2])+"""</span>
                     <span class="orderDate">"""+str(order[1].split(" ")[0])+"""</span>
                 </div>
+                <p class="orderDownload">
+                    Скачать платежное поручение: 
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать поручение в формате xls"> xls </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать поручение в формате pdf"> pdf </a>
+                    <a href='javascript:openLink(\""""+str(order[0])+"""\","ods")' title="Скачать поручение в формате ods"> ods </a>
+                </p>
 
-                
             </div>
         """
         
