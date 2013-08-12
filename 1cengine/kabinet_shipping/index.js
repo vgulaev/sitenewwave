@@ -113,7 +113,7 @@ function openLink(linkUID, type) {
     });
     $.ajax({
         type: "POST",
-        url: "/1cengine/php_scripts/getPaymentFileLink.php",
+        url: "/1cengine/php_scripts/getShippingFileLink.php",
         async: true,
         data: "linkUID=" + linkUID + "&type=" + type + "",
         success: function(html) {

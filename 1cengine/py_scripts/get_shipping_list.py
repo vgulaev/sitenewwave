@@ -112,10 +112,10 @@ def get_shipping_list(UID):
                 </div>
 
                 <p class="shippingDownload">
-                    Скачать платежное поручение: 
-                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","xlsx")' title="Скачать поручение в формате xls"> xls </a>
-                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","pdf")' title="Скачать поручение в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","ods")' title="Скачать поручение в формате ods"> ods </a>
+                    Скачать документ отгрузки: 
+                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","xlsx")' title="Скачать документ отгрузки в формате xls"> xls </a>
+                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","pdf")' title="Скачать документ отгрузки в формате pdf"> pdf </a>
+                    <a href='javascript:openLink(\""""+str(shipping[0])+"""\","ods")' title="Скачать документ отгрузки в формате ods"> ods </a>
                 </p>
             </div>
         """

@@ -24,7 +24,7 @@ def get_shipping_list(uid):
 
     return "<div>nya</div>"
 
-def show_payments():
+def show_shipping():
 
     python_lib_name = "user"
     user_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
