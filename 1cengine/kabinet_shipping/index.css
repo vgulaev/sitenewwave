@@ -87,15 +87,15 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 
 .datePickButton{
-	bshipping:1px solid black;
+	border:1px solid black;
 	width:150px;
 	height:25px;
 	padding-top:7px;
 	margin:15px;
 	/*float:left;*/
 	text-align:center;
-	bshipping:1px outset rgb(48, 57, 154);
-	bshipping-radius:40px 10px;
+	border:1px outset rgb(48, 57, 154);
+	border-radius:40px 10px;
 	background-color: #5da130;
 	color:white;
 	cursor:pointer;
