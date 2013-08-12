@@ -1,6 +1,6 @@
 <?php
-// $srv = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws'));
-$srv = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws'));
+$srv = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/privetoffice.1cws'));
+// $srv = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws'));
 
 
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/price1c.1cws');
