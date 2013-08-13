@@ -21,8 +21,8 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
-# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -66,7 +66,8 @@ def get_orders_list(UID):
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     # client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
 
-    client.set_options(cache=DocumentCache())
+    client.set_options(cache=None)
+    # client.set_options(cache=DocumentCache())
 
 
     result = client.service.PaymentList(UID,date_from,date_to)
@@ -80,7 +81,7 @@ def get_orders_list(UID):
          
         <div class="dateChooser">
             <form method="POST" action="/kabinet/payment/" id="dateForm">
-                Показать заказы в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
+                Показать платежи в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
                 <div class="datePickButton">Обновить журнал</div>
             </form>
         </div>
@@ -103,18 +104,18 @@ def get_orders_list(UID):
             <div class="orderItem """+odd+""" ">
                 <div>
                     <span class="openOrderDownload">
-                    <img class="ar_img" src="/1cengine/kabinet_orders/arrow.svg" />
+                        <img class="ar_img" src="/1cengine/kabinet_orders/arrow.svg" />
                     """+str(order[3])+"""</span>
                     <span>"""+str(order[2])+"""</span>
                     <span class="orderDate">"""+str(order[1].split(" ")[0])+"""</span>
                 </div>
-
                 <p class="orderDownload">
                     Скачать платежное поручение: 
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","xlsx")' title="Скачать поручение в формате xls"> xls </a>
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","pdf")' title="Скачать поручение в формате pdf"> pdf </a>
                     <a href='javascript:openLink(\""""+str(order[0])+"""\","ods")' title="Скачать поручение в формате ods"> ods </a>
                 </p>
+
             </div>
         """
         

@@ -22,7 +22,6 @@ def get_shipping_list(uid):
 
     return "<div>"+str(payment_lib.get_shipping_list(uid))+"</div>" 
 
-    return "<div>nya</div>"
 
 def show_shipping():
 
