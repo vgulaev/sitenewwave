@@ -45,6 +45,11 @@ $(document).ready( function(){
     })
 })
 
+function logout(){
+    $.removeCookie("sid",{ expires: 30, path: '/'})
+    window.location = "/kabinet/authorization/"
+}
+
 function orderDate(way){
     if(way="up"){
         date_string_array = $(".dateFrom").val().split("/")

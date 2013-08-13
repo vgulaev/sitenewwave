@@ -51,6 +51,11 @@ function shippingDate(way){
     }
 }
 
+function logout(){
+    $.removeCookie("sid",{ expires: 30, path: '/'})
+    window.location = "/kabinet/authorization/"
+}
+
 function pass(){
     // alert(1)
     var elements = $.makeArray($(".shippingItem"))

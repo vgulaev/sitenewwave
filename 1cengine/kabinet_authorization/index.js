@@ -19,6 +19,12 @@ $(document).ready( function (){
     //         $(".enterButton").show()
     //     }
     // })
+    // 
+    
+    function logout(){
+        $.removeCookie("sid",{ expires: 30, path: '/'})
+        window.location = "/kabinet/authorization/"
+    }
 
     function loginUser(){
         passwd = $(".passwdInput").val()

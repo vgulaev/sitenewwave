@@ -30,3 +30,8 @@ $(document).ready( function(){
         // alert($("#passwd_input").val())
     })
 })
+
+function logout(){
+    $.removeCookie("sid",{ expires: 30, path: '/'})
+    window.location = "/kabinet/authorization/"
+}

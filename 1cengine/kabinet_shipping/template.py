@@ -48,5 +48,14 @@ def show_shipping():
         
         return get_shipping_list(uid_1c)       
 
+def show_menu():
+
+    python_lib_name = "kabinet_menu"
+    kabinet_menu_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+
+    menu = kabinet_menu_lib.show_menu("shipping")
+
+    return menu
+
 def __main__(funkt):
     return eval(funkt)

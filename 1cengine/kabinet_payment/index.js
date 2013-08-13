@@ -87,6 +87,11 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function logout(){
+    $.removeCookie("sid",{ expires: 30, path: '/'})
+    window.location = "/kabinet/authorization/"
+}
+
 /// функция получения ссылки для скачивания. Скоммунизжена из modern_uiJS ж))) ///
 
 function openLink(linkUID, type) {
