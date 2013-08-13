@@ -22,8 +22,6 @@ def get_payments_list(uid):
 
     return "<div>"+str(payment_lib.get_orders_list(uid))+"</div>" 
 
-    return "<div>nya</div>"
-
 def show_payments():
 
     python_lib_name = "user"
@@ -47,7 +45,10 @@ def show_payments():
         sid = cookie["sid"].value
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         
-        return get_payments_list(uid_1c)       
+        try:
+            return get_payments_list(uid_1c)       
+        except:
+            return "<div>Контрагент не назначен или что-то пошло не так</div>"
 
 def show_menu():
 

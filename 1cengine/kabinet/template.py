@@ -24,9 +24,7 @@ def authorized_redirect():
         return """
             <div>
             <script type="text/javascript">
-                $(document).ready( function(){
-                        window.location = "/kabinet/orders/"
-                    })
+                window.location = "/kabinet/orders/"
             </script>
             </div>
         """
@@ -34,10 +32,7 @@ def authorized_redirect():
         return """
             <div>
             <script type="text/javascript">
-                $(document).ready( function(){
-                    
-                        window.location = "/kabinet/authorization/"
-                    })
+                window.location = "/kabinet/authorization/"
             </script>
             </div>
         """

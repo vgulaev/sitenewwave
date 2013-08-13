@@ -33,11 +33,15 @@ def show_orders():
             data = "<div>"+get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")+"</div>"
             # data = get_orders_list_lib.__main__("get_orders_list('b266ce1a-60d7-4725-b572-f1aa3282995f')")
         except:
-            data = "<div>Контрагент не назначен</div>"
+            data = "<div>Контрагент не назначен или что-то пошло не так</div>"
         
         return data
     else:
-        return "<div>((</div>"
+        return """<div>
+            <script type="text/javascript">
+                window.location = "/kabinet/authorization/"
+            </script>
+            </div>"""
     
 def show_menu():
 

@@ -34,9 +34,7 @@ def show_shipping():
         return """
             <div>
             <script type="text/javascript">
-                $(document).ready( function(){
-                        window.location = "/kabinet/authorization/"
-                    })
+                window.location = "/kabinet/authorization/"
             </script>
             </div>
         """
@@ -46,7 +44,10 @@ def show_shipping():
         sid = cookie["sid"].value
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         
-        return get_shipping_list(uid_1c)       
+        try:
+            return get_shipping_list(uid_1c)       
+        except:
+            return "<div>Контрагент не назначен или что-то пошло не так</div>"
 
 def show_menu():
 
