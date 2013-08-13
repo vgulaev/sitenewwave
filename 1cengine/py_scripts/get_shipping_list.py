@@ -80,7 +80,7 @@ def get_shipping_list(UID):
          
         <div class="dateChooser">
             <form method="POST" action="/kabinet/shipping/" id="dateForm">
-                Показать заказы в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
+                Показать отгрузки в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
                 <div class="datePickButton">Обновить журнал</div>
             </form>
         </div>
