@@ -27,6 +27,11 @@ def compose_personal_part():
 
     #########
     
+    fullname_tr = soup.new_tag("tr")
+
+    fullname_label_td = soup.new_tag("td")
+    fullname_label_td["id"] = "fullname_label"
+    fullname_label_td.append("Ваше текущее ФИО:")
     
 
 
