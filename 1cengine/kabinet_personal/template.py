@@ -31,9 +31,19 @@ def compose_personal_part():
 
     fullname_label_td = soup.new_tag("td")
     fullname_label_td["id"] = "fullname_label"
-    fullname_label_td.append("Ваше текущее ФИО:")
-    
+    fullname_label_td.append("Вы назвались как:")
+    fullname_text_td = soup.new_tag("td")
+    fullname_text_td["id"] = "fullname_text"
+    fullname_text_td.append(get_fullname())
 
+    fullname_tr.append(fullname_label_td)
+    fullname_tr.append(fullname_text_td)
+
+    table_tag.append(fullname_tr)
+
+    fieldset_tag.append(table_tag)
+    
+    return fieldset_tag
 
 def compose_password_part():
     fieldset_tag = soup.new_tag("fieldset")
@@ -108,7 +118,20 @@ def compose_password_part():
     fieldset_tag.append(table_tag)
     fieldset_tag.append(passwd_button_div)
 
-    return "<div>"+str(fieldset_tag)+"</div>"
+    return fieldset_tag
+
+def get_fullname():
+    return "test"
+
+def compose_personal():
+
+    return """
+    <div>
+
+    """+str(compose_personal_part())+"""
+    """+str(compose_password_part())+"""
+    
+    </div>"""
 
 def show_personal():
 
@@ -129,7 +152,7 @@ def show_personal():
         """
     else:
 
-         return compose_password_part()       
+         return compose_personal()       
 
 def show_menu():
 

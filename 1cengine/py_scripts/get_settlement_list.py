@@ -68,6 +68,8 @@ def get_shipping_list(UID):
 
     client.set_options(cache=DocumentCache())
 
+    # client.set_options(cache=None)
+    # client.options.cache.clear()
 
     result = client.service.SettlementList(UID,date_from,date_to)
 
