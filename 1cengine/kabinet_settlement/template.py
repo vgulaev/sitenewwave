@@ -45,12 +45,12 @@ def show_shipping():
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         
         
-        return get_shipping_list(uid_1c)
+        # return get_shipping_list(uid_1c)
 
-        # try:
-        #     return get_shipping_list(uid_1c)       
-        # except:
-        #     return "<div>Контрагент не назначен или что-то пошло не так</div>"
+        try:
+            return get_shipping_list(uid_1c)       
+        except:
+            return "<div>Контрагент не назначен или что-то пошло не так</div>"
 
 def show_menu():
 
