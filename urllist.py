@@ -77,6 +77,7 @@ trimeturls.append(urltype("kabinet/authorization", "1cengine/kabinet_authorizati
 trimeturls.append(urltype("kabinet/personal", "1cengine/kabinet_personal/"))
 trimeturls.append(urltype("kabinet/payment", "1cengine/kabinet_payment/"))
 trimeturls.append(urltype("kabinet/shipping", "1cengine/kabinet_shipping/"))
+trimeturls.append(urltype("kabinet/settlement", "1cengine/kabinet_settlement/"))
 
 trimeturls.append(urltype("payment", "1cengine/payment/"))
 trimeturls.append(urltype("payment/*", "1cengine/payment/"))

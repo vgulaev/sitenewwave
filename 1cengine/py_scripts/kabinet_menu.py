@@ -20,7 +20,8 @@ menu_list = {
         0 : [ "orders","заказы" ],
         1 : [ "payment","платежи" ],
         2 : [ "shipping","отгрузки" ],
-        3 : [ "personal","настройки" ]
+        3 : [ "settlement", "взаиморасчеты" ],
+        4 : [ "personal","настройки" ]
         },
     "not-authorized" : {
         0 : [ "authorization","Авторизация" ]
