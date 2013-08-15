@@ -76,7 +76,7 @@ class User1C():
         return result
 
     def get_user_information(self, uid):
-        client = Client(_CURRENT_ADDRESS_+'Register.1cws?wsdl', location = _CURRENT_ADDRESS_+"Register.1cws")
+        client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
         client.set_options(cache=DocumentCache())
 
         result = client.service.GetUser(uid)

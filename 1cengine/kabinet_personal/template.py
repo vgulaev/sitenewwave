@@ -5,6 +5,7 @@ import sys, os
 import cgi
 import cgitb; cgitb.enable()
 import imp
+import Cookie
 
 from bs4 import BeautifulSoup
 
@@ -14,7 +15,7 @@ lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
-def compose_personal_part():
+def compose_personal_part(uid):
     fieldset_tag = soup.new_tag("fieldset")
     fieldset_tag["title"] = "Личные данные"
     legend_tag = soup.new_tag("legend")
@@ -34,7 +35,7 @@ def compose_personal_part():
     fullname_label_td.append("Вы назвались как:")
     fullname_text_td = soup.new_tag("td")
     fullname_text_td["id"] = "fullname_text"
-    fullname_text_td.append(get_fullname())
+    fullname_text_td.append(get_fullname(uid))
 
     fullname_tr.append(fullname_label_td)
     fullname_tr.append(fullname_text_td)
@@ -120,15 +121,22 @@ def compose_password_part():
 
     return fieldset_tag
 
-def get_fullname():
-    return "test"
+def get_fullname(uid):
 
-def compose_personal():
+    python_lib_name = "1c_user_interaction"
+    user_1c_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+
+    user_1c = user_1c_lib.User1C()
+    user_data = user_1c.get_user_information(uid)
+
+    return user_data[1]
+
+def compose_personal(uid):
 
     return """
     <div>
 
-    """+str(compose_personal_part())+"""
+    """+str(compose_personal_part(uid))+"""
     """+str(compose_password_part())+"""
     
     </div>"""
@@ -152,7 +160,11 @@ def show_personal():
         """
     else:
 
-         return compose_personal()       
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        sid = cookie["sid"].value
+        uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
+
+        return compose_personal(uid_1c)       
 
 def show_menu():
 
