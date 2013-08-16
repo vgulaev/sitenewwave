@@ -100,6 +100,10 @@ def makecontent(path):
 
         if r != None:
             python_replace = BeautifulSoup(r)
+            redirect = python_replace.find("redirectme")
+            if redirect != None:
+                print "Status:307\nLocation: http://sitenewwave.dev"+str(redirect.string).strip()
+
             currentelement.replaceWith(python_replace.div)
         else:
             current_element.extract()
@@ -116,8 +120,17 @@ def makecontent(path):
     soup.html.body.append(node)
 
     #print(unicode(soup))
+    
+    print_headers()
+
     print(soup.prettify("utf-8"))
     #print(html_minify(soup.prettify("utf-8")))
+
+def print_headers():
+    print ("Content-Type: text/html; charset=utf-8")
+    print ("")
+    
+    print("<!DOCTYPE html>")
 
 
 
@@ -146,15 +159,19 @@ else:
 
 # Редирект должен осуществляться до вывода чего либо на страницу
 
-if ((sys.platform) == "win32"):
-    #print ("")
-    #sys.stdout = open('temp.html', 'w')
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
-else:
-    print ("Content-Type: text/html; charset=utf-8")
-    print ("")
+
+### подозреваю, что это условие боле не важно, раз
+#   столько времени висит в комментариях
+#   
+# if ((sys.platform) == "win32"):
+#     #print ("")
+#     #sys.stdout = open('temp.html', 'w')
+#     print ("Content-Type: text/html; charset=utf-8")
+#     print ("")
+# else:
+#     print ("Content-Type: text/html; charset=utf-8")
+#     print ("")
     
-print("<!DOCTYPE html>")
+# print("<!DOCTYPE html>")
 
 makecontent(pathtohtml)
