@@ -38,9 +38,11 @@ def show_orders():
         return data
     else:
         return """
+        <div>
         <redirectme>
             /kabinet/authorization/
         </redirectme>
+        </div>
         """
     
 def show_menu():

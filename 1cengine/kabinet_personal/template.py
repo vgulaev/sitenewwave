@@ -119,9 +119,11 @@ def show_personal():
 
     if user.check_SID() == False:
         return """
+        <div>
         <redirectme>
             /kabinet/authorization/
         </redirectme>
+        </div>
         """
     else:
 
