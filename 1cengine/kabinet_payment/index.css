@@ -16,8 +16,8 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	width:100px;
 }
 .orderItem span:first-child{
-	width:130px;
-	margin-left:0px;
+	width:100px;
+	margin-left:30px;
 }
 .openOrderDownload img{
 	margin-right:12px;

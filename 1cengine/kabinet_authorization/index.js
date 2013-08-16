@@ -31,7 +31,7 @@ $(document).ready( function (){
         email = $(".emailInput").val()
         if(passwd!="" && email!=""){
             passwd = hex_sha256(passwd)
-            $(".passwdInput").val(passwd) 
+            $(".hidden_passwd").val(passwd) 
             $("#regForm").submit()  
         }
     }
