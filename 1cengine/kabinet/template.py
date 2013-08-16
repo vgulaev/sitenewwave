@@ -22,22 +22,15 @@ def authorized_redirect():
 
     if user_lib.__main__("check_SID()") == True:
         return """
-            <div>
             <redirectme>
                 /kabinet/orders/
             </redirectme>
-            <script type="text/javascript">
-                window.location = "/kabinet/orders/"
-            </script>
-            </div>
         """
     else:
         return """
-            <div>
-            <script type="text/javascript">
-                window.location = "/kabinet/authorization/"
-            </script>
-            </div>
+        <redirectme>
+            /kabinet/authorization/
+        </redirectme>
         """
 def show_menu():
 

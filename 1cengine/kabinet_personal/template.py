@@ -119,13 +119,9 @@ def show_personal():
 
     if user.check_SID() == False:
         return """
-            <div>
-            <script type="text/javascript">
-                $(document).ready( function(){
-                        window.location = "/kabinet/authorization/"
-                    })
-            </script>
-            </div>
+        <redirectme>
+            /kabinet/authorization/
+        </redirectme>
         """
     else:
 

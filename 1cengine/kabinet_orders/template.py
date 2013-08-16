@@ -37,11 +37,11 @@ def show_orders():
         
         return data
     else:
-        return """<div>
-            <script type="text/javascript">
-                window.location = "/kabinet/authorization/"
-            </script>
-            </div>"""
+        return """
+        <redirectme>
+            /kabinet/authorization/
+        </redirectme>
+        """
     
 def show_menu():
 

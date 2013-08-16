@@ -32,11 +32,9 @@ def show_shipping():
 
     if user.check_SID() == False:
         return """
-            <div>
-            <script type="text/javascript">
-                window.location = "/kabinet/authorization/"
-            </script>
-            </div>
+        <redirectme>
+            /kabinet/authorization/
+        </redirectme>
         """
     else:
 
