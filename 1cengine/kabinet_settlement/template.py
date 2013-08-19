@@ -48,7 +48,7 @@ def show_shipping():
         # return get_shipping_list(uid_1c)
 
         try:
-            return get_shipping_list(uid_1c)       
+            return "<div>" + get_shipping_list(uid_1c) + "</div>"       
         except:
             return "<div>Контрагент не назначен или что-то пошло не так</div>"
 

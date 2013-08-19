@@ -30,7 +30,7 @@ def show_orders():
         # print uid_1c
         # print get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")
         
-        return "<div>"+get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")+"</div>"
+        # return "<div>"+get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")+"</div>"
 
         try:
             data = "<div>"+get_orders_list_lib.__main__("get_orders_list('"+uid_1c+"')")+"</div>"
