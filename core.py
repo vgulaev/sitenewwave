@@ -102,7 +102,7 @@ def makecontent(path):
             python_replace = BeautifulSoup(r)
             redirect = python_replace.find("redirectme")
             if redirect != None:
-                print "Status:307\nLocation: http://sitenewwave.dev"+str(redirect.string).strip()
+                print "Status:307\nLocation: http://trimet.ru"+str(redirect.string).strip()
 
             currentelement.replaceWith(python_replace.div)
         else:
