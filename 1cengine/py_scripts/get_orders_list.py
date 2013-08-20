@@ -123,7 +123,7 @@ def get_order_list_ajax(UID,date_from,date_to):
                 success: function(html) {
                     
                     $("#order_ajax_div").html(html)
-                    
+                    after_get_list()
 
                 }
 

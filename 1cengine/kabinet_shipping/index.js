@@ -1,21 +1,5 @@
 $(document).ready( function(){
-    /// Открытие ссылок для загрузки ///
-    $(".shippingItem").click( function(){
-        $(".shippingDownload").hide()
-        $(".ar_img").attr("src","/1cengine/kabinet_shipping/arrow.svg")
-        // alert(0)
-        $(this).find(".ar_img").each( function(){
-            // alert("nya")
-            $(this).attr("src","/1cengine/kabinet_shipping/arrow_down.svg")
-        })
-        $(this).find(".shippingDownload").each( function(){
-            // alert(1)
-            
-            $(this).show()
-        })
-
-    })  
-
+   
     $.datepicker.regional['ru'] = {clearText: 'Очистить', clearStatus: '',
             
             closeText: 'Закрыть', closeStatus: '',
@@ -44,6 +28,25 @@ $(document).ready( function(){
         $("#dateForm").submit()
     })
 })
+
+function after_get_list(){
+     /// Открытие ссылок для загрузки ///
+    $(".shippingItem").click( function(){
+        $(".shippingDownload").hide()
+        $(".ar_img").attr("src","/1cengine/kabinet_shipping/arrow.svg")
+        // alert(0)
+        $(this).find(".ar_img").each( function(){
+            // alert("nya")
+            $(this).attr("src","/1cengine/kabinet_shipping/arrow_down.svg")
+        })
+        $(this).find(".shippingDownload").each( function(){
+            // alert(1)
+            
+            $(this).show()
+        })
+
+    })  
+}
 
 function shippingDate(way){
     if(way="up"){
