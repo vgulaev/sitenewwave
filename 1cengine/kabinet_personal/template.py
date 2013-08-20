@@ -15,7 +15,62 @@ lib_path = os.path.abspath('1cengine/py_scripts/')
 sys.path.append(lib_path)
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
-def compose_personal_part(uid):
+
+user_info = {}
+
+def compose_info_part():
+    fieldset_tag = soup.new_tag("fieldset")
+    fieldset_tag["title"] = "Информация"
+    legend_tag = soup.new_tag("legend")
+    legend_tag.append("Информация")
+
+    fieldset_tag.append(legend_tag)
+
+    table_tag = soup.new_tag("table")
+    table_tag["id"] = "info_tab"
+
+    #########
+    
+    login_tr = soup.new_tag("tr")
+
+    login_label_td = soup.new_tag("td")
+    login_label_td["id"] = "login_label"
+    login_label_td.append("Вы залогинены как")
+    login_text_td = soup.new_tag("td")
+    login_text_td["id"] = "login_text"
+    login_text_td.append(user_info["loginname"])
+
+    login_tr.append(login_label_td)
+    login_tr.append(login_text_td)
+
+    counterparty_tr = soup.new_tag("tr")
+
+    counterparty_label_td = soup.new_tag("td")
+    counterparty_label_td["id"] = "counterparty_label"
+    counterparty_label_td.append("Вам назначены контрагенты")
+    counterparty_text_td = soup.new_tag("td")
+    counterparty_text_td["id"] = "counterparty_text"
+    counterparty_ul = soup.new_tag("ul")
+    for x in user_info["counterparty"][0]:
+        counterparty_li = soup.new_tag("li")
+        counterparty_li.append(str(x))
+        counterparty_ul.append(counterparty_li)
+
+    counterparty_text_td.append(counterparty_ul)
+
+    counterparty_tr.append(counterparty_label_td)
+    counterparty_tr.append(counterparty_text_td)
+
+    table_tag.append(login_tr)
+    table_tag.append(counterparty_tr)
+
+    fieldset_tag.append(table_tag)
+
+    
+
+    return fieldset_tag
+
+def compose_personal_part():
     fieldset_tag = soup.new_tag("fieldset")
     fieldset_tag["title"] = "Личные данные"
     legend_tag = soup.new_tag("legend")
@@ -32,10 +87,10 @@ def compose_personal_part(uid):
 
     fullname_label_td = soup.new_tag("td")
     fullname_label_td["id"] = "fullname_label"
-    fullname_label_td.append("Вы назвались как:")
+    fullname_label_td.append("Вы назвались как")
     fullname_text_td = soup.new_tag("td")
     fullname_text_td["id"] = "fullname_text"
-    fullname_text_td.append(get_fullname(uid))
+    fullname_text_td.append(user_info["fullname"])
 
     fullname_tr.append(fullname_label_td)
     fullname_tr.append(fullname_text_td)
@@ -121,6 +176,17 @@ def compose_password_part():
 
     return fieldset_tag
 
+def get_user_info(uid):
+    python_lib_name = "1c_user_interaction"
+    user_1c_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+
+    user_1c = user_1c_lib.User1C()
+    user_data = user_1c.get_user_information(uid)
+
+    user_info["loginname"] = user_data[0]
+    user_info["fullname"] = user_data[1]
+    user_info["counterparty"] = user_data[8]
+
 def get_fullname(uid):
 
     python_lib_name = "1c_user_interaction"
@@ -133,10 +199,12 @@ def get_fullname(uid):
 
 def compose_personal(uid):
 
+    get_user_info(uid)
     return """
     <div>
 
-    """+str(compose_personal_part(uid))+"""
+    """+str(compose_info_part())+"""
+    """+str(compose_personal_part())+"""
     """+str(compose_password_part())+"""
     
     </div>"""

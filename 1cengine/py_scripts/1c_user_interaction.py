@@ -41,6 +41,8 @@ class User1C():
         # print email, " | ", passwd
         client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
         client.set_options(cache=DocumentCache())
+        
+        # client.set_options(cache=None)
 
         username = ""
         fullname = ""

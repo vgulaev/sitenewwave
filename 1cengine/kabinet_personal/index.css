@@ -66,3 +66,41 @@ fieldset legend{
 	font-weight: bold;
 	/*width: 290px;*/
 }
+
+#login_label{
+	text-align: right;
+	vertical-align: middle;
+	font-size: 16px;
+	width: 200px;
+}
+
+#login_text{
+	text-align: left;
+	padding-left: 25px;
+	vertical-align: middle;
+	font-size: 16px;
+	font-weight: bold;
+	/*width: 290px;*/
+}
+
+#counterparty_label{
+	text-align: right;
+	vertical-align: middle;
+	font-size: 16px;
+	width: 200px;
+}
+#counterparty_text{
+	text-align: left;
+	padding-left: 25px;
+	vertical-align: middle;
+	font-size: 16px;
+	font-weight: bold;
+}
+#counterparty_text ul{
+	padding:0;
+	margin-left:10px;
+}
+#counterparty_text li{
+	padding:0;
+	background: none;
+}
