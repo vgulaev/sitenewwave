@@ -133,6 +133,8 @@ def get_settlement_list_html(UID,date_from,date_to):
 
     client.set_options(cache=DocumentCache())
 
+    # client.set_options(cache=None)
+    # client.options.cache.clear()
 
     result = client.service.SettlementList(UID,date_from,date_to)
 

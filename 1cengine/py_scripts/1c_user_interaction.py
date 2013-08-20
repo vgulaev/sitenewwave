@@ -41,6 +41,8 @@ class User1C():
         # print email, " | ", passwd
         client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
         client.set_options(cache=DocumentCache())
+        
+        # client.set_options(cache=None)
 
         username = ""
         fullname = ""
@@ -65,6 +67,22 @@ class User1C():
         result = client.service.UpdateUser(uid,"Password",new_passwd)
 
         # print result
+        return result
+
+    def change_fio_1c(self, uid, new_fio):
+        client = Client(_CURRENT_ADDRESS_+'Register.1cws?wsdl', location = _CURRENT_ADDRESS_+"Register.1cws")
+        client.set_options(cache=DocumentCache())
+
+        result = client.service.UpdateUser(uid,"FullName",new_fio)
+
+        return result
+
+    def get_user_information(self, uid):
+        client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
+        client.set_options(cache=DocumentCache())
+
+        result = client.service.GetUser(uid)
+
         return result
 
 
