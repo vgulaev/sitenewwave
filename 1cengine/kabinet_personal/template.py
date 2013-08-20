@@ -204,10 +204,18 @@ def compose_personal(uid):
     <div>
 
     """+str(compose_info_part())+"""
-    """+str(compose_personal_part())+"""
     """+str(compose_password_part())+"""
     
     </div>"""
+
+    # return """
+    # <div>
+
+    # """+str(compose_info_part())+"""
+    # """+str(compose_personal_part())+"""
+    # """+str(compose_password_part())+"""
+    
+    # </div>"""
 
 def show_personal():
 
