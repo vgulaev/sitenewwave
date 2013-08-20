@@ -43,6 +43,8 @@ def show_shipping():
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
         sid = cookie["sid"].value
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
+
+        # return "<div>" + get_shipping_list(uid_1c) + "</div>"  
         
         try:
             return "<div>" + get_shipping_list(uid_1c) + "</div>"       
