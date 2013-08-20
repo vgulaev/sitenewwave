@@ -31,13 +31,11 @@ def show_payments():
 
     if user.check_SID() == False:
         return """
-            <div>
-            <script type="text/javascript">
-                $(document).ready( function(){
-                        window.location = "/kabinet/authorization/"
-                    })
-            </script>
-            </div>
+        <div>
+        <redirectme>
+            /kabinet/authorization/
+        </redirectme>
+        </div>
         """
     else:
 
@@ -45,8 +43,9 @@ def show_payments():
         sid = cookie["sid"].value
         uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
         
+        # return "<div>"+get_payments_list(uid_1c)+"</div>"  
         try:
-            return get_payments_list(uid_1c)       
+            return "<div>"+get_payments_list(uid_1c)+"</div>"       
         except:
             return "<div>Контрагент не назначен или что-то пошло не так</div>"
 

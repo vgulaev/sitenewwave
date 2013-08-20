@@ -1,20 +1,5 @@
 $(document).ready( function(){
-    /// Открытие ссылок для загрузки ///
-    $(".orderItem").click( function(){
-        $(".orderDownload").hide()
-        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
-        // alert(0)
-        $(this).find(".ar_img").each( function(){
-            // alert("nya")
-            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
-        })
-        $(this).find(".orderDownload").each( function(){
-            // alert(1)
-            
-            $(this).show()
-        })
-
-    })  
+    
 
     $.datepicker.regional['ru'] = {clearText: 'Очистить', clearStatus: '',
             
@@ -44,6 +29,25 @@ $(document).ready( function(){
         $("#dateForm").submit()
     })
 })
+
+function after_get_list(){
+    /// Открытие ссылок для загрузки ///
+    $(".orderItem").click( function(){
+        $(".orderDownload").hide()
+        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
+        // alert(0)
+        $(this).find(".ar_img").each( function(){
+            // alert("nya")
+            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
+        })
+        $(this).find(".orderDownload").each( function(){
+            // alert(1)
+            
+            $(this).show()
+        })
+
+    })  
+}
 
 function logout(){
     $.removeCookie("sid",{ expires: 30, path: '/'})

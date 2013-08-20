@@ -1,4 +1,4 @@
-#!/web/trimet/python/bin/python2.6
+#!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 
 import sys, os
@@ -30,27 +30,30 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+post = {}
+
+if "POST_DATA" in os.environ:
+    raw_post = os.environ["POST_DATA"]
+else:
+    raw_post = sys.stdin.read()
+
+if raw_post != "":
+    if "&amp;" in raw_post:
+        pre_post = raw_post.split("&amp;")
+    else:
+        pre_post = raw_post.split("&")
+    # print pre_post
+    for variables in pre_post:
+        # print variables
+        key_var = str(variables).split("=")
+        # print key_var
+        post[key_var[0]] = key_var[1]
 
 def get_orders_list(UID):
 
-    post = {}
-
-    if "POST_DATA" in os.environ:
-        raw_post = os.environ["POST_DATA"]
-    else:
-        raw_post = sys.stdin.read()
-
-    if raw_post != "":
-        pre_post = raw_post.split("&")
-        # print pre_post
-        for variables in pre_post:
-            # print variables
-            key_var = str(variables).split("=")
-            # print key_var
-            post[key_var[0]] = key_var[1]
-
-    date_from = None
-    date_to = None
+    
+    date_from = ""
+    date_to = ""
 
     if "dateFrom" in post:
         if post["dateFrom"] != "":
@@ -62,6 +65,71 @@ def get_orders_list(UID):
         if post["dateTo"] != "":
             date_to_array = post["dateTo"].split(".")
             date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
+
+    return get_payment_list_ajax(UID,date_from,date_to)
+    
+
+def get_payment_list_ajax(UID,date_from,date_to):
+
+    if date_from != "":
+        date_from_par = "&date_from=" + date_from
+    else:
+        date_from_par = ""
+
+    if date_to != "":
+        date_to_par = "&date_to=" + date_to
+    else:
+        date_to_par = ""
+
+    import  random
+    loader_list = ["379","285","377","382","385"]
+    
+    loader_str = "<div><img src='/1cengine/payment/"+random.choice(loader_list)+".png' /></div>"
+
+    if "dateFrom" in post:
+        date_from_value = post["dateFrom"]
+    else:
+        date_from_value = ""
+
+    if "dateTo" in post:
+        date_to_value = post["dateTo"]
+    else:
+        date_to_value = ""
+
+    ajax = """
+        <div class="dateChooser">
+            <form method="POST" action="/kabinet/payment/" id="dateForm">
+                Показать платежи в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" value=\""""+date_from_value+"""\" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" value=\""""+date_to_value+"""\" />
+                <div class="datePickButton">Обновить журнал</div>
+            </form>
+        </div>
+        <div id="payment_ajax_div">
+        """ + loader_str + """
+        <script type="text/javascript">
+        $(document).ready( function(){
+            $.ajax({
+                type: "POST",
+                url: "/1cengine/py_scripts/get_payments_list.py",
+                async: true,
+                data: "UID=""" + UID + date_from_par + date_to_par + """&from_ajax=true",
+                success: function(html) {
+                    
+                    $("#payment_ajax_div").html(html)
+                    
+
+                }
+
+            }); 
+
+        })
+            
+        </script>
+        </div>
+    """
+
+    return ajax
+
+def get_payment_list_html(UID,date_from,date_to):
 
     client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
     # client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
@@ -77,21 +145,13 @@ def get_orders_list(UID):
     # print "nya"
     # print result
 
-    listOrder = """
-         
-        <div class="dateChooser">
-            <form method="POST" action="/kabinet/payment/" id="dateForm">
-                Показать платежи в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" />
-                <div class="datePickButton">Обновить журнал</div>
-            </form>
-        </div>
-    """
+    listOrder = ""
 
     listOrder = listOrder + """
         <div class="orderListHeader">
             <span>Номер</span>
             <span>Сумма</span>
-            <span><a href="javascript:pass()">Дата<img class="date_arrow" src="/1cengine/kabinet_orders/arrow_down.svg" /></a></span>
+            <span><a href="javascript:pass()">Дата<img class="date_arrow" src="/1cengine/kabinet_payment/arrow_down.svg" /></a></span>
         </div>
         <div id="ordersContainer">
     """
@@ -124,3 +184,38 @@ def get_orders_list(UID):
 
 def __main__(funct_name):
     return eval(funct_name)
+
+
+if os.environ.get('REQUEST_METHOD','') == "POST":
+    
+    # print os.environ.get('REQUEST_METHOD','')
+    raw_post = sys.stdin.read()
+
+    if raw_post != "":
+        pre_post = raw_post.split("&amp;")
+        # print pre_post
+        for variables in pre_post:
+            # print variables
+            key_var = str(variables).split("=")
+            # print key_var
+            post[key_var[0]] = key_var[1]
+
+    # print post
+    if "from_ajax" in post:
+        print "Content-Type: text/html; charset=utf-8\n"
+       
+
+        UID = post["UID"]
+        if "date_from" in post:
+            date_from = post["date_from"]
+        else:
+            date_from = None
+        if "date_to" in post:
+            date_to = post["date_to"]
+        else:
+            date_to = None
+        
+        payment_list = get_payment_list_html(UID,date_from,date_to)
+
+        print payment_list
+
