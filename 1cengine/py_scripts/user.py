@@ -379,6 +379,27 @@ class User():
         else:
             return "Вы не злогинены Оо"
 
+    def update_fullname(self, fullname):
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        if cookie.has_key("sid"):
+            sid = cookie["sid"].value
+        else:
+            return "Что то пошло не так, попробуйте позже"
+
+        uid1c = self.get_1c_sid(sid)
+        user1c = user_1c_lib.User1C()
+        user1c.change_fio_1c(uid1c, fullname)
+
+        return "Вы успешно сменили имя!"
+
+
+    def change_fullname(self):
+        sid = self.check_SID()
+        if sid == True:
+            return self.update_fullname(fullname)
+        else:
+            return "Вы не злогинены Оо"
+
 
 def __main__(funkt=False):
 
@@ -458,6 +479,11 @@ if "newUser" in post:
         is_new = False
 else:
     is_new = False
+
+if "fullname" in post:
+    fullname = post["fullname"]
+else:
+    fullname = ""
 
 if "funkt" in post:
     funkt = post["funkt"]

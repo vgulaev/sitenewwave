@@ -58,13 +58,31 @@ fieldset legend{
 	font-size: 16px;
 	width: 200px;
 }
-#fullname_text{
-	text-align: left;
-	padding-left: 25px;
-	vertical-align: middle;
+#fullname_input{
+	margin: 5px;
+	width: 250px;
+	height: 30px;
+	border: 1px solid rgb(161, 161, 161);
+	box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
 	font-size: 16px;
-	font-weight: bold;
-	/*width: 290px;*/
+}
+
+#fullname_button{
+	width:100px;
+	height:23px;
+	cursor:pointer;
+	border:1px outset rgb(154, 57, 48);
+	margin-right:25px;
+	margin-top:25px;
+	text-align:center;
+	float:right;
+	border-radius:40px 10px;
+	background-color: rgb(154, 57, 48);
+	color:white;
+	font-weight:bold;
+	font-size:14px;
+	padding-top:7px;
+	display:none;
 }
 
 #login_label{
