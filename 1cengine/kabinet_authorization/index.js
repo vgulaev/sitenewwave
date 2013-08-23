@@ -22,7 +22,7 @@ $(document).ready( function (){
 
         $.blockUI({
             message: "\
-            <div id='wait_please'>
+            <div id='wait_please'>\
                 Происходит процесс авторизации, пожалуйста, подождите<br />\     
             </div>"
         });
