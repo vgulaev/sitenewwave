@@ -26,18 +26,63 @@ $(document).ready( function (){
         window.location = "/kabinet/authorization/"
     }
 
+    // Returns a random integer between min and max
+    // Using Math.round() will give you a non-uniform distribution!
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function submit_form(){
+        $.ajax({
+            type: "POST",
+            url: "/1cengine/py_scripts/user.py",
+            async: false,
+            data: "passwd=" + $(".passwdInput").val() + "&email=" + $(".emailInput").val() + "&funkt=authorize_me",
+            success: function(html) {
+                authorization = html
+                eval(authorization)
+            }
+
+        });    
+    }
+
     function loginUser(){
+        downloader_array = new Array("285","365","377","379","382","385")
+    
+        $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+        $.blockUI.defaults.fadeIn = 100; //ускоряем появление
+        $.blockUI.defaults.fadeOut = 100; //и исчезновение
+        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = 'white'
+        $.blockUI.defaults.css.cursor = 'defaults'
+        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+        $.blockUI.defaults.css.fontSize = '14px'
+        $.blockUI.defaults.css.width = '450px'
+        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.paddingTop = '10px'
+
+        $.blockUI({
+            message: "\
+            <div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br />\
+                <img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
+            </div>"
+        });
         passwd = $(".passwdInput").val()
         email = $(".emailInput").val()
         if(passwd!="" && email!=""){
             passwd = hex_sha256(passwd)
             $(".passwdInput").val(passwd) 
-            $("#regForm").submit()  
+
+            submit_form()
+            // $("#regForm").submit()  
         }
     }
 
+    
+
     function newUser(){
         
+
         passwd = $(".passwdInput").val()
         passwdRepeat = $(".passwdInputRepeat").val()
         email = $(".emailInput").val()

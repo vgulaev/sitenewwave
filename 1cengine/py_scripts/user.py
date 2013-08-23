@@ -224,29 +224,15 @@ class User():
                     # print "nya"
                     # print c
                     return """ 
-                        <div>
-                        <script type="text/javascript">
-                            $(document).ready( function(){
-                                    $.removeCookie("sid",{ expires: 30, path: '/'});
-                                    // $.cookie("sid", "",{ expires: 30, path: '/'})
-                                    $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
-                                    //alert('"""+str(c)+"""')
-                                    //alert('"""+uid1c+"""')
-                                    window.location = "/kabinet/orders/"
-                                })
-                        </script>
-                        </div>
+                            $.removeCookie("sid",{ expires: 30, path: '/'});
+                            $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
+                            window.location = "/kabinet/orders/"
                     """
                 else:
 
                     return """
-                        <div>
-                        <script type="text/javascript">
-                            $(document).ready( function(){
-                                $.removeCookie("sid",{ expires: 30, path: '/'})
-                                })
-                        </script>
-                        </div>
+                            $.removeCookie("sid",{ expires: 30, path: '/'})
+                            alert("Не авторизованы")
                     """
                     
             else:
@@ -424,6 +410,13 @@ def __main__(funkt=False):
         print ("Content-Type: text/html; charset=utf-8\n")
 
         q = user.change_passwd()
+
+        print q
+
+    elif "authorize_me" in funkt:
+        print ("Content-Type: text/html; charset=utf-8\n")
+
+        q = user.authorize()
 
         print q
 
