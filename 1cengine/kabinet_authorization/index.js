@@ -22,8 +22,8 @@ $(document).ready( function (){
 
         $.blockUI({
             message: "\
-            <div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br />\
-                <img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
+            <div id='wait_please'>
+                Происходит процесс авторизации, пожалуйста, подождите<br />\     
             </div>"
         });
         loginUser() 
