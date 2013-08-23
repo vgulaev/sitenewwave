@@ -21,10 +21,7 @@ $(document).ready( function (){
         $.blockUI.defaults.css.paddingTop = '10px'
 
         $.blockUI({
-            message: "\
-            <div id='wait_please'>\
-                Происходит процесс авторизации, пожалуйста, подождите<br />\     
-            </div>"
+            message: "<div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br /></div>"
         });
         loginUser() 
 
