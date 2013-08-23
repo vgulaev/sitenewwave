@@ -233,6 +233,7 @@ class User():
                     return """
                             $.removeCookie("sid",{ expires: 30, path: '/'})
                             alert("Не авторизованы")
+                            $.unblockUI()
                     """
                     
             else:

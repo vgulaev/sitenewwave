@@ -5,7 +5,30 @@ $(document).ready( function (){
     })
 
 
-    $(".enterButton").click( function(){ loginUser() } )
+    $(".enterButton").click( function(){ 
+        downloader_array = new Array("285","365","377","379","382","385")
+    
+        $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+        $.blockUI.defaults.fadeIn = 100; //ускоряем появление
+        $.blockUI.defaults.fadeOut = 100; //и исчезновение
+        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = 'white'
+        $.blockUI.defaults.css.cursor = 'defaults'
+        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+        $.blockUI.defaults.css.fontSize = '14px'
+        $.blockUI.defaults.css.width = '450px'
+        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.paddingTop = '10px'
+
+        $.blockUI({
+            message: "\
+            <div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br />\
+                <img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
+            </div>"
+        });
+        loginUser() 
+
+    } )
     $(".regButton").click( function(){ newUser() } )
 
     // $(".newUser").change( function(){
@@ -41,32 +64,14 @@ $(document).ready( function (){
             success: function(html) {
                 authorization = html
                 eval(authorization)
+                
             }
 
         });    
     }
 
     function loginUser(){
-        downloader_array = new Array("285","365","377","379","382","385")
-    
-        $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
-        $.blockUI.defaults.fadeIn = 100; //ускоряем появление
-        $.blockUI.defaults.fadeOut = 100; //и исчезновение
-        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
-        $.blockUI.defaults.css.backgroundColor = 'white'
-        $.blockUI.defaults.css.cursor = 'defaults'
-        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-        $.blockUI.defaults.css.fontSize = '14px'
-        $.blockUI.defaults.css.width = '450px'
-        $.blockUI.defaults.css.height = '220px'
-        $.blockUI.defaults.css.paddingTop = '10px'
-
-        $.blockUI({
-            message: "\
-            <div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br />\
-                <img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
-            </div>"
-        });
+        
         passwd = $(".passwdInput").val()
         email = $(".emailInput").val()
         if(passwd!="" && email!=""){
@@ -76,6 +81,11 @@ $(document).ready( function (){
             submit_form()
             // $("#regForm").submit()  
         }
+    }
+
+    function logout(){
+        $.removeCookie("sid",{ expires: 30, path: '/'})
+        window.location = "/kabinet/authorization/"
     }
 
     
