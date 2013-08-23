@@ -23,7 +23,7 @@ $(document).ready( function (){
         $.blockUI({
             message: "<div id='wait_please'>Происходит процесс авторизации, пожалуйста, подождите<br /></div>"
         });
-        loginUser() 
+        window.setTimeout(loginUser() ,1000)
 
     } )
     $(".regButton").click( function(){ newUser() } )
