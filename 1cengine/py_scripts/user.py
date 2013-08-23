@@ -224,29 +224,16 @@ class User():
                     # print "nya"
                     # print c
                     return """ 
-                        <div>
-                        <script type="text/javascript">
-                            $(document).ready( function(){
-                                    $.removeCookie("sid",{ expires: 30, path: '/'});
-                                    // $.cookie("sid", "",{ expires: 30, path: '/'})
-                                    $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
-                                    //alert('"""+str(c)+"""')
-                                    //alert('"""+uid1c+"""')
-                                    window.location = "/kabinet/orders/"
-                                })
-                        </script>
-                        </div>
+                            $.removeCookie("sid",{ expires: 30, path: '/'});
+                            $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
+                            window.location = "/kabinet/orders/"
                     """
                 else:
 
                     return """
-                        <div>
-                        <script type="text/javascript">
-                            $(document).ready( function(){
-                                $.removeCookie("sid",{ expires: 30, path: '/'})
-                                })
-                        </script>
-                        </div>
+                            $.removeCookie("sid",{ expires: 30, path: '/'})
+                            alert("Не авторизованы")
+                            $.unblockUI()
                     """
                     
             else:
@@ -379,6 +366,27 @@ class User():
         else:
             return "Вы не злогинены Оо"
 
+    def update_fullname(self, fullname):
+        cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+        if cookie.has_key("sid"):
+            sid = cookie["sid"].value
+        else:
+            return "Что то пошло не так, попробуйте позже"
+
+        uid1c = self.get_1c_sid(sid)
+        user1c = user_1c_lib.User1C()
+        user1c.change_fio_1c(uid1c, fullname)
+
+        return "Вы успешно сменили имя!"
+
+
+    def change_fullname(self):
+        sid = self.check_SID()
+        if sid == True:
+            return self.update_fullname(fullname)
+        else:
+            return "Вы не злогинены Оо"
+
 
 def __main__(funkt=False):
 
@@ -403,6 +411,13 @@ def __main__(funkt=False):
         print ("Content-Type: text/html; charset=utf-8\n")
 
         q = user.change_passwd()
+
+        print q
+
+    elif "authorize_me" in funkt:
+        print ("Content-Type: text/html; charset=utf-8\n")
+
+        q = user.authorize()
 
         print q
 
@@ -458,6 +473,11 @@ if "newUser" in post:
         is_new = False
 else:
     is_new = False
+
+if "fullname" in post:
+    fullname = post["fullname"]
+else:
+    fullname = ""
 
 if "funkt" in post:
     funkt = post["funkt"]

@@ -29,7 +29,32 @@ $(document).ready( function(){
         
         // alert($("#passwd_input").val())
     })
+
+    $("#fullname_button").click( function(){
+        $.ajax({
+            type: "POST",
+            url: "/1cengine/py_scripts/user.py",
+            async: false,
+            data: "fullname=" + $("#fullname_input").val() + "&funkt=change_fullname()",
+            success: function(html) {
+                alert(html)
+
+                $("#fullname_input").attr("fullname",$("#fullname_input").val())
+            }
+
+        }); 
+    })
+
+    $("#fullname_input").change( function(){ fullname_changed() } )
 })
+
+function fullname_changed(){
+    if( $("#fullname_input").val() == $("#fullname_input").attr("name") ){
+        $("#fullname_button").hide()
+    } else {
+        $("#fullname_button").show()
+    }
+}
 
 function logout(){
     $.removeCookie("sid",{ expires: 30, path: '/'})

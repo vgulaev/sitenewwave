@@ -88,16 +88,27 @@ def compose_personal_part():
     fullname_label_td = soup.new_tag("td")
     fullname_label_td["id"] = "fullname_label"
     fullname_label_td.append("Вы назвались как")
-    fullname_text_td = soup.new_tag("td")
-    fullname_text_td["id"] = "fullname_text"
-    fullname_text_td.append(user_info["fullname"])
+    fullname_input_td = soup.new_tag("td")
+    fullname_input = soup.new_tag("input")
+    fullname_input["id"] = "fullname_input"
+    fullname_input["value"] = user_info["fullname"]
+    fullname_input["name"] = user_info["fullname"]
+    fullname_input_td.append(fullname_input)
 
     fullname_tr.append(fullname_label_td)
-    fullname_tr.append(fullname_text_td)
+    fullname_tr.append(fullname_input_td)
 
     table_tag.append(fullname_tr)
 
     fieldset_tag.append(table_tag)
+
+    #########
+    
+    fullname_button_div = soup.new_tag("div")
+    fullname_button_div["id"] = "fullname_button"
+    fullname_button_div.append("Сохранить")
+
+    fieldset_tag.append(fullname_button_div)
     
     return fieldset_tag
 
@@ -200,22 +211,22 @@ def get_fullname(uid):
 def compose_personal(uid):
 
     get_user_info(uid)
-    return """
-    <div>
-
-    """+str(compose_info_part())+"""
-    """+str(compose_password_part())+"""
-    
-    </div>"""
-
     # return """
     # <div>
 
     # """+str(compose_info_part())+"""
-    # """+str(compose_personal_part())+"""
     # """+str(compose_password_part())+"""
     
     # </div>"""
+
+    return """
+    <div>
+
+    """+str(compose_info_part())+"""
+    """+str(compose_personal_part())+"""
+    """+str(compose_password_part())+"""
+    
+    </div>"""
 
 def show_personal():
 
