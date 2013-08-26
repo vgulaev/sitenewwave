@@ -226,6 +226,7 @@ class User():
                     return """ 
                             $.removeCookie("sid",{ expires: 30, path: '/'});
                             $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
+                            $.unblockUI()
                             window.location = "/kabinet/orders/"
                     """
                 else:

@@ -57,7 +57,7 @@ $(document).ready( function (){
         $.ajax({
             type: "POST",
             url: "/1cengine/py_scripts/user.py",
-            async: false,
+            async: true,
             data: "passwd=" + $(".hidden_passwd").val() + "&email=" + $(".emailInput").val() + "&funkt=authorize_me",
             success: function(html) {
                 authorization = html
