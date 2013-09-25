@@ -46,12 +46,12 @@ class Index_Page():
 
     def load_template_from_file(self, path):
         template_file = open(path, "r")
-        template = template_file.read()
+        current_template = template_file.read()
         template_file.close()
 
         # print template
 
-        return template
+        return current_template
 
     def compose_head_temlplate(self):
         if self.head_template == "":
