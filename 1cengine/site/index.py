@@ -1,9 +1,11 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 
-import sys, os
+import sys
+import os
 import cgi
-import cgitb; cgitb.enable()
+import cgitb
+cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 from bs4 import BeautifulSoup
 
@@ -12,13 +14,16 @@ import imp
 
 lib_path = os.path.abspath('../py_scripts/')
 
-python_lib = imp.load_source("detect_mobile", lib_path+"/detect_mobile"+".py")
+python_lib = imp.load_source(
+    "detect_mobile", lib_path + "/detect_mobile" + ".py")
 
-if python_lib.detect() == True:
+if python_lib.detect() is True:
     form = cgi.FieldStorage()
-    if form.has_key("linkUID"):
+    if "linkUID" in form:
         # print 1
-        print "Status:307\nLocation: http://trimet/1cengine/pda_site/qrorder.php?linkUID="+form["linkUID"].value
+        print "Status:307\nLocation: \
+            http://trimet/1cengine/pda_site/qrorder.php?linkUID=\
+            " + form["linkUID"].value
 
 
 print "Content-Type: text/html; charset=utf-8\n"
@@ -28,6 +33,7 @@ print "<!DOCTYPE html>"
 # print "hello"
 
 class Index_Page():
+
     def __init__(self):
         self.head_template = ""
         self.header_template = ""
@@ -46,33 +52,28 @@ class Index_Page():
 
         return template
 
-
     def compose_head_temlplate(self):
         if self.head_template == "":
             return BeautifulSoup("<html><head></head></html>").head
 
         head = BeautifulSoup(self.head_template)
 
-        #### loading python script ####
+        # loading python script ####
         py_nodes = head.find_all("pythonscript")
 
         for current_element in py_nodes:
-            python_lib_name = current_element.contents[0].split("{")[1].split("}")[0]
-#            python_method_name = current_element.contents[0].split("|")[1].split("}")[0]
-            
-            import template
+            python_lib_name = current_element.contents[
+                0].split("{")[1].split("}")[0]
+
             r = eval(python_lib_name)
-#            python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
-#            
-#            r = python_lib.__main__(python_method_name)
-#
-            if r != None:
+
+            if r is not None:
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
-               current_element.extract()
+                current_element.extract()
 
-        #### load js tags ####
+        # load js tags ####
         for js in self.js_list:
             js_tag = head.new_tag("script")
             js_tag["type"] = "text/javascript"
@@ -80,8 +81,7 @@ class Index_Page():
 
             head.head.append(js_tag)
 
-
-        #### load css tags ####
+        # load css tags ####
         for style in self.style_list:
             style_tag = head.new_tag("link")
             style_tag["media"] = "all"
@@ -91,7 +91,6 @@ class Index_Page():
 
             head.head.append(style_tag)
 
-
         return head.head
 
     def compose_header_temlplate(self):
@@ -100,24 +99,20 @@ class Index_Page():
 
         header = BeautifulSoup(self.header_template)
 
-        #### loading python script ####
+        # loading python script ####
         py_nodes = header.find_all("pythonscript")
 
         for current_element in py_nodes:
-            python_lib_name = current_element.contents[0].split("{")[1].split("}")[0]
-#            python_method_name = current_element.contents[0].split("|")[1].split("}")[0]
-            
-            import template
+            python_lib_name = current_element.contents[
+                0].split("{")[1].split("}")[0]
+
             r = eval(python_lib_name)
-#            python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
-#            
-#            r = python_lib.__main__(python_method_name)
-#
-            if r != None:
+
+            if r is not None:
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
-               current_element.extract()
+                current_element.extract()
 
         return header.header
 
@@ -127,24 +122,20 @@ class Index_Page():
 
         footer = BeautifulSoup(self.footer_template)
 
-        #### loading python script ####
+        # loading python script ####
         py_nodes = footer.find_all("pythonscript")
 
         for current_element in py_nodes:
-            python_lib_name = current_element.contents[0].split("{")[1].split("}")[0]
-#            python_method_name = current_element.contents[0].split("|")[1].split("}")[0]
-            
-            import template
+            python_lib_name = current_element.contents[
+                0].split("{")[1].split("}")[0]
+
             r = eval(python_lib_name)
-#            python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
-#            
-#            r = python_lib.__main__(python_method_name)
-#
-            if r != None:
+
+            if r is not None:
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
-               current_element.extract()
+                current_element.extract()
 
         return footer.footer
 
@@ -154,35 +145,35 @@ class Index_Page():
 
         content = BeautifulSoup(self.content_template)
 
-        #### loading python script ####
+        # loading python script ####
         py_nodes = content.find_all("pythonscript")
 
         for current_element in py_nodes:
-            python_lib_name = current_element.contents[0].split("{")[1].split("}")[0]
-#            python_method_name = current_element.contents[0].split("|")[1].split("}")[0]
-            
-            import template
+            python_lib_name = current_element.contents[
+                0].split("{")[1].split("}")[0]
+
             r = eval(python_lib_name)
-#            python_lib = imp.load_source(python_lib_name, path+python_lib_name+".py")
-#            
-#            r = python_lib.__main__(python_method_name)
-#
-            if r != None:
+
+            if r is not None:
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
-               current_element.extract()
+                current_element.extract()
 
         return content.div
 
-
     def show_page(self):
-        page = BeautifulSoup("<html><head></head><body class=\"page-main\"></body></html>")
+        page = BeautifulSoup(
+            "<html><head></head><body class=\"page-main\"></body></html>")
 
-        self.head_template = self.load_template_from_file("templates/head.tpl.html")
-        self.header_template = self.load_template_from_file("templates/header.tpl.html")
-        self.footer_template = self.load_template_from_file("templates/footer.tpl.html")
-        self.content_template = self.load_template_from_file("templates/content.tpl.html")
+        self.head_template = self.load_template_from_file(
+            "templates/head.tpl.html")
+        self.header_template = self.load_template_from_file(
+            "templates/header.tpl.html")
+        self.footer_template = self.load_template_from_file(
+            "templates/footer.tpl.html")
+        self.content_template = self.load_template_from_file(
+            "templates/content.tpl.html")
 
         self.js_list = [
             "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js",
@@ -197,7 +188,7 @@ class Index_Page():
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
-            "/1cengine/site/css/modern_style.css" 
+            "/1cengine/site/css/modern_style.css"
         ]
 
         head = self.compose_head_temlplate()
@@ -213,8 +204,6 @@ class Index_Page():
         print str(page)
         # print page.prettify("utf-8", formatter="minimal")
 
-
-            
 
 page = Index_Page()
 page.show_page()
