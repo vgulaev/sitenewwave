@@ -1,9 +1,11 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding:utf-8 -*-
 
-import sys, os
+import sys
+import os
 import cgi
-import cgitb; cgitb.enable()
+import cgitb
+cgitb.enable()
 import imp
 import Cookie
 
@@ -18,6 +20,7 @@ _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
 user_info = {}
 
+
 def compose_info_part():
     fieldset_tag = soup.new_tag("fieldset")
     fieldset_tag["title"] = "Информация"
@@ -29,8 +32,8 @@ def compose_info_part():
     table_tag = soup.new_tag("table")
     table_tag["id"] = "info_tab"
 
-    #########
-    
+    #
+
     login_tr = soup.new_tag("tr")
 
     login_label_td = soup.new_tag("td")
@@ -66,9 +69,8 @@ def compose_info_part():
 
     fieldset_tag.append(table_tag)
 
-    
-
     return fieldset_tag
+
 
 def compose_personal_part():
     fieldset_tag = soup.new_tag("fieldset")
@@ -81,8 +83,8 @@ def compose_personal_part():
     table_tag = soup.new_tag("table")
     table_tag["id"] = "personal_tab"
 
-    #########
-    
+    #
+
     fullname_tr = soup.new_tag("tr")
 
     fullname_label_td = soup.new_tag("td")
@@ -102,28 +104,29 @@ def compose_personal_part():
 
     fieldset_tag.append(table_tag)
 
-    #########
-    
+    #
+
     fullname_button_div = soup.new_tag("div")
     fullname_button_div["id"] = "fullname_button"
     fullname_button_div.append("Сохранить")
 
     fieldset_tag.append(fullname_button_div)
-    
+
     return fieldset_tag
+
 
 def compose_password_part():
     fieldset_tag = soup.new_tag("fieldset")
     fieldset_tag["title"] = "Смена пароля"
     legend_tag = soup.new_tag("legend")
     legend_tag.append("Сменить пароль")
-    
+
     fieldset_tag.append(legend_tag)
-    
+
     table_tag = soup.new_tag("table")
     table_tag["id"] = "passwd_tab"
 
-    #########
+    #
 
     old_passwd_tr = soup.new_tag("tr")
 
@@ -140,10 +143,10 @@ def compose_password_part():
 
     table_tag.append(old_passwd_tr)
 
-    #########
+    #
 
     passwd_tr = soup.new_tag("tr")
-    
+
     passwd_label_td = soup.new_tag("td")
     passwd_label_td.append("Новый пароль")
     passwd_input_td = soup.new_tag("td")
@@ -157,10 +160,10 @@ def compose_password_part():
 
     table_tag.append(passwd_tr)
 
-    ##########
+    #
 
     repeat_passwd_tr = soup.new_tag("tr")
-    
+
     repeat_passwd_label_td = soup.new_tag("td")
     repeat_passwd_label_td.append("Повторите пароль")
     repeat_passwd_input_td = soup.new_tag("td")
@@ -174,22 +177,24 @@ def compose_password_part():
 
     table_tag.append(repeat_passwd_tr)
 
-    ##########
-    
+    #
+
     passwd_button_div = soup.new_tag("div")
     passwd_button_div["id"] = "passwd_button"
     passwd_button_div.append("Изменить")
 
-    #########
-    
+    #
+
     fieldset_tag.append(table_tag)
     fieldset_tag.append(passwd_button_div)
 
     return fieldset_tag
 
+
 def get_user_info(uid):
     python_lib_name = "1c_user_interaction"
-    user_1c_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+    user_1c_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
     user_1c = user_1c_lib.User1C()
     user_data = user_1c.get_user_information(uid)
@@ -198,15 +203,18 @@ def get_user_info(uid):
     user_info["fullname"] = user_data[1]
     user_info["counterparty"] = user_data[8]
 
+
 def get_fullname(uid):
 
     python_lib_name = "1c_user_interaction"
-    user_1c_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+    user_1c_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
     user_1c = user_1c_lib.User1C()
     user_data = user_1c.get_user_information(uid)
 
     return user_data[1]
+
 
 def compose_personal(uid):
 
@@ -216,26 +224,28 @@ def compose_personal(uid):
 
     # """+str(compose_info_part())+"""
     # """+str(compose_password_part())+"""
-    
+
     # </div>"""
 
     return """
     <div>
 
-    """+str(compose_info_part())+"""
-    """+str(compose_personal_part())+"""
-    """+str(compose_password_part())+"""
-    
+    """ + str(compose_info_part()) + """
+    """ + str(compose_personal_part()) + """
+    """ + str(compose_password_part()) + """
+
     </div>"""
+
 
 def show_personal():
 
     python_lib_name = "user"
-    user_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+    user_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
     user = user_lib.User()
 
-    if user.check_SID() == False:
+    if user.check_SID() is False:
         return """
         <div>
         <redirectme>
@@ -247,18 +257,21 @@ def show_personal():
 
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
         sid = cookie["sid"].value
-        uid_1c = user_lib.__main__("get_1c_sid('"+sid+"')")
+        uid_1c = user_lib.__main__("get_1c_sid('" + sid + "')")
 
-        return compose_personal(uid_1c)       
+        return compose_personal(uid_1c)
+
 
 def show_menu():
 
     python_lib_name = "kabinet_menu"
-    kabinet_menu_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+    kabinet_menu_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
     menu = kabinet_menu_lib.show_menu("personal")
 
     return menu
+
 
 def __main__(funkt):
     return eval(funkt)
