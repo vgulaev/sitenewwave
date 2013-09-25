@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 
 
 import imp
+import template
 
 lib_path = os.path.abspath('../py_scripts/')
 
