@@ -5,6 +5,7 @@ import cgi
 import os
 import sys
 from bs4 import BeautifulSoup
+import urllib2
 
 form = cgi.FieldStorage()
 
@@ -80,7 +81,9 @@ def set_search_value():
         input_search_item["value"] = form["ref"].value.decode("utf-8")
 
     elif "catalog" in form:
-        input_search_item["value"] = form["catalog"].value.decode("utf-8")
+        catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
+        input_search_item["value"] = catalog
+        # input_search_item["value"] = u'Сало!'
     else:
         input_search_item["value"] = ""
 
@@ -105,8 +108,9 @@ def set_search_results():
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
+        catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
         result_table = get_items_bs.ResultTable(
-            form["catalog"].value, "catalog")
+            catalog, "catalog")
 
         return result_table.compose_table()
 

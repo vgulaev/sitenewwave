@@ -645,9 +645,9 @@ $(document).ready(function() {
 
 
         if(GET['catalog'] != undefined) {
-            showGroup2(decodeURI(GET['catalog']))
-            $('#myCanvasContainer').hide();
-            $('#tags').hide();
+            //showGroup2(decodeURI(GET['catalog']))
+            //$('#myCanvasContainer').hide();
+            //$('#tags').hide();
         }
 
         if(GET['linkUID'] != undefined) {
