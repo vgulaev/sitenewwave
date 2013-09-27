@@ -58,6 +58,7 @@ mobile_agent_list = [
     "playstation"
 ]
 
+
 def detect():
 
     user_agent = os.environ["HTTP_USER_AGENT"].lower()
@@ -65,5 +66,5 @@ def detect():
     for agent in mobile_agent_list:
         if agent in user_agent:
             return True
-        
+
     return False

@@ -1,9 +1,10 @@
 #!/web/trimet/python/bin/python2.6
 # -*- coding:utf-8 -*-
 
-import sys, os
-import cgi
-import cgitb; cgitb.enable()
+import sys
+import os
+import cgitb
+cgitb.enable()
 
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
@@ -11,7 +12,6 @@ sys.setdefaultencoding('utf-8')
 
 # print ("Content-Type: text/html; charset=utf-8\n")
 
-import json
 from suds.client import Client
 from suds.cache import DocumentCache
 
@@ -27,64 +27,68 @@ _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 
-
 if "dev" in os.environ["SERVER_NAME"]:
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+
 class User1C():
+
     def __init__(self):
         pass
 
     def register_user_1c(self, email, passwd):
         # print email, " | ", passwd
-        client = Client(_CURRENT_ADDRESS_+"Register.1cws?wsdl", location = _CURRENT_ADDRESS_+"Register.1cws")
+        client = Client(_CURRENT_ADDRESS_ + "Register.1cws?wsdl",
+                        location=_CURRENT_ADDRESS_ + "Register.1cws")
         client.set_options(cache=DocumentCache())
-        
+
         # client.set_options(cache=None)
 
-        username = ""
         fullname = ""
 
-        result = client.service.AddUser(email,passwd,email,fullname)
+        result = client.service.AddUser(email, passwd, email, fullname)
         # print result
         return result
 
     def authorize_user_1c(self, email, passwd):
-        client = Client(_CURRENT_ADDRESS_+"PrivetOffice.1cws?wsdl", location = _CURRENT_ADDRESS_+"PrivetOffice.1cws")
+        client = Client(_CURRENT_ADDRESS_ + "PrivetOffice.1cws?wsdl",
+                        location=_CURRENT_ADDRESS_ + "PrivetOffice.1cws")
         client.set_options(cache=DocumentCache())
 
-        result = client.service.Authorize(email,passwd,"")
+        result = client.service.Authorize(email, passwd, "")
 
         # print result
         return result
 
     def change_passwd_1c(self, uid, new_passwd):
-        client = Client(_CURRENT_ADDRESS_+'Register.1cws?wsdl', location = _CURRENT_ADDRESS_+"Register.1cws?")
+        client = Client(_CURRENT_ADDRESS_ + 'Register.1cws?wsdl',
+                        location=_CURRENT_ADDRESS_ + "Register.1cws?")
         client.set_options(cache=DocumentCache())
 
-        result = client.service.UpdateUser(uid,"Password",new_passwd)
+        result = client.service.UpdateUser(uid, "Password", new_passwd)
 
         # print result
         return result
 
     def change_fio_1c(self, uid, new_fio):
-        client = Client(_CURRENT_ADDRESS_+'Register.1cws?wsdl', location = _CURRENT_ADDRESS_+"Register.1cws")
+        client = Client(_CURRENT_ADDRESS_ + 'Register.1cws?wsdl',
+                        location=_CURRENT_ADDRESS_ + "Register.1cws")
         client.set_options(cache=DocumentCache())
 
-        result = client.service.UpdateUser(uid,"FullName",new_fio)
+        result = client.service.UpdateUser(uid, "FullName", new_fio)
 
         return result
 
     def get_user_information(self, uid):
-        client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
+        client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
+                        location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
         client.set_options(cache=DocumentCache())
 
         result = client.service.GetUser(uid)
 
         return result
-
 
 
 def __main__(funkt=False):
