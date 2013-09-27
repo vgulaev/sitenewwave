@@ -1,9 +1,11 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding:utf-8 -*-
 
-import sys, os
+import sys
+import os
 import cgi
-import cgitb; cgitb.enable()
+import cgitb
+cgitb.enable()
 import imp
 
 from bs4 import BeautifulSoup
@@ -16,26 +18,28 @@ _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
 
 menu_list = {
-    "authorized" : {
-        0 : [ "orders","заказы" ],
-        1 : [ "payment","платежи" ],
-        2 : [ "shipping","отгрузки" ],
-        3 : [ "settlement", "взаиморасчеты" ],
-        4 : [ "personal","настройки" ]
-        },
-    "not-authorized" : {
-        0 : [ "authorization","Авторизация" ]
-        }
+    "authorized": {
+        0: ["orders", "заказы"],
+        1: ["payment", "платежи"],
+        2: ["shipping", "отгрузки"],
+        3: ["settlement", "взаиморасчеты"],
+        4: ["personal", "настройки"]
+    },
+    "not-authorized": {
+        0: ["authorization", "Авторизация"]
     }
+}
+
 
 def show_menu(active_element):
 
     python_lib_name = "user"
-    user_lib = imp.load_source(python_lib_name, lib_path+"/"+python_lib_name+".py")
+    user_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
     ul_tag = soup.new_tag("ul")
 
-    if user_lib.__main__("check_SID()") == True:
+    if user_lib.__main__("check_SID()") is True:
 
         menu_authorized = menu_list["authorized"]
         authorized_length = menu_authorized.__len__()
@@ -58,7 +62,7 @@ def show_menu(active_element):
             i = i + 1
 
             ul_tag.append(li_tag)
-        
+
         li_tag = soup.new_tag("li")
         a_tag = soup.new_tag("a")
         a_tag["href"] = "javascript:logout()"
@@ -68,7 +72,6 @@ def show_menu(active_element):
 
         ul_tag.append(li_tag)
     else:
-
 
         menu_not_authorized = menu_list["not-authorized"]
         authorized_length = menu_not_authorized.__len__()
@@ -93,4 +96,3 @@ def show_menu(active_element):
             ul_tag.append(li_tag)
 
     return "<div>" + str(ul_tag) + "</div>"
-

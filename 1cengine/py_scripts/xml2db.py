@@ -15,12 +15,14 @@ pricefile.close()
 
 xmlList = []
 
+
 def display(data):
 
-    xmlList.append(data) 
+    xmlList.append(data)
 
 
 class Element:
+
     def setData(self, key, value):
         self.__dict__[key] = value
 
@@ -38,7 +40,6 @@ class Element:
     def jsonable(self):
         return self._traverse(self.__dict__)
 
-    # http://stackoverflow.com/questions/1036409/recursively-convert-python-object-graph-to-dictionary/1118038#1118038
     def _traverse(self, obj):
         if isinstance(obj, dict):
             for k in obj.keys():
@@ -48,13 +49,15 @@ class Element:
             return [self._traverse(v) for v in obj]
         elif hasattr(obj, "__dict__"):
             data = dict([(key, self._traverse(value))
-                for key, value in obj.__dict__.iteritems()
-                if not callable(value) and not key.startswith('_')])
+                         for key, value in obj.__dict__.iteritems()
+                         if not callable(value) and not key.startswith('_')])
             return data
         else:
             return obj
 
+
 class ObjBuilder(sax.ContentHandler):
+
     def __init__(self, node):
         sax.ContentHandler.__init__(self)
         self.obj = []
@@ -75,7 +78,7 @@ class ObjBuilder(sax.ContentHandler):
             self.obj[-1].setObject(localname, o)
             self.obj.append(o)
 
-    def characters(self,contents):
+    def characters(self, contents):
         if self.fetch:
             self.__buffer += contents.strip()
 
@@ -94,41 +97,61 @@ class ObjBuilder(sax.ContentHandler):
 
 def insertGroup(gName, gHash, pHash):
 
-    cursor.execute(""" INSERT INTO `trimetru_goods`.`groups` (`name`,`hash`,`parent_hash`) VALUES ( %s,%s,%s ) """, (gName, gHash, pHash) )
+    cursor.execute(
+        """ INSERT INTO `trimetru_goods`.`groups`
+        (`name`,`hash`,`parent_hash`) VALUES ( %s,%s,%s ) """,
+        (gName, gHash, pHash))
     row = cursor.fetchone()
     conn.commit()
 
 
-def insertItem(iName, pHash, cName, weight, length, kf, iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock): 
+def insertItem(
+    iName, pHash, cName, weight, length, kf,
+        iHash, edIzm, price, priceType, groupSecondName, itemHashN, inStock):
 
     if type(iName) != type(dict()) and type(cName) != type(dict()):
         print iName.encode("utf-8") + ' ' + cName.encode("utf-8")
         if type(groupSecondName) == type(dict()):
             groupSecondName = iName
 
-        cursor.execute (""" INSERT INTO `trimetru_goods`.`offers` (`id`, `name`, `hash`, `parent_hash`, `display_name`, `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`, `price_type`, `father_hash`, `stock`) VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, ('',(groupSecondName+' '+cName).encode("utf-8"), iHash, pHash, iName, cName, weight, length, kf, edIzm, price, priceType, itemHashN, inStock))
+        cursor.execute(""" INSERT INTO `trimetru_goods`.`offers`
+            (`id`, `name`, `hash`, `parent_hash`, `display_name`,
+            `char_name`, `weight`, `length`, `kf`, `edIzm`, `price`,
+            `price_type`, `father_hash`, `stock`)
+            VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ) """, (
+            '', (groupSecondName + ' ' + cName).encode("utf-8"),
+            iHash, pHash, iName, cName, weight, length, kf,
+            edIzm, price, priceType, itemHashN, inStock))
         row = cursor.fetchone()
         conn.commit()
 
 
 def groupEater(group):
-    
+
     if u'Предмет' in group:
 
-        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+        insertGroup(
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
 
-        if type(group[u'Предмет'])==type(list()):
+        if type(group[u'Предмет']) == type(list()):
             for itemChar in group[u'Предмет']:
-            
+
                 priceDB = []
                 priceType = []
                 for price in itemChar[u'Цена']:
                     priceDB.append(price[u'Цена'])
                     priceType.append(price[u'НазваниеЦены'])
 
-                insertItem(group[u'НаименованиеГруппы'], pHash, itemChar[u'Характеристика'], itemChar[u'Вес'], itemChar[u'Кратность'], itemChar[u'Коэффициент'], itemChar[u'ХарактеристикаСсылка'], itemChar[u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], itemChar[u'ЕстьВНаличии'])
+                insertItem(group[u'НаименованиеГруппы'], pHash,
+                           itemChar[u'Характеристика'], itemChar[u'Вес'],
+                           itemChar[u'Кратность'], itemChar[u'Коэффициент'],
+                           itemChar[u'ХарактеристикаСсылка'],
+                           itemChar[u'ЕдИзмерения'], "|".join(priceDB),
+                           "|".join(priceType), group[u'Синоним'],
+                           group[u'НоменклатураСсылка'],
+                           itemChar[u'ЕстьВНаличии'])
 
-        elif type(group[u'Предмет']==type(dict)):
+        elif type(group[u'Предмет'] == type(dict)):
 
             priceDB = []
             priceType = []
@@ -136,44 +159,52 @@ def groupEater(group):
                 priceDB.append(price[u'Цена'])
                 priceType.append(price[u'НазваниеЦены'])
 
-            insertItem(group[u'НаименованиеГруппы'], pHash, group[u'Предмет'][u'Характеристика'], group[u'Предмет'][u'Вес'], group[u'Предмет'][u'Кратность'], group[u'Предмет'][u'Коэффициент'], group[u'Предмет'][u'ХарактеристикаСсылка'], group[u'Предмет'][u'ЕдИзмерения'], "|".join(priceDB), "|".join(priceType), group[u'Синоним'], group[u'НоменклатураСсылка'], group[u'Предмет'][u'ЕстьВНаличии'])
+            insertItem(group[u'НаименованиеГруппы'], pHash,
+                       group[u'Предмет'][u'Характеристика'],
+                       group[u'Предмет'][u'Вес'],
+                       group[u'Предмет'][u'Кратность'],
+                       group[u'Предмет'][u'Коэффициент'],
+                       group[u'Предмет'][u'ХарактеристикаСсылка'],
+                       group[u'Предмет'][u'ЕдИзмерения'], "|".join(priceDB),
+                       "|".join(priceType), group[u'Синоним'],
+                       group[u'НоменклатураСсылка'],
+                       group[u'Предмет'][u'ЕстьВНаличии'])
 
     if u'Цена' in group:
 
         priceDB = []
         priceType = []
-        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
-        if type(group[u'Цена'])==type(list()):
+        insertGroup(
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+        if type(group[u'Цена']) == type(list()):
             for price in group[u'Цена']:
                 priceDB.append(price[u'Цена'])
                 priceType.append(price[u'НазваниеЦены'])
 
-        elif type(group[u'Цена'])==type(dict()):
+        elif type(group[u'Цена']) == type(dict()):
             priceDB.append(group[u'Цена'][u'Цена'])
             priceType.append(group[u'Цена'][u'НазваниеЦены'])
 
-
-        if(priceDB.__len__()==1):
+        if(priceDB.__len__() == 1):
             pDB = priceDB[0]
-            pT =  priceType[0]
+            pT = priceType[0]
         else:
             pDB = "|".join(priceDB)
-            pT =  "|".join(priceType)
-            
+            pT = "|".join(priceType)
 
-        insertItem(group[u'НаименованиеГруппы'], pHash, u'до 6 м', 0, 0, 0, 0, group[u'ЕдИзмерения'], pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
-
-
+        insertItem(group[u'НаименованиеГруппы'],
+                   pHash, u'до 6 м', 0, 0, 0, 0, group[u'ЕдИзмерения'],
+                   pDB, pT, group[u'Синоним'], group[u'НоменклатураСсылка'], 1)
 
     if u'Группа' in group:
 
-        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+        insertGroup(
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
 
-
-        if type(group[u'Группа'])==type(list()):
+        if type(group[u'Группа']) == type(list()):
             for subgroup in group[u'Группа']:
                 groupEater(subgroup)
-        elif type(group[u'Группа'])==type(dict()):
+        elif type(group[u'Группа']) == type(dict()):
             groupEater(group[u'Группа'])
 
 if __name__ == '__main__':
@@ -188,10 +219,10 @@ if __name__ == '__main__':
     import MySQLdb
     from secrets import *
 
-    conn = MySQLdb.connect (host = host_var,
-                           user = user_var,
-                           passwd = passwd_var,
-                           db = db_var)
+    conn = MySQLdb.connect(host=host_var,
+                           user=user_var,
+                           passwd=passwd_var,
+                           db=db_var)
     conn.set_character_set('utf8')
     cursor = conn.cursor()
     cursor.execute('SET NAMES utf8;')
@@ -203,18 +234,15 @@ if __name__ == '__main__':
 
         pHash = group[u'НоменклатураСсылка']
 
-        insertGroup(group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
-
+        insertGroup(
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
 
         if u'Группа' in group:
-            if type(group[u'Группа'])==type(dict()):
+            if type(group[u'Группа']) == type(dict()):
                 groupEater(group[u'Группа'])
-            elif type(group[u'Группа'])==type(list()):
+            elif type(group[u'Группа']) == type(list()):
                 for subgroup in group[u'Группа']:
                     groupEater(subgroup)
 
-    cursor.close ()
-    conn.close ()
-
-
-    
+    cursor.close()
+    conn.close()
