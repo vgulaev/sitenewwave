@@ -50,8 +50,8 @@ class Index_Page():
         template_file.close()
 
         # print template
-        # 
         return current_template
+
 
     def compose_head_temlplate(self):
         if self.head_template == "":
@@ -66,9 +66,11 @@ class Index_Page():
             python_lib_name = current_element.contents[
                 0].split("{")[1].split("}")[0]
 
+
             r = eval(python_lib_name)
 
             if r is not None:
+
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
@@ -110,6 +112,7 @@ class Index_Page():
             r = eval(python_lib_name)
 
             if r is not None:
+
 
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
