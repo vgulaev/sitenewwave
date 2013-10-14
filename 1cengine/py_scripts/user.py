@@ -1,10 +1,14 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding:utf-8 -*-
 
-import sys, os
+import sys
+import os
 import cgi
-import cgitb; cgitb.enable()
-import Cookie, datetime, random
+import cgitb
+cgitb.enable()
+import Cookie
+import datetime
+import random
 import HTMLParser
 
 lib_path = os.path.abspath('../py_scripts/')
@@ -14,22 +18,25 @@ _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
 import imp
 python_lib_name = "1c_user_interaction"
-user_1c_lib = imp.load_source(python_lib_name, _PATH_+"/"+python_lib_name+".py")
+user_1c_lib = imp.load_source(
+    python_lib_name, _PATH_ + "/" + python_lib_name + ".py")
 
 from secrets import *
 
+
 class User():
+
     def __init__(self):
         self.connector = myDBC("users")
         self.cursor = self.connector.dbConnect()
         self.uid = ""
         self.sid = ""
 
-    def is_valid_email(self,email):
+    def is_valid_email(self, email):
         row = self.connector.dbExecute("""
-                SELECT `users`.`id` 
+                SELECT `users`.`id`
                 FROM `users`
-                WHERE `users`.`email`='"""+email+"""'
+                WHERE `users`.`email`='""" + email + """'
             """)
 
         if row.__len__() > 0:
@@ -39,12 +46,13 @@ class User():
             # print 22
             return True
 
-    def check_user(self,email,passwd):
+    def check_user(self, email, passwd):
         # print email," >> ", passwd
         row = self.connector.dbExecute("""
-                SELECT `users`.`id` 
+                SELECT `users`.`id`
                 FROM `users`
-                WHERE `users`.`email`='"""+email+"""' AND `users`.`passwdhash`='"""+passwd+"""'
+                WHERE `users`.`email`='""" + email + """'
+                AND `users`.`passwdhash`='""" + passwd + """'
             """)
 
         # print row
@@ -54,75 +62,79 @@ class User():
             # print row[0][0]
             return row[0][0]
         else:
-            return self.get_user_1c(email,passwd)
+            return self.get_user_1c(email, passwd)
 
-    def get_user_1c(self,email,passwd):
+    def get_user_1c(self, email, passwd):
         user_1c = user_1c_lib.User1C()
-        uid1c = user_1c.authorize_user_1c(email,passwd)
+        uid1c = user_1c.authorize_user_1c(email, passwd)
         # print uid1c
-    
+
         if not "Произошла ошибка" in uid1c:
             row = self.connector.dbExecute("""
-                INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
-                VALUE (Null,'"""+email+"""','"""+passwd+"""',"")
+                INSERT INTO `trimetru_users`.`users`
+                (`id`,`email`,`passwdhash`,`1cuid`)
+                VALUE (Null,'""" + email + """','""" + passwd + """',"")
             """)
 
             return self.cursor.lastrowid
         else:
             return False
 
-    def new_user(self,email,passwd):
+    def new_user(self, email, passwd):
         email = email.replace("%40", "@")
         # print 50
-        if self.is_valid_email(email) == True:
+        if self.is_valid_email(email) is True:
             row = self.connector.dbExecute("""
-                INSERT INTO `trimetru_users`.`users` (`id`,`email`,`passwdhash`,`1cuid`)
-                VALUE (Null,'"""+email+"""','"""+passwd+"""',"")
+                INSERT INTO `trimetru_users`.`users`
+                (`id`,`email`,`passwdhash`,`1cuid`)
+                VALUE (Null,'""" + email + """','""" + passwd + """',"")
             """)
 
             self.uid = self.cursor.lastrowid
             user_1c = user_1c_lib.User1C()
-            k = user_1c.register_user_1c(email,passwd)
+            k = user_1c.register_user_1c(email, passwd)
             # print "k:",k
             # print user_1c.register_user_1c(email,passwd)
-            # return self.uid 
+            # return self.uid
             # self.generate_SID(self.uid)
 
         else:
             return False
 
-    def is_uid_SID_linked(self,uid,ip_reg):
+    def is_uid_SID_linked(self, uid, ip_reg):
         row = self.connector.dbExecute("""
                 SELECT `uids`.`sid`
                 FROM `uids`
-                WHERE `uids`.`id_user` = '"""+str(uid)+"""' AND `uids`.`ip_reg` ='"""+str(ip_reg)+"""'
+                WHERE `uids`.`id_user` = '""" + str(uid) + """'
+                AND `uids`.`ip_reg` ='""" + str(ip_reg) + """'
             """)
 
-        if row.__len__()>0:
+        if row.__len__() > 0:
             return row[0][0]
         else:
             return False
 
-    def is_1c_uid_linked(self,uid):
+    def is_1c_uid_linked(self, uid):
         row.connector.dbExecute("""
                 SELECT `users`.`1cuid`
                 FROM `uids`
-                WHERE `uids`.`id` = '"""+str(uid)+"""'
+                WHERE `uids`.`id` = '""" + str(uid) + """'
             """)
 
-        if row.__len__()>0:
+        if row.__len__() > 0:
             return row[0][0]
         else:
             return False
 
-    def get_1c_sid(self,sid):
+    def get_1c_sid(self, sid):
         row = self.connector.dbExecute("""
                 SELECT `users`.`1cuid`
                 FROM `users`,`uids`
-                WHERE `uids`.`sid`='"""+sid+"""' AND `users`.`id`=`uids`.`id_user`
+                WHERE `uids`.`sid`='""" + sid + """'
+                AND `users`.`id`=`uids`.`id_user`
             """)
 
-        if row.__len__()>0:
+        if row.__len__() > 0:
             return row[0][0]
         else:
             return False
@@ -132,12 +144,12 @@ class User():
             cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
             # print 1
             # print " <<< ",cookie, " >>> "
-            if cookie.has_key("sid"):
+            if "sid" in cookie:
                 # print cookie["sid"].value
                 row = self.connector.dbExecute("""
                     SELECT `uids`.`ip_reg`
                     FROM `uids`
-                    WHERE `uids`.`sid`='"""+cookie["sid"].value+"""'
+                    WHERE `uids`.`sid`='""" + cookie["sid"].value + """'
                     """)
                 # print row
                 # print 3
@@ -157,21 +169,26 @@ class User():
             return False
 
     def generate_SID(self, uid):
-        import uuid, OpenSSL
+        import uuid
+        import OpenSSL
         # print uid
-        self.sid = uuid.UUID(bytes = OpenSSL.rand.bytes(16))
+        self.sid = uuid.UUID(bytes=OpenSSL.rand.bytes(16))
         today = datetime.datetime.now()
         user_ip = cgi.escape(os.environ["REMOTE_ADDR"])
-        if self.is_uid_SID_linked(uid,user_ip) == False:
+        if self.is_uid_SID_linked(uid, user_ip) is False:
             row = self.connector.dbExecute("""
-                    INSERT INTO `trimetru_users`.`uids` (`id_user`,`sid`,`date`,`ip_reg`)
-                    VALUES ('"""+str(uid)+"""','"""+str(self.sid)+"""','','"""+str(user_ip)+"""')
+                    INSERT INTO `trimetru_users`.`uids`
+                    (`id_user`,`sid`,`date`,`ip_reg`)
+                    VALUES ('""" + str(uid) + """',
+                        '""" + str(self.sid) + """',''
+                        ,'""" + str(user_ip) + """')
                 """)
         else:
             row = self.connector.dbExecute("""
                     UPDATE `trimetru_users`.`uids`
-                    SET `sid` = '"""+str(self.sid)+"""'
-                    WHERE `id_user`='"""+str(uid)+"""' AND `ip_reg`='"""+str(user_ip)+"""'
+                    SET `sid` = '""" + str(self.sid) + """'
+                    WHERE `id_user`='""" + str(uid) + """'
+                    AND `ip_reg`='""" + str(user_ip) + """'
                 """)
         # print self.sid
         return self.sid
@@ -184,18 +201,18 @@ class User():
         cookie["sid"]["domain"] = ".sitenewwave.dev"
         cookie["sid"]["path"] = "/"
         cookie["sid"]["expires"] = \
-          expiration.strftime("%a, %d-%b-%Y %H:%M:%S PST")
+            expiration.strftime("%a, %d-%b-%Y %H:%M:%S PST")
 
         return sid
 
     def insert_1c_uid(self, uid, uid1c):
         row = self.connector.dbExecute("""
             UPDATE `trimetru_users`.`users`
-            SET `1cuid` = '"""+str(uid1c)+"""'
-            WHERE `id` = '"""+str(uid)+"""'
+            SET `1cuid` = '""" + str(uid1c) + """'
+            WHERE `id` = '""" + str(uid) + """'
             """)
-        
-        if row.__len__()>0:
+
+        if row.__len__() > 0:
             return True
         else:
             return False
@@ -207,25 +224,26 @@ class User():
         else:
             return ""
 
-
     def authorize(self):
-        if is_new == False:
-            if email != False:
-                uid = self.check_user(email,passwd)
+        if is_new is False:
+            if email is not False:
+                uid = self.check_user(email, passwd)
                 # print passwd
                 # print uid
-                if uid != False:
-                    c=self.set_session(uid)
+                if uid is not False:
+                    c = self.set_session(uid)
                     user_1c = user_1c_lib.User1C()
-                    uid1c = user_1c.authorize_user_1c(email,passwd)
+                    uid1c = user_1c.authorize_user_1c(email, passwd)
                     # print uid1c
-                    if not "Произошла ошибка" in uid1c:    
+                    if not "Произошла ошибка" in uid1c:
                         self.insert_1c_uid(uid, uid1c)
                     # print "nya"
                     # print c
-                    return """ 
+                    return """
                             $.removeCookie("sid",{ expires: 30, path: '/'});
-                            $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
+                            $.cookie("sid",
+                                \"""" + str(c) + """\",
+                                { expires: 30, path: '/'})
                             $.unblockUI()
                             window.location = "/kabinet/orders/"
                     """
@@ -236,44 +254,37 @@ class User():
                             alert("Не авторизованы")
                             $.unblockUI()
                     """
-                    
+
             else:
                 return """
                     <div>
                     <script type="text/javascript">
                             $(document).ready( function(){
-                                    // $.removeCookie("sid",{ expires: 30, path: '/'})
+                            // $.removeCookie("sid",{ expires: 30, path: '/'})
                                 })
                         </script>
                     </div>
                 """
         else:
-            uid = self.new_user(email,passwd)
-            if uid != False:
+            uid = self.new_user(email, passwd)
+            if uid is not False:
                 c = self.set_session(uid)
                 user_1c = user_1c_lib.User1C()
-                uid1c = user_1c.authorize_user_1c(email,passwd)
+                uid1c = user_1c.authorize_user_1c(email, passwd)
                 # print uid1c
-                if not "Произошла ошибка" in uid1c:    
+                if not "Произошла ошибка" in uid1c:
                     self.insert_1c_uid(uid, uid1c)
-                return """ 
+                return """
                         <div>
                         <script type="text/javascript">
                             $(document).ready( function(){
-                                    $.removeCookie("sid",{ expires: 30, path: '/'});
-                                    // $.cookie("sid", "",{ expires: 30, path: '/'})
-                                    $.cookie("sid",\""""+str(c)+"""\",{ expires: 30, path: '/'})
-                                    // alert('"""+str(c)+"""')
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/send_feedback.py",
-                                        async: true,
-                                        data: "from=webmaster@trimet.ru&name=Регистрация%20пользователей&message=Зарегистрировался%20новый%20пользователь%20с%20емейлом%20"""+email+""" ",
-                                        success: function(html) {
-                                            return false
-                                        }
+                                    $.removeCookie("sid",
+                                        { expires: 30, path: '/'});
+                                    $.cookie("sid",
+                                        \"""" + str(c) + """\",
+                                        { expires: 30, path: '/'})
+                                    // alert('""" + str(c) + """')
 
-                                    });
                                     window.location = "/kabinet/orders/"
                                 })
                         </script>
@@ -293,7 +304,7 @@ class User():
 
     def who_am_i(self):
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-        if cookie.has_key("sid"):
+        if "sid" in cookie:
             sid = cookie["sid"].value
         else:
             return None
@@ -301,7 +312,8 @@ class User():
         row = self.connector.dbExecute("""
                 SELECT `email`
                 FROM `trimetru_users`.`users`, `trimetru_users`.`uids`
-                WHERE `users`.`id` = `uids`.`id_user` AND `uids`.`sid` = '"""+sid+"""'
+                WHERE `users`.`id` = `uids`.`id_user`
+                AND `uids`.`sid` = '""" + sid + """'
             """)
 
         if row.__len__() > 0:
@@ -311,15 +323,15 @@ class User():
 
     def check_passwd(self, passwd):
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-        if cookie.has_key("sid"):
+        if "sid" in cookie:
             sid = cookie["sid"].value
         else:
             return None
 
-        row = self.connector.dbExecute(""" 
+        row = self.connector.dbExecute("""
                 SELECT `passwdhash`
                 FROM `trimetru_users`.`users`
-                WHERE `passwdhash`='"""+passwd+"""'
+                WHERE `passwdhash`='""" + passwd + """'
             """)
 
         if row.__len__() > 0:
@@ -330,7 +342,7 @@ class User():
     def update_passwd(self, passwd, old_passwd):
 
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-        if cookie.has_key("sid"):
+        if "sid" in cookie:
             sid = cookie["sid"].value
         else:
             return "Что то пошло не так, попробуйте позже"
@@ -338,12 +350,12 @@ class User():
         if self.check_passwd(old_passwd):
             row = self.connector.dbExecute("""
                         UPDATE `trimetru_users`.`users`
-                        SET `passwdhash` = '"""+passwd+"""'
+                        SET `passwdhash` = '""" + passwd + """'
                         WHERE (
-                            SELECT `id_user` 
-                            FROM `trimetru_users`.`uids` 
-                            WHERE `sid`='"""+sid+"""' 
-                        ) = `id` AND `passwdhash`='"""+old_passwd+"""'
+                            SELECT `id_user`
+                            FROM `trimetru_users`.`uids`
+                            WHERE `sid`='""" + sid + """'
+                        ) = `id` AND `passwdhash`='""" + old_passwd + """'
                     """)
 
             uid1c = self.get_1c_sid(sid)
@@ -361,15 +373,15 @@ class User():
         # sid = cookie["sid"].value
         # print sid
         sid = self.check_SID()
-        if sid == True:
-    
+        if sid is True:
+
             return self.update_passwd(passwd, old_passwd)
         else:
             return "Вы не злогинены Оо"
 
     def update_fullname(self, fullname):
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-        if cookie.has_key("sid"):
+        if "sid" in cookie:
             sid = cookie["sid"].value
         else:
             return "Что то пошло не так, попробуйте позже"
@@ -380,10 +392,9 @@ class User():
 
         return "Вы успешно сменили имя!"
 
-
     def change_fullname(self):
         sid = self.check_SID()
-        if sid == True:
+        if sid is True:
             return self.update_fullname(fullname)
         else:
             return "Вы не злогинены Оо"
@@ -398,35 +409,34 @@ def __main__(funkt=False):
 
     # elif funkt=="new_user":
     #     uid = user.new_user(email,passwd)
-    #     # print uid
+    # print uid
     #     user.set_session(uid)
     # print 1
     if "is_valid_email" in funkt:
         # print funkt
-        print ("Content-Type: text/html; charset=utf-8\n")
+        print("Content-Type: text/html; charset=utf-8\n")
 
         q = user.is_valid_email(email)
         print q
 
     elif "change_passwd" in funkt:
-        print ("Content-Type: text/html; charset=utf-8\n")
+        print("Content-Type: text/html; charset=utf-8\n")
 
         q = user.change_passwd()
 
         print q
 
     elif "authorize_me" in funkt:
-        print ("Content-Type: text/html; charset=utf-8\n")
+        print("Content-Type: text/html; charset=utf-8\n")
 
         q = user.authorize()
 
         print q
 
-
-    elif funkt!=False:
+    elif funkt is not False:
         # print funkt
         # print "user."+funkt
-        return eval("user."+funkt)
+        return eval("user." + funkt)
 
     user.connector.dbClose()
 
@@ -447,7 +457,6 @@ if raw_post != "":
         key_var = str(variables).split("=")
         # print key_var
         post[key_var[0]] = key_var[1]
-
 
 
 if "email" in post:
@@ -483,4 +492,3 @@ else:
 if "funkt" in post:
     funkt = post["funkt"]
     __main__(funkt)
-

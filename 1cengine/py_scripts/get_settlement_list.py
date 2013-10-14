@@ -1,9 +1,11 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 
-import sys, os
+import sys
+import os
 import cgi
-import cgitb; cgitb.enable()
+import cgitb
+cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -49,6 +51,7 @@ if raw_post != "":
         # print key_var
         post[key_var[0]] = key_var[1]
 
+
 def get_shipping_list(UID):
 
     date_from = ""
@@ -57,18 +60,20 @@ def get_shipping_list(UID):
     if "dateFrom" in post:
         if post["dateFrom"] != "":
             date_from_array = post["dateFrom"].split(".")
-            date_from = date_from_array[2]+"-"+date_from_array[1]+"-"+date_from_array[0]
+            date_from = date_from_array[
+                2] + "-" + date_from_array[1] + "-" + date_from_array[0]
             # print date_from
 
     if "dateTo" in post:
         if post["dateTo"] != "":
             date_to_array = post["dateTo"].split(".")
-            date_to = date_to_array[2]+"-"+date_to_array[1]+"-"+date_to_array[0]
+            date_to = date_to_array[
+                2] + "-" + date_to_array[1] + "-" + date_to_array[0]
 
-    return get_settlement_list_ajax(UID,date_from,date_to)
+    return get_settlement_list_ajax(UID, date_from, date_to)
 
 
-def get_settlement_list_ajax(UID,date_from,date_to):
+def get_settlement_list_ajax(UID, date_from, date_to):
 
     if date_from != "":
         date_from_par = "&date_from=" + date_from
@@ -80,10 +85,11 @@ def get_settlement_list_ajax(UID,date_from,date_to):
     else:
         date_to_par = ""
 
-    import  random
-    loader_list = ["379","285","377","382","385"]
-    
-    loader_str = "<div><img src='/1cengine/kabinet_settlement/"+random.choice(loader_list)+".png' /></div>"
+    import random
+    loader_list = ["379", "285", "377", "382", "385"]
+
+    loader_str = "<div><img src='/1cengine/kabinet_settlement/" + \
+        random.choice(loader_list) + ".png' /></div>"
 
     if "dateFrom" in post:
         date_from_value = post["dateFrom"]
@@ -98,7 +104,11 @@ def get_settlement_list_ajax(UID,date_from,date_to):
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/settlement/" id="dateForm">
-                Показать взаиморасчеты в период: <input type="textarea" name="dateFrom" class="dateInput dateFrom" value=\""""+date_from_value+"""\" /> - <input type="textarea" name="dateTo" class="dateInput dateTo" value=\""""+date_to_value+"""\" />
+                Показать взаиморасчеты в период: <input type="textarea"
+                name="dateFrom" class="dateInput dateFrom"
+                value=\"""" + date_from_value + """\" /> - <input
+                type="textarea" name="dateTo" class="dateInput dateTo"
+                value=\"""" + date_to_value + """\" />
                 <div class="datePickButton">Обновить журнал</div>
             </form>
         </div>
@@ -110,33 +120,30 @@ def get_settlement_list_ajax(UID,date_from,date_to):
                 type: "POST",
                 url: "/1cengine/py_scripts/get_settlement_list.py",
                 async: true,
-                data: "UID=""" + UID + date_from_par + date_to_par + """&from_ajax=true",
-                success: function(html) {
-                    
+                data: "UID=""" + UID + date_from_par + date_to_par + """
+                &from_ajax=true",
+                success: function(html)
                     $("#settlement_ajax_div").html(html)
-
                 }
-
-            }); 
-
+            });
         })
-            
         </script>
         </div>
     """
 
     return ajax
 
-def get_settlement_list_html(UID,date_from,date_to):
-    client = Client(_CURRENT_ADDRESS_+'privetoffice.1cws?wsdl', location = _CURRENT_ADDRESS_+"privetoffice.1cws")
-    # client = Client('http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice.1cws?wsdl', location = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/privetoffice2.1cws?")
+
+def get_settlement_list_html(UID, date_from, date_to):
+    client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
+                    location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
 
     client.set_options(cache=DocumentCache())
 
     # client.set_options(cache=None)
     # client.options.cache.clear()
 
-    result = client.service.SettlementList(UID,date_from,date_to)
+    result = client.service.SettlementList(UID, date_from, date_to)
 
     # return result
 
@@ -164,29 +171,30 @@ def get_settlement_list_html(UID,date_from,date_to):
     shippings = ""
     for shipping in result[0][0]:
         shippings = shippings + """
-            <tr class="settlementItem """+odd+""" ">
-                <td>"""+str(shipping[0])+"""</td>
-                <td>"""+str(shipping[1])+"""</td>
-                <td>"""+str(shipping[2])+"""</td>
-                <td>"""+str(shipping[3])+"""</td>
-                <td>"""+str(shipping[4])+"""</td>
+            <tr class="settlementItem """ + odd + """ ">
+                <td>""" + str(shipping[0]) + """</td>
+                <td>""" + str(shipping[1]) + """</td>
+                <td>""" + str(shipping[2]) + """</td>
+                <td>""" + str(shipping[3]) + """</td>
+                <td>""" + str(shipping[4]) + """</td>
             </tr>
         """
-        
-        if odd=="odd":
-            odd=""
+
+        if odd == "odd":
+            odd = ""
         else:
             odd = "odd"
 
     listShipping = listShipping + shippings + "</tbody></table>"
 
-    return listShipping 
+    return listShipping
+
 
 def __main__(funct_name):
     return eval(funct_name)
 
-if os.environ.get('REQUEST_METHOD','') == "POST":
-    
+if os.environ.get('REQUEST_METHOD', '') == "POST":
+
     # print os.environ.get('REQUEST_METHOD','')
     raw_post = sys.stdin.read()
 
@@ -202,7 +210,6 @@ if os.environ.get('REQUEST_METHOD','') == "POST":
     # print post
     if "from_ajax" in post:
         print "Content-Type: text/html; charset=utf-8\n"
-       
 
         UID = post["UID"]
         if "date_from" in post:
@@ -213,8 +220,7 @@ if os.environ.get('REQUEST_METHOD','') == "POST":
             date_to = post["date_to"]
         else:
             date_to = None
-        
-        settlement_list = get_settlement_list_html(UID,date_from,date_to)
+
+        settlement_list = get_settlement_list_html(UID, date_from, date_to)
 
         print settlement_list
-
