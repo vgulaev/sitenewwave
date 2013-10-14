@@ -189,8 +189,11 @@ function searchItem2(item) {
 function sendOrder(orderString) {
 
     if($('#selfCarry').is(':checked') == false) {
-        if($('#destination').val() != "--") {
-            destination = $('input#destination').val()
+        if($('#townSelect').val() != "--") {
+            destination = $('#townSelect').text()
+            destination += ", " + $('#street').val()
+            destination += " " + $('#building').text()
+            destination += " / " + $('#additional').text() 
             delivery_cost = $("#delivery_cost").html()
         } else {
             destination = ''
@@ -254,7 +257,7 @@ function sendOrder(orderString) {
 }
 
 /// создание заказа клиента ///
-$("#sendOrderButtom").click(function() {
+$("#sendOrderButton").click(function() {
     createOrder()
 })
 
@@ -680,6 +683,8 @@ $(document).ready(function() {
     })
 
     $("#townSelect").change(function() {
+        $(".ui-autocomplete-input[name=city]").val($('#townSelect option:selected').text())
+        $(".ui-autocomplete-input[name=city]").change()
         // alert($("#townSelect :selected").val())
         if($("#townSelect :selected").val() != "72000001") {
             $("#carry [value='Длинномер']").attr("selected", "selected")
