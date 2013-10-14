@@ -122,7 +122,7 @@ def get_settlement_list_ajax(UID, date_from, date_to):
                 async: true,
                 data: "UID=""" + UID + date_from_par + date_to_par + \
                 """&from_ajax=true",
-                success: function(html)
+                success: function(html) {
                     $("#settlement_ajax_div").html(html)
                 }
             });
