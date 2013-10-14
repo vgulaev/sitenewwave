@@ -120,8 +120,8 @@ def get_shipping_list_ajax(UID, date_from, date_to):
                 type: "POST",
                 url: "/1cengine/py_scripts/get_shipping_list.py",
                 async: true,
-                data: "UID=""" + UID + date_from_par + date_to_par + """
-                &from_ajax=true",
+                data: "UID=""" + UID + date_from_par + date_to_par + \
+                """&from_ajax=true",
                 success: function(html) {
                     $("#shipping_ajax_div").html(html)
                     after_get_list()
