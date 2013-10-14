@@ -50,7 +50,7 @@ class Index_Page():
         template_file.close()
 
         # print template
-
+        # 
         return current_template
 
     def compose_head_temlplate(self):
@@ -110,6 +110,7 @@ class Index_Page():
             r = eval(python_lib_name)
 
             if r is not None:
+
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
@@ -130,9 +131,11 @@ class Index_Page():
             python_lib_name = current_element.contents[
                 0].split("{")[1].split("}")[0]
 
+
             r = eval(python_lib_name)
 
             if r is not None:
+
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
@@ -153,9 +156,11 @@ class Index_Page():
             python_lib_name = current_element.contents[
                 0].split("{")[1].split("}")[0]
 
+
             r = eval(python_lib_name)
 
             if r is not None:
+
                 # python_replace = BeautifulSoup(r)
                 current_element.replaceWith(r)
             else:
@@ -183,13 +188,17 @@ class Index_Page():
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/modern_uiJs.js",
             "/1cengine/site/js/modern_ui_goods_handler.js",
-            "/lib/frameworks/raf_sha256.js"
+            "/lib/frameworks/raf_sha256.js",
+            "/lib/frameworks/jqrequired/jquery.primepix.kladr.min.js",
+            "/1cengine/site/js/kladr.js",
+            "http://api-maps.yandex.ru/2.0.18/?load=package.standard&mode=release&lang=ru-RU"
         ]
 
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
-            "/1cengine/site/css/modern_style.css"
+            "/1cengine/site/css/modern_style.css",
+            "/1cengine/site/css/kladr.css"
         ]
 
         head = self.compose_head_temlplate()
