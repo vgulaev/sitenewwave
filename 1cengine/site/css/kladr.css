@@ -11,9 +11,10 @@
 }
 
 .add-panel__map {
-    width: 472px;
-    height: 147px;
-    float: left;
+    width: 700px;
+    height: 356px;
+    /*float: left;*/
+    margin:5px auto;
     padding: 10px;
     border-radius: 3px;
     background: #F2F2F2;
