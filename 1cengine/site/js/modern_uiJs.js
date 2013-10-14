@@ -630,6 +630,11 @@ $(document).ready(function() {
     var squery = String(document.location).replace(/\%2F/g, "\\")
     var squery = String(document.location).replace(/\s\s/g, "\s")
     // var squery = String(document.location).replace(/\+/g, "\s")
+    
+    if(squery.indexOf("/catalog/") != -1){
+        $("#showGroupsDiv").show()
+    }
+
     if(squery.split("?", 2)[1]) {
         parts = squery.split("?", 2)[1].split("&");
         GET = {};
@@ -648,6 +653,7 @@ $(document).ready(function() {
             //showGroup2(decodeURI(GET['catalog']))
             //$('#myCanvasContainer').hide();
             //$('#tags').hide();
+            $("#showGroupsDiv").show()
         }
 
         if(GET['linkUID'] != undefined) {
