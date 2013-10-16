@@ -786,6 +786,7 @@ $(document).ready(function() {
         } 
         if($("#townSelect :selected").val() != "72000001"){
             $("#carry [value='Длинномер']").attr("selected", "selected")
+            $("#carry").change()
         }
         
         var d_price = $("#delivery_cost").attr("name").replace(/\s/g, "")
