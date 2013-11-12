@@ -968,7 +968,12 @@ tr.iHeader{
 }
 .ui-menu-item:hover{
 	background-color:rgb(45, 54, 148);
+
 }
+.ui-menu-item:hover a{
+	color:white;
+}
+
 .ui-autocomplete{
 	background-color: white;
 	border:1px solid gray;
@@ -979,3 +984,5 @@ tr.iHeader{
 	/*display:none;*/
 	font-size: 10px;
 }
+
+/*ui.item.label*/
