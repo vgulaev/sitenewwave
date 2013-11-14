@@ -1,28 +1,55 @@
-show_basket = () ->
+Array::toDict = (key) ->
+    @reduce ((dict, obj) -> dict[ obj[key] ] = obj if obj[key]?; return dict), {}
+
+tabs = [
+    {
+        id: "tabBasket"
+        other: [
+            "basketDiv",
+            "showPriceSpan"
+        ],
+        counter: [ "tabPrice" ]
+    },
+    {
+        id: "tabPrice"
+        other: [
+            "pTableContentTab",
+            "showBasketSpan"
+        ],
+        counter: [ "tabBasket" ]
+    }
+]
+
+tabs_dict = tabs.toDict("id")
+
+switch_tabs = (id) ->
+    alert(id)
+    counters = tabs_dict[id]["counter"]
     
-    $("#pTableContentTab").hide()
-    $("#basketDiv").show()
-    $("#showBasketSpan").hide()
-    $("#showPriceSpan").show()
-    0
-    
-    
-show_price = () ->
-    $("#pTableContentTab").show()
-    $("#basketDiv").hide()
-    $("#showBasketSpan").show()
-    $("#showPriceSpan").hide()
-    0
+    for counter in counters
+        for other in tabs_dict[counter]["other"]
+            $("##{other}").hide()
+
+    for other in tabs_dict[id]["other"]
+        $("##{other}").show()
+
 
 $(document).ready ->
 
-    $("#tabBasket").click ->
-        show_basket()
-        0
+    for item of tabs_dict
+        name = item
+        $("##{name}").click ->
+            switch_tabs(this.id)
+            # alert(item)
+
+
+    # $("#tabBasket").click ->
+    #     switch_tabs("tabBasket")
+    #     0
     
-    $("#tabPrice").click ->
-        show_price()
-        0
+    # $("#tabPrice").click ->
+    #     switch_tabs("tabPrice")
+    #     0
 
     $("#itemName").autocomplete(
         source: "/1cengine/py_scripts/item_autocomplete.py",
@@ -47,7 +74,7 @@ $(document).ready ->
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
-            async: false
+            async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 $("#qRes").html html
