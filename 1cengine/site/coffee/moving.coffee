@@ -90,6 +90,31 @@ switch_tabs = (id) ->
     if tabs_dict[id]["inactive_class"]
         $("##{id}").removeClass(tabs_dict[id]['inactive_class'])
 
+show_groups = () ->
+    $.blockUI.defaults.css.borderRadius = '10px'; 
+    $.blockUI.defaults.fadeIn = 100;
+    $.blockUI.defaults.fadeOut = 100;
+    $.blockUI.defaults.css.backgroundColor = 'white'
+    $.blockUI.defaults.css.cursor = 'defaults'
+    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+    $.blockUI.defaults.css.fontSize = '14px'
+    $.blockUI.defaults.css.width = '700px'
+    $.blockUI.defaults.css.height = '370px'
+    $.blockUI.defaults.css.paddingTop = '70px'
+    $.blockUI.defaults.css.paddingLeft = '20px'
+
+    $.blockUI
+        message: $("#tags")
+    
+    $(".blockMsg").draggable();
+
+    $(document).on "keyup", (e) ->
+        e.preventDefault()
+        if e.which is 27
+            $.unblockUI();
+        
+       
+
 $(document).ready ->
 
     for item of tabs_dict
@@ -126,20 +151,26 @@ $(document).ready ->
             success: (html) ->
                 $("#qRes").html html
                 
-                # $(html).appendTo("#tableRes")
                 if $(".item").length >= 1
                     $("#tags").hide()
                     $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
                     $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-
-                    # $('#myCanvasContainer').show();
                     $("#tags").show()
                     $("#showGroupsDiv").hide()
+
                 if $(".item").length is 20
                     $("#showAll").show()
-                
-                # $('#hollowResult').empty()
                 else
                     $("#showAll").hide()
+
+    $("#showNds").change ->
+        if $("#showNds").attr("checked") is "checked"
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
+        else
+            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
+
+    $("#show_groups").click ->
+        show_groups()
+        false
