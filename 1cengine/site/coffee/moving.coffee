@@ -7,7 +7,7 @@ tabs = [
         other: [
             "basketDiv",
             "showPriceSpan"
-        ],
+        ]
         counter: [ "tabPrice" ]
     },
     {
@@ -15,24 +15,80 @@ tabs = [
         other: [
             "pTableContentTab",
             "showBasketSpan"
-        ],
+        ]
         counter: [ "tabBasket" ]
+    },
+    {
+        id: "closeBasket"
+        other: [
+            "pTableContentTab",
+            "showBasketSpan"
+        ]
+        counter: [ "tabBasket" ]
+    },
+    {
+        id: "switchOrderDiv"
+        other: [
+            "orderDiv",
+            "showNDSlabel"
+        ]
+        counter: [
+            "switchDeliveryDiv",
+            "switchNotificationDiv"
+        ]
+        active_class: "activeDiv"
+        inactive_class: "inactiveDiv"
+    },
+    {
+        id: "switchDeliveryDiv"
+        other: [
+            "deliveryDiv"
+        ]
+        counter: [
+            "switchOrderDiv",
+            "switchNotificationDiv"
+        ]
+        active_class: "activeDiv"
+        inactive_class: "inactiveDiv"
+    },
+    {
+        id: "switchNotificationDiv"
+        other: [
+            "notificationDiv"
+        ]
+        counter: [
+            "switchOrderDiv",
+            "switchDeliveryDiv"
+        ]
+        active_class: "activeDiv"
+        inactive_class: "inactiveDiv"
     }
 ]
 
 tabs_dict = tabs.toDict("id")
 
 switch_tabs = (id) ->
-    alert(id)
+    # alert(id)
     counters = tabs_dict[id]["counter"]
     
     for counter in counters
         for other in tabs_dict[counter]["other"]
             $("##{other}").hide()
 
+        if tabs_dict[counter]["active_class"]
+            $("##{tabs_dict[counter]['id']}").removeClass(tabs_dict[counter]['active_class'])
+    
+        if tabs_dict[counter]["inactive_class"]
+            $("##{tabs_dict[counter]['id']}").addClass(tabs_dict[counter]['inactive_class'])
+
     for other in tabs_dict[id]["other"]
         $("##{other}").show()
 
+    if tabs_dict[id]["active_class"]
+        $("##{id}").addClass(tabs_dict[id]['active_class'])
+    
+    if tabs_dict[id]["inactive_class"]
+        $("##{id}").removeClass(tabs_dict[id]['inactive_class'])
 
 $(document).ready ->
 
@@ -40,16 +96,7 @@ $(document).ready ->
         name = item
         $("##{name}").click ->
             switch_tabs(this.id)
-            # alert(item)
 
-
-    # $("#tabBasket").click ->
-    #     switch_tabs("tabBasket")
-    #     0
-    
-    # $("#tabPrice").click ->
-    #     switch_tabs("tabPrice")
-    #     0
 
     $("#itemName").autocomplete(
         source: "/1cengine/py_scripts/item_autocomplete.py",

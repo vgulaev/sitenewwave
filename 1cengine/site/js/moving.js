@@ -20,14 +20,35 @@
       id: "tabPrice",
       other: ["pTableContentTab", "showBasketSpan"],
       counter: ["tabBasket"]
+    }, {
+      id: "closeBasket",
+      other: ["pTableContentTab", "showBasketSpan"],
+      counter: ["tabBasket"]
+    }, {
+      id: "switchOrderDiv",
+      other: ["orderDiv", "showNDSlabel"],
+      counter: ["switchDeliveryDiv", "switchNotificationDiv"],
+      active_class: "activeDiv",
+      inactive_class: "inactiveDiv"
+    }, {
+      id: "switchDeliveryDiv",
+      other: ["deliveryDiv"],
+      counter: ["switchOrderDiv", "switchNotificationDiv"],
+      active_class: "activeDiv",
+      inactive_class: "inactiveDiv"
+    }, {
+      id: "switchNotificationDiv",
+      other: ["notificationDiv"],
+      counter: ["switchOrderDiv", "switchDeliveryDiv"],
+      active_class: "activeDiv",
+      inactive_class: "inactiveDiv"
     }
   ];
 
   tabs_dict = tabs.toDict("id");
 
   switch_tabs = function(id) {
-    var counter, counters, other, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _results;
-    alert(id);
+    var counter, counters, other, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
     counters = tabs_dict[id]["counter"];
     for (_i = 0, _len = counters.length; _i < _len; _i++) {
       counter = counters[_i];
@@ -36,14 +57,24 @@
         other = _ref[_j];
         $("#" + other).hide();
       }
+      if (tabs_dict[counter]["active_class"]) {
+        $("#" + tabs_dict[counter]['id']).removeClass(tabs_dict[counter]['active_class']);
+      }
+      if (tabs_dict[counter]["inactive_class"]) {
+        $("#" + tabs_dict[counter]['id']).addClass(tabs_dict[counter]['inactive_class']);
+      }
     }
     _ref1 = tabs_dict[id]["other"];
-    _results = [];
     for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
       other = _ref1[_k];
-      _results.push($("#" + other).show());
+      $("#" + other).show();
     }
-    return _results;
+    if (tabs_dict[id]["active_class"]) {
+      $("#" + id).addClass(tabs_dict[id]['active_class']);
+    }
+    if (tabs_dict[id]["inactive_class"]) {
+      return $("#" + id).removeClass(tabs_dict[id]['inactive_class']);
+    }
   };
 
   $(document).ready(function() {
