@@ -82,7 +82,7 @@ def set_search_value():
 
     elif "catalog" in form:
         catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
-        input_search_item["value"] = catalog
+        input_search_item["value"] = catalog + " "
         # input_search_item["value"] = u'Сало!'
     else:
         input_search_item["value"] = ""

@@ -1,9 +1,13 @@
+AddDefaultCharset UTF-8
+
 <IfModule mod_cgi.c>
 	AddHandler cgi-script .py
 </IfModule>
 
 RewriteEngine on
-RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
+RewriteRule ^1cengine/site/$ 1cengine/site/index.py [L]
+RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
+RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)$ 1cengine/site/index.py?catalog=$1 [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^1cengine/py_scripts/ - [L]
