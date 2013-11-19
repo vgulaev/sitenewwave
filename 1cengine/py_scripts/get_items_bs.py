@@ -253,7 +253,7 @@ class Item():
                     div_postal_tag["itemprop"] = "address"
                     div_postal_tag[
                         "itemscope itemtype"] = \
-                            "http://schema.org/PostalAddress"
+                        "http://schema.org/PostalAddress"
 
                     span_sa_tag = soup.new_tag("span")
                     span_sa_tag["itemprop"] = "streetAddress"

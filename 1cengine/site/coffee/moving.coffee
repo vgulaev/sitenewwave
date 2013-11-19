@@ -165,6 +165,16 @@ $(document).ready ->
                 else
                     $("#showAll").hide()
 
+                window.history.pushState(
+                    {term: value},
+                    '',
+                    '/1cengine/site/'+$.trim(value)+'/'
+                )
+
+    $(window).on "popstate", (e) ->
+        $("#itemName").val(history.state['term'])
+        $("#itemName").change()
+
     $("#showNds").change ->
         if $("#showNds").attr("checked") is "checked"
             $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()

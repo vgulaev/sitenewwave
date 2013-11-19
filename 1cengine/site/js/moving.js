@@ -144,12 +144,19 @@
             $("#showGroupsDiv").hide();
           }
           if ($(".item").length === 20) {
-            return $("#showAll").show();
+            $("#showAll").show();
           } else {
-            return $("#showAll").hide();
+            $("#showAll").hide();
           }
+          return window.history.pushState({
+            term: value
+          }, '', '/1cengine/site/' + $.trim(value) + '/');
         }
       });
+    });
+    $(window).on("popstate", function(e) {
+      $("#itemName").val(history.state['term']);
+      return $("#itemName").change();
     });
     $("#showNds").change(function() {
       if ($("#showNds").attr("checked") === "checked") {
