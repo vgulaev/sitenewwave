@@ -4,62 +4,37 @@ Array::toDict = (key) ->
 tabs = [
     {
         id: "tabBasket"
-        other: [
-            "basketDiv",
-            "showPriceSpan"
-        ]
+        other: [ "basketDiv", "showPriceSpan" ]
         counter: [ "tabPrice" ]
     },
     {
         id: "tabPrice"
-        other: [
-            "pTableContentTab",
-            "showBasketSpan"
-        ]
+        other: [ "pTableContentTab", "showBasketSpan" ]
         counter: [ "tabBasket" ]
     },
     {
         id: "closeBasket"
-        other: [
-            "pTableContentTab",
-            "showBasketSpan"
-        ]
+        other: [ "pTableContentTab", "showBasketSpan" ]
         counter: [ "tabBasket" ]
     },
     {
         id: "switchOrderDiv"
-        other: [
-            "orderDiv",
-            "showNDSlabel"
-        ]
-        counter: [
-            "switchDeliveryDiv",
-            "switchNotificationDiv"
-        ]
+        other: [ "orderDiv", "showNDSlabel" ]
+        counter: [ "switchDeliveryDiv", "switchNotificationDiv" ]
         active_class: "activeDiv"
         inactive_class: "inactiveDiv"
     },
     {
         id: "switchDeliveryDiv"
-        other: [
-            "deliveryDiv"
-        ]
-        counter: [
-            "switchOrderDiv",
-            "switchNotificationDiv"
-        ]
+        other: [ "deliveryDiv" ]
+        counter: [ "switchOrderDiv", "switchNotificationDiv" ]
         active_class: "activeDiv"
         inactive_class: "inactiveDiv"
     },
     {
         id: "switchNotificationDiv"
-        other: [
-            "notificationDiv"
-        ]
-        counter: [
-            "switchOrderDiv",
-            "switchDeliveryDiv"
-        ]
+        other: [ "notificationDiv" ]
+        counter: [ "switchOrderDiv", "switchDeliveryDiv" ]
         active_class: "activeDiv"
         inactive_class: "inactiveDiv"
     }
@@ -113,9 +88,17 @@ show_groups = () ->
         if e.which is 27
             $.unblockUI();
         
-       
+showGroup2 = (term) -> 
+    $("#itemName").val(term)
+    $("#itemName").change()
+    $.unblockUI()
+
 
 $(document).ready ->
+
+    if $("#tags").css("display") is "none"
+        $("#showGroupsDiv").show()
+        # alert(1)
 
     for item of tabs_dict
         name = item
@@ -170,6 +153,8 @@ $(document).ready ->
                     '',
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
+
+                $("#show_groups").show()
 
     $(window).on "popstate", (e) ->
         $("#itemName").val(history.state['term'])
