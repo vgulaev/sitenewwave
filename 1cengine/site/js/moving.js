@@ -159,7 +159,7 @@
       return $("#itemName").change();
     });
     $("#showNds").change(function() {
-      if ($("#showNds").attr("checked") === "checked") {
+      if (this.checked) {
         return $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show();
       } else {
         return $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide();

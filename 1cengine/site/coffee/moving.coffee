@@ -176,7 +176,7 @@ $(document).ready ->
         $("#itemName").change()
 
     $("#showNds").change ->
-        if $("#showNds").attr("checked") is "checked"
+        if this.checked
             $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
         else
             $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
