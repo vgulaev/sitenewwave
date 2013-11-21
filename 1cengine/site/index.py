@@ -190,6 +190,7 @@ class Index_Page():
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/moving.js",
+            "/1cengine/site/js/ordering.js",
             "/lib/frameworks/raf_sha256.js",
             "/lib/frameworks/jqrequired/jquery.primepix.kladr.min.js",
             "/1cengine/site/js/kladr.js",
