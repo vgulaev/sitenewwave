@@ -1,24 +1,25 @@
 class Item
-    @length = 0
     constructor: (@id) ->
-        this.get_chars(@id)
-        alert(this.length)
+        @get_chars()
 
-    get_chars: (hash) ->
+    get_chars: ->
+        response = null
         $.ajax
             type: "POST"
             url: "/1cengine/py_scripts/get_item_char.py"
-            async: true
-            data: "item_hash=" + hash
+            async: false
+            data: "item_hash=" + @id
             success: (html) ->
-                set_chars(html)
+                response = html
+                response
+
+        @set_chars(response)
 
     set_chars: (chars) ->
-        char_array = chars.spit("|")
-
-        this.length = char_array[0]
-        this.weigth = char_array[1]
-        this.kf     = char_array[2]
+        char_array = chars.split "|"
+        @length = char_array[0]
+        @weigth = char_array[1]
+        @kf     = char_array[2]
             
 
 $(document).ready ->

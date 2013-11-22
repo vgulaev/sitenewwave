@@ -3,29 +3,30 @@
   var Item;
 
   Item = (function() {
-    Item.length = 0;
-
     function Item(id) {
       this.id = id;
-      this.get_chars(this.id);
-      alert(this.length);
+      this.get_chars();
     }
 
-    Item.prototype.get_chars = function(hash) {
-      return $.ajax({
+    Item.prototype.get_chars = function() {
+      var response;
+      response = null;
+      $.ajax({
         type: "POST",
         url: "/1cengine/py_scripts/get_item_char.py",
-        async: true,
-        data: "item_hash=" + hash,
+        async: false,
+        data: "item_hash=" + this.id,
         success: function(html) {
-          return set_chars(html);
+          response = html;
+          return response;
         }
       });
+      return this.set_chars(response);
     };
 
     Item.prototype.set_chars = function(chars) {
       var char_array;
-      char_array = chars.spit("|");
+      char_array = chars.split("|");
       this.length = char_array[0];
       this.weigth = char_array[1];
       return this.kf = char_array[2];
