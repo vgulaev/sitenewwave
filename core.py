@@ -87,7 +87,7 @@ def makecontent(path):
     nodes = soupForImport.find_all("a")
     for currentelement in nodes:
         if currentelement.has_key("href"):
-            if ".png" or ".jpg" in currentelement["href"]:
+            if ".png" in currentelement["href"]:
                 currentelement["href"] = "/" + path + currentelement["href"]
 
     # set title
