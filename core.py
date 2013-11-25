@@ -83,6 +83,13 @@ def makecontent(path):
             if "src" in currentelement:
                 currentelement["src"] = "/sitenewwave" + currentelement["src"]
 
+    #change links to a pictures
+    nodes = soupForImport.find_all("a")
+    for currentelement in nodes:
+        if currentelement.has_key("href"):
+            if ".png" or ".jpg" in currentelement["href"]:
+                currentelement["href"] = "/" + path + currentelement["href"]
+
     # set title
     title = soupForImport.find("title")
     soup.html.head.title.replaceWith(title)
