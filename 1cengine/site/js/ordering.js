@@ -4,9 +4,22 @@
 
   Item = (function() {
     function Item(id) {
+      var price, _i, _len, _ref;
       this.id = id;
-      this.get_chars();
-      this.set_name();
+      this.set_chars();
+      console.log(this.name);
+      console.log(this.char);
+      console.log(this.length);
+      console.log(this.weight);
+      console.log(this.kf);
+      _ref = this.prices;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        price = _ref[_i];
+        console.log(price);
+      }
+      $.blockUI({
+        message: this.get_modal()
+      });
     }
 
     Item.prototype.get_chars = function() {
@@ -22,20 +35,36 @@
           return response;
         }
       });
-      return this.set_chars(response);
+      return response;
     };
 
     Item.prototype.set_chars = function(chars) {
-      var char_array;
+      var char_array, obj,
+        _this = this;
+      chars = this.get_chars().replace(/\s+$/g, "");
       char_array = chars.split("|");
       this.length = char_array[0];
-      this.weigth = char_array[1];
-      return this.kf = char_array[2];
+      this.weight = char_array[1];
+      this.kf = char_array[2];
+      this.prices = [];
+      obj = $("tr[id='" + this.id + "']");
+      return $(obj).children().each(function(index, element) {
+        if ($(element).attr("class") === "itemName") {
+          _this.name = $(element).children("[itemprop='name']").text();
+        }
+        if ($(element).attr("class") === "itemChar") {
+          _this.char = $(element).text();
+        }
+        if (($(element).attr("class").indexOf("price", 0)) === 0) {
+          return _this.prices.push($(element).children("span").text());
+        }
+      });
     };
 
-    Item.prototype.set_name = function() {
-      console.log($("tr#3a3917a0-3fb3-11d9-a449-505054503030:895a109c-3966-11d9-a448-505054503030"));
-      return console.log(this.id);
+    Item.prototype.get_modal = function() {
+      var message;
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\"><<Имя товара>></span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input />\n</td>\n<td>\n    <input />\n</td>\n<td>\n    <input />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость</td>\n<td>0</td>\n<td>0</td>\n<td>0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: </div>\n</div>";
+      return message;
     };
 
     return Item;
@@ -43,11 +72,10 @@
   })();
 
   $(document).ready(function() {
-    $(".bItem").click(function() {
+    return $(".bItem").click(function() {
       var item;
       return item = new Item($(this).closest("tr").attr("id"));
     });
-    return console.log($("#3a3917a0-3fb3-11d9-a449-505054503030:895a109c-3966-11d9-a448-505054503030").attr("id"));
   });
 
 }).call(this);

@@ -45,14 +45,14 @@ tabs_dict = tabs.toDict("id")
 switch_tabs = (id) ->
     # alert(id)
     counters = tabs_dict[id]["counter"]
-    
+
     for counter in counters
         for other in tabs_dict[counter]["other"]
             $("##{other}").hide()
 
         if tabs_dict[counter]["active_class"]
             $("##{tabs_dict[counter]['id']}").removeClass(tabs_dict[counter]['active_class'])
-    
+
         if tabs_dict[counter]["inactive_class"]
             $("##{tabs_dict[counter]['id']}").addClass(tabs_dict[counter]['inactive_class'])
 
@@ -61,12 +61,12 @@ switch_tabs = (id) ->
 
     if tabs_dict[id]["active_class"]
         $("##{id}").addClass(tabs_dict[id]['active_class'])
-    
+
     if tabs_dict[id]["inactive_class"]
         $("##{id}").removeClass(tabs_dict[id]['inactive_class'])
 
 show_groups = () ->
-    $.blockUI.defaults.css.borderRadius = '10px'; 
+    $.blockUI.defaults.css.borderRadius = '10px';
     $.blockUI.defaults.fadeIn = 100;
     $.blockUI.defaults.fadeOut = 100;
     $.blockUI.defaults.css.backgroundColor = 'white'
@@ -80,15 +80,15 @@ show_groups = () ->
 
     $.blockUI
         message: $("#tags")
-    
+
     $(".blockMsg").draggable();
 
     $(document).on "keyup", (e) ->
         e.preventDefault()
         if e.which is 27
             $.unblockUI();
-        
-showGroup2 = (term) -> 
+
+showGroup2 = (term) ->
     $("#itemName").val(term)
     $("#itemName").change()
     $.unblockUI()
@@ -133,7 +133,7 @@ $(document).ready ->
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 $("#qRes").html html
-                
+
                 if $(".item").length >= 1
                     $("#tags").hide()
                     $("#showGroupsDiv").show()
