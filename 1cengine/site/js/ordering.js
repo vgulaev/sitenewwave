@@ -6,6 +6,7 @@
     function Item(id) {
       this.id = id;
       this.get_chars();
+      this.set_name();
     }
 
     Item.prototype.get_chars = function() {
@@ -32,15 +33,21 @@
       return this.kf = char_array[2];
     };
 
+    Item.prototype.set_name = function() {
+      console.log($("tr#3a3917a0-3fb3-11d9-a449-505054503030:895a109c-3966-11d9-a448-505054503030"));
+      return console.log(this.id);
+    };
+
     return Item;
 
   })();
 
   $(document).ready(function() {
-    return $(".bItem").click(function() {
+    $(".bItem").click(function() {
       var item;
       return item = new Item($(this).closest("tr").attr("id"));
     });
+    return console.log($("#3a3917a0-3fb3-11d9-a449-505054503030:895a109c-3966-11d9-a448-505054503030").attr("id"));
   });
 
 }).call(this);
