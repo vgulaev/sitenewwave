@@ -93,13 +93,20 @@ class Item
         @change_modal_price()
 
     change_modal_price: ->
-        price_weight = ( +@prices[0] ).toFixed(2)
-        price_length = ( ( price_weight / 1000 ) * @weight ).toFixed(2)
-        price_count = ( price_length * @length ).toFixed(2)
+        @price_weight = ( +@prices[0] ).toFixed(2)
+        @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
+        @price_count = ( @price_length * @length ).toFixed(2)
 
-        $(".price_weight").html(price_weight)
-        $(".price_length").html(price_length)
-        $(".price_count").html(price_count)
+        $(".price_weight").html(@price_weight)
+        $(".price_length").html(@price_length)
+        $(".price_count").html(@price_count)
+
+        @set_final_price()
+
+    set_final_price: ->
+        @final_price = ( @buy_weight * @price_weight ).toFixed(2)
+        $(".final_price").html(@final_price)
+
 
     show_modal: ->
         $.blockUI.defaults.css.borderRadius = '10px';
@@ -136,6 +143,12 @@ class Item
 
         @change_modal_price()
 
+        $(".add_to_basket").bind 'click', (event) =>
+
+            Basket.add_item(this)
+            $.unblockUI()
+            alert(Basket._total_weight)
+
 
     get_modal: ->
         message = """
@@ -168,13 +181,35 @@ class Item
         </tr>
 
         </table>
-        <div class="buy_item_overall">Итого: </div>
+        <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
+        <span class="popUpContinue"><a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a></span>
         </div>""";
 
         message
 
 
+class Basket
+    @_item_list = []
+    @_sum = 0
+    @_count = 0
+    @_total_weight = 0
+
+    @add_item: (item) ->
+        Basket._item_list.push item
+        Basket._sum = Basket._sum + (+item.final_price)
+        Basket._total_weight = Basket._total_weight + (+item.buy_weight)
+        Basket._count++
+
+    @get_count: ->
+        @_count
+
+    constructor: (@name) ->
+
+
+
 $(document).ready ->
+
+
     $(".bItem").click ->
 
         elem_id = $(this).closest( "tr" ).attr("id")
