@@ -95,7 +95,18 @@
     Item.prototype.change_modal = function() {
       $(".buy_count").val(this.buy_count);
       $(".buy_weight").val(this.buy_weight);
-      return $(".buy_length").val(this.buy_length);
+      $(".buy_length").val(this.buy_length);
+      return this.change_modal_price();
+    };
+
+    Item.prototype.change_modal_price = function() {
+      var price_count, price_length, price_weight;
+      price_weight = (+this.prices[0]).toFixed(2);
+      price_length = ((price_weight / 1000) * this.weight).toFixed(2);
+      price_count = (price_length * this.length).toFixed(2);
+      $(".price_weight").html(price_weight);
+      $(".price_length").html(price_length);
+      return $(".price_count").html(price_count);
     };
 
     Item.prototype.show_modal = function() {
@@ -125,14 +136,15 @@
       $(".buy_length").bind('change', function(event) {
         return _this.change_buy_length($(".buy_length").val());
       });
-      return $(".buy_weight").bind('change', function(event) {
+      $(".buy_weight").bind('change', function(event) {
         return _this.change_buy_weight($(".buy_weight").val());
       });
+      return this.change_modal_price();
     };
 
     Item.prototype.get_modal = function() {
       var message;
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость</td>\n<td>0</td>\n<td>0</td>\n<td>0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: </div>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: </div>\n</div>";
       return message;
     };
 

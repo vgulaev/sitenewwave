@@ -90,6 +90,17 @@ class Item
         $(".buy_weight").val(@buy_weight)
         $(".buy_length").val(@buy_length)
 
+        @change_modal_price()
+
+    change_modal_price: ->
+        price_weight = ( +@prices[0] ).toFixed(2)
+        price_length = ( ( price_weight / 1000 ) * @weight ).toFixed(2)
+        price_count = ( price_length * @length ).toFixed(2)
+
+        $(".price_weight").html(price_weight)
+        $(".price_length").html(price_length)
+        $(".price_count").html(price_count)
+
     show_modal: ->
         $.blockUI.defaults.css.borderRadius = '10px';
         $.blockUI.defaults.fadeIn = 100;
@@ -123,6 +134,8 @@ class Item
 
             @change_buy_weight($(".buy_weight").val())
 
+        @change_modal_price()
+
 
     get_modal: ->
         message = """
@@ -148,10 +161,10 @@ class Item
         </td>
         </tr>
         <tr class="buy_item_price">
-        <td>Стоимость</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
+        <td>Стоимость за ед.</td>
+        <td class="price_length">0</td>
+        <td class="price_count">0</td>
+        <td class="price_weight">0</td>
         </tr>
 
         </table>

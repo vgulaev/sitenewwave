@@ -999,7 +999,7 @@ tr.iHeader{
 }
 .buy_item_name{
     font-weight: bold;
-    border:1px dotted gray;
+    /*border:1px dotted gray;*/
 }
 .buy_item_head th{
     font-size: 16px;
