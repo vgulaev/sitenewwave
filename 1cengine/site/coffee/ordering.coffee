@@ -147,7 +147,7 @@ class Item
 
             Basket.add_item(this)
             $.unblockUI()
-            alert(Basket._total_weight)
+            # alert(Basket._total_weight)
 
 
     get_modal: ->
@@ -189,19 +189,83 @@ class Item
 
 
 class Basket
-    @_item_list = []
-    @_sum = 0
-    @_count = 0
-    @_total_weight = 0
+    @_item_list: []
+    @_sum: 0
+    @_count: 0
+    @_total_weight: 0
+
+    @find_by_id: (id) ->
+        flag = false
+        for item in @_item_list
+            if item.id is id
+                flag = true
+                break
+        if flag
+            item
+        else
+            false
 
     @add_item: (item) ->
-        Basket._item_list.push item
-        Basket._sum = Basket._sum + (+item.final_price)
-        Basket._total_weight = Basket._total_weight + (+item.buy_weight)
-        Basket._count++
+        index = @_item_list.indexOf(item)
+        if index is -1
+            @_item_list.push item
+            @_sum = ( (+item.final_price) + (+@_sum) ).toFixed(2)
+            @_total_weight = ( (+item.buy_weight) + (+@_total_weight) ).toFixed(3)
+            @_count++
+
+            @change_basket()
+
+    @delete_item: (id) ->
+
+        item = @find_by_id(id)
+        index = @_item_list.indexOf(item)
+        alert(index)
+        if index > -1
+
+            # item = @_item_list[index]
+            alert(index)
+            @_sum = ( (+@_sum) - (+item.final_price) ).toFixed(2)
+            @_total_weight = ( (+@_total_weight) - (+item.buy_weight) ).toFixed(3)
+            @_count--
+            @_item_list.splice(index,1)
+
+            @change_basket()
 
     @get_count: ->
         @_count
+
+    @change_basket: ->
+        $(".basketCount").html(@_count)
+        $("#lItemTab").empty()
+        for item in @_item_list
+            # alert(1)
+            $("#lItemTab").append(@create_row(item))
+
+            $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
+                alert(item.id)
+                @delete_item(item.id)
+
+    @create_row: (item) ->
+        row = """
+            <tr class="itemTr" name="#{item.id}">
+            <td>#{@_item_list.indexOf(item)}</td>
+            <td class='itemNameTd'>#{item.name}
+            <span class="delEdSpan">
+            <a class="delete_from_basket" href="Убрать из корзины" onClick="return false">X</a>
+            <a href="Редактировать" onClick="return false"><img src="/1cengine/site/images/edit.png" /></a></span></td>
+
+
+            <td class='itemCharTd'>#{item.char}</td>
+
+            <td class='itemCountTd'>#{item.buy_count}</td>
+            <td class='itemEdIzmTd'></td>
+            <td class='itemPriceTd'>#{item.price_weight}</td>
+            <td class='itemNdsKfTd'>18%</td>
+            <td class='itemNdsSumTd'></td>
+            <td class='itemSumTd'>#{item.final_price}</td>
+            <td class='itemRezkaTd' style='display:none'></td>
+            </tr>
+        """
 
     constructor: (@name) ->
 

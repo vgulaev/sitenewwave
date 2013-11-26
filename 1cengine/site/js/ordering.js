@@ -147,8 +147,7 @@
       this.change_modal_price();
       return $(".add_to_basket").bind('click', function(event) {
         Basket.add_item(_this);
-        $.unblockUI();
-        return alert(Basket._total_weight);
+        return $.unblockUI();
       });
     };
 
@@ -171,15 +170,76 @@
 
     Basket._total_weight = 0;
 
+    Basket.find_by_id = function(id) {
+      var flag, item, _i, _len, _ref;
+      flag = false;
+      _ref = this._item_list;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.id === id) {
+          flag = true;
+          break;
+        }
+      }
+      if (flag) {
+        return item;
+      } else {
+        return false;
+      }
+    };
+
     Basket.add_item = function(item) {
-      Basket._item_list.push(item);
-      Basket._sum = Basket._sum + (+item.final_price);
-      Basket._total_weight = Basket._total_weight + (+item.buy_weight);
-      return Basket._count++;
+      var index;
+      index = this._item_list.indexOf(item);
+      if (index === -1) {
+        this._item_list.push(item);
+        this._sum = ((+item.final_price) + (+this._sum)).toFixed(2);
+        this._total_weight = ((+item.buy_weight) + (+this._total_weight)).toFixed(3);
+        this._count++;
+        return this.change_basket();
+      }
+    };
+
+    Basket.delete_item = function(id) {
+      var index, item;
+      item = this.find_by_id(id);
+      index = this._item_list.indexOf(item);
+      alert(index);
+      if (index > -1) {
+        alert(index);
+        this._sum = ((+this._sum) - (+item.final_price)).toFixed(2);
+        this._total_weight = ((+this._total_weight) - (+item.buy_weight)).toFixed(3);
+        this._count--;
+        this._item_list.splice(index, 1);
+        return this.change_basket();
+      }
     };
 
     Basket.get_count = function() {
       return this._count;
+    };
+
+    Basket.change_basket = function() {
+      var item, _i, _len, _ref, _results,
+        _this = this;
+      $(".basketCount").html(this._count);
+      $("#lItemTab").empty();
+      _ref = this._item_list;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        $("#lItemTab").append(this.create_row(item));
+        _results.push($("tr[name='" + item.id + "']").find(".delete_from_basket").bind("click", function(event) {
+          alert(item.id);
+          return _this.delete_item(item.id);
+        }));
+      }
+      return _results;
+    };
+
+    Basket.create_row = function(item) {
+      var row;
+      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item)) + "</td>\n<td class='itemNameTd'>" + item.name + "\n<span class=\"delEdSpan\">\n<a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\">X</a>\n<a href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/edit.png\" /></a></span></td>\n\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_count + "</td>\n<td class='itemEdIzmTd'></td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'></td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemRezkaTd' style='display:none'></td>\n</tr>";
     };
 
     function Basket(name) {
