@@ -3,23 +3,33 @@
   var Item;
 
   Item = (function() {
+    Item._existing = [];
+
+    Item.elem_exist = function(id) {
+      var flag, item, _i, _len, _ref;
+      flag = false;
+      _ref = this._existing;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        if (item.id === id) {
+          flag = true;
+          break;
+        }
+      }
+      if (flag) {
+        return item;
+      } else {
+        return false;
+      }
+    };
+
     function Item(id) {
-      var price, _i, _len, _ref;
       this.id = id;
       this.set_chars();
-      console.log(this.name);
-      console.log(this.char);
-      console.log(this.length);
-      console.log(this.weight);
-      console.log(this.kf);
-      _ref = this.prices;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        price = _ref[_i];
-        console.log(price);
-      }
-      $.blockUI({
-        message: this.get_modal()
-      });
+      this.count = 1;
+      this.change_buy_count(this.count);
+      this.show_modal();
+      Item._existing.push(this);
     }
 
     Item.prototype.get_chars = function() {
@@ -61,9 +71,68 @@
       });
     };
 
+    Item.prototype.change_buy_count = function(count) {
+      this.buy_count = Math.ceil(count);
+      this.buy_length = (this.buy_count * this.length).toFixed(2);
+      this.buy_weight = ((this.buy_length * this.weight) / 1000).toFixed(3);
+      return this.change_modal();
+    };
+
+    Item.prototype.change_buy_length = function(length) {
+      this.buy_length = length.replace(/,+/g, ".");
+      this.buy_count = this.buy_length / this.length;
+      this.change_modal();
+      return $(".buy_count").change();
+    };
+
+    Item.prototype.change_buy_weight = function(weight) {
+      this.buy_weight = weight.replace(/,+/g, ".");
+      this.buy_length = (this.buy_weight * 1000) / this.weight;
+      this.change_modal();
+      return $(".buy_length").change();
+    };
+
+    Item.prototype.change_modal = function() {
+      $(".buy_count").val(this.buy_count);
+      $(".buy_weight").val(this.buy_weight);
+      return $(".buy_length").val(this.buy_length);
+    };
+
+    Item.prototype.show_modal = function() {
+      var _this = this;
+      $.blockUI.defaults.css.borderRadius = '10px';
+      $.blockUI.defaults.fadeIn = 100;
+      $.blockUI.defaults.fadeOut = 100;
+      $.blockUI.defaults.css.backgroundColor = 'white';
+      $.blockUI.defaults.css.cursor = 'defaults';
+      $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)';
+      $.blockUI.defaults.css.fontSize = '14px';
+      $.blockUI.defaults.css.width = '450px';
+      $.blockUI.defaults.css.paddingTop = '10px';
+      $.blockUI({
+        message: this.get_modal()
+      });
+      $(".blockMsg").draggable();
+      $(document).on("keyup", function(e) {
+        e.preventDefault();
+        if (e.which === 27) {
+          return $.unblockUI();
+        }
+      });
+      $(".buy_count").bind('change', function(event) {
+        return _this.change_buy_count($(".buy_count").val());
+      });
+      $(".buy_length").bind('change', function(event) {
+        return _this.change_buy_length($(".buy_length").val());
+      });
+      return $(".buy_weight").bind('change', function(event) {
+        return _this.change_buy_weight($(".buy_weight").val());
+      });
+    };
+
     Item.prototype.get_modal = function() {
       var message;
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\"><<Имя товара>></span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input />\n</td>\n<td>\n    <input />\n</td>\n<td>\n    <input />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость</td>\n<td>0</td>\n<td>0</td>\n<td>0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: </div>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость</td>\n<td>0</td>\n<td>0</td>\n<td>0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: </div>\n</div>";
       return message;
     };
 
@@ -73,8 +142,14 @@
 
   $(document).ready(function() {
     return $(".bItem").click(function() {
-      var item;
-      return item = new Item($(this).closest("tr").attr("id"));
+      var elem_id, item;
+      elem_id = $(this).closest("tr").attr("id");
+      item = Item.elem_exist(elem_id);
+      if (item === false) {
+        return item = new Item($(this).closest("tr").attr("id"));
+      } else {
+        return item.show_modal();
+      }
     });
   });
 
