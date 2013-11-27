@@ -219,11 +219,7 @@ class Basket
 
         item = @find_by_id(id)
         index = @_item_list.indexOf(item)
-        alert(index)
         if index > -1
-
-            # item = @_item_list[index]
-            alert(index)
             @_sum = ( (+@_sum) - (+item.final_price) ).toFixed(2)
             @_total_weight = ( (+@_total_weight) - (+item.buy_weight) ).toFixed(3)
             @_count--
@@ -238,12 +234,11 @@ class Basket
         $(".basketCount").html(@_count)
         $("#lItemTab").empty()
         for item in @_item_list
-            # alert(1)
             $("#lItemTab").append(@create_row(item))
 
             $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
-                alert(item.id)
-                @delete_item(item.id)
+                target = $(event.currentTarget)
+                @delete_item(target.closest( "tr" ).attr("name"))
 
     @create_row: (item) ->
         row = """

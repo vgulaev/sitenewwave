@@ -204,9 +204,7 @@
       var index, item;
       item = this.find_by_id(id);
       index = this._item_list.indexOf(item);
-      alert(index);
       if (index > -1) {
-        alert(index);
         this._sum = ((+this._sum) - (+item.final_price)).toFixed(2);
         this._total_weight = ((+this._total_weight) - (+item.buy_weight)).toFixed(3);
         this._count--;
@@ -230,8 +228,9 @@
         item = _ref[_i];
         $("#lItemTab").append(this.create_row(item));
         _results.push($("tr[name='" + item.id + "']").find(".delete_from_basket").bind("click", function(event) {
-          alert(item.id);
-          return _this.delete_item(item.id);
+          var target;
+          target = $(event.currentTarget);
+          return _this.delete_item(target.closest("tr").attr("name"));
         }));
       }
       return _results;
