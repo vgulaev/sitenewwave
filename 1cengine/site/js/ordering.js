@@ -26,11 +26,24 @@
     function Item(id) {
       this.id = id;
       this.set_chars();
-      this.count = 1;
-      this.change_buy_count(this.count);
+      if (this.is_measureable()) {
+        this.count = 1;
+        this.change_buy_count(this.count);
+      } else {
+        this.buy_weight = "1";
+        this.change_buy_weight(this.buy_weight);
+      }
       this.show_modal();
       Item._existing.push(this);
     }
+
+    Item.prototype.is_measureable = function() {
+      if (this.length === "0") {
+        return false;
+      } else {
+        return true;
+      }
+    };
 
     Item.prototype.get_chars = function() {
       var response;
@@ -89,25 +102,32 @@
 
     Item.prototype.change_buy_weight = function(weight) {
       this.buy_weight = weight.replace(/,+/g, ".");
-      this.buy_length = (this.buy_weight * 1000) / this.weight;
-      this.change_modal();
-      return $(".buy_length").change();
+      if (this.is_measureable()) {
+        this.buy_length = (this.buy_weight * 1000) / this.weight;
+        this.change_modal();
+        $(".buy_length").change();
+      }
+      return this.change_modal();
     };
 
     Item.prototype.change_modal = function() {
-      $(".buy_count").val(this.buy_count);
+      if (this.is_measureable()) {
+        $(".buy_count").val(this.buy_count);
+        $(".buy_length").val(this.buy_length);
+      }
       $(".buy_weight").val(this.buy_weight);
-      $(".buy_length").val(this.buy_length);
       return this.change_modal_price();
     };
 
     Item.prototype.change_modal_price = function() {
       this.price_weight = (+this.prices[0]).toFixed(2);
-      this.price_length = ((this.price_weight / 1000) * this.weight).toFixed(2);
-      this.price_count = (this.price_length * this.length).toFixed(2);
+      if (this.is_measureable()) {
+        this.price_length = ((this.price_weight / 1000) * this.weight).toFixed(2);
+        this.price_count = (this.price_length * this.length).toFixed(2);
+        $(".price_length").html(this.price_length);
+        $(".price_count").html(this.price_count);
+      }
       $(".price_weight").html(this.price_weight);
-      $(".price_length").html(this.price_length);
-      $(".price_count").html(this.price_count);
       return this.set_final_price();
     };
 
@@ -137,12 +157,14 @@
           return $.unblockUI();
         }
       });
-      $(".buy_count").bind('change', function(event) {
-        return _this.change_buy_count($(".buy_count").val());
-      });
-      $(".buy_length").bind('change', function(event) {
-        return _this.change_buy_length($(".buy_length").val());
-      });
+      if (this.is_measureable()) {
+        $(".buy_count").bind('change', function(event) {
+          return _this.change_buy_count($(".buy_count").val());
+        });
+        $(".buy_length").bind('change', function(event) {
+          return _this.change_buy_length($(".buy_length").val());
+        });
+      }
       $(".buy_weight").bind('change', function(event) {
         return _this.change_buy_weight($(".buy_weight").val());
       });
@@ -158,13 +180,21 @@
     };
 
     Item.prototype.get_modal = function() {
-      var message, modal_link;
+      var c_input, l_input, message, modal_link, w_input;
       if (Basket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>';
       } else {
         modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>';
       }
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      if (this.is_measureable()) {
+        l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="' + this.buy_length + '" />';
+        c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
+      } else {
+        l_input = '<input class="buy_length" value="---" disabled />';
+        c_input = '<input class="buy_count" value="---" disabled />';
+      }
+      w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 

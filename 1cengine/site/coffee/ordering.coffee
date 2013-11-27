@@ -22,13 +22,23 @@ class Item
         # console.log @kf
         # for price in @prices
         #     console.log price
-        @count = 1
-        @change_buy_count(@count)
+
+        if @is_measureable()
+            @count = 1
+            @change_buy_count(@count)
+        else
+            @buy_weight = "1"
+            @change_buy_weight(@buy_weight)
 
         @show_modal()
 
         Item._existing.push this
 
+    is_measureable: ->
+        if @length is "0"
+            false
+        else
+            true
 
 
     get_chars: ->
@@ -82,26 +92,36 @@ class Item
 
     change_buy_weight: (weight) ->
         @buy_weight = weight.replace /,+/g, "."
-        @buy_length = ( @buy_weight * 1000 ) / @weight
+
+        if @is_measureable()
+            @buy_length = ( @buy_weight * 1000 ) / @weight
+
+            @change_modal()
+            $(".buy_length").change()
 
         @change_modal()
-        $(".buy_length").change()
 
     change_modal: ->
-        $(".buy_count").val(@buy_count)
+        if @is_measureable()
+            $(".buy_count").val(@buy_count)
+
+            $(".buy_length").val(@buy_length)
+
         $(".buy_weight").val(@buy_weight)
-        $(".buy_length").val(@buy_length)
 
         @change_modal_price()
 
     change_modal_price: ->
         @price_weight = ( +@prices[0] ).toFixed(2)
-        @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
-        @price_count = ( @price_length * @length ).toFixed(2)
+
+        if @is_measureable()
+            @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
+            @price_count = ( @price_length * @length ).toFixed(2)
+
+            $(".price_length").html(@price_length)
+            $(".price_count").html(@price_count)
 
         $(".price_weight").html(@price_weight)
-        $(".price_length").html(@price_length)
-        $(".price_count").html(@price_count)
 
         @set_final_price()
 
@@ -131,16 +151,14 @@ class Item
             if e.which is 27
                 $.unblockUI();
 
-        $(".buy_count").bind 'change', (event) =>
+        if @is_measureable()
+            $(".buy_count").bind 'change', (event) =>
+                @change_buy_count($(".buy_count").val())
 
-            @change_buy_count($(".buy_count").val())
-
-        $(".buy_length").bind 'change', (event) =>
-
-            @change_buy_length($(".buy_length").val())
+            $(".buy_length").bind 'change', (event) =>
+                @change_buy_length($(".buy_length").val())
 
         $(".buy_weight").bind 'change', (event) =>
-
             @change_buy_weight($(".buy_weight").val())
 
         @change_modal_price()
@@ -163,6 +181,16 @@ class Item
         else
             modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>'
 
+
+        if @is_measureable()
+            l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
+            c_input = '<input class="buy_count" pattern="[0-9]+" value="'+@buy_count+'" />'
+        else
+            l_input = '<input class="buy_length" value="---" disabled />'
+            c_input = '<input class="buy_count" value="---" disabled />'
+        w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="'+@buy_weight+'" />'
+
+
         message = """
         <div class="buy_item_div">
         <span class="buy_item_name">#{@name} #{@char}</span>
@@ -176,13 +204,13 @@ class Item
         <tr class="buy_item_count">
         <td>Количество</td>
         <td>
-            <input class="buy_length" pattern="[0-9,\\.]+" value="#{@buy_length}" />
+            #{l_input}
         </td>
         <td>
-            <input class="buy_count" pattern="[0-9]+" value="#{@buy_count}" />
+            #{c_input}
         </td>
         <td>
-            <input class="buy_weight" pattern="[0-9,\\.]+" value="#{@buy_weight}" />
+            #{w_input}
         </td>
         </tr>
         <tr class="buy_item_price">
