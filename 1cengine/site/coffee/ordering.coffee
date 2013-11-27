@@ -35,7 +35,7 @@ class Item
         response = null
         $.ajax
             type: "POST"
-            url: "/1cengine/py_scripts/get_item_char.py"
+            url: "/1cengine/py_scripts/get_item_lwkes.py"
             async: false
             data: "item_hash=" + @id
             success: (html) ->
@@ -50,6 +50,8 @@ class Item
         @length = char_array[0]
         @weight = char_array[1]
         @kf     = char_array[2]
+        @ed_izm = char_array[3]
+        @stock  = char_array[4]
 
         @prices = []
         obj = $("tr[id='#{@id}']")
@@ -147,10 +149,20 @@ class Item
 
             Basket.add_item(this)
             $.unblockUI()
+
+        $(".change_in_basket").bind 'click', (event) =>
+
+            Basket.change_item(this)
+            $.unblockUI()
             # alert(Basket._total_weight)
 
 
     get_modal: ->
+        if Basket.is_in_basket(this)
+            modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>'
+        else
+            modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>'
+
         message = """
         <div class="buy_item_div">
         <span class="buy_item_name">#{@name} #{@char}</span>
@@ -182,7 +194,8 @@ class Item
 
         </table>
         <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
-        <span class="popUpContinue"><a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a></span>
+        <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{Basket._sum}</span></div>
+        <span class="popUpContinue">#{modal_link}</span>
         </div>""";
 
         message
@@ -193,6 +206,13 @@ class Basket
     @_sum: 0
     @_count: 0
     @_total_weight: 0
+
+    @is_in_basket: (item) ->
+        index = @_item_list.indexOf(item)
+        if index is -1
+            false
+        else
+            true
 
     @find_by_id: (id) ->
         flag = false
@@ -214,6 +234,17 @@ class Basket
             @_count++
 
             @change_basket()
+
+    @change_item: (item) ->
+        index = @_item_list.indexOf(item)
+        if index > -1
+            @_sum = 0
+            @_total_weight = 0
+            for elem in @_item_list
+                @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
+                @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
+
+                @change_basket()
 
     @delete_item: (id) ->
 
@@ -240,23 +271,36 @@ class Basket
                 target = $(event.currentTarget)
                 @delete_item(target.closest( "tr" ).attr("name"))
 
+            $("tr[name='#{item.id}']").find(".edit_from_basket").bind "click", (event) =>
+                target = $(event.currentTarget)
+                element = @find_by_id(target.closest( "tr" ).attr("name"))
+                element.show_modal()
+
+                @change_basket()
+
+        nds = ( ( @_sum / 100 ) * 18 ).toFixed(2)
+        $("#SumGoods").html(@_sum)
+        $("#CountAll").html(@_total_weight)
+        $("#NDSAll").html(nds)
+
     @create_row: (item) ->
+        nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2)
         row = """
             <tr class="itemTr" name="#{item.id}">
-            <td>#{@_item_list.indexOf(item)}</td>
+            <td>#{@_item_list.indexOf(item)+1}</td>
             <td class='itemNameTd'>#{item.name}
             <span class="delEdSpan">
             <a class="delete_from_basket" href="Убрать из корзины" onClick="return false">X</a>
-            <a href="Редактировать" onClick="return false"><img src="/1cengine/site/images/edit.png" /></a></span></td>
+            <a class="edit_from_basket" href="Редактировать" onClick="return false"><img src="/1cengine/site/images/edit.png" /></a></span></td>
 
 
             <td class='itemCharTd'>#{item.char}</td>
 
-            <td class='itemCountTd'>#{item.buy_count}</td>
-            <td class='itemEdIzmTd'></td>
+            <td class='itemCountTd'>#{item.buy_weight}</td>
+            <td class='itemEdIzmTd'>#{item.ed_izm}</td>
             <td class='itemPriceTd'>#{item.price_weight}</td>
             <td class='itemNdsKfTd'>18%</td>
-            <td class='itemNdsSumTd'></td>
+            <td class='itemNdsSumTd'>#{nds}</td>
             <td class='itemSumTd'>#{item.final_price}</td>
             <td class='itemRezkaTd' style='display:none'></td>
             </tr>
@@ -270,6 +314,16 @@ $(document).ready ->
 
 
     $(".bItem").click ->
+
+        elem_id = $(this).closest( "tr" ).attr("id")
+
+        item = Item.elem_exist(elem_id)
+        if item is false
+            item = new Item $(this).closest( "tr" ).attr("id")
+        else
+            item.show_modal()
+
+    $(".oItem").click ->
 
         elem_id = $(this).closest( "tr" ).attr("id")
 

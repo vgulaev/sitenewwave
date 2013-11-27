@@ -37,7 +37,7 @@
       response = null;
       $.ajax({
         type: "POST",
-        url: "/1cengine/py_scripts/get_item_char.py",
+        url: "/1cengine/py_scripts/get_item_lwkes.py",
         async: false,
         data: "item_hash=" + this.id,
         success: function(html) {
@@ -56,6 +56,8 @@
       this.length = char_array[0];
       this.weight = char_array[1];
       this.kf = char_array[2];
+      this.ed_izm = char_array[3];
+      this.stock = char_array[4];
       this.prices = [];
       obj = $("tr[id='" + this.id + "']");
       return $(obj).children().each(function(index, element) {
@@ -145,15 +147,24 @@
         return _this.change_buy_weight($(".buy_weight").val());
       });
       this.change_modal_price();
-      return $(".add_to_basket").bind('click', function(event) {
+      $(".add_to_basket").bind('click', function(event) {
         Basket.add_item(_this);
+        return $.unblockUI();
+      });
+      return $(".change_in_basket").bind('click', function(event) {
+        Basket.change_item(_this);
         return $.unblockUI();
       });
     };
 
     Item.prototype.get_modal = function() {
-      var message;
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<span class=\"popUpContinue\"><a class=\"add_to_basket\" href=\"Добавить в корзину\" onClick=\"return false\">В корзину</a></span>\n</div>";
+      var message, modal_link;
+      if (Basket.is_in_basket(this)) {
+        modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>';
+      } else {
+        modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>';
+      }
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    <input class=\"buy_length\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_length + "\" />\n</td>\n<td>\n    <input class=\"buy_count\" pattern=\"[0-9]+\" value=\"" + this.buy_count + "\" />\n</td>\n<td>\n    <input class=\"buy_weight\" pattern=\"[0-9,\\.]+\" value=\"" + this.buy_weight + "\" />\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 
@@ -169,6 +180,16 @@
     Basket._count = 0;
 
     Basket._total_weight = 0;
+
+    Basket.is_in_basket = function(item) {
+      var index;
+      index = this._item_list.indexOf(item);
+      if (index === -1) {
+        return false;
+      } else {
+        return true;
+      }
+    };
 
     Basket.find_by_id = function(id) {
       var flag, item, _i, _len, _ref;
@@ -200,6 +221,24 @@
       }
     };
 
+    Basket.change_item = function(item) {
+      var elem, index, _i, _len, _ref, _results;
+      index = this._item_list.indexOf(item);
+      if (index > -1) {
+        this._sum = 0;
+        this._total_weight = 0;
+        _ref = this._item_list;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          elem = _ref[_i];
+          this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
+          this._total_weight = ((+elem.buy_weight) + (+this._total_weight)).toFixed(3);
+          _results.push(this.change_basket());
+        }
+        return _results;
+      }
+    };
+
     Basket.delete_item = function(id) {
       var index, item;
       item = this.find_by_id(id);
@@ -218,27 +257,37 @@
     };
 
     Basket.change_basket = function() {
-      var item, _i, _len, _ref, _results,
+      var item, nds, _i, _len, _ref,
         _this = this;
       $(".basketCount").html(this._count);
       $("#lItemTab").empty();
       _ref = this._item_list;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         $("#lItemTab").append(this.create_row(item));
-        _results.push($("tr[name='" + item.id + "']").find(".delete_from_basket").bind("click", function(event) {
+        $("tr[name='" + item.id + "']").find(".delete_from_basket").bind("click", function(event) {
           var target;
           target = $(event.currentTarget);
           return _this.delete_item(target.closest("tr").attr("name"));
-        }));
+        });
+        $("tr[name='" + item.id + "']").find(".edit_from_basket").bind("click", function(event) {
+          var element, target;
+          target = $(event.currentTarget);
+          element = _this.find_by_id(target.closest("tr").attr("name"));
+          element.show_modal();
+          return _this.change_basket();
+        });
       }
-      return _results;
+      nds = ((this._sum / 100) * 18).toFixed(2);
+      $("#SumGoods").html(this._sum);
+      $("#CountAll").html(this._total_weight);
+      return $("#NDSAll").html(nds);
     };
 
     Basket.create_row = function(item) {
-      var row;
-      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item)) + "</td>\n<td class='itemNameTd'>" + item.name + "\n<span class=\"delEdSpan\">\n<a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\">X</a>\n<a href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/edit.png\" /></a></span></td>\n\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_count + "</td>\n<td class='itemEdIzmTd'></td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'></td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemRezkaTd' style='display:none'></td>\n</tr>";
+      var nds, row;
+      nds = ((item.final_price / 100) * 18).toFixed(2);
+      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "\n<span class=\"delEdSpan\">\n<a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\">X</a>\n<a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/edit.png\" /></a></span></td>\n\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_weight + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemRezkaTd' style='display:none'></td>\n</tr>";
     };
 
     function Basket(name) {
@@ -250,7 +299,17 @@
   })();
 
   $(document).ready(function() {
-    return $(".bItem").click(function() {
+    $(".bItem").click(function() {
+      var elem_id, item;
+      elem_id = $(this).closest("tr").attr("id");
+      item = Item.elem_exist(elem_id);
+      if (item === false) {
+        return item = new Item($(this).closest("tr").attr("id"));
+      } else {
+        return item.show_modal();
+      }
+    });
+    return $(".oItem").click(function() {
       var elem_id, item;
       elem_id = $(this).closest("tr").attr("id");
       item = Item.elem_exist(elem_id);
