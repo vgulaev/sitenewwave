@@ -75,7 +75,7 @@
     margin: 0px 240px 0px 287px;
 }
 
-#obj-mmenu2 {
+#obj-mmenu2, #seo_menu {
     color: rgb(174, 179, 212);
     float: left;
     margin: 4px 0px 0px;
@@ -89,7 +89,7 @@
     line-height: 1;
 }
 
-#obj-mmenu2 li {
+#obj-mmenu2 li, #seo_menu li {
     background: none repeat scroll 0% 0% transparent;
     border-left: 1px solid rgb(118, 118, 118);
     float: left;
