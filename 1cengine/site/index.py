@@ -23,7 +23,7 @@ if python_lib.detect() is True:
     if "linkUID" in form:
         # print 1
         print "Status:307\nLocation: \
-            http://trimet/1cengine/pda_site/qrorder.php?linkUID=\
+            http://trimet.ru/1cengine/pda_site/qrorder.php?linkUID=\
             " + form["linkUID"].value
 
 
