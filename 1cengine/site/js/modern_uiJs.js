@@ -187,7 +187,10 @@ function searchItem2(item) {
  * @return {[type]}             [description]
  */
 function sendOrder(orderString, is_async) {
-    is_async || (is_async = true);
+    if (typeof is_async == 'undefined'){
+        is_async = true
+    }
+
     if($('#selfCarry').is(':checked') == false) {
         if($('#townSelect').val() != "--") {
             destination = $('#townSelect').text()
