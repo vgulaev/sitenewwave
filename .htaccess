@@ -1,3 +1,4 @@
+AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 <IfModule mod_cgi.c>
 	AddHandler cgi-script .py
 </IfModule>
@@ -31,7 +32,10 @@ RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=балка\%20�
 
 RewriteRule ^index.html core.py [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1 [L,R=301]
+
+
 RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
+
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
 RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
