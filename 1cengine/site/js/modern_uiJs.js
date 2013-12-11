@@ -153,7 +153,7 @@ function showGroup2(groupName) {
     return false;
 }
 
- 
+
 /**
  * [переход в каталог]
  * @param  {[type]} href [description]
@@ -434,6 +434,21 @@ function openLink(linkUID, type) {
  * @return {[type]}        [description]
  */
 function getOrderFomat(format) {
+    $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+        $.blockUI.defaults.fadeIn = 100; //ускоряем появление
+        $.blockUI.defaults.fadeOut = 100; //и исчезновение
+        //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = 'white'
+        $.blockUI.defaults.css.cursor = 'defaults'
+        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+        $.blockUI.defaults.css.fontSize = '14px'
+        $.blockUI.defaults.css.width = '450px'
+        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.paddingTop = '10px'
+        $.blockUI({
+            message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"
+        })
+
     var sendRow = '';
     $('tr.itemTr').each(function() {
 
@@ -639,7 +654,7 @@ $(document).ready(function() {
     var squery = String(document.location).replace(/\%2F/g, "\\")
     var squery = String(document.location).replace(/\s\s/g, "\s")
     // var squery = String(document.location).replace(/\+/g, "\s")
-    
+
     if(squery.indexOf("/catalog/") != -1){
         $("#showGroupsDiv").show()
     }
