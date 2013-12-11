@@ -186,14 +186,14 @@ function searchItem2(item) {
  * @param  {[type]} orderString [description]
  * @return {[type]}             [description]
  */
-function sendOrder(orderString) {
-
+function sendOrder(orderString, is_async) {
+    is_async || (is_async = true);
     if($('#selfCarry').is(':checked') == false) {
         if($('#townSelect').val() != "--") {
             destination = $('#townSelect').text()
             destination += ", " + $('#street').val()
             destination += " " + $('#building').text()
-            destination += " / " + $('#additional').text() 
+            destination += " / " + $('#additional').text()
             delivery_cost = $("#delivery_cost").html()
         } else {
             destination = ''
@@ -230,7 +230,7 @@ function sendOrder(orderString) {
     $.ajax({
         type: "POST",
         url: "/1cengine/php_scripts/createOrder.php",
-        async: true,
+        async: is_async,
         data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name,
         success: function(html) {
             //var success = 'true';
@@ -421,7 +421,9 @@ function openLink(linkUID, type) {
     });
 }
 
-/// не могу найти референса к этому. по крайней мере ещё ///
+/// не могу найти референса к этому. по крайней мере ещё
+/// а эта штука, кстати, открывает заказ по ссылке >_>
+/// ///
 
 /**
  * [getOrderFomat description]
@@ -439,7 +441,8 @@ function getOrderFomat(format) {
         }
 
     })
-    var order = sendOrder(sendRow);
+    var order = sendOrder(sendRow, false);
+
     var q = order.split(',')
 
     openLink(q[1], format)
