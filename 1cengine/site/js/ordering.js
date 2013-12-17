@@ -211,6 +211,8 @@
 
     Basket._total_weight = 0;
 
+    Basket._active_price_measured = 0;
+
     Basket.is_in_basket = function(item) {
       var index;
       index = this._item_list.indexOf(item);
@@ -323,6 +325,14 @@
     function Basket(name) {
       this.name = name;
     }
+
+    Basket.on_weight_change_handler = function() {
+      return alert("ARRRRGH!!1");
+    };
+
+    Basket.watch("_total_weight", function(id, oldval, newval) {
+      return this.on_weight_change_handler();
+    });
 
     return Basket;
 

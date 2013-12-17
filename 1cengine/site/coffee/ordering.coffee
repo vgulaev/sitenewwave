@@ -234,6 +234,8 @@ class Basket
     @_sum: 0
     @_count: 0
     @_total_weight: 0
+    @_active_price_measured: 0
+
 
     @is_in_basket: (item) ->
         index = @_item_list.indexOf(item)
@@ -336,6 +338,12 @@ class Basket
 
     constructor: (@name) ->
 
+    @on_weight_change_handler: ->
+        alert("ARRRRGH!!1")
+
+
+    @watch "_total_weight", (id, oldval, newval) ->
+        @on_weight_change_handler()
 
 
 $(document).ready ->
