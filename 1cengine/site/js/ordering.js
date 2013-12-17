@@ -327,11 +327,30 @@
     }
 
     Basket.on_weight_change_handler = function() {
-      return alert("ARRRRGH!!1");
+      if (this._total_weight < 2) {
+        this._active_price_measured = 0;
+      }
+      if (this._total_weight >= 2 && this._total_weight < 8) {
+        this._active_price_measured = 1;
+      }
+      if (this._total_weight >= 8 && this._total_weight < 15) {
+        this._active_price_measured = 2;
+      }
+      if (this._total_weight >= 15) {
+        return this._active_price_measured = 3;
+      }
     };
 
     Basket.watch("_total_weight", function(id, oldval, newval) {
       return this.on_weight_change_handler();
+    });
+
+    Basket.on_active_price_measured_change_handler = function() {
+      return alert(this._active_price_measured);
+    };
+
+    Basket.watch("_active_price_measured", function(id, oldval, newval) {
+      return this.on_active_price_measured_change_handler();
     });
 
     return Basket;

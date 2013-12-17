@@ -339,12 +339,23 @@ class Basket
     constructor: (@name) ->
 
     @on_weight_change_handler: ->
-        alert("ARRRRGH!!1")
-
+        if @_total_weight < 2
+            @_active_price_measured = 0
+        if @_total_weight >= 2 and @_total_weight < 8
+            @_active_price_measured = 1
+        if @_total_weight >= 8 and @_total_weight < 15
+            @_active_price_measured = 2
+        if @_total_weight >= 15
+            @_active_price_measured = 3
 
     @watch "_total_weight", (id, oldval, newval) ->
         @on_weight_change_handler()
 
+    @on_active_price_measured_change_handler: ->
+        alert(@_active_price_measured)
+
+    @watch "_active_price_measured", (id, oldval, newval) ->
+        @on_active_price_measured_change_handler()
 
 $(document).ready ->
 
