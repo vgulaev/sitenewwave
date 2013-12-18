@@ -120,7 +120,7 @@
     };
 
     Item.prototype.change_modal_price = function() {
-      this.price_weight = (+this.prices[0]).toFixed(2);
+      this.set_price_weight();
       if (this.is_measureable()) {
         this.price_length = ((this.price_weight / 1000) * this.weight).toFixed(2);
         this.price_count = (this.price_length * this.length).toFixed(2);
@@ -131,7 +131,18 @@
       return this.set_final_price();
     };
 
+    Item.prototype.set_price_weight = function() {
+      var price_index;
+      if (this.ed_izm === "т") {
+        price_index = Basket._active_price_measured;
+      } else {
+        price_index = 0;
+      }
+      return this.price_weight = (+this.prices[price_index]).toFixed(2);
+    };
+
     Item.prototype.set_final_price = function() {
+      this.set_price_weight();
       this.final_price = (this.buy_weight * this.price_weight).toFixed(2);
       return $(".final_price").html(this.final_price);
     };
@@ -327,7 +338,6 @@
         this._active_price_measured = 0;
       }
       if (weight >= 2 && weight < 8) {
-        alert(weight);
         this._active_price_measured = 1;
       }
       if (weight >= 8 && weight < 15) {
@@ -345,13 +355,27 @@
     });
 
     Basket.on_active_price_measured_change_handler = function() {
-      return alert(this._active_price_measured);
+      this.update_price();
+      return this._active_price_measured;
     };
 
     Basket.watch("_active_price_measured", function(id, oldval, newval) {
       this.on_active_price_measured_change_handler();
       return this._active_price_measured = newval;
     });
+
+    Basket.update_price = function() {
+      var item, _i, _len, _ref, _results;
+      _ref = this._item_list;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        item.set_final_price();
+        this.change_item(item);
+        _results.push(this.change_basket());
+      }
+      return _results;
+    };
 
     function Basket(name) {
       this.name = name;

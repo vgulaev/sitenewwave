@@ -112,7 +112,7 @@ class Item
         @change_modal_price()
 
     change_modal_price: ->
-        @price_weight = ( +@prices[0] ).toFixed(2)
+        @set_price_weight()
 
         if @is_measureable()
             @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
@@ -125,7 +125,16 @@ class Item
 
         @set_final_price()
 
+    set_price_weight: ->
+        if @ed_izm is "т"
+            price_index = Basket._active_price_measured
+        else
+            price_index = 0
+
+        @price_weight = ( +@prices[price_index] ).toFixed(2)
+
     set_final_price: ->
+        @set_price_weight()
         @final_price = ( @buy_weight * @price_weight ).toFixed(2)
         $(".final_price").html(@final_price)
 
@@ -341,7 +350,6 @@ class Basket
         if weight < 2
             @_active_price_measured = 0
         if weight >= 2 and weight < 8
-            alert(weight)
             @_active_price_measured = 1
         if weight >= 8 and weight < 15
             @_active_price_measured = 2
@@ -356,11 +364,19 @@ class Basket
 
 
     @on_active_price_measured_change_handler: ->
-        alert(@_active_price_measured)
+        @update_price()
+
+        @_active_price_measured
 
     @watch "_active_price_measured", (id, oldval, newval) ->
         @on_active_price_measured_change_handler()
         @_active_price_measured = newval
+
+    @update_price: ->
+        for item in @_item_list
+            item.set_final_price()
+            @change_item(item)
+            @change_basket()
 
 
     constructor: (@name) ->
