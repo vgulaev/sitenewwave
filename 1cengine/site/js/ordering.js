@@ -322,27 +322,26 @@
       return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "\n<span class=\"delEdSpan\">\n<a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\">X</a>\n<a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/edit.png\" /></a></span></td>\n\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_weight + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemRezkaTd' style='display:none'></td>\n</tr>";
     };
 
-    function Basket(name) {
-      this.name = name;
-    }
-
-    Basket.on_weight_change_handler = function() {
-      if (this._total_weight < 2) {
+    Basket.on_weight_change_handler = function(weight) {
+      if (weight < 2) {
         this._active_price_measured = 0;
       }
-      if (this._total_weight >= 2 && this._total_weight < 8) {
+      if (weight >= 2 && weight < 8) {
+        alert(weight);
         this._active_price_measured = 1;
       }
-      if (this._total_weight >= 8 && this._total_weight < 15) {
+      if (weight >= 8 && weight < 15) {
         this._active_price_measured = 2;
       }
-      if (this._total_weight >= 15) {
-        return this._active_price_measured = 3;
+      if (weight >= 15) {
+        this._active_price_measured = 3;
       }
+      return weight;
     };
 
     Basket.watch("_total_weight", function(id, oldval, newval) {
-      return this.on_weight_change_handler();
+      this.on_weight_change_handler(newval);
+      return this._total_weight = newval;
     });
 
     Basket.on_active_price_measured_change_handler = function() {
@@ -350,8 +349,13 @@
     };
 
     Basket.watch("_active_price_measured", function(id, oldval, newval) {
-      return this.on_active_price_measured_change_handler();
+      this.on_active_price_measured_change_handler();
+      return this._active_price_measured = newval;
     });
+
+    function Basket(name) {
+      this.name = name;
+    }
 
     return Basket;
 

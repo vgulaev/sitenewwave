@@ -336,26 +336,35 @@ class Basket
             </tr>
         """
 
-    constructor: (@name) ->
+    @on_weight_change_handler: (weight) ->
 
-    @on_weight_change_handler: ->
-        if @_total_weight < 2
+        if weight < 2
             @_active_price_measured = 0
-        if @_total_weight >= 2 and @_total_weight < 8
+        if weight >= 2 and weight < 8
+            alert(weight)
             @_active_price_measured = 1
-        if @_total_weight >= 8 and @_total_weight < 15
+        if weight >= 8 and weight < 15
             @_active_price_measured = 2
-        if @_total_weight >= 15
+        if weight >= 15
             @_active_price_measured = 3
 
+        weight
+
     @watch "_total_weight", (id, oldval, newval) ->
-        @on_weight_change_handler()
+        @on_weight_change_handler(newval)
+        @_total_weight = newval
+
 
     @on_active_price_measured_change_handler: ->
         alert(@_active_price_measured)
 
     @watch "_active_price_measured", (id, oldval, newval) ->
         @on_active_price_measured_change_handler()
+        @_active_price_measured = newval
+
+
+    constructor: (@name) ->
+
 
 $(document).ready ->
 
