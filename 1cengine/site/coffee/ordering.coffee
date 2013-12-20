@@ -1,4 +1,4 @@
-class Item
+class App.Item
     @_existing: []
 
     @elem_exist: (id) ->
@@ -32,7 +32,7 @@ class Item
 
         @show_modal()
 
-        Item._existing.push this
+        App.Item._existing.push this
 
     is_measureable: ->
         if @length is "0"
@@ -322,6 +322,8 @@ class Basket
         $("#CountAll").html(@_total_weight)
         $("#NDSAll").html(nds)
 
+        alert("changed")
+
     @create_row: (item) ->
         nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2)
         row = """
@@ -389,9 +391,9 @@ $(document).ready ->
 
         elem_id = $(this).closest( "tr" ).attr("id")
 
-        item = Item.elem_exist(elem_id)
+        item = App.Item.elem_exist(elem_id)
         if item is false
-            item = new Item $(this).closest( "tr" ).attr("id")
+            item = new App.Item $(this).closest( "tr" ).attr("id")
         else
             item.show_modal()
 
@@ -399,8 +401,8 @@ $(document).ready ->
 
         elem_id = $(this).closest( "tr" ).attr("id")
 
-        item = Item.elem_exist(elem_id)
+        item = App.Item.elem_exist(elem_id)
         if item is false
-            item = new Item $(this).closest( "tr" ).attr("id")
+            item = new App.Item $(this).closest( "tr" ).attr("id")
         else
             item.show_modal()

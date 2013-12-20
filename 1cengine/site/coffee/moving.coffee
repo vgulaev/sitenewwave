@@ -154,7 +154,29 @@ $(document).ready ->
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
 
+                $(".bItem").click ->
+                    # alert("lol")
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+                false
+
                 $("#show_groups").show()
+
 
     $(window).on "popstate", (e) ->
         $("#itemName").val(history.state['term'])
@@ -168,4 +190,3 @@ $(document).ready ->
 
     $("#show_groups").click ->
         show_groups()
-        false

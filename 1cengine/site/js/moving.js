@@ -160,6 +160,27 @@
           window.history.pushState({
             term: value
           }, '', '/1cengine/site/' + $.trim(value) + '/');
+          $(".bItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          $(".oItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          false;
           return $("#show_groups").show();
         }
       });
@@ -176,8 +197,7 @@
       }
     });
     return $("#show_groups").click(function() {
-      show_groups();
-      return false;
+      return show_groups();
     });
   });
 
