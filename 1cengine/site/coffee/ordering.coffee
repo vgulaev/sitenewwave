@@ -275,6 +275,7 @@ class Basket
             @change_basket()
 
     @change_item: (item) ->
+        alert("lol")
         index = @_item_list.indexOf(item)
         if index > -1
             @_sum = 0
@@ -322,7 +323,10 @@ class Basket
         $("#CountAll").html(@_total_weight)
         $("#NDSAll").html(nds)
 
-        alert("changed")
+        # alert("changed")
+
+    @rebuild_basket: ->
+
 
     @create_row: (item) ->
         nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2)
@@ -376,7 +380,9 @@ class Basket
 
     @update_price: ->
         for item in @_item_list
+            item.set_price_weight()
             item.set_final_price()
+
             @change_item(item)
             @change_basket()
 

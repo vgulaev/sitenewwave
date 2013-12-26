@@ -266,6 +266,7 @@
 
     Basket.change_item = function(item) {
       var elem, index, _i, _len, _ref, _results;
+      alert("lol");
       index = this._item_list.indexOf(item);
       if (index > -1) {
         this._sum = 0;
@@ -324,9 +325,10 @@
       nds = ((this._sum / 100) * 18).toFixed(2);
       $("#SumGoods").html(this._sum);
       $("#CountAll").html(this._total_weight);
-      $("#NDSAll").html(nds);
-      return alert("changed");
+      return $("#NDSAll").html(nds);
     };
+
+    Basket.rebuild_basket = function() {};
 
     Basket.create_row = function(item) {
       var nds, row;
@@ -371,6 +373,7 @@
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
+        item.set_price_weight();
         item.set_final_price();
         this.change_item(item);
         _results.push(this.change_basket());
