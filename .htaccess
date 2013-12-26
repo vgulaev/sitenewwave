@@ -3,8 +3,6 @@ AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 	AddHandler cgi-script .py
 </IfModule>
 
-SSLCertificateFile /web/trimetru/site/ssl/trimet_ru.crt
-SSLCertificateChainFile /web/trimetru/site/ssl/trimet_ru.ca-bundle
 
 RewriteEngine on
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
