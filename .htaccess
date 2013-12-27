@@ -40,7 +40,10 @@ RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
 RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
-RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
+RewriteRule ^(.*)$ https://trimet.ru/$1 [L,R=301]
+
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 ErrorDocument 404 /404.py
 
