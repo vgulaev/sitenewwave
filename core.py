@@ -22,10 +22,12 @@ if "dev" in os.environ["SERVER_NAME"]:
 
 if (debugmode is False):
     if os.environ['REQUEST_URI'] == "/core.py":
-        print "Status:301\nLocation: http://trimet.ru"
+        print "Status:301\nLocation: https://trimet.ru"
     elif "?page" in os.environ['REQUEST_URI']:
         new_location = os.environ['REQUEST_URI'].split('?page=')[1]
-        print "Status:301\nLocation: http://trimet.ru/" + new_location
+        print "Status:301\nLocation: https://trimet.ru/" + new_location
+    elif os.environ['SERVER_PORT'] == '80':
+        print "Status:301\nLocation: https://trimet.ru/"
 
 
 def findpath(pagename):
