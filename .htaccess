@@ -5,9 +5,6 @@ AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 
 RewriteEngine on
 
-RewriteCond %{SERVER_PORT} !443
-RewriteRule (.*) https://trimet.ru/ [R]
-
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
@@ -44,6 +41,9 @@ RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
 RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
 RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
+
+RewriteCond %{SERVER_PORT} !443
+RewriteRule (.*) https://trimet.ru/ [R]
 
 ErrorDocument 404 /404.py
 
