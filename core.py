@@ -26,8 +26,8 @@ if (debugmode is False):
     elif "?page" in os.environ['REQUEST_URI']:
         new_location = os.environ['REQUEST_URI'].split('?page=')[1]
         print "Status:301\nLocation: https://trimet.ru/" + new_location
-    elif os.environ['SERVER_PORT'] == '80':
-        print "Status:301\nLocation: https://trimet.ru/"
+    # elif os.environ['SERVER_PORT'] == '80':
+    #     print "Status:301\nLocation: https://trimet.ru/"
 
 
 def findpath(pagename):
