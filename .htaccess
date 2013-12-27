@@ -4,6 +4,10 @@ AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 </IfModule>
 
 RewriteEngine on
+
+RewriteCond %{SERVER_PORT} !443
+RewriteRule (.*) https://trimet.ru/ [R]
+
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
