@@ -3,7 +3,7 @@ AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 	AddHandler cgi-script .py
 </IfModule>
 
-sslcertificatechainfile /etc/ssl/crt/yourservername.ca-bundle
+sslcertificatechainfile /etc/ssl/crt/trimet_ru.ca-bundle
 
 RewriteEngine on
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
