@@ -44,7 +44,7 @@ RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
 
 
 RewriteCond %{SERVER_PORT} !443 [NC]
-RewriteRule ^(.*) https://%{HTTP_HOST}/$1 [R]
+RewriteRule ^(.*) https://%{HTTP_HOST}/$1 [L,R]
 
 ErrorDocument 404 /404.py
 
