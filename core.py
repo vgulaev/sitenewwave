@@ -122,7 +122,7 @@ def makecontent(path):
             redirect = python_replace.find("redirectme")
             if redirect is not None:
                 print "Status:307\nLocation: \
-                    http://trimet.ru" + str(redirect.string).strip()
+                    https://trimet.ru" + str(redirect.string).strip()
 
             currentelement.replaceWith(python_replace.div)
         else:
@@ -166,7 +166,7 @@ if "page" in form:
     pathtohtml = findpath(form["page"].value)
     if pathtohtml == "404":
         # print "Content-Type: text/html; charset=utf-8\n"
-        print "Status:307\nLocation: http://trimet.ru/404.py\n"
+        print "Status:307\nLocation: https://trimet.ru/404.py\n"
 else:
     if ((sys.platform) == "win32"):
         # string for debug
