@@ -37,6 +37,18 @@
 	top: 0px;
 	right: 0px;
 }
+.webstore-tb-ub-mc-nc-oc-z p{
+	padding:0;
+	margin:0;
+	text-align: right;
+	font-size: 8pt;
+	color: #2D3694;
+}
+.webstore-tb-ub-mc-nc-oc-z p:first-child{
+	font-size: 12pt;
+	font-weight: 700;
+}
+
 .webstore-sb-zc-Ac-Bc, .webstore-sb-dc-Kc-Lc-e, .webstore-sb-Tb-Yb, .webstore-sb-tb-ub-Mc-B, .webstore-sb-tb-ub-bc-B, .webstore-sb-tb-ub-Nc-Eb, .webstore-sb-tb-ub-Nc-Eb-o, .webstore-sb-tb-ub-Oc-Pc, .webstore-sb-tb-ub-vb-Eb-o, .webstore-sb-tb-ub-Qc-Eb, .webstore-sb-tb-ub-Qc-Eb-o, .webstore-sb-tb-ub-Rc-Eb, .webstore-sb-tb-ub-Rc-Eb-o, .webstore-sb-tb-ub-Sc-Eb, .webstore-sb-tb-ub-Sc-Eb-o, .webstore-sb-tb-ub-qb-sc, .webstore-sb-tb-ub-pc-Pc, .webstore-A-Eb-Kb, .webstore-A-Eb-Kb-Ib, .webstore-A-Eb-Kb-Tc {
 }
 .webstore-Pf-zb {
