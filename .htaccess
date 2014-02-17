@@ -13,6 +13,7 @@ RewriteRule ^1cengine/old_site/ - [L]
 RewriteRule ^1cengine/pda_site/ - [L]
 RewriteRule ^gpb/ - [L]
 RewriteRule ^gpb/check$ gpb/check.py$1 [L]
+RewriteRule ^gpb/pay$ gpb/pay.py$1 [L]
 
 RewriteRule ^catalog/armatura/$ 1cengine/site/?catalog=Арматура$1 [L]
 RewriteRule ^catalog/armatura-12/$ 1cengine/site/?catalog=Арматура\%2012$1 [L]

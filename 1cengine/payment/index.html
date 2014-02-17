@@ -39,39 +39,22 @@
     Здесь вы можете оплатить ваш заказ
 
 </p>
-<form action="https://e-commerce.raiffeisen.ru/vsmc3ds/pay/3dsproxy_init.jsp" method="post" name="form1" id="form1">
+<form action="https://test.pps.gazprombank.ru/payment/start.wsm" method="post" name="form1" id="form1">
     <div style="display:none">
-        <input name="MerchantID" type="text" id="MerchantID"  value="000001680213001-80213001" />
-        <input name="MerchantName" type="text" id="MerchantName"  value="Trimet" />
-        <input name="MerchantURL" type="text" id="MerchantURL"  value="http://www.trimet.ru" />
-        <input name="SuccessURL" type="text" id="TargetURL2"   value="http://trimet.ru/payment/success"/>
-        <input name="FailURL" type="text" id="TargetURL"   value="http://trimet.ru/payment/fail"/>
-        <input name="MerchantCity" type="text" id="MerchantCity"  value="MOSCOW"/>
-        <input name="Language" type="text" id="Language"  value="01" />
-        <input name="CountryCode" type="text" id="CountryCode"   value="643"/>
-        <input name="CurrencyCode" type="text" id="CurrencyCode"   value="643"/>
-        
-        
-        <input name="PCurrencyCode" type="text" id="PCurrencyCode"  />
-        <input name="PPurchaseAmt" type="text" id="PPurchaseAmt"  />
-        <input type="checkbox" name="CardholderName" id="CardholderName"  value="Y" checked="checked"/>
-        <input type="checkbox" name="Email" id="Email"  value="Y" checked="checked" />
-        <input type="checkbox" name="Country" id="Country"  value="Y" checked="checked" /> 
-        <input type="checkbox" name="City" id="City"  value="Y" checked="checked" />
-        <input type="checkbox" name="Address" id="Address"  value="Y" />
-        <input type="checkbox" name="Phone" id="Phone"  value="Y" /> 
-    
+        <input name="merch_id" type="text" id="merch_id"  value="145BAC0E366974FE4B8CA7FFAA4A51B7" />
+        <input name="back_url_s" type="text" id="back_url_s"   value="https://trimet.ru/payment/success"/>
+        <input name="back_url_f" type="text" id="back_url_f"   value="https://trimet.ru/payment/fail"/>
+        <input name="o.fio" type="text" id="o.fio" value="%D0%94%D1%83%D0%B1%D1%80%D0%BE%D0%B2%D0%B8%D0%BD%20%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD" />
+        <input name="o.birthday" type="text" id="o.birthday" value="01.01.1900" />
+        <input name="o.email" type="text" id="o.birthday" value="mail@mail.ru"  />
+        <input name="o.amount" type="text" id="o.birthday" value="100"  />
 
-        <input name="key_h" type="text" id="key_h"  />
-        <input type="checkbox" name="use_time_window" id="use_time_window" />
-        <input name="Window" type="text" id="window_val"  /></td>
-        <input name="Time" type="text" id="time_val"  /></td>
-        <input name="Options" type="text" id="Options" />
-        <input name="control_string" type="text" id="control_string"  /></td>
-        <input name="HMAC" type="text" id="HMAC" />
-            
-    </div>  
-              
+
+
+    </div>
+
+    <input type="submit" value="Вперед!" />
+
     <div id="order_table_div">
         <p> Ваш заказ подгружается </p>
         <!-- <img src="379.png"></img> -->
@@ -79,7 +62,7 @@
             {template|show_loader()}
         </pythonscript>
     </div>
-      
+
     </form>
 </div></div>
 
