@@ -42,6 +42,9 @@ RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
 RewriteRule ^(.*)$ https://trimet.ru/$1 [L,R=301]
 
+RewriteCond %{HTTP_HOST} ^trimet\.ru/wordpress/$ [NC]
+RewriteRule ^(.*)$ https://trimet.ru/wordpress/$1 [L,R]
+
 ErrorDocument 404 /404.py
 
 <IfModule mod_fcgid.c>

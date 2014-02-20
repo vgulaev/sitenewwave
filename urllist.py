@@ -93,6 +93,7 @@ url_dictionary = {
     "payment": "1cengine/payment/",
     "payment/*": "1cengine/payment/",
     "payment/success": "1cengine/payment_success/",
+    "services/pp_rezka": "htmlstaticcontent/054_services_pp_rezka/",
 }
 
 trimeturls = list()
