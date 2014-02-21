@@ -72,6 +72,9 @@ url_dictionary = {
                 "htmlstaticcontent/052_services_metalwork_lentopil_rezka_/",
     "services/metalwork/plazma_rezka":
                 "htmlstaticcontent/053_services_metalwork_plazma_rezka_/",
+    "services/metalwork/pp_rezka":
+                "htmlstaticcontent/054_services_metalwork_pp_rezka/",
+
     # блок меню "Поставщикам"
     "suppliers": "htmlstaticcontent/005_suppliers_/",
     # блок меню "Контакты"
@@ -93,7 +96,6 @@ url_dictionary = {
     "payment": "1cengine/payment/",
     "payment/*": "1cengine/payment/",
     "payment/success": "1cengine/payment_success/",
-    "services/pp_rezka": "htmlstaticcontent/054_services_pp_rezka/",
 }
 
 trimeturls = list()
