@@ -1,18 +1,25 @@
 AddDefaultCharset UTF-8
 
+AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 <IfModule mod_cgi.c>
 	AddHandler cgi-script .py
 </IfModule>
 
 RewriteEngine on
-RewriteRule ^1cengine/site/$ 1cengine/site/index.py [L]
+
+RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)$ 1cengine/site/index.py?catalog=$1 [L]
+
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^1cengine/py_scripts/ - [L]
 RewriteRule ^1cengine/old_site/ - [L]
 RewriteRule ^1cengine/pda_site/ - [L]
+RewriteRule ^gpb/ -
+RewriteRule ^gpb/check$ gpb/check.py$1 [L]
+RewriteRule ^gpb/pay$ gpb/pay.py$1 [L]
+RewriteRule ^gpb/check.cgi$ gpb/check.py$1 [L]
 
 RewriteRule ^catalog/armatura/$ 1cengine/site/?catalog=Арматура$1 [L]
 RewriteRule ^catalog/armatura-12/$ 1cengine/site/?catalog=Арматура\%2012$1 [L]
@@ -34,12 +41,15 @@ RewriteRule ^catalog/setka-rabitsa/$ 1cengine/site/?catalog=Сетка\%20раб
 RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=балка\%20двутавровая$1 [L]
 
 RewriteRule ^index.html core.py [L]
-RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1 [L,R=301]
+RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1/ [L,R=301]
+
+
 RewriteRule ^([-a-zA-Z0-9_/]+)/$ core.py?page=$1 [L]
+
 RewriteRule ^([-a-zA-Z0-9_/]+)$ core.py?page=$1 [L]
 
 RewriteCond %{HTTP_HOST} ^www\.trimet\.ru$ [NC]
-RewriteRule ^(.*)$ http://trimet.ru/$1 [L,R=301]
+RewriteRule ^(.*)$ https://trimet.ru/$1 [L,R=301]
 
 ErrorDocument 404 /404.py
 

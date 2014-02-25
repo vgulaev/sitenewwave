@@ -22,10 +22,12 @@ if "dev" in os.environ["SERVER_NAME"]:
 
 if (debugmode is False):
     if os.environ['REQUEST_URI'] == "/core.py":
-        print "Status:301\nLocation: http://trimet.ru"
+        print "Status:301\nLocation: https://trimet.ru"
     elif "?page" in os.environ['REQUEST_URI']:
         new_location = os.environ['REQUEST_URI'].split('?page=')[1]
-        print "Status:301\nLocation: http://trimet.ru/" + new_location
+        print "Status:301\nLocation: https://trimet.ru/" + new_location
+    # elif os.environ['SERVER_PORT'] == '80':
+    #     print "Status:301\nLocation: https://trimet.ru/"
 
 
 def findpath(pagename):
@@ -83,6 +85,13 @@ def makecontent(path):
             if "src" in currentelement:
                 currentelement["src"] = "/sitenewwave" + currentelement["src"]
 
+    #change links to a pictures
+    nodes = soupForImport.find_all("a")
+    for currentelement in nodes:
+        if currentelement.has_key("href"):
+            if ".png" in currentelement["href"]:
+                currentelement["href"] = "/" + path + currentelement["href"]
+
     # set title
     title = soupForImport.find("title")
     soup.html.head.title.replaceWith(title)
@@ -113,7 +122,7 @@ def makecontent(path):
             redirect = python_replace.find("redirectme")
             if redirect is not None:
                 print "Status:307\nLocation: \
-                    http://trimet.ru" + str(redirect.string).strip()
+                    https://trimet.ru" + str(redirect.string).strip()
 
             currentelement.replaceWith(python_replace.div)
         else:
@@ -157,7 +166,7 @@ if "page" in form:
     pathtohtml = findpath(form["page"].value)
     if pathtohtml == "404":
         # print "Content-Type: text/html; charset=utf-8\n"
-        print "Status:307\nLocation: http://trimet.ru/404.py\n"
+        print "Status:307\nLocation: https://trimet.ru/404.py\n"
 else:
     if ((sys.platform) == "win32"):
         # string for debug

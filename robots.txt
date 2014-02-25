@@ -3,3 +3,5 @@ Allow: /
 Crawl-delay: 2
 Sitemap: http://trimet.ru/sitemap.xml
 Host: trimet.ru
+
+Disallow: /1cengine/site/?ref=
