@@ -275,7 +275,7 @@ class Basket
             @change_basket()
 
     @change_item: (item) ->
-        alert("lol")
+        # alert("lol")
         index = @_item_list.indexOf(item)
         if index > -1
             @_sum = 0

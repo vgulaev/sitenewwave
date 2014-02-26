@@ -266,7 +266,6 @@
 
     Basket.change_item = function(item) {
       var elem, index, _i, _len, _ref, _results;
-      alert("lol");
       index = this._item_list.indexOf(item);
       if (index > -1) {
         this._sum = 0;
