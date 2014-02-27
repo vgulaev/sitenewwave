@@ -154,26 +154,26 @@ $(document).ready ->
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
 
-                $(".bItem").click ->
-                    # alert("lol")
-                    elem_id = $(this).closest( "tr" ).attr("id")
+                # $(".bItem").click ->
+                #     # alert("lol")
+                #     elem_id = $(this).closest( "tr" ).attr("id")
 
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
+                #     item = App.Item.elem_exist(elem_id)
+                #     if item is false
+                #         item = new App.Item $(this).closest( "tr" ).attr("id")
+                #     else
+                #         item.show_modal()
 
-                $(".oItem").click ->
+                # $(".oItem").click ->
 
-                    elem_id = $(this).closest( "tr" ).attr("id")
+                #     elem_id = $(this).closest( "tr" ).attr("id")
 
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
-                false
+                #     item = App.Item.elem_exist(elem_id)
+                #     if item is false
+                #         item = new App.Item $(this).closest( "tr" ).attr("id")
+                #     else
+                #         item.show_modal()
+                # false
 
                 $("#show_groups").show()
 

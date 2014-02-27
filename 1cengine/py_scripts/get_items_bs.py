@@ -309,33 +309,33 @@ class Item():
         if self.stocked:
             item_buy_a_tag["class"] = u"bItem"
             item_buy_a_tag["href"] = u"Добавить в корзину"
-            
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'купить');
-            #     openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-            #     '""" + self.ed_izm.decode("utf-8") + "', '" \
-            #     + self.price_string.decode("utf-8") + """','1');
-            #     return false"""
-            
+
             item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
                 'onBuyLinkPressed', 'купить');
+                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+                '""" + self.ed_izm.decode("utf-8") + "', '" \
+                + self.price_string.decode("utf-8") + """','1');
                 return false"""
-            
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'купить');
+            #     return false"""
+
             item_buy_a_tag.append(u"купить")
         else:
             item_buy_a_tag["class"] = "oItem"
             item_buy_a_tag["href"] = u"Добавить в корзину"
-            
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'заказать');
-            #     openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-            #     '""" + self.ed_izm.decode("utf-8") + "', '" \
-            #     + self.price_string.decode("utf-8") + """','0');
-            #     return false"""
-            
+
             item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
                 'onBuyLinkPressed', 'заказать');
+                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+                '""" + self.ed_izm.decode("utf-8") + "', '" \
+                + self.price_string.decode("utf-8") + """','0');
                 return false"""
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'заказать');
+            #     return false"""
 
             item_buy_a_tag.append(u"заказать")
 
