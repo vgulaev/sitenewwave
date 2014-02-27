@@ -21,9 +21,9 @@ function array_to_objecttree($array) {
 $orderString = $_POST['orderString'];
 // $orderString = "8f97e0cd-5fc1-11d9-a6d2-505054503030:8f97e0cd-5fc1-11d9-a6d2-505054503030:-:23:32150.00;8dc51296-c7dc-11e0-a1a9-00155dc20a18:8dc51296-c7dc-11e0-a1a9-00155dc20a18:-:31:55110.00;";
 if($_SESSION['1cusername']!=''){
-	$user = $_SESSION['1cusername'];
+    $user = $_SESSION['1cusername'];
 } else {
-	$user = 'Anonymous';
+    $user = 'Anonymous';
 }
 
 // $filename = 'test.txt';
@@ -46,18 +46,18 @@ $sumOverall = 0;
 
 foreach($orderStringArray as $orderItem){
 
-	if(!$orderItem==''){
-		$orderItemArray = split(':', $orderItem);
-		$GoodsRow["ХарактеристикаСсылка"] = $orderItemArray[0];
-		$GoodsRow["НоменклатураСсылка"] = $orderItemArray[1];
-		$GoodsRow["КоличествоШтук"] = $orderItemArray[2];
-		$GoodsRow["КоличествоВес"] = $orderItemArray[3];
-		$GoodsRow["Цена"] = $orderItemArray[4];
-		
+    if(!$orderItem==''){
+        $orderItemArray = split(':', $orderItem);
+        $GoodsRow["ХарактеристикаСсылка"] = $orderItemArray[0];
+        $GoodsRow["НоменклатураСсылка"] = $orderItemArray[1];
+        $GoodsRow["КоличествоШтук"] = $orderItemArray[2];
+        $GoodsRow["КоличествоВес"] = $orderItemArray[3];
+        $GoodsRow["Цена"] = $orderItemArray[4];
+
     $sumOverall = $sumOverall + $orderItemArray[4];
-		array_push($GoodsList["СтрокиТаблицы"], $GoodsRow); 
-	}	
-	
+        array_push($GoodsList["СтрокиТаблицы"], $GoodsRow);
+    }
+
 
 }
 
