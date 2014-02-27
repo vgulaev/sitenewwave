@@ -126,7 +126,7 @@ def makecontent(path):
 
             currentelement.replaceWith(python_replace.div)
         else:
-            current_element.extract()
+            currentelement.extract()
 
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:

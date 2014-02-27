@@ -1,3 +1,5 @@
+AddDefaultCharset UTF-8
+
 AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 <IfModule mod_cgi.c>
 	AddHandler cgi-script .py
@@ -6,11 +8,18 @@ AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 RewriteEngine on
 
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
+RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
+RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)$ 1cengine/site/index.py?catalog=$1 [L]
+
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^1cengine/py_scripts/ - [L]
 RewriteRule ^1cengine/old_site/ - [L]
 RewriteRule ^1cengine/pda_site/ - [L]
+RewriteRule ^gpb/ -
+RewriteRule ^gpb/check$ gpb/check.py$1 [L]
+RewriteRule ^gpb/pay$ gpb/pay.py$1 [L]
+RewriteRule ^gpb/check.cgi$ gpb/check.py$1 [L]
 
 RewriteRule ^catalog/armatura/$ 1cengine/site/?catalog=Арматура$1 [L]
 RewriteRule ^catalog/armatura-12/$ 1cengine/site/?catalog=Арматура\%2012$1 [L]

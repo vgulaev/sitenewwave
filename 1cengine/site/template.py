@@ -49,11 +49,26 @@ def set_keywords():
         key_tag["content"] = form["ref"].value.decode(
             "utf-8") + u" купить, онлайн, тюмень"
     else:
+        key_words = [
+            u"металлопрокат",
+            u"профнастил",
+            u"металлосайдинг",
+            u"купить",
+            u"онлайн",
+            u"тюмень",
+            u"арматура",
+            u"балка",
+            u"веллер",
+            u"трубы",
+            u"угол",
+            u"штрипс",
+            u"квадрат",
+            u"круг",
+            u"лист",
+            u"проволока"
+        ]
         key_tag[
-            "content"] = u"металлопрокат, профнастил, металлосайдинг, \
-                            купить, онлайн, тюмень, арматура, балка, \
-                            швеллер, трубы, угол, штрипс, квадрат, \
-                            круг, лист, проволока"
+            "content"] = ", ".join(key_words)
 
     return key_tag
 
@@ -66,8 +81,7 @@ def set_description():
             form["catalog"].value.decode("utf-8")]["description"]
     else:
         description_tag[
-            "content"] = u"Покупка металлосайдинга, профнастила, \
-                            металлопроката в Тюмени онлайн"
+            "content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
 
     return description_tag
 
@@ -82,7 +96,7 @@ def set_search_value():
 
     elif "catalog" in form:
         catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
-        input_search_item["value"] = catalog
+        input_search_item["value"] = catalog + " "
         # input_search_item["value"] = u'Сало!'
     else:
         input_search_item["value"] = ""

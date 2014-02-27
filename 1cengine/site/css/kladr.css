@@ -182,7 +182,7 @@ label {
 .ui-autocomplete li:hover a,
 .ui-autocomplete li a:hover {
     font-weight: normal;
-    color: #333333;
+
 }
 
 .ui-autocomplete li .ac-s {
