@@ -38,7 +38,7 @@ RewriteRule ^catalog/profilnye-truby/$ 1cengine/site/?catalog=профильны
 RewriteRule ^catalog/otsinkovannye-truby/$ 1cengine/site/?catalog=оцинкованные\%20трубы$1 [L]
 RewriteRule ^catalog/setka-kladochnaya/$ 1cengine/site/?catalog=сетка\%20кладочная$1 [L]
 RewriteRule ^catalog/setka-rabitsa/$ 1cengine/site/?catalog=Сетка\%20рабица$1 [L]
-RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=балка\%20двутавровая$1 [L]
+RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=балка$1 [L]
 
 RewriteRule ^index.html core.py [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1/ [L,R=301]

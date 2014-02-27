@@ -151,6 +151,9 @@ def set_tags_div():
     if "catalog" in form:
         tag_div["style"] = "display:none"
 
+    if "ref" in form:
+        tag_div["style"] = "display:none"
+
     return tag_div
 
 
