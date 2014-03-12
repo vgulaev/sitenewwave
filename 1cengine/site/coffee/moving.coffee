@@ -190,3 +190,30 @@ $(document).ready ->
 
     $("#show_groups").click ->
         show_groups()
+
+    $("#showAll").click ->
+
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + "&show_all=true"
+            success: (html) ->
+                $("#qRes").html html
+
+                if $(".item").length >= 1
+                    $("#tags").hide()
+                    $("#showGroupsDiv").show()
+                    $("#hollowResult").empty()
+                else
+                    $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
+                    $("#tags").show()
+                    $("#showGroupsDiv").hide()
+
+                if $(".item").length is 20
+                    $("#showAll").show()
+                else
+                    $("#showAll").hide()

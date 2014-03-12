@@ -160,27 +160,6 @@
           window.history.pushState({
             term: value
           }, '', '/1cengine/site/' + $.trim(value) + '/');
-          $(".bItem").click(function() {
-            var elem_id;
-            elem_id = $(this).closest("tr").attr("id");
-            item = App.Item.elem_exist(elem_id);
-            if (item === false) {
-              return item = new App.Item($(this).closest("tr").attr("id"));
-            } else {
-              return item.show_modal();
-            }
-          });
-          $(".oItem").click(function() {
-            var elem_id;
-            elem_id = $(this).closest("tr").attr("id");
-            item = App.Item.elem_exist(elem_id);
-            if (item === false) {
-              return item = new App.Item($(this).closest("tr").attr("id"));
-            } else {
-              return item.show_modal();
-            }
-          });
-          false;
           return $("#show_groups").show();
         }
       });
@@ -196,8 +175,36 @@
         return $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide();
       }
     });
-    return $("#show_groups").click(function() {
+    $("#show_groups").click(function() {
       return show_groups();
+    });
+    return $("#showAll").click(function() {
+      var value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items_bs.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "&show_all=true",
+        success: function(html) {
+          $("#qRes").html(html);
+          if ($(".item").length >= 1) {
+            $("#tags").hide();
+            $("#showGroupsDiv").show();
+            $("#hollowResult").empty();
+          } else {
+            $("#hollowResult").html("Извините, но по заданному запросу товар не найден");
+            $("#tags").show();
+            $("#showGroupsDiv").hide();
+          }
+          if ($(".item").length === 20) {
+            return $("#showAll").show();
+          } else {
+            return $("#showAll").hide();
+          }
+        }
+      });
     });
   });
 
