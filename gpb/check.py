@@ -1,15 +1,19 @@
 #!/web/trimetru/python/bin/python2.6
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import sys
 import os
 import cgi
+
+import imp
 import cgitb
 cgitb.enable()
-
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+print("Content-Type: text/xml; charset=utf-8\n")
+
 import json
 from suds.client import Client
 from suds.cache import DocumentCache
@@ -66,7 +70,7 @@ f = open('/web/trimetru/site/www/gpbtest.txt', 'w')
 if "o.uid" in form:
     order = get_order(form["o.uid"].value)
 
-    print("Content-Type: text/xml; charset=utf-8\n")
+    # print("Content-Type: text/xml; charset=utf-8\n")
 
     print("""<?xml version='1.0' encoding='UTF-8'?>
         <payment-avail-response>
