@@ -55,39 +55,6 @@ def translit(letter):
     return ru_en_dict[letter].upper()
 
 
-def get_new_secret_key():
-
-    import requests
-    lib_path = os.path.abspath('').replace("1cengine/py_scripts", "")
-    # sys.path.append(lib_path)
-
-    # print lib_path
-
-    python_lib_name = "secrets"
-    secrets_lib = imp.load_source(
-        python_lib_name, lib_path + "/" + python_lib_name + ".py")
-
-    banking = secrets_lib.banking
-
-    post = {
-        'xICBSXPProxy.ReqType':   '100',
-        'xICBSXPProxy.Version':   '05.00',
-        'xICBSXPProxy.UserName':   banking["login"],
-        'xICBSXPProxy.UserPassword':   banking["passwd"],
-        'MerchantID':   banking["merchant_id"]
-    }
-
-    r = requests.post(
-        "https://e-commerce.raiffeisen.ru/portal/mrchtrnvw/trn_xml.jsp",
-        data=post)
-
-    from bs4 import BeautifulSoup
-
-    response = BeautifulSoup(r.text)
-
-    return response.find("value").text
-
-
 def get_order(UID):
 
     # cache cleaning code
