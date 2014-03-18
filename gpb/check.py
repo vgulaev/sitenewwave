@@ -27,3 +27,14 @@ print("""<?xml version='1.0' encoding='UTF-8'?>
       </purchase>
     </payment-avail-response>
 """)
+
+form = cgi.FieldStorage()
+
+f = open('/web/trimetru/site/www/gpbtest.txt', 'w')
+
+if "o.uid" in form:
+    f.write(form["o.uid"].value)
+else:
+    f.write("Hell No!")
+
+f.close

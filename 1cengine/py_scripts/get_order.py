@@ -26,8 +26,8 @@ else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
 
-# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut_copy/ws/"
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -123,8 +123,8 @@ def get_order(UID):
         for letter in result[3]:
             order_number = order_number + translit(letter)
         result_table = result_table + """
-            <input style="display:none" name="PurchaseDesc"
-            type="text" id="PurchaseDesc"
+            <input style="display:none" name="o.number"
+            type="text" id="o.number"
             value=\"""" + order_number + """\" /></caption>"""
 
         result_table = result_table + \
@@ -149,21 +149,15 @@ def get_order(UID):
         result_table = result_table + """
         <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
         </td><td>""" + display_sum + """
-        <input style="display:none" name="PurchaseAmt" type="text"
-         id="PurchaseAmt"  value=\"""" + result[5] + """\" /></td></tr></table>
+        <input style="display:none" name="o.amount" type="text" id="o.amount" value=\"""" + result[5] + """\" />
+         </td></tr></table>
         """
 
         result_table = result_table + """
-            <input style="display:none" name="key_b" type="text" id="key_b"
-            value=\"""" + get_new_secret_key() + """\"/>
+            <input style="display:none" name="o.uid" type="text" id="o.uid"
+            value=\"""" + str(UID) + """\"/>
+
             <input type="submit" name="SubmitName" value="Создать платеж" />
-            <script type="text/javascript">
-                $(document).ready( function(){
-                    $.removeCookie("uid",{ expires: 1, path: '/'});
-                    $.cookie(
-                        "uid",\"""" + str(UID) + """\",{ expires: 1, path: '/'})
-                })
-             </script>
         """
 
         # except:

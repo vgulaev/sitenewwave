@@ -24,14 +24,14 @@
 <div id="main">
     <a href="#sm" id="top" tabindex="1" title="Перейти к содержимому"></a>
 
-    
+
 
     <div class="clear">&nbsp;</div>
 
     <div id="post-header">
 <h1 class="title">Оплата заказа</h1>        <a href="#bottom" id="sm" tabindex="2" title="вниз страницы"></a>
 
-<div id="obj-path"><a href="/" title="На главную">Главная</a>&nbsp;<ins>&gt;</ins>Оплата заказа</div> <!-- /obj-path -->    </div> <!-- /post-header --><div id="wrap"><div id="col2"><div id="cont2"> 
+<div id="obj-path"><a href="/" title="На главную">Главная</a>&nbsp;<ins>&gt;</ins>Оплата заказа</div> <!-- /obj-path -->    </div> <!-- /post-header --><div id="wrap"><div id="col2"><div id="cont2">
 <p>
     * Раздел работает в тестовом режиме *
 </p>
@@ -44,10 +44,7 @@
         <input name="merch_id" type="text" id="merch_id"  value="145BAC0E366974FE4B8CA7FFAA4A51B7" />
         <input name="back_url_s" type="text" id="back_url_s"   value="https://trimet.ru/payment/success"/>
         <input name="back_url_f" type="text" id="back_url_f"   value="https://trimet.ru/payment/fail"/>
-        <input name="o.fio" type="text" id="o.fio" value="Дубровин Роман" />
-        <input name="o.birthday" type="text" id="o.birthday" value="01.01.1900" />
-        <input name="o.email" type="text" id="o.email" value="mail@mail.ru" />
-        <input name="o.amount" type="text" id="o.amount" value="100" />
+
         <input name="CheckPaymentAvailURL" type="text" value="https://trimet.ru/gpb/check" />
         <input name="lang" type="text" value="RU" />
 
@@ -55,7 +52,13 @@
 
     </div>
 
-    <input type="submit" value="Вперед!" />
+    <div id="order_table_div">
+        <p> Ваш заказ подгружается </p>
+        <!-- <img src="379.png"></img> -->
+        <pythonscript>
+            {template|show_loader()}
+        </pythonscript>
+    </div>
 
     </form>
 </div></div>

@@ -8,7 +8,7 @@ $(document).ready( function(){
             async: false,
             data: "funkt=get_order(\""+window.location.pathname.split("/")[2]+"\")",
             success: function(html) {
-                
+
                 $("#order_table_div").html(html)
 
 
@@ -16,10 +16,3 @@ $(document).ready( function(){
 
         });
 })
-
-window.onload=function(){
-    BTH();
-    HTB();
-    ComputeCString();
-    GENhex();
-}
