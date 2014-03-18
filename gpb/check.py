@@ -72,7 +72,7 @@ if "o.uid" in form:
 
     # print("Content-Type: text/xml; charset=utf-8\n")
 
-    print("""<?xml version='1.0' encoding='UTF-8'?>
+    rs = """<?xml version='1.0' encoding='UTF-8'?>
         <payment-avail-response>
           <result>
             <code>1</code>
@@ -89,9 +89,11 @@ if "o.uid" in form:
             </account-amount>
           </purchase>
         </payment-avail-response>
-    """)
+    """
 
-    f.write(form["o.uid"].value)
+    print(rs)
+
+    f.write(form["o.uid"].value + "\n" + rs)
 else:
     f.write("Hell No!")
 
