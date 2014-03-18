@@ -134,9 +134,15 @@ def set_show_all_result():
     a_tag["id"] = "showAll"
     a_tag["href"] = u"Все результаты"
     a_tag["onClick"] = "return false"
-    a_tag.string = u"Показать все результаты"
+    a_tag.string = u"Показать все результаты "
     if "catalog" not in form:
         a_tag["style"] = "display:none"
+
+    span_count_tag = soup.new_tag("span")
+    span_count_tag["class"] = "count_all_result"
+    # span_count_tag.append("0")
+
+    a_tag.append(span_count_tag)
 
     return a_tag
 
@@ -162,3 +168,27 @@ def show_seo_text():
         seo_value = seo_tags[form["catalog"].value.decode("utf-8")]
         if "text" in seo_value:
             return BeautifulSoup(seo_value["text"])
+
+
+def set_groups():
+    tag_ul = soup.new_tag("ul")
+    tag_ul["id"] = "groups_list"
+
+    lib_path = os.path.abspath('../py_scripts/')
+    sys.path.append(lib_path)
+
+    # print lib_path
+    import imp
+    get_item_group = imp.load_source(
+        "get_item_group", lib_path + "/get_item_group" + ".py")
+
+    groups = get_item_group.get_main_groups()
+
+    for group in groups:
+        tag_li = soup.new_tag("li")
+        tag_li["name"] = group.decode("utf-8")
+        tag_li.append(group.decode("utf-8"))
+
+        tag_ul.append(tag_li)
+
+    return tag_ul

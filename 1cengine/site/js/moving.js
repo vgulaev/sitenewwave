@@ -108,7 +108,8 @@
   };
 
   $(document).ready(function() {
-    var item, name;
+    var item, name,
+      _this = this;
     if ($("#tags").css("display") === "none") {
       $("#showGroupsDiv").show();
     }
@@ -136,7 +137,7 @@
       $("#groupDiv").hide();
       value = $("#itemName").val();
       value = value.replace("+", " ");
-      return $.ajax({
+      $.ajax({
         type: "GET",
         url: "/1cengine/py_scripts/get_items_bs.py",
         async: true,
@@ -163,6 +164,15 @@
           return $("#show_groups").show();
         }
       });
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_count_items.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "",
+        success: function(html) {
+          return $(".count_all_result").html(html);
+        }
+      });
     });
     $(window).on("popstate", function(e) {
       $("#itemName").val(history.state['term']);
@@ -178,7 +188,7 @@
     $("#show_groups").click(function() {
       return show_groups();
     });
-    return $("#showAll").click(function() {
+    $("#showAll").click(function() {
       var value;
       value = $("#itemName").val();
       value = value.replace("+", " ");
@@ -204,6 +214,35 @@
             return $("#showAll").hide();
           }
         }
+      });
+    });
+    return $("#groups_list").find("li").each(function(index, element) {
+      return $(element).click(function() {
+        var g_name;
+        $(element).addClass("active_group");
+        g_name = $(this).attr("name");
+        $("#itemName").val(g_name);
+        $("#itemName").change();
+        $(element).append("<ul></ul>");
+        return $.ajax({
+          type: "GET",
+          url: "/1cengine/py_scripts/item_autocomplete.py",
+          async: true,
+          data: "term=" + encodeURIComponent(g_name) + "",
+          success: function(html) {
+            var subgroup, subgroups, _i, _len, _results,
+              _this = this;
+            subgroups = JSON.parse(html);
+            _results = [];
+            for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
+              subgroup = subgroups[_i];
+              _results.push((function(subgroup) {
+                return $(element).find("ul").append("<li>" + subgroup.replace(g_name, "") + "</li>");
+              })(subgroup));
+            }
+            return _results;
+          }
+        });
       });
     });
   });

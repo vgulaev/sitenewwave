@@ -140,6 +140,10 @@ class ItemGroup():
         for price_tag in price_tag_array:
             header_tag.append(price_tag)
 
+        header_buy_tag = soup.new_tag("td")
+        header_buy_tag.append(u"В корзину")
+        header_tag.append(header_buy_tag)
+
         return header_tag
 
 
@@ -302,45 +306,6 @@ class Item():
         item_name_span_tag.append(self.name.decode("utf-8"))
         item_name_tag.append(item_name_span_tag)
 
-        item_buy_span_tag = soup.new_tag("span")
-        item_buy_span_tag["class"] = "buySpan"
-
-        item_buy_a_tag = soup.new_tag("a")
-        if self.stocked:
-            item_buy_a_tag["class"] = u"bItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-                'onBuyLinkPressed', 'купить');
-                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-                '""" + self.ed_izm.decode("utf-8") + "', '" \
-                + self.price_string.decode("utf-8") + """','1');
-                return false"""
-
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'купить');
-            #     return false"""
-
-            item_buy_a_tag.append(u"купить")
-        else:
-            item_buy_a_tag["class"] = "oItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-                'onBuyLinkPressed', 'заказать');
-                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-                '""" + self.ed_izm.decode("utf-8") + "', '" \
-                + self.price_string.decode("utf-8") + """','0');
-                return false"""
-
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'заказать');
-            #     return false"""
-
-            item_buy_a_tag.append(u"заказать")
-
-        item_buy_span_tag.append(item_buy_a_tag)
-        item_name_tag.append(item_buy_span_tag)
 
         item_tag.append(item_name_tag)
 
@@ -367,10 +332,65 @@ class Item():
 
         item_tag.append(item_char_tag)
 
+
         # FINISHED char td composing ####
+
+        # price composing ####
 
         for item_price_tag in self.compose_price():
             item_tag.append(item_price_tag)
+
+        # FINISHED price composing ####
+
+        # to basket td composing ####
+
+        item_buy_tag = soup.new_tag("td")
+        item_buy_tag["class"] = "itemBuy"
+
+        item_buy_span_tag = soup.new_tag("span")
+        item_buy_span_tag["class"] = "buySpan"
+
+        item_buy_a_tag = soup.new_tag("a")
+        if self.stocked:
+            item_buy_a_tag["class"] = u"bItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+                'onBuyLinkPressed', 'купить');
+                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+                '""" + self.ed_izm.decode("utf-8") + "', '" \
+                + self.price_string.decode("utf-8") + """','1');
+                return false"""
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'купить');
+            #     return false"""
+
+            item_buy_a_tag.append(item_buy_span_tag)
+        else:
+            item_buy_a_tag["class"] = "oItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+                'onBuyLinkPressed', 'заказать');
+                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+                '""" + self.ed_izm.decode("utf-8") + "', '" \
+                + self.price_string.decode("utf-8") + """','0');
+                return false"""
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'заказать');
+            #     return false"""
+
+            item_buy_a_tag.append(item_buy_span_tag)
+
+        # item_buy_span_tag.append(item_buy_a_tag)
+
+        item_buy_tag.append(item_buy_a_tag)
+
+        item_tag.append(item_buy_tag)
+
+        # FINISHED to basket td composing ####
 
         return item_tag
 

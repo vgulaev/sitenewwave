@@ -154,28 +154,15 @@ $(document).ready ->
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
 
-                # $(".bItem").click ->
-                #     # alert("lol")
-                #     elem_id = $(this).closest( "tr" ).attr("id")
-
-                #     item = App.Item.elem_exist(elem_id)
-                #     if item is false
-                #         item = new App.Item $(this).closest( "tr" ).attr("id")
-                #     else
-                #         item.show_modal()
-
-                # $(".oItem").click ->
-
-                #     elem_id = $(this).closest( "tr" ).attr("id")
-
-                #     item = App.Item.elem_exist(elem_id)
-                #     if item is false
-                #         item = new App.Item $(this).closest( "tr" ).attr("id")
-                #     else
-                #         item.show_modal()
-                # false
-
                 $("#show_groups").show()
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_count_items.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + ""
+            success: (html) ->
+                $(".count_all_result").html html
 
 
     $(window).on "popstate", (e) ->
@@ -217,3 +204,22 @@ $(document).ready ->
                     $("#showAll").show()
                 else
                     $("#showAll").hide()
+
+    $("#groups_list").find("li").each (index, element) =>
+        $(element).click ->
+            $(element).addClass("active_group")
+            g_name = $(this).attr("name")
+            $("#itemName").val g_name
+            $("#itemName").change()
+            # alert($(this).attr("name"))
+            $(element).append("<ul></ul>")
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/item_autocomplete.py"
+                async: true
+                data: "term=" + encodeURIComponent(g_name) + ""
+                success: (html) ->
+                    subgroups = JSON.parse html
+                    for subgroup in subgroups then do (subgroup) =>
+                        $(element).find("ul").append("<li>"+subgroup.replace(g_name, "")+"</li>")
+                        # alert(subgroup)

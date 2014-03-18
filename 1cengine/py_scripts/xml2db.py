@@ -8,7 +8,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-pricefile = open('/web/trimetru/site/www/import/price.xml', 'r')
+pricefile = open('/home/saur/web/sitenewwave/import/price.xml', 'r')
 xml_string = pricefile.read()
 pricefile.close()
 # print xml_string
@@ -130,8 +130,8 @@ def groupEater(group):
 
     if u'Предмет' in group:
 
-        insertGroup(
-            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+        # insertGroup(
+        #     group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
 
         if type(group[u'Предмет']) == type(list()):
             for itemChar in group[u'Предмет']:
@@ -219,10 +219,10 @@ if __name__ == '__main__':
     import MySQLdb
     from secrets import *
 
-    conn = MySQLdb.connect(host=host_var,
-                           user=user_var,
-                           passwd=passwd_var,
-                           db=db_var)
+    conn = MySQLdb.connect(host=databases["goods"]["host"],
+                           user=databases["goods"]["user"],
+                           passwd=databases["goods"]["passwd"],
+                           db=databases["goods"]["db"])
     conn.set_character_set('utf8')
     cursor = conn.cursor()
     cursor.execute('SET NAMES utf8;')
