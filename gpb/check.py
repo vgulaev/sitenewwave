@@ -61,35 +61,37 @@ def get_order(UID):
 
 form = cgi.FieldStorage()
 
-# f = open('/web/trimetru/site/www/gpbtest.txt', 'w')
+f = open('/web/trimetru/site/www/gpbtest.txt', 'w')
 
 if "o.uid" in form:
     order = get_order(form["o.uid"].value)
-    # f.write(form["o.uid"].value)
-# else:
-    # f.write("Hell No!")
 
-# f.close
+    print("Content-Type: text/xml; charset=utf-8\n")
+
+    print("""<?xml version='1.0' encoding='UTF-8'?>
+        <payment-avail-response>
+          <result>
+            <code>1</code>
+            <desc>"""+str(order[3])+"""</desc>
+          </result>
+          <purchase>
+            <shortDesc> </shortDesc>
+            <longDesc>Zakaz #"""+str(order[3])+"""</longDesc>
+            <account-amount>
+              <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
+              <amount>"""+str(order[5])+"""</amount>
+              <currency>643</currency>
+              <exponent>2</exponent>
+            </account-amount>
+          </purchase>
+        </payment-avail-response>
+    """)
+
+    f.write(form["o.uid"].value)
+else:
+    f.write("Hell No!")
+
+f.close
 
 
 
-print("Content-Type: text/xml; charset=utf-8\n")
-
-print("""<?xml version='1.0' encoding='UTF-8'?>
-    <payment-avail-response>
-      <result>
-        <code>1</code>
-        <desc>"""+order[3]+"""</desc>
-      </result>
-      <purchase>
-        <shortDesc> </shortDesc>
-        <longDesc>Zakaz #"""+order[3]+"""</longDesc>
-        <account-amount>
-          <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
-          <amount>"""+order[5]+"""</amount>
-          <currency>643</currency>
-          <exponent>2</exponent>
-        </account-amount>
-      </purchase>
-    </payment-avail-response>
-""")
