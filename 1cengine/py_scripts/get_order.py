@@ -116,7 +116,7 @@ def get_order(UID):
         result_table = result_table + """
         <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
         </td><td>""" + display_sum + """
-        <input style="display:none" name="o.amount" type="text" id="o.amount" value=\"""" + result[5] + """\" />
+        <input style="display:none" name="o.amount" type="text" id="o.amount" value=\"""" + str(result[5]).replace(".",",") + """\" />
          </td></tr></table>
         """
 

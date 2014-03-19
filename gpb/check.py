@@ -99,14 +99,14 @@ if "o.uid" in form:
         <payment-avail-response>
           <result>
             <code>1</code>
-            <desc>"""+order_number+"""</desc>
+            <desc>"""+order[3]+"""</desc>
           </result>
           <purchase>
             <shortDesc> </shortDesc>
-            <longDesc>Zakaz #"""+order_number+"""</longDesc>
+            <longDesc>Заказ #"""+order[3]+"""</longDesc>
             <account-amount>
               <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
-              <amount>"""+str(order[5]).replace(".",",")+"""</amount>
+              <amount>"""+str(order[5]).replace(".", ",")+"""</amount>
               <currency>643</currency>
               <exponent>2</exponent>
             </account-amount>
