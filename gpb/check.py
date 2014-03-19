@@ -5,7 +5,6 @@ import sys
 import os
 import cgi
 
-import imp
 import cgitb
 cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
@@ -14,7 +13,6 @@ sys.setdefaultencoding('utf-8')
 
 print("Content-Type: text/xml; charset=utf-8\n")
 
-import json
 from suds.client import Client
 from suds.cache import DocumentCache
 
@@ -35,25 +33,6 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
-def translit(letter):
-    ru_en_dict = {
-        "а":  "a",  "б": "b",  "в": "v",   "г": "g",
-        "д":  "d",  "е": "e",  "ё": "yo",  "ж": "zh",
-        "з":  "z",  "и": "i",  "й": "j",   "к": "k",
-        "л":  "l",  "м": "m",  "н": "n",   "о": "o",
-        "п":  "p",  "р": "r",  "с": "s",   "т": "t",
-        "у":  "u",  "ф": "f",  "х": "x",   "ц": "cz",
-        "ч":  "ch", "ш": "sh", "щ": "shh", "ъ": "``",
-        "ы":  "y'", "ь": "`",  "э": "e`",  "ю": "yu",
-        "я":  "ya", "0": "0",  "1": "1",   "2": "2",
-        "3":  "3",  "4": "4",  "5": "5",   "6": "6",
-        "7":  "7",  "8": "8",  "9": "9",   " ": " "
-    }
-
-    letter = letter.lower().encode('utf-8')
-    return ru_en_dict[letter].upper()
-
-
 
 def get_order(UID):
 
@@ -66,14 +45,14 @@ def get_order(UID):
         client.set_options(cache=DocumentCache())
 
         try:
-            result = client.service.GetOrders(UID)
+            result = client.service.GetOrderMeta(UID)
         except:
             return False
 
-        if result[3].strip().__len__() != 0:
-            pass
+        if "FAIL" in result:
+            return "FAIL"
         else:
-            return False
+            pass
 
         return result
 
@@ -81,44 +60,63 @@ def get_order(UID):
         return False
 
 
-
 form = cgi.FieldStorage()
 
-f = open('/web/trimetru/site/www/gpbtest.txt', 'w+')
+# f = open('/web/trimetru/site/www/gpbtest.txt', 'w+')
 
 if "o.uid" in form:
     order = get_order(form["o.uid"].value)
 
-    # print("Content-Type: text/xml; charset=utf-8\n")
+    if "FAIL" in order:
+        rs = """<?xml version='1.0' encoding='UTF-8'?>
+            <payment-avail-response>
+              <result>
+                <code>2</code>
+                <desc>Заказ не существует</desc>
+              </result>
+            </payment-avail-response>
+        """
+    elif order is False:
+        rs = """<?xml version='1.0' encoding='UTF-8'?>
+            <payment-avail-response>
+              <result>
+                <code>2</code>
+                <desc>Произошла ошибка, попробуйте повторить платёж позже</desc>
+              </result>
+            </payment-avail-response>
+        """
+    else:
+        rs = """<?xml version='1.0' encoding='UTF-8'?>
+            <payment-avail-response>
+              <result>
+                <code>1</code>
+                <desc>"""+order[1]+"""</desc>
+              </result>
+              <purchase>
+                <shortDesc> </shortDesc>
+                <longDesc>Заказ #"""+order[1]+"""</longDesc>
+                <account-amount>
+                  <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
+                  <amount>"""+str(order)+"""</amount>
+                  <currency>643</currency>
+                  <exponent>2</exponent>
+                </account-amount>
+              </purchase>
+            </payment-avail-response>
+        """
 
-    order_number = ""
-    for letter in order[3]:
-        order_number = order_number + translit(letter)
 
+    # f.write(form["o.uid"].value + "\n" + rs)
+else:
     rs = """<?xml version='1.0' encoding='UTF-8'?>
         <payment-avail-response>
           <result>
-            <code>1</code>
-            <desc>"""+order[3]+"""</desc>
+            <code>2</code>
           </result>
-          <purchase>
-            <shortDesc> </shortDesc>
-            <longDesc>Заказ #"""+order[3]+"""</longDesc>
-            <account-amount>
-              <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
-              <amount>"""+str(order[5]).replace(".", "")+"""</amount>
-              <currency>643</currency>
-              <exponent>2</exponent>
-            </account-amount>
-          </purchase>
         </payment-avail-response>
     """
 
-    print(rs)
+print(rs)
+    # f.write("Hell No!")
 
-    f.write(form["o.uid"].value + "\n" + rs)
-else:
-    f.write("Hell No!")
-
-f.close
-
+# f.close
