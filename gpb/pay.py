@@ -7,11 +7,13 @@ import cgi
 import cgitb
 cgitb.enable()
 
-from suds.client import Client
-from suds.cache import DocumentCache
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+from suds.client import Client
+from suds.cache import DocumentCache
+
 
 import logging
 logging.basicConfig(level=logging.INFO)
