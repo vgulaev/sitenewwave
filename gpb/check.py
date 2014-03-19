@@ -67,16 +67,7 @@ form = cgi.FieldStorage()
 if "o.uid" in form:
     order = get_order(form["o.uid"].value)
 
-    if "FAIL" in order:
-        rs = """<?xml version='1.0' encoding='UTF-8'?>
-            <payment-avail-response>
-              <result>
-                <code>2</code>
-                <desc>Заказ не существует</desc>
-              </result>
-            </payment-avail-response>
-        """
-    elif order is False:
+    if order is False:
         rs = """<?xml version='1.0' encoding='UTF-8'?>
             <payment-avail-response>
               <result>
@@ -85,6 +76,17 @@ if "o.uid" in form:
               </result>
             </payment-avail-response>
         """
+
+    elif "FAIL" in order:
+        rs = """<?xml version='1.0' encoding='UTF-8'?>
+            <payment-avail-response>
+              <result>
+                <code>2</code>
+                <desc>Заказ не существует</desc>
+              </result>
+            </payment-avail-response>
+        """
+
     else:
         rs = """<?xml version='1.0' encoding='UTF-8'?>
             <payment-avail-response>
