@@ -84,7 +84,7 @@ def get_order(UID):
 
 form = cgi.FieldStorage()
 
-f = open('/web/trimetru/site/www/gpbtest.txt', 'w')
+f = open('/web/trimetru/site/www/gpbtest.txt', 'w+')
 
 if "o.uid" in form:
     order = get_order(form["o.uid"].value)
