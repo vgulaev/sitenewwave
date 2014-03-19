@@ -43,7 +43,7 @@ def report_1c(uid, sum):
 
     # try:
     result = client.service.CreatePaymentOrder(
-        uid, sum)
+        uid, sum.replace(sum[-2:],","+sum[-2:]))
 
     return result
 
