@@ -216,33 +216,36 @@
         }
       });
     });
-    return $("#groups_list").find("li").each(function(index, element) {
+    return $("#groups_list").find("li.main_group").each(function(index, element) {
       return $(element).click(function() {
         var g_name;
+        $("#groups_list").find("li.main_group").removeClass("active_group");
         $(element).addClass("active_group");
         g_name = $(this).attr("name");
         $("#itemName").val(g_name);
         $("#itemName").change();
-        $(element).append("<ul></ul>");
-        return $.ajax({
-          type: "GET",
-          url: "/1cengine/py_scripts/item_autocomplete.py",
-          async: true,
-          data: "term=" + encodeURIComponent(g_name) + "",
-          success: function(html) {
-            var subgroup, subgroups, _i, _len, _results,
-              _this = this;
-            subgroups = JSON.parse(html);
-            _results = [];
-            for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
-              subgroup = subgroups[_i];
-              _results.push((function(subgroup) {
-                return $(element).find("ul").append("<li>" + subgroup.replace(g_name, "") + "</li>");
-              })(subgroup));
+        if ($(element).children().is(".subgroup") === false) {
+          $(element).append("<ul class=\"subgroup\"></ul>");
+          return $.ajax({
+            type: "GET",
+            url: "/1cengine/py_scripts/item_autocomplete.py",
+            async: true,
+            data: "term=" + encodeURIComponent(g_name) + "",
+            success: function(html) {
+              var subgroup, subgroups, _i, _len, _results,
+                _this = this;
+              subgroups = JSON.parse(html);
+              _results = [];
+              for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
+                subgroup = subgroups[_i];
+                _results.push((function(subgroup) {
+                  return $(element).find("ul").append("<li>" + subgroup.replace(g_name, "") + "</li>");
+                })(subgroup));
+              }
+              return _results;
             }
-            return _results;
-          }
-        });
+          });
+        }
       });
     });
   });

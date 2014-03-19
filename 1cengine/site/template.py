@@ -187,6 +187,7 @@ def set_groups():
     for group in groups:
         tag_li = soup.new_tag("li")
         tag_li["name"] = group.decode("utf-8")
+        tag_li["class"] = "main_group"
         tag_li.append(group.decode("utf-8"))
 
         tag_ul.append(tag_li)

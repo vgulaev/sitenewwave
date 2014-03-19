@@ -205,21 +205,24 @@ $(document).ready ->
                 else
                     $("#showAll").hide()
 
-    $("#groups_list").find("li").each (index, element) =>
+    $("#groups_list").find("li.main_group").each (index, element) =>
         $(element).click ->
+            $("#groups_list").find("li.main_group").removeClass("active_group")
             $(element).addClass("active_group")
             g_name = $(this).attr("name")
             $("#itemName").val g_name
             $("#itemName").change()
             # alert($(this).attr("name"))
-            $(element).append("<ul></ul>")
-            $.ajax
-                type: "GET"
-                url: "/1cengine/py_scripts/item_autocomplete.py"
-                async: true
-                data: "term=" + encodeURIComponent(g_name) + ""
-                success: (html) ->
-                    subgroups = JSON.parse html
-                    for subgroup in subgroups then do (subgroup) =>
-                        $(element).find("ul").append("<li>"+subgroup.replace(g_name, "")+"</li>")
-                        # alert(subgroup)
+            if $(element).children().is(".subgroup") is false
+                # alert($(element).children("ul"))
+                $(element).append("<ul class=\"subgroup\"></ul>")
+                $.ajax
+                    type: "GET"
+                    url: "/1cengine/py_scripts/item_autocomplete.py"
+                    async: true
+                    data: "term=" + encodeURIComponent(g_name) + ""
+                    success: (html) ->
+                        subgroups = JSON.parse html
+                        for subgroup in subgroups then do (subgroup) =>
+                            $(element).find("ul").append("<li>"+subgroup.replace(g_name, "")+"</li>")
+                            # alert(subgroup)
