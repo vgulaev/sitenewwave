@@ -35,6 +35,25 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+def translit(letter):
+    ru_en_dict = {
+        "а":  "a",  "б": "b",  "в": "v",   "г": "g",
+        "д":  "d",  "е": "e",  "ё": "yo",  "ж": "zh",
+        "з":  "z",  "и": "i",  "й": "j",   "к": "k",
+        "л":  "l",  "м": "m",  "н": "n",   "о": "o",
+        "п":  "p",  "р": "r",  "с": "s",   "т": "t",
+        "у":  "u",  "ф": "f",  "х": "x",   "ц": "cz",
+        "ч":  "ch", "ш": "sh", "щ": "shh", "ъ": "``",
+        "ы":  "y'", "ь": "`",  "э": "e`",  "ю": "yu",
+        "я":  "ya", "0": "0",  "1": "1",   "2": "2",
+        "3":  "3",  "4": "4",  "5": "5",   "6": "6",
+        "7":  "7",  "8": "8",  "9": "9",   " ": " "
+    }
+
+    letter = letter.lower().encode('utf-8')
+    return ru_en_dict[letter].upper()
+
+
 
 def get_order(UID):
 
@@ -72,15 +91,19 @@ if "o.uid" in form:
 
     # print("Content-Type: text/xml; charset=utf-8\n")
 
+    order_number = ""
+    for letter in order[3]:
+        order_number = order_number + translit(letter)
+
     rs = """<?xml version='1.0' encoding='UTF-8'?>
         <payment-avail-response>
           <result>
             <code>1</code>
-            <desc>"""+str(order[3])+"""</desc>
+            <desc>"""+order_number+"""</desc>
           </result>
           <purchase>
             <shortDesc> </shortDesc>
-            <longDesc>Zakaz #"""+str(order[3])+"""</longDesc>
+            <longDesc>Zakaz #"""+order_number+"""</longDesc>
             <account-amount>
               <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
               <amount>"""+str(order[5])+"""</amount>
@@ -98,6 +121,4 @@ else:
     f.write("Hell No!")
 
 f.close
-
-
 
