@@ -174,8 +174,8 @@ def groupEater(group):
 
         priceDB = []
         priceType = []
-        insertGroup(
-            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+        # insertGroup(
+            # group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
         if type(group[u'Цена']) == type(list()):
             for price in group[u'Цена']:
                 priceDB.append(price[u'Цена'])
