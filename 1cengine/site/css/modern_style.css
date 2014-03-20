@@ -1198,6 +1198,11 @@ li.special_nav{
 	width: 775px;
 }
 
+#stickyalias {
+ 	display: none;
+  	height: 32px;
+}
+
 .navigation {
     text-align: left;
     display: block;
