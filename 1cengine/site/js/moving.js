@@ -108,8 +108,9 @@
   };
 
   $(document).ready(function() {
-    var item, name,
+    var PAGE, item, name,
       _this = this;
+    PAGE = 1;
     if ($("#tags").css("display") === "none") {
       $("#showGroupsDiv").show();
     }
@@ -215,6 +216,39 @@
           }
         }
       });
+    });
+    $(".next_result").click(function() {
+      var value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items_bs.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "&page=" + PAGE + 1 + "",
+        success: function(html) {
+          $("#qRes").html(html);
+          return PAGE = PAGE + 1;
+        }
+      });
+    });
+    $(".prev_result").click(function() {
+      var n_page, value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      if (PAGE !== 1) {
+        n_page = PAGE - 1;
+        return $.ajax({
+          type: "GET",
+          url: "/1cengine/py_scripts/get_items_bs.py",
+          async: true,
+          data: "term=" + encodeURIComponent(value) + "&page=" + n_page + "",
+          success: function(html) {
+            $("#qRes").html(html);
+            return PAGE = PAGE - 1;
+          }
+        });
+      }
     });
     return $("#groups_list").find("li.main_group").each(function(index, element) {
       return $(element).click(function() {

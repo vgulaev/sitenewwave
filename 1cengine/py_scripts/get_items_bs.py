@@ -22,7 +22,7 @@ class ResultTable():
         self.req = req
         self.rtype = rtype
 
-    def get_items(self, item_limit):
+    def get_items(self, item_limit, item_offset):
 
         connector = myDBC("goods")
         connector.dbConnect()
@@ -46,7 +46,7 @@ class ResultTable():
                     condition = condition + \
                         "`offers`.`name` LIKE '% " + reqWord + "%' AND "
 
-            limit = "ORDER BY `offers`.`stock` DESC LIMIT " + str(item_limit)
+            limit = "ORDER BY `offers`.`stock` DESC LIMIT " + str(item_offset) + "," + str(item_limit)
 
         r = connector.dbExecute("""
                 SELECT `offers`.`display_name`,
@@ -63,14 +63,14 @@ class ResultTable():
 
         return r
 
-    def compose_table(self, limit=20):
+    def compose_table(self, limit=20, offset=0):
         result_table_tag = soup.new_tag("table")
 
         result_table_tag["id"] = "tableRes"
 
         parent_array = []
 
-        r = self.get_items(limit)
+        r = self.get_items(limit, offset)
 
         for row in r:
             if not row[4] in parent_array:
@@ -405,7 +405,13 @@ if "term" in form:
         print str(result_table.compose_table(231))
     else:
         print "Content-Type: text/html; charset=utf-8\n"
-        print str(result_table.compose_table())
+
+        if "page" in form:
+            offset = int(form["page"].value) + 20
+            limit = 20
+            print str(result_table.compose_table(limit, offset))
+        else:
+            print str(result_table.compose_table())
 
 # g = ResultTable("Арматура","catalog")
 # print g.compose_table().prettify()

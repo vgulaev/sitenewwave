@@ -96,6 +96,8 @@ showGroup2 = (term) ->
 
 $(document).ready ->
 
+    PAGE = 1
+
     if $("#tags").css("display") is "none"
         $("#showGroupsDiv").show()
         # alert(1)
@@ -204,6 +206,35 @@ $(document).ready ->
                     $("#showAll").show()
                 else
                     $("#showAll").hide()
+
+    $(".next_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
+            success: (html) ->
+                $("#qRes").html html
+                PAGE = PAGE + 1
+
+    $(".prev_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+        if PAGE != 1
+            n_page = PAGE - 1
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/get_items_bs.py"
+                async: true
+                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
+                success: (html) ->
+                    $("#qRes").html html
+                    PAGE = PAGE - 1
+
+
 
     $("#groups_list").find("li.main_group").each (index, element) =>
         $(element).click ->

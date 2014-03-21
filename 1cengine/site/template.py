@@ -147,6 +147,37 @@ def set_show_all_result():
     return a_tag
 
 
+def set_show_nexr_prev():
+    span_tag = soup.new_tag("div")
+    span_tag["id"] = "show_next_prev"
+    # if "catalog" not in form:
+    #     span_tag["style"] = "display:none"
+
+    prev_a_tag = soup.new_tag("span")
+    prev_a_tag["class"] = "prev_result"
+    # prev_a_tag["href"] = u"Предыдущие 20"
+    # prev_a_tag["onClick"] = "return false"
+    prev_a_tag.string = u"Предыдущие 20"
+
+    span_tag.append(prev_a_tag)
+
+    current_span_tag = soup.new_tag("span")
+    current_span_tag["class"] = "current_page"
+    current_span_tag.string = "1"
+
+    span_tag.append(current_span_tag)
+
+    next_a_tag = soup.new_tag("span")
+    next_a_tag["class"] = "next_result"
+    # next_a_tag["href"] = u"Следующие 20"
+    # next_a_tag["onClick"] = "return false"
+    next_a_tag.string = u"Следующие 20"
+
+    span_tag.append(next_a_tag)
+
+    return span_tag
+
+
 def set_tags_div():
     path_to_table = "templates/groups.tpl.html"
     tag_div = soup.new_tag("div")
