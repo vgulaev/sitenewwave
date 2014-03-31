@@ -21,10 +21,16 @@ def get_main_groups():
     ret = []
     connector = myDBC("goods")
     connector.dbConnect()
+    # r = connector.dbExecute("""
+    #         SELECT DISTINCT `name`
+    #         FROM `groups`
+    #         WHERE `parent_hash` = `hash`
+    #     """)
+
     r = connector.dbExecute("""
-            SELECT DISTINCT `name`
-            FROM `groups`
-            WHERE `parent_hash` = `hash`
+            SELECT DISTINCT SUBSTRING_INDEX(`display_name`, ' ', 1)
+            FROM `offers`
+            WHERE `display_name` LIKE '%'
         """)
 
     for row in r:
@@ -46,6 +52,8 @@ def get_items(term):
             WHERE `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
                 AND `parent_hash` != `hash`
         """)
+
+
 
     for row in r:
         ret.append(str(row[0]) + " ")

@@ -29,11 +29,16 @@ def get_items(term):
     #     """)
 
     if term.__len__() < 2:
+        # r = connector.dbExecute("""
+        #         SELECT DISTINCT `name`
+        #         FROM `groups`
+        #         WHERE `parent_hash` = `hash`
+        #     """)
         r = connector.dbExecute("""
-                SELECT DISTINCT `name`
-                FROM `groups`
-                WHERE `parent_hash` = `hash`
-            """)
+            SELECT DISTINCT SUBSTRING_INDEX(`display_name`, ' ', 1)
+            FROM `offers`
+            WHERE `display_name` LIKE '%'
+        """)
     else:
         r = connector.dbExecute("""
                 SELECT DISTINCT `name`
