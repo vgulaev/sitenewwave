@@ -41,6 +41,19 @@ def get_main_groups():
     return ret
 
 
+def get_subgroups(group):
+    ret = []
+    connector = myDBC("goods")
+    connector.dbConnect()
+
+    r = connector.dbExecute("""
+            SELECT DISTINCT `name`
+            FROM `groups`
+            WHERE ( `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+group+"""' )
+                AND `parent_hash` != `hash` ) OR (`name` LIKE '"""+group+""" %' AND `hash`=`parent_hash`)
+        """)
+
+
 def get_items(term):
     space_count = term.decode("utf-8").count(' ') + 1
     ret = []

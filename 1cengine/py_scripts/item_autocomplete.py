@@ -40,16 +40,25 @@ def get_items(term):
             WHERE `display_name` LIKE '%'
         """)
     else:
+        # r = connector.dbExecute("""
+        #         SELECT DISTINCT `name`
+        #         FROM `groups`
+        #         WHERE `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
+        #             AND `parent_hash` != `hash`
+        #     """)
+
         r = connector.dbExecute("""
                 SELECT DISTINCT `name`
                 FROM `groups`
-                WHERE `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
-                    AND `parent_hash` != `hash`
+                WHERE ( `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
+                    AND `parent_hash` != `hash` ) OR (`name` LIKE '"""+term+"""%' AND `hash`=`parent_hash`)
             """)
 
 
     for row in r:
-        if term.__len__() > 1:
+
+        r_a = str(row[0]).split(" ")
+        if term.__len__() > 1 and term.strip().lower() != r_a[0].strip().lower():
             ret.append(term + " " + str(row[0]))
         else:
             ret.append(str(row[0]))

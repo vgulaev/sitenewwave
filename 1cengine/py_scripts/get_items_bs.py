@@ -15,6 +15,11 @@ from secrets import *
 soup = BeautifulSoup()
 
 
+synonims = {
+    "Сталь": "ст."
+}
+
+
 class ResultTable():
 
     def __init__(self, req, rtype):
@@ -38,25 +43,29 @@ class ResultTable():
 
         else:
             reqArray = self.req.split(" ")
+            condition_array = []
             for reqWord in reqArray:
                 if reqWord.__len__() > 1:
-                    condition = condition + \
-                        "`offers`.`name` LIKE '%" + reqWord + "%' AND "
+                    condition_array.append(
+                        "`offers`.`name` LIKE '%" + reqWord + "%'")
                 else:
-                    condition = condition + \
-                        "`offers`.`name` LIKE '% " + reqWord + "%' AND "
+                    condition_array.append(
+                        "`offers`.`name` LIKE '% " + reqWord + "%'")
 
-            limit = "ORDER BY `offers`.`stock` DESC LIMIT " + str(item_offset) + "," + str(item_limit)
+            condition = condition + "(" + " AND ".join(condition_array)
+            limit = "ORDER BY `offers`.`stock` DESC, `offers`.`parent_hash` DESC LIMIT " + str(item_offset) + "," + str(item_limit)
 
         r = connector.dbExecute("""
-                SELECT `offers`.`display_name`,
+                SELECT DISTINCT `offers`.`display_name`,
                 `offers`.`char_name`, `offers`.`price`,
                 `offers`.`price_type`, `groups`.`name`,
                 `offers`.`hash`, `offers`.`edIzm`,
                 `offers`.`father_hash`, `offers`.`stock`
                 FROM `offers`, `groups`
                 """ + condition + """
-                `offers`.`parent_hash`=`groups`.`hash` """ + limit + """
+                AND `offers`.`parent_hash`=`groups`.`hash` )
+
+                 """ + limit + """
             """)
 
         connector.dbClose()

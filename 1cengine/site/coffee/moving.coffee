@@ -127,7 +127,7 @@ $(document).ready ->
         $("#groupDiv").hide()
         value = $("#itemName").val()
         value = value.replace("+", " ")
-
+        $("#qRes").fadeOut(400)
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
@@ -135,7 +135,7 @@ $(document).ready ->
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 $("#qRes").html html
-
+                $("#qRes").fadeIn(400)
                 if $(".item").length >= 1
                     $("#tags").hide()
                     $("#showGroupsDiv").show()
@@ -250,7 +250,7 @@ $(document).ready ->
                 $.ajax
                     type: "GET"
                     url: "/1cengine/py_scripts/item_autocomplete.py"
-                    async: true
+                    async: false
                     data: "term=" + encodeURIComponent(g_name) + ""
                     success: (html) ->
                         subgroups = JSON.parse html

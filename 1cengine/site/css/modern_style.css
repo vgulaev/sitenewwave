@@ -1328,6 +1328,8 @@ li.special_nav{
 
 #groups_list li.active_group{
 	border-bottom:1px solid #2D3694;
+	box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.3);
+	font-weight: 700;
 }
 
 #groups_list li.active_group ul{
@@ -1338,8 +1340,18 @@ li.special_nav{
 
 #groups_list li.active_group li{
 	font-size: 8pt;
-	padding-left:5px;
+	padding-left:0px;
+	border:none;
+	width:140px;
+	font-weight: 400;
+	list-style: disc;
+	margin-left: 10px;
 
+}
+
+#groups_list li.active_group li:hover{
+	background-color: #a0a4d0;
+	list-style: circle;
 }
 
 #groups_list li ul{
