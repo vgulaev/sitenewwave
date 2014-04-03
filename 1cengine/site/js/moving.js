@@ -108,7 +108,7 @@
   };
 
   $(document).ready(function() {
-    var PAGE, item, name,
+    var PAGE, c_url, is_empty, item, name, things,
       _this = this;
     PAGE = 1;
     if ($("#tags").css("display") === "none") {
@@ -138,6 +138,7 @@
       $("#groupDiv").hide();
       value = $("#itemName").val();
       value = value.replace("+", " ");
+      $("#qRes").fadeOut(400);
       $.ajax({
         type: "GET",
         url: "/1cengine/py_scripts/get_items_bs.py",
@@ -145,6 +146,7 @@
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
           $("#qRes").html(html);
+          $("#qRes").fadeIn(400);
           if ($(".item").length >= 1) {
             $("#tags").hide();
             $("#showGroupsDiv").show();
@@ -250,38 +252,57 @@
         });
       }
     });
-    return $("#groups_list").find("li.main_group").each(function(index, element) {
+    $("#groups_list").find("li.main_group").each(function(index, element) {
       return $(element).click(function() {
         var g_name;
-        $("#groups_list").find("li.main_group").removeClass("active_group");
-        $(element).addClass("active_group");
         g_name = $(this).attr("name");
-        $("#itemName").val(g_name);
-        $("#itemName").change();
-        if ($(element).children().is(".subgroup") === false) {
-          $(element).append("<ul class=\"subgroup\"></ul>");
+        if ($(element).hasClass("active_group") === false) {
+          $("#itemName").val(g_name);
+          $("#itemName").change();
+          $("#groups_list").find("li.main_group").removeClass("active_group");
+          $(element).addClass("active_group");
+        }
+        if ($(element).children().is(".subgroup_c") === false) {
+          $(element).append("<ul class=\"subgroup_c\"></ul>");
           return $.ajax({
             type: "GET",
             url: "/1cengine/py_scripts/item_autocomplete.py",
-            async: true,
+            async: false,
             data: "term=" + encodeURIComponent(g_name) + "",
             success: function(html) {
-              var subgroup, subgroups, _i, _len, _results,
+              var subgroup, subgroups, _fn, _i, _len,
                 _this = this;
               subgroups = JSON.parse(html);
-              _results = [];
+              _fn = function(subgroup) {
+                var subgroup_name;
+                subgroup_name = subgroup.replace(g_name, "");
+                return $(element).find("ul").append(("<li class='subgroup' name='" + subgroup_name + "'>") + subgroup_name + "</li>");
+              };
               for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
                 subgroup = subgroups[_i];
-                _results.push((function(subgroup) {
-                  return $(element).find("ul").append("<li>" + subgroup.replace(g_name, "") + "</li>");
-                })(subgroup));
+                _fn(subgroup);
               }
-              return _results;
+              return $(element).find("li.subgroup").each(function(index, sgroup) {
+                return $(sgroup).click(function() {
+                  var i_name;
+                  $(".subgroup").removeClass("active_subgroup");
+                  $(sgroup).addClass("active_subgroup");
+                  i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
+                  $("#itemName").val(i_name);
+                  return $("#itemName").change();
+                });
+              });
             }
           });
         }
       });
     });
+    c_url = window.location.pathname;
+    is_empty = c_url.replace("/1cengine/site/", "");
+    if (is_empty.length < 3) {
+      things = $("li.main_group");
+      return $(things[Math.floor(Math.random() * things.length)]).click();
+    }
   });
 
 }).call(this);

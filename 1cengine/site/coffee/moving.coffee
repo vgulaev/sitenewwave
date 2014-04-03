@@ -238,15 +238,19 @@ $(document).ready ->
 
     $("#groups_list").find("li.main_group").each (index, element) =>
         $(element).click ->
-            $("#groups_list").find("li.main_group").removeClass("active_group")
-            $(element).addClass("active_group")
             g_name = $(this).attr("name")
-            $("#itemName").val g_name
-            $("#itemName").change()
+            if $(element).hasClass("active_group") is false
+
+                $("#itemName").val g_name
+                $("#itemName").change()
+
+                $("#groups_list").find("li.main_group").removeClass("active_group")
+                $(element).addClass("active_group")
+
             # alert($(this).attr("name"))
-            if $(element).children().is(".subgroup") is false
+            if $(element).children().is(".subgroup_c") is false
                 # alert($(element).children("ul"))
-                $(element).append("<ul class=\"subgroup\"></ul>")
+                $(element).append("<ul class=\"subgroup_c\"></ul>")
                 $.ajax
                     type: "GET"
                     url: "/1cengine/py_scripts/item_autocomplete.py"
@@ -255,5 +259,25 @@ $(document).ready ->
                     success: (html) ->
                         subgroups = JSON.parse html
                         for subgroup in subgroups then do (subgroup) =>
-                            $(element).find("ul").append("<li>"+subgroup.replace(g_name, "")+"</li>")
+                            subgroup_name = subgroup.replace(g_name, "")
+                            $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}'>"+subgroup_name+"</li>")
                             # alert(subgroup)
+
+                        $(element).find("li.subgroup").each (index, sgroup) =>
+                            $(sgroup).click ->
+                                $(".subgroup").removeClass("active_subgroup")
+                                $(sgroup).addClass("active_subgroup")
+                                i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+                                # alert(i_name)
+
+                                $("#itemName").val(i_name)
+                                $("#itemName").change()
+
+
+    c_url = window.location.pathname
+    # alert(c_url)
+    is_empty = c_url.replace "/1cengine/site/", ""
+    # alert($(things[Math.floor(Math.random()*things.length)]).attr("name"))
+    if is_empty.length < 3
+        things = $("li.main_group")
+        $(things[Math.floor(Math.random()*things.length)]).click()

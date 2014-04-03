@@ -1340,18 +1340,26 @@ li.special_nav{
 
 #groups_list li.active_group li{
 	font-size: 8pt;
-	padding-left:0px;
+	padding-left:10px;
 	border:none;
-	width:140px;
+	width:145px;
 	font-weight: 400;
-	list-style: disc;
-	margin-left: 10px;
+	list-style-type: disc;
+	margin-left: -5px;
+	list-style-position: inside;
 
+}
+
+#groups_list li.active_group li.active_subgroup{
+	background-color: #a0a4d0;
+	list-style-type: circle;
+	color: white;
+	font-weight: 700;
 }
 
 #groups_list li.active_group li:hover{
 	background-color: #a0a4d0;
-	list-style: circle;
+	list-style-type: circle;
 }
 
 #groups_list li ul{
