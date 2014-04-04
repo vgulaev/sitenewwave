@@ -127,9 +127,6 @@ def get_order(UID):
             <input type="submit" name="SubmitName" value="Создать платеж" />
         """
 
-        # except:
-            # result_table = "<p>Что то пошло не так</p>"
-
     else:
         result_table = "<p>Не задан идентификатор заказа</p>"
 
