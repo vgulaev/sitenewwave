@@ -98,7 +98,7 @@ if "o.uid" in form:
                 <shortDesc> </shortDesc>
                 <longDesc>Заказ #"""+order[1]+"""</longDesc>
                 <account-amount>
-                  <id>CB4E2E881BEC16145B7DA0AB2278A19D</id>
+                  <id>58A7ABEFD18BAEBD4173DEA65868910D</id>
                   <amount>"""+str(order[0]).replace(".", "")+"""</amount>
                   <currency>643</currency>
                   <exponent>2</exponent>
