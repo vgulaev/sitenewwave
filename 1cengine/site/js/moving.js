@@ -297,6 +297,18 @@
         }
       });
     });
+    $("li.subgroup").each(function(index, sgroup) {
+      return $(sgroup).click(function() {
+        var g_name, group, i_name;
+        $(".subgroup").removeClass("active_subgroup");
+        $(sgroup).addClass("active_subgroup");
+        group = $(sgroup).closest(".active_group");
+        g_name = $(group).attr("name");
+        i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
+        $("#itemName").val(i_name);
+        return $("#itemName").change();
+      });
+    });
     c_url = window.location.pathname;
     is_empty = c_url.replace("/1cengine/site/", "");
     if (is_empty.length < 3) {

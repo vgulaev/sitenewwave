@@ -213,6 +213,7 @@ def set_groups():
     get_item_group = imp.load_source(
         "get_item_group", lib_path + "/get_item_group" + ".py")
 
+    c_catalog = None
     if "catalog" in form:
         c_catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
 
@@ -221,11 +222,30 @@ def set_groups():
     for group in groups:
         tag_li = soup.new_tag("li")
         tag_li["name"] = group.decode("utf-8")
-        if c_catalog in group.decode("utf-8"):
+        tag_li.append(group.decode("utf-8"))
+
+        if c_catalog is not None and c_catalog in group.decode("utf-8"):
             tag_li["class"] = "main_group active_group"
+
+            subgroups = get_item_group.get_subgroups(c_catalog)
+
+            if subgroups.__len__() > 0:
+                tag_ul_sg = soup.new_tag("ul")
+                tag_ul_sg["class"] = "subgroup_c"
+
+                for sgroup in subgroups:
+                    if sgroup.decode("utf-8") != group.decode("utf-8"):
+                        tag_li_sg = soup.new_tag("li")
+                        tag_li_sg["class"] = "subgroup"
+                        tag_li_sg["name"] = sgroup.decode("utf-8")
+                        tag_li_sg.append(sgroup.decode("utf-8"))
+
+                        tag_ul_sg.append(tag_li_sg)
+
+                tag_li.append(tag_ul_sg)
+
         else:
             tag_li["class"] = "main_group"
-        tag_li.append(group.decode("utf-8"))
 
         tag_ul.append(tag_li)
 

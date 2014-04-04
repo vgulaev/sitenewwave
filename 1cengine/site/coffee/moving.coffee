@@ -273,6 +273,17 @@ $(document).ready ->
                                 $("#itemName").val(i_name)
                                 $("#itemName").change()
 
+    $("li.subgroup").each (index, sgroup) =>
+        $(sgroup).click ->
+            $(".subgroup").removeClass("active_subgroup")
+            $(sgroup).addClass("active_subgroup")
+            group = $(sgroup).closest(".active_group")
+            g_name = $(group).attr("name")
+            i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+            # alert(i_name)
+
+            $("#itemName").val(i_name)
+            $("#itemName").change()
 
     c_url = window.location.pathname
     # alert(c_url)

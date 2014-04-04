@@ -49,9 +49,18 @@ def get_subgroups(group):
     r = connector.dbExecute("""
             SELECT DISTINCT `name`
             FROM `groups`
-            WHERE ( `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+group+"""' )
-                AND `parent_hash` != `hash` ) OR (`name` LIKE '"""+group+""" %' AND `hash`=`parent_hash`)
+            WHERE ( `parent_hash` = (
+                SELECT `hash` FROM `groups` WHERE `name`='"""+group+"""'
+            ) AND `parent_hash` != `hash` )
+            OR (`name` LIKE '"""+group+"""%' AND `hash`=`parent_hash`)
         """)
+
+    for row in r:
+        ret.append(str(row[0]) + " ")
+
+    connector.dbClose()
+
+    return ret
 
 
 def get_items(term):
@@ -66,15 +75,10 @@ def get_items(term):
                 AND `parent_hash` != `hash`
         """)
 
-
-
     for row in r:
         ret.append(str(row[0]) + " ")
 
     connector.dbClose()
-
-
-
 
     return ret
 
