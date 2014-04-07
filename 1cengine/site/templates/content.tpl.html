@@ -83,11 +83,13 @@
                     <span id="basketCaption">Заказ покупателя</span>
 
                     <div id="switchDiv">
-                        <div class="activeDiv" id="switchOrderDiv">Товары</div>
-                        <div class="inactiveDiv" id="switchDeliveryDiv">Доставка</div>
-                        <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
-                        <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
+                        <div class="switchDivBackground">
+                            <div class="activeDiv" id="switchOrderDiv">Товары</div>
+                            <div class="inactiveDiv" id="switchDeliveryDiv">Дополнительные услуги</div>
+                            <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
+                        </div>
                     </div>
+                    <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
                     <div id="orderDiv">
                         <table id='basketTab' cellspacing='0' cellpadding='0'>
                           <thead>
