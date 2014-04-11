@@ -124,7 +124,6 @@
       if (this.is_measureable()) {
         this.price_length = ((this.price_weight / 1000) * this.weight).toFixed(2);
         this.price_count = (this.price_length * this.length).toFixed(2);
-        $(".price_length").html(this.price_length);
         $(".price_count").html(this.price_count);
       }
       $(".price_weight").html(this.price_weight);
@@ -191,7 +190,7 @@
     };
 
     Item.prototype.get_modal = function() {
-      var c_input, l_input, message, modal_link, w_input;
+      var c_input, c_izm, edizm_dict, l_input, message, modal_link, w_input;
       if (Basket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>';
       } else {
@@ -205,7 +204,15 @@
         c_input = '<input class="buy_count" value="---" disabled />';
       }
       w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n<th>Метры</th>\n<th>Штуки</th>\n<th>Тонны</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td>\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_length\">0</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      edizm_dict = {
+        "т": "Тонны",
+        "шт": "Штуки",
+        "м2": "Метры кв.",
+        "кв.м.": "Метры кв.",
+        "пог.м": "Метры пог."
+      };
+      c_izm = edizm_dict["" + this.ed_izm];
+      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 
@@ -253,14 +260,16 @@
     };
 
     Basket.add_item = function(item) {
-      var index;
+      var i_id, index;
       index = this._item_list.indexOf(item);
       if (index === -1) {
         this._item_list.push(item);
         this._sum = ((+item.final_price) + (+this._sum)).toFixed(2);
         this._total_weight = ((+item.buy_weight) + (+this._total_weight)).toFixed(3);
         this._count++;
-        return this.change_basket();
+        this.change_basket();
+        i_id = ("#" + item.id).replace(":", "\\:");
+        return $("" + i_id).addClass("in_basket");
       }
     };
 
@@ -303,11 +312,11 @@
       var item, nds, _i, _len, _ref,
         _this = this;
       $(".basketCount").html(this._count);
-      $("#lItemTab").empty();
+      $(".lItemTab").empty();
       _ref = this._item_list;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
-        $("#lItemTab").append(this.create_row(item));
+        $("." + (item.ed_izm.replace('.', '\\.'))).append(this.create_row(item));
         $("tr[name='" + item.id + "']").find(".delete_from_basket").bind("click", function(event) {
           var target;
           target = $(event.currentTarget);
@@ -332,7 +341,7 @@
     Basket.create_row = function(item) {
       var nds, row;
       nds = ((item.final_price / 100) * 18).toFixed(2);
-      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "\n<span class=\"delEdSpan\">\n<a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\">X</a>\n<a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/edit.png\" /></a></span></td>\n\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_weight + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemRezkaTd' style='display:none'></td>\n</tr>";
+      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "</td>\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_weight + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemEdit'>\n    <span class=\"delEdSpan\">\n    <a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_edit.png\" /></a></span>\n    <a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_delete.png\" /></a>\n</td>\n</tr>";
     };
 
     Basket.on_weight_change_handler = function(weight) {

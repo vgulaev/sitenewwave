@@ -118,7 +118,7 @@ class App.Item
             @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
             @price_count = ( @price_length * @length ).toFixed(2)
 
-            $(".price_length").html(@price_length)
+            # $(".price_length").html(@price_length)
             $(".price_count").html(@price_count)
 
         $(".price_weight").html(@price_weight)
@@ -199,6 +199,15 @@ class App.Item
             c_input = '<input class="buy_count" value="---" disabled />'
         w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="'+@buy_weight+'" />'
 
+        edizm_dict = {
+            "т":"Тонны",
+            "шт":"Штуки",
+            "м2":"Метры кв.",
+            "кв.м.":"Метры кв.",
+            "пог.м":"Метры пог."
+            }
+
+        c_izm = edizm_dict["#{@ed_izm}"]
 
         message = """
         <div class="buy_item_div">
@@ -206,15 +215,13 @@ class App.Item
         <table class="buy_item_table">
         <tr class="buy_item_head">
         <th></th>
-        <th>Метры</th>
+
         <th>Штуки</th>
-        <th>Тонны</th>
+        <th>#{c_izm}</th>
         </tr>
         <tr class="buy_item_count">
         <td>Количество</td>
-        <td>
-            #{l_input}
-        </td>
+
         <td>
             #{c_input}
         </td>
@@ -224,7 +231,6 @@ class App.Item
         </tr>
         <tr class="buy_item_price">
         <td>Стоимость за ед.</td>
-        <td class="price_length">0</td>
         <td class="price_count">0</td>
         <td class="price_weight">0</td>
         </tr>
@@ -274,6 +280,11 @@ class Basket
 
             @change_basket()
 
+            i_id = "##{item.id}".replace(":", "\\:")
+            # alert($("#{i_id}").attr("class"))
+            # $("#tableRes").find("##{item.id}")
+            $("#{i_id}").addClass("in_basket")
+
     @change_item: (item) ->
         # alert("lol")
         index = @_item_list.indexOf(item)
@@ -303,9 +314,10 @@ class Basket
 
     @change_basket: ->
         $(".basketCount").html(@_count)
-        $("#lItemTab").empty()
+        $(".lItemTab").empty()
         for item in @_item_list
-            $("#lItemTab").append(@create_row(item))
+            $(".#{item.ed_izm.replace('.','\\.')}").append(@create_row(item))
+            # $("#lItemTab").append(@create_row(item))
 
             $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
                 target = $(event.currentTarget)
@@ -333,11 +345,7 @@ class Basket
         row = """
             <tr class="itemTr" name="#{item.id}">
             <td>#{@_item_list.indexOf(item)+1}</td>
-            <td class='itemNameTd'>#{item.name}
-            <span class="delEdSpan">
-            <a class="delete_from_basket" href="Убрать из корзины" onClick="return false">X</a>
-            <a class="edit_from_basket" href="Редактировать" onClick="return false"><img src="/1cengine/site/images/edit.png" /></a></span></td>
-
+            <td class='itemNameTd'>#{item.name}</td>
 
             <td class='itemCharTd'>#{item.char}</td>
 
@@ -347,7 +355,11 @@ class Basket
             <td class='itemNdsKfTd'>18%</td>
             <td class='itemNdsSumTd'>#{nds}</td>
             <td class='itemSumTd'>#{item.final_price}</td>
-            <td class='itemRezkaTd' style='display:none'></td>
+            <td class='itemEdit'>
+                <span class="delEdSpan">
+                <a class="edit_from_basket" href="Редактировать" onClick="return false"><img src="/1cengine/site/images/cart_edit.png" /></a></span>
+                <a class="delete_from_basket" href="Убрать из корзины" onClick="return false"><img src="/1cengine/site/images/cart_delete.png" /></a>
+            </td>
             </tr>
         """
 

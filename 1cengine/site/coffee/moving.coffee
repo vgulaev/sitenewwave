@@ -156,7 +156,27 @@ $(document).ready ->
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
 
-                $("#show_groups").show()
+                $(".bItem").click ->
+                    # alert("lol")
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+                false
+
 
         $.ajax
             type: "GET"
@@ -206,6 +226,27 @@ $(document).ready ->
                     $("#showAll").show()
                 else
                     $("#showAll").hide()
+
+                    $(".bItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
+
+                    $(".oItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
+
 
     $(".next_result").click ->
         value = $("#itemName").val()

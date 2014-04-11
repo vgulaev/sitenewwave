@@ -333,7 +333,8 @@ tr.iHeader{
     line-height: 1.73;
 }
 
-#lItemTab td{
+
+.lItemTab td{
     border-bottom:1px dotted gray;
     border-left:1px dotted gray;
     padding:2px;
@@ -341,8 +342,16 @@ tr.iHeader{
     padding-left:10px;
     font-size:12px;
 }
-#lItemTab td:first-child{
+.lItemTab td:first-child{
     border-left:none;
+}
+
+.lItemTab tr:first-child td{
+    border-top:1px solid gray;
+}
+
+.lItemTab tr:last-child td{
+    border-bottom:none;
 }
 
 #mainTr{
@@ -512,7 +521,7 @@ tr.iHeader{
 .priceHeader{
     text-align: center;
 }
-.itemBuy a.bItem .buySpan{
+.item .itemBuy a.bItem .buySpan{
     background-image: url("../images/cart_add.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -520,6 +529,13 @@ tr.iHeader{
     height:32px;
     display:block;
 }
+
+.in_basket .itemBuy a.bItem .buySpan{
+    background-image: url("../images/cart_edit.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .itemBuy a.oItem .buySpan{
     background-image: url("../images/cart_order.png");
     background-repeat: no-repeat;
@@ -528,6 +544,13 @@ tr.iHeader{
     height:32px;
     display:block;
 }
+
+.in_basket .itemBuy a.oItem .buySpan{
+    background-image: url("../images/cart_edit.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .itemBuy a{
     /*color:white;
     text-decoration: none;
@@ -537,80 +560,21 @@ tr.iHeader{
 }
 
 .delEdSpan{
+    text-decoration: none;
+    font-weight:bold;
+    width:60px;
+}
+
+.delete_from_basket{
     float:right;
-    color:white;
-    /*border:1px outset rgb(48, 57, 154);*/
-    /*border-radius:40px 10px;*/
-    /*background-color: rgb(255,187,028);*/
-    /*background-color: #daa520;*/
-    text-decoration: none;
-    font-weight:bold;
-    width:80px;
-    /*padding-left:14px;*/
-    display:none;
 }
 
-.delEdSpan a{
-    color:white;
-    text-decoration: none;
-}
-
-.itemTr:hover span.delEdSpan{
-    color:white;
-    /*border:1px outset rgb(48, 57, 154);*/
-    /*border-radius:40px 10px;*/
-    /*background-color: rgb(255,187,028);*/
-    /*background-color: #daa520;*/
-    text-decoration: none;
-    font-weight:bold;
-    width:80px;
-    /*padding-left:14px;*/
-    display:block;
-}
-
-.itemTr:hover span.delEdSpan a:first-child{
-    border:1px outset rgb(48, 57, 154);
-    border-radius:40px 10px;
+.edit_from_basket{
     float:left;
-    background-color:#daa520;
-    width:20px;
-    padding-left: 10px;
 }
 
-.itemTr:hover span.delEdSpan a:last-child{
-    border:1px outset rgb(48, 57, 154);
-    border-radius:40px 10px;
-    float:right;
-    background-color: #5da130;
-    width:30px;
-    padding-left: 7px;
-}
-
-.item:hover a.bItem, .itemBuy a.bItem:hover{
-    /*text-shadow: black 0 0 2px;*/
-    float:right;
-    /*color:white;
-    border:1px outset rgb(48, 57, 154);
-    border-radius:40px 10px;
-    background-color: #5da130;
-    width:50px;
-    padding-left:10px;*/
-}
 .item:hover, .itemTr:hover{
     font-weight:bold;
-}
-.item:hover a.oItem, .itemBuy a.oItem:hover{
-    /*text-shadow: black 0 0 2px;*/
-    float:right;
-    /*color:#ff5959;*/
-    /*color:white;
-    border:1px outset rgb(48, 57, 154);
-    border-radius:40px 10px;
-    background-color: rgb(255,187,028);
-    background-color: #daa520;
-    
-    width:60px;
-    padding-left:7px;*/
 }
 
 #Summary td:last-child{
