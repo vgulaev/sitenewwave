@@ -50,6 +50,10 @@ def report_1c(uid, sum):
 
 print("Content-Type: text/xml; charset=utf-8\n")
 
+f = open("testpay.txt", "w+")
+f.write(cgi.FieldStorage())
+f.close()
+
 form = cgi.FieldStorage()
 
 if "o.uid" in form and "amount" in form:
