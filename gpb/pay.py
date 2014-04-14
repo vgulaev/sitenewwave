@@ -50,39 +50,51 @@ def report_1c(uid, sum):
 
 print("Content-Type: text/xml; charset=utf-8\n")
 
-f = open("testpay.txt", "w+")
-f.write(cgi.FieldStorage())
-f.close()
-
 form = cgi.FieldStorage()
 
-if "o.uid" in form and "amount" in form:
-    result = report_1c(form["o.uid"].value, form["amount"].value)
-    if "SUCCESS" in result:
-        rs = """<?xml version='1.0' encoding='UTF-8'?>
-                    <register-payment-response>
-                       <result>
-                          <code>1</code>
-                          <desc>"""+result+"""</desc>
-                       </result>
-                    </register-payment-response>
-                """
+f = open("testpay.txt", "w+")
+f.write(form["result_code"].value)
+f.close()
+
+if "result_code" in form and form["result_code"].value == "1":
+
+    if "o.uid" in form and "amount" in form:
+        result = report_1c(form["o.uid"].value, form["amount"].value)
+        if "SUCCESS" in result:
+            rs = """<?xml version='1.0' encoding='UTF-8'?>
+                        <register-payment-response>
+                            <result>
+                                <code>1</code>
+                                <desc>"""+result+"""</desc>
+                            </result>
+                        </register-payment-response>
+                    """
+        else:
+            rs = """<?xml version='1.0' encoding='UTF-8'?>
+                        <register-payment-response>
+                            <result>
+                                <code>2</code>
+                                <desc>"""+result+"""</desc>
+                            </result>
+                        </register-payment-response>
+                    """
     else:
         rs = """<?xml version='1.0' encoding='UTF-8'?>
                     <register-payment-response>
-                       <result>
-                          <code>2</code>
-                          <desc>"""+result+"""</desc>
-                       </result>
+                        <result>
+                            <code>2</code>
+                            <desc>Нет идентификатора платежа или суммы</desc>
+                        </result>
                     </register-payment-response>
-                """
+            """
 else:
     rs = """<?xml version='1.0' encoding='UTF-8'?>
                     <register-payment-response>
-                       <result>
-                          <code>2</code>
-                          <desc>Нет идентификатора платежа или суммы</desc>
-                       </result>
+                        <result>
+                            <code>2</code>
+                            <desc>Платеж отменен</desc>
+                        </result>
                     </register-payment-response>
-                """
+            """
+
 print(rs)
