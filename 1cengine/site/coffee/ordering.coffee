@@ -63,6 +63,16 @@ class App.Item
         @ed_izm = char_array[3]
         @stock  = char_array[4]
 
+        i_hash = @id.slice 0, @id.indexOf(":")
+
+        if i_hash is "0"
+            @is_kis = true
+            @weight = 2
+            @length = 1000
+            @char = @weight
+        else
+            @is_kis = false
+
         @prices = []
         obj = $("tr[id='#{@id}']")
         $(obj).children().each (index, element) =>
@@ -73,6 +83,7 @@ class App.Item
 
             if ( $(element).attr("class").indexOf "price", 0 ) is 0
                 @prices.push $(element).children( "span" ).text()
+
 
     change_buy_count: (count) ->
         # alert(count)
@@ -107,6 +118,9 @@ class App.Item
 
             $(".buy_length").val(@buy_length)
 
+        if @is_kis
+            $(".char_length").val(@weight)
+
         $(".buy_weight").val(@buy_weight)
 
         @change_modal_price()
@@ -138,6 +152,16 @@ class App.Item
         @final_price = ( @buy_weight * @price_weight ).toFixed(2)
         $(".final_price").html(@final_price)
 
+    change_char_length: (n_length) ->
+        if n_length < 0.2
+            n_length = 0.2
+        else if n_length > 6
+            n_length = 6
+
+        @weight = n_length
+        @char = @weight
+
+        @change_buy_count($(".buy_count").val())
 
     show_modal: ->
         $.blockUI.defaults.css.borderRadius = '10px';
@@ -170,6 +194,10 @@ class App.Item
         $(".buy_weight").bind 'change', (event) =>
             @change_buy_weight($(".buy_weight").val())
 
+        if @is_kis
+            $(".char_length").bind 'change', (event) =>
+                @change_char_length($(".char_length").val())
+
         @change_modal_price()
 
         $(".add_to_basket").bind 'click', (event) =>
@@ -199,19 +227,34 @@ class App.Item
             c_input = '<input class="buy_count" value="---" disabled />'
         w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="'+@buy_weight+'" />'
 
+        if @is_kis
+            cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="'+@weight+'" />'
+
+            set_length = """
+                <span>Укажите требуемую длину листа: #{cl_input}</span>
+            """
+        else
+            set_length = ""
+
         edizm_dict = {
             "т":"Тонны",
             "шт":"Штуки",
             "м2":"Метры кв.",
             "кв.м.":"Метры кв.",
-            "пог.м":"Метры пог."
+            "кв. м.":"Метры кв.",
+            "пог.м":"Метры пог.",
+            "пог. м":"Метры пог."
             }
 
         c_izm = edizm_dict["#{@ed_izm}"]
 
+
+
+
         message = """
         <div class="buy_item_div">
         <span class="buy_item_name">#{@name} #{@char}</span>
+        #{set_length}
         <table class="buy_item_table">
         <tr class="buy_item_head">
         <th></th>
@@ -275,7 +318,8 @@ class Basket
         if index is -1
             @_item_list.push item
             @_sum = ( (+item.final_price) + (+@_sum) ).toFixed(2)
-            @_total_weight = ( (+item.buy_weight) + (+@_total_weight) ).toFixed(3)
+            if item.ed_izm is "т"
+                @_total_weight = ( (+item.buy_weight) + (+@_total_weight) ).toFixed(3)
             @_count++
 
             @change_basket()
@@ -316,7 +360,7 @@ class Basket
         $(".basketCount").html(@_count)
         $(".lItemTab").empty()
         for item in @_item_list
-            $(".#{item.ed_izm.replace('.','\\.')}").append(@create_row(item))
+            $(".#{item.ed_izm.replace('.','\\.').replace(' ','')}").append(@create_row(item))
             # $("#lItemTab").append(@create_row(item))
 
             $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
@@ -401,6 +445,134 @@ class Basket
 
     constructor: (@name) ->
 
+### DEPRECATED START!!!! ###
+
+isValidEmail = (str) ->
+    (str.indexOf(".") > 2) and (str.indexOf("@") > 0)
+
+sendOrder = (orderString, is_async) ->
+    is_async = true  if typeof is_async is "undefined"
+    if $("#selfCarry").is(":checked") is false
+        destination = $("#destination_input").val()
+
+    else
+        destination = ""
+        carry = ""
+        delivery_cost = ""
+    email = $("input#emailInput").val()
+    unless email is ""
+        if isValidEmail(email) is false
+            # $.unblockUI()
+            alert "Проверьте правильность адреса электронной почты"
+            return null
+    main_phone = $("#mainPhoneInput").val()
+    last_name = $("#lastNameInput").val()
+    name_surname = $("#nameSurnameInput").val()
+    other_phone = $("#otherPhoneInput").val()
+    ret = ""
+    $.ajax
+        type: "POST"
+        url: "/1cengine/php_scripts/createOrder.php"
+        async: is_async
+        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name
+        success: (html) ->
+            #var success = 'true';
+            ret = "номер " + html
+            $("#popUpOrderClose").show()
+            $(".oInProcess").hide()
+            $(".oProcessed").show()
+            $("#basketCaption").empty()
+            order = ret
+            oA = order.split(",")
+            $("#basketCaption").append "Заказ " + oA[0]
+            $("#switchOrderDiv").click()
+            ret
+
+    #alert(ret)
+    ret
+
+$("#sendOrderButton").click ->
+    createOrder()
+    return
+
+
+createOrder = () ->
+    if $("#emailInput").val() is ""
+
+        # $.unblockUI()
+        $("#switchNotificationDiv").click()
+        $("#emailInput").focus()
+    else if $("#mainPhoneInput").val() is ""
+
+        # $.unblockUI()
+        $("#switchNotificationDiv").click()
+        $("#phoneMainInput").focus()
+    else
+        $.blockUI.defaults.css.borderRadius = "10px" #убираем серую границу
+        $.blockUI.defaults.fadeIn = 100 #ускоряем появление
+        $.blockUI.defaults.fadeOut = 100 #и исчезновение
+        #$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+        $.blockUI.defaults.css.backgroundColor = "white"
+        $.blockUI.defaults.css.cursor = "defaults"
+        $.blockUI.defaults.css.boxShadow = "0px 0px 5px 5px rgb(207, 207, 207)"
+        $.blockUI.defaults.css.fontSize = "14px"
+        $.blockUI.defaults.css.width = "450px"
+        $.blockUI.defaults.css.height = "220px"
+        $.blockUI.defaults.css.paddingTop = "10px"
+        $.blockUI message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span><span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш запрос обработан</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"
+        sendRow = ""
+        $("tr.itemTr").each ->
+            unless $(this).find("input.itemCharInput").length is 0
+                sendRow += "" + $(this).find("input.itemCharInput").val() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
+            else
+                sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
+
+        order = sendOrder(sendRow)
+
+openLink = (linkUID, type) ->
+    $.ajax
+        type: "POST"
+        url: "/1cengine/php_scripts/getfilelink.php"
+        async: false
+        data: "linkUID=" + linkUID + "&type=" + type + ""
+        success: (html) ->
+            
+            #var success = 'true';
+            window.location.href = html
+            return
+
+    return
+
+getOrderFomat = (format) ->
+    $.blockUI.defaults.css.borderRadius = "10px" #убираем серую границу
+    $.blockUI.defaults.fadeIn = 100 #ускоряем появление
+    $.blockUI.defaults.fadeOut = 100 #и исчезновение
+    #$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+    $.blockUI.defaults.css.backgroundColor = "white"
+    $.blockUI.defaults.css.cursor = "defaults"
+    $.blockUI.defaults.css.boxShadow = "0px 0px 5px 5px rgb(207, 207, 207)"
+    $.blockUI.defaults.css.fontSize = "14px"
+    $.blockUI.defaults.css.width = "450px"
+    $.blockUI.defaults.css.height = "220px"
+    $.blockUI.defaults.css.paddingTop = "10px"
+    $.blockUI message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"
+    sendRow = ""
+    $("tr.itemTr").each ->
+        unless $(this).find("input.itemCharInput").length is 0
+            sendRow += "" + $(this).find("input.itemCharInput").val() + ":" + $(this).attr("name") + ":-:" + $(this).find("input.itemCountInput").val() + ":" + $(this).find(".itemPriceTd").html() + ";"
+        else
+            sendRow += "" + $(this).attr("name") + ":-:" + $(this).find("input.itemCountInput").val() + ":" + $(this).find(".itemPriceTd").html() + ";"
+        return
+
+    window.setTimeout (->
+        order = sendOrder(sendRow, false)
+        q = order.split(",")
+        openLink q[1], format
+        return
+    ), 1000
+    return
+
+### DEPRECATED END!!!! ###
 
 $(document).ready ->
 
@@ -424,3 +596,26 @@ $(document).ready ->
             item = new App.Item $(this).closest( "tr" ).attr("id")
         else
             item.show_modal()
+
+    $("#sendOrderButton").click ->
+        createOrder()
+
+    ### DEPRECATED ###
+
+    #/ Разбор GET-параметров ///
+    squery = String(document.location).replace(/\%2F/g, "\\")
+    squery = String(document.location).replace(/\s\s/g, "s")
+
+    # var squery = String(document.location).replace(/\+/g, "\s")
+    if squery.split("?", 2)[1]
+        parts = squery.split("?", 2)[1].split("&")
+        GET = {}
+        i = 0
+        while i < parts.length
+            curr = parts[i].split("=")
+            GET[curr[0]] = curr[1]
+            i++
+        openLink GET["linkUID"], GET["type"]    unless GET["linkUID"] is `undefined`
+
+
+    ### /DEPRECATED ###

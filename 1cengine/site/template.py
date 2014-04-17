@@ -129,24 +129,6 @@ def set_search_results():
         return result_table.compose_table()
 
 
-def set_show_all_result():
-    a_tag = soup.new_tag("a")
-    a_tag["id"] = "showAll"
-    a_tag["href"] = u"Все результаты"
-    a_tag["onClick"] = "return false"
-    a_tag.string = u"Показать все результаты "
-    if "catalog" not in form:
-        a_tag["style"] = "display:none"
-
-    span_count_tag = soup.new_tag("span")
-    span_count_tag["class"] = "count_all_result"
-    # span_count_tag.append("0")
-
-    a_tag.append(span_count_tag)
-
-    return a_tag
-
-
 def set_show_nexr_prev():
     span_tag = soup.new_tag("div")
     span_tag["id"] = "show_next_prev"
@@ -162,10 +144,25 @@ def set_show_nexr_prev():
     span_tag.append(prev_a_tag)
 
     current_span_tag = soup.new_tag("span")
+    current_span_tag["style"] = "display:none;"
     current_span_tag["class"] = "current_page"
     current_span_tag.string = "1"
 
     span_tag.append(current_span_tag)
+
+    a_tag = soup.new_tag("span")
+    a_tag["id"] = "showAll"
+    a_tag.string = u"Еще результаты: "
+    if "catalog" not in form:
+        a_tag["style"] = "display:none"
+
+    span_count_tag = soup.new_tag("span")
+    span_count_tag["class"] = "count_all_result"
+    # span_count_tag.append("0")
+
+    a_tag.append(span_count_tag)
+
+    span_tag.append(a_tag)
 
     next_a_tag = soup.new_tag("span")
     next_a_tag["class"] = "next_result"

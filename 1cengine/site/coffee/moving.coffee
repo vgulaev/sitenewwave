@@ -261,6 +261,7 @@ $(document).ready ->
                 $("#qRes").html html
                 PAGE = PAGE + 1
 
+
     $(".prev_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
@@ -275,7 +276,8 @@ $(document).ready ->
                     $("#qRes").html html
                     PAGE = PAGE - 1
 
-
+    $("#orderDiv").find(".next_step").click ->
+        switch_tabs("switchDeliveryDiv")
 
     $("#groups_list").find("li.main_group").each (index, element) =>
         $(element).click ->
