@@ -22,14 +22,46 @@ def get_items(term):
     ret = []
     connector = myDBC("goods")
     connector.dbConnect()
-    r = connector.dbExecute("""
-            SELECT DISTINCT SUBSTRING_INDEX(`display_name`, ' ', """+str(space_count)+""")
+    # r = connector.dbExecute("""
+    #         SELECT DISTINCT SUBSTRING_INDEX(`display_name`, ' ', """+str(space_count)+""")
+    #         FROM `offers`
+    #         WHERE `display_name` LIKE '"""+term+"""%'
+    #     """)
+
+    if term.__len__() < 2:
+        # r = connector.dbExecute("""
+        #         SELECT DISTINCT `name`
+        #         FROM `groups`
+        #         WHERE `parent_hash` = `hash`
+        #     """)
+        r = connector.dbExecute("""
+            SELECT DISTINCT SUBSTRING_INDEX(`display_name`, ' ', 1)
             FROM `offers`
-            WHERE `display_name` LIKE '"""+term+"""%'
+            WHERE `display_name` LIKE '%'
         """)
+    else:
+        # r = connector.dbExecute("""
+        #         SELECT DISTINCT `name`
+        #         FROM `groups`
+        #         WHERE `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
+        #             AND `parent_hash` != `hash`
+        #     """)
+
+        r = connector.dbExecute("""
+                SELECT DISTINCT `name`
+                FROM `groups`
+                WHERE ( `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
+                    AND `parent_hash` != `hash` ) OR (`name` LIKE '"""+term+"""%' AND `hash`=`parent_hash`)
+            """)
+
 
     for row in r:
-        ret.append(str(row[0]) + " ")
+
+        r_a = str(row[0]).split(" ")
+        if term.__len__() > 1 and term.strip().lower() != r_a[0].strip().lower():
+            ret.append(term + " " + str(row[0]))
+        else:
+            ret.append(str(row[0]))
 
     connector.dbClose()
 

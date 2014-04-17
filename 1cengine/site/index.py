@@ -191,12 +191,10 @@ class Index_Page():
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/global.js",
             "/1cengine/site/js/moving.js",
-            "/1cengine/site/js/modern_uiJs.js.js",
-            "/1cengine/site/js/modern_ui_goods_handler.js",
-            "/lib/frameworks/raf_sha256.js",
-            "/lib/frameworks/jqrequired/jquery.primepix.kladr.min.js",
-            "/1cengine/site/js/kladr.js",
-            "http://api-maps.yandex.ru/2.0.18/?load=package.standard&mode=release&lang=ru-RU"
+            # "/1cengine/site/js/modern_uiJs.js.js",
+            # "/1cengine/site/js/modern_ui_goods_handler.js",
+            "/1cengine/site/js/ordering.js",
+            "/lib/frameworks/raf_sha256.js"
         ]
 
         self.style_list = [

@@ -108,7 +108,9 @@
   };
 
   $(document).ready(function() {
-    var item, name;
+    var PAGE, c_url, is_empty, item, name, things,
+      _this = this;
+    PAGE = 1;
     if ($("#tags").css("display") === "none") {
       $("#showGroupsDiv").show();
     }
@@ -136,13 +138,15 @@
       $("#groupDiv").hide();
       value = $("#itemName").val();
       value = value.replace("+", " ");
-      return $.ajax({
+      $("#qRes").fadeOut(400);
+      $.ajax({
         type: "GET",
         url: "/1cengine/py_scripts/get_items_bs.py",
         async: true,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
           $("#qRes").html(html);
+          $("#qRes").fadeIn(400);
           if ($(".item").length >= 1) {
             $("#tags").hide();
             $("#showGroupsDiv").show();
@@ -160,7 +164,36 @@
           window.history.pushState({
             term: value
           }, '', '/1cengine/site/' + $.trim(value) + '/');
-          return $("#show_groups").show();
+          $(".bItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          $(".oItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          return false;
+        }
+      });
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_count_items.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "",
+        success: function(html) {
+          return $(".count_all_result").html(html);
         }
       });
     });
@@ -178,7 +211,7 @@
     $("#show_groups").click(function() {
       return show_groups();
     });
-    return $("#showAll").click(function() {
+    $("#showAll").click(function() {
       var value;
       value = $("#itemName").val();
       value = value.replace("+", " ");
@@ -201,11 +234,130 @@
           if ($(".item").length === 20) {
             return $("#showAll").show();
           } else {
-            return $("#showAll").hide();
+            $("#showAll").hide();
+            $(".bItem").click(function() {
+              var elem_id;
+              elem_id = $(this).closest("tr").attr("id");
+              item = App.Item.elem_exist(elem_id);
+              if (item === false) {
+                return item = new App.Item($(this).closest("tr").attr("id"));
+              } else {
+                return item.show_modal();
+              }
+            });
+            return $(".oItem").click(function() {
+              var elem_id;
+              elem_id = $(this).closest("tr").attr("id");
+              item = App.Item.elem_exist(elem_id);
+              if (item === false) {
+                return item = new App.Item($(this).closest("tr").attr("id"));
+              } else {
+                return item.show_modal();
+              }
+            });
           }
         }
       });
     });
+    $(".next_result").click(function() {
+      var value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items_bs.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "&page=" + PAGE + 1 + "",
+        success: function(html) {
+          $("#qRes").html(html);
+          return PAGE = PAGE + 1;
+        }
+      });
+    });
+    $(".prev_result").click(function() {
+      var n_page, value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      if (PAGE !== 1) {
+        n_page = PAGE - 1;
+        return $.ajax({
+          type: "GET",
+          url: "/1cengine/py_scripts/get_items_bs.py",
+          async: true,
+          data: "term=" + encodeURIComponent(value) + "&page=" + n_page + "",
+          success: function(html) {
+            $("#qRes").html(html);
+            return PAGE = PAGE - 1;
+          }
+        });
+      }
+    });
+    $("#orderDiv").find(".next_step").click(function() {
+      return switch_tabs("switchDeliveryDiv");
+    });
+    $("#groups_list").find("li.main_group").each(function(index, element) {
+      return $(element).click(function() {
+        var g_name;
+        g_name = $(this).attr("name");
+        if ($(element).hasClass("active_group") === false) {
+          $("#itemName").val(g_name);
+          $("#itemName").change();
+          $("#groups_list").find("li.main_group").removeClass("active_group");
+          $(element).addClass("active_group");
+        }
+        if ($(element).children().is(".subgroup_c") === false) {
+          $(element).append("<ul class=\"subgroup_c\"></ul>");
+          return $.ajax({
+            type: "GET",
+            url: "/1cengine/py_scripts/item_autocomplete.py",
+            async: false,
+            data: "term=" + encodeURIComponent(g_name) + "",
+            success: function(html) {
+              var subgroup, subgroups, _fn, _i, _len,
+                _this = this;
+              subgroups = JSON.parse(html);
+              _fn = function(subgroup) {
+                var subgroup_name;
+                subgroup_name = subgroup.replace(g_name, "");
+                return $(element).find("ul").append(("<li class='subgroup' name='" + subgroup_name + "'>") + subgroup_name + "</li>");
+              };
+              for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
+                subgroup = subgroups[_i];
+                _fn(subgroup);
+              }
+              return $(element).find("li.subgroup").each(function(index, sgroup) {
+                return $(sgroup).click(function() {
+                  var i_name;
+                  $(".subgroup").removeClass("active_subgroup");
+                  $(sgroup).addClass("active_subgroup");
+                  i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
+                  $("#itemName").val(i_name);
+                  return $("#itemName").change();
+                });
+              });
+            }
+          });
+        }
+      });
+    });
+    $("li.subgroup").each(function(index, sgroup) {
+      return $(sgroup).click(function() {
+        var g_name, group, i_name;
+        $(".subgroup").removeClass("active_subgroup");
+        $(sgroup).addClass("active_subgroup");
+        group = $(sgroup).closest(".active_group");
+        g_name = $(group).attr("name");
+        i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
+        $("#itemName").val(i_name);
+        return $("#itemName").change();
+      });
+    });
+    c_url = window.location.pathname;
+    is_empty = c_url.replace("/1cengine/site/", "");
+    if (is_empty.length < 3) {
+      things = $("li.main_group");
+      return $(things[Math.floor(Math.random() * things.length)]).click();
+    }
   });
 
 }).call(this);

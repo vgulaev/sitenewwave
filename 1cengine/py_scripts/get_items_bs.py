@@ -15,6 +15,11 @@ from secrets import *
 soup = BeautifulSoup()
 
 
+synonims = {
+    "Сталь": "ст."
+}
+
+
 class ResultTable():
 
     def __init__(self, req, rtype):
@@ -22,7 +27,7 @@ class ResultTable():
         self.req = req
         self.rtype = rtype
 
-    def get_items(self, item_limit):
+    def get_items(self, item_limit, item_offset):
 
         connector = myDBC("goods")
         connector.dbConnect()
@@ -38,39 +43,43 @@ class ResultTable():
 
         else:
             reqArray = self.req.split(" ")
+            condition_array = []
             for reqWord in reqArray:
                 if reqWord.__len__() > 1:
-                    condition = condition + \
-                        "`offers`.`name` LIKE '%" + reqWord + "%' AND "
+                    condition_array.append(
+                        "`offers`.`name` LIKE '%" + reqWord + "%'")
                 else:
-                    condition = condition + \
-                        "`offers`.`name` LIKE '% " + reqWord + "%' AND "
+                    condition_array.append(
+                        "`offers`.`name` LIKE '% " + reqWord + "%'")
 
-            limit = "ORDER BY `offers`.`stock` DESC LIMIT " + str(item_limit)
+            condition = condition + "(" + " AND ".join(condition_array)
+            limit = "ORDER BY `offers`.`stock` DESC, `offers`.`parent_hash` DESC LIMIT " + str(item_offset) + "," + str(item_limit)
 
         r = connector.dbExecute("""
-                SELECT `offers`.`display_name`,
+                SELECT DISTINCT `offers`.`display_name`,
                 `offers`.`char_name`, `offers`.`price`,
                 `offers`.`price_type`, `groups`.`name`,
                 `offers`.`hash`, `offers`.`edIzm`,
                 `offers`.`father_hash`, `offers`.`stock`
                 FROM `offers`, `groups`
                 """ + condition + """
-                `offers`.`parent_hash`=`groups`.`hash` """ + limit + """
+                AND `offers`.`parent_hash`=`groups`.`hash` )
+
+                 """ + limit + """
             """)
 
         connector.dbClose()
 
         return r
 
-    def compose_table(self, limit=20):
+    def compose_table(self, limit=20, offset=0):
         result_table_tag = soup.new_tag("table")
 
         result_table_tag["id"] = "tableRes"
 
         parent_array = []
 
-        r = self.get_items(limit)
+        r = self.get_items(limit, offset)
 
         for row in r:
             if not row[4] in parent_array:
@@ -139,6 +148,10 @@ class ItemGroup():
 
         for price_tag in price_tag_array:
             header_tag.append(price_tag)
+
+        header_buy_tag = soup.new_tag("td")
+        header_buy_tag.append(u"В корзину")
+        header_tag.append(header_buy_tag)
 
         return header_tag
 
@@ -302,45 +315,6 @@ class Item():
         item_name_span_tag.append(self.name.decode("utf-8"))
         item_name_tag.append(item_name_span_tag)
 
-        item_buy_span_tag = soup.new_tag("span")
-        item_buy_span_tag["class"] = "buySpan"
-
-        item_buy_a_tag = soup.new_tag("a")
-        if self.stocked:
-            item_buy_a_tag["class"] = u"bItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-                'onBuyLinkPressed', 'купить');
-                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-                '""" + self.ed_izm.decode("utf-8") + "', '" \
-                + self.price_string.decode("utf-8") + """','1');
-                return false"""
-
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'купить');
-            #     return false"""
-
-            item_buy_a_tag.append(u"купить")
-        else:
-            item_buy_a_tag["class"] = "oItem"
-            item_buy_a_tag["href"] = u"Добавить в корзину"
-
-            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-                'onBuyLinkPressed', 'заказать');
-                openItem('""" + self.item_hash + ":" + self.parent_hash + """',
-                '""" + self.ed_izm.decode("utf-8") + "', '" \
-                + self.price_string.decode("utf-8") + """','0');
-                return false"""
-
-            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-            #     'onBuyLinkPressed', 'заказать');
-            #     return false"""
-
-            item_buy_a_tag.append(u"заказать")
-
-        item_buy_span_tag.append(item_buy_a_tag)
-        item_name_tag.append(item_buy_span_tag)
 
         item_tag.append(item_name_tag)
 
@@ -367,10 +341,65 @@ class Item():
 
         item_tag.append(item_char_tag)
 
+
         # FINISHED char td composing ####
+
+        # price composing ####
 
         for item_price_tag in self.compose_price():
             item_tag.append(item_price_tag)
+
+        # FINISHED price composing ####
+
+        # to basket td composing ####
+
+        item_buy_tag = soup.new_tag("td")
+        item_buy_tag["class"] = "itemBuy"
+
+        item_buy_span_tag = soup.new_tag("span")
+        item_buy_span_tag["class"] = "buySpan"
+
+        item_buy_a_tag = soup.new_tag("a")
+        if self.stocked:
+            item_buy_a_tag["class"] = u"bItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'купить');
+            #     openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+            #     '""" + self.ed_izm.decode("utf-8") + "', '" \
+            #     + self.price_string.decode("utf-8") + """','1');
+            #     return false"""
+
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+                'onBuyLinkPressed', 'купить');
+                return false"""
+
+            item_buy_a_tag.append(item_buy_span_tag)
+        else:
+            item_buy_a_tag["class"] = "oItem"
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+
+            # item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+            #     'onBuyLinkPressed', 'заказать');
+            #     openItem('""" + self.item_hash + ":" + self.parent_hash + """',
+            #     '""" + self.ed_izm.decode("utf-8") + "', '" \
+            #     + self.price_string.decode("utf-8") + """','0');
+            #     return false"""
+
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+                'onBuyLinkPressed', 'заказать');
+                return false"""
+
+            item_buy_a_tag.append(item_buy_span_tag)
+
+        # item_buy_span_tag.append(item_buy_a_tag)
+
+        item_buy_tag.append(item_buy_a_tag)
+
+        item_tag.append(item_buy_tag)
+
+        # FINISHED to basket td composing ####
 
         return item_tag
 
@@ -385,7 +414,13 @@ if "term" in form:
         print str(result_table.compose_table(231))
     else:
         print "Content-Type: text/html; charset=utf-8\n"
-        print str(result_table.compose_table())
+
+        if "page" in form:
+            offset = int(form["page"].value) + 20
+            limit = 20
+            print str(result_table.compose_table(limit, offset))
+        else:
+            print str(result_table.compose_table())
 
 # g = ResultTable("Арматура","catalog")
 # print g.compose_table().prettify()
