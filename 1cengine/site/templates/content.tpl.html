@@ -23,9 +23,9 @@
                     <p><noindex><a href='javascript:createOrder()' title='Сохранить заказ' rel="nofollow">Оформить заказ</a></noindex></p>
                     <p>Скачать заказ:
                         <ul>
-                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
-                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
-                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
+                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать заказ в формате xls">xls</a></li>
+                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать заказ в формате pdf">pdf</a></li>
+                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать заказ в формате ods">ods</a></li>
                         </ul>
                     </p>
 
@@ -45,16 +45,15 @@
                         <div id="price_get">
                             <span>Прайс:</span>
                             <ul>
-                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
-                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
-                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
+                            <li><a href='/download/files/price.xls' title="Скачать прайс в формате xls">xls</a></li>
+                            <li><a href='/download/files/price.pdf' title="Скачать прайс в формате pdf">pdf</a></li>
+                            <li><a href='/download/files/price.ods' title="Скачать прайс в формате ods">ods</a></li>
                             </ul>
                         </div>
                         <div id="tabBasket">Корзина (<span class='basketCount'>0</span>)</div>
                         </div>
 
                     </div><br />
-                    <noindex><a href="Показать группы" id="show_groups" title="Показать группы товаров" rel="nofollow" onclick="return false" ><div id="showGroupsDiv">Показать группы</div></a></noindex>
                     <span id="hollowResult"></span>
                     <div id="qRes">
                             <pythonscript>
@@ -72,9 +71,6 @@
                         </pythonscript>
                     </p>
 
-                    <pythonscript>
-                        {template.set_tags_div()}
-                    </pythonscript>
                 </div>
                 <div id="basketDiv" style="display:none">
                     <span id="basketCaption">Заказ покупателя</span>

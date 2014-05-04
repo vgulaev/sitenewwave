@@ -368,6 +368,7 @@ tr.iHeader{
 
 #show_next_prev{
     margin-left: 150px;
+    display: none;
 }
 
 #showBasketSpan a{

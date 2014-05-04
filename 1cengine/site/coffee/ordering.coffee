@@ -130,7 +130,7 @@ class App.Item
 
         if @is_measureable()
             @price_length = ( ( @price_weight / 1000 ) * @weight ).toFixed(2)
-            @price_count = ( @price_length * @length ).toFixed(2)
+            @price_count = ( ( @price_weight * @buy_weight ) / @buy_count ).toFixed(2)
 
             # $(".price_length").html(@price_length)
             $(".price_count").html(@price_count)
@@ -264,7 +264,9 @@ class App.Item
         </tr>
         <tr class="buy_item_count">
         <td>Количество</td>
-
+        <td style="display:none">
+            #{l_input}
+        </td>
         <td>
             #{c_input}
         </td>
@@ -346,17 +348,31 @@ class Basket
         item = @find_by_id(id)
         index = @_item_list.indexOf(item)
         if index > -1
-            @_sum = ( (+@_sum) - (+item.final_price) ).toFixed(2)
-            @_total_weight = ( (+@_total_weight) - (+item.buy_weight) ).toFixed(3)
+            # @_sum = ( (+@_sum) - (+item.final_price) ).toFixed(2)
+            # @_total_weight = ( (+@_total_weight) - (+item.buy_weight) ).toFixed(3)
+            
+            i_id = "##{item.id}".replace(":", "\\:")
+            $("#{i_id}").removeClass("in_basket")
+
+
             @_count--
             @_item_list.splice(index,1)
+            # alert(@_item_list)
 
-            @change_basket()
+            for elem in @_item_list
+                @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
+                @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
+
+                @change_basket()
+
+            
+        # @change_basket()
 
     @get_count: ->
         @_count
 
     @change_basket: ->
+        # alert(@_sum)
         $(".basketCount").html(@_count)
         $(".lItemTab").empty()
         for item in @_item_list
@@ -365,14 +381,14 @@ class Basket
 
             $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
                 target = $(event.currentTarget)
-                @delete_item(target.closest( "tr" ).attr("name"))
+                Basket.delete_item(target.closest( "tr" ).attr("name"))
 
             $("tr[name='#{item.id}']").find(".edit_from_basket").bind "click", (event) =>
                 target = $(event.currentTarget)
                 element = @find_by_id(target.closest( "tr" ).attr("name"))
                 element.show_modal()
 
-                @change_basket()
+                # @change_basket()
 
         nds = ( ( @_sum / 100 ) * 18 ).toFixed(2)
         $("#SumGoods").html(@_sum)

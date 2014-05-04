@@ -146,9 +146,9 @@ $(document).ready ->
                     $("#showGroupsDiv").hide()
 
                 if $(".item").length is 20
-                    $("#showAll").show()
+                    $("#show_next_prev").show()
                 else
-                    $("#showAll").hide()
+                    $("#show_next_prev").hide()
 
                 window.history.pushState(
                     {term: value},
@@ -214,13 +214,9 @@ $(document).ready ->
                 $("#qRes").html html
 
                 if $(".item").length >= 1
-                    $("#tags").hide()
-                    $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
                     $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-                    $("#tags").show()
-                    $("#showGroupsDiv").hide()
 
                 if $(".item").length is 20
                     $("#showAll").show()

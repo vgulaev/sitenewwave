@@ -157,9 +157,9 @@
             $("#showGroupsDiv").hide();
           }
           if ($(".item").length === 20) {
-            $("#showAll").show();
+            $("#show_next_prev").show();
           } else {
-            $("#showAll").hide();
+            $("#show_next_prev").hide();
           }
           window.history.pushState({
             term: value
@@ -223,13 +223,9 @@
         success: function(html) {
           $("#qRes").html(html);
           if ($(".item").length >= 1) {
-            $("#tags").hide();
-            $("#showGroupsDiv").show();
             $("#hollowResult").empty();
           } else {
             $("#hollowResult").html("Извините, но по заданному запросу товар не найден");
-            $("#tags").show();
-            $("#showGroupsDiv").hide();
           }
           if ($(".item").length === 20) {
             return $("#showAll").show();
