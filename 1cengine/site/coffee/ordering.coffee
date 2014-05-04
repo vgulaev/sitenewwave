@@ -350,7 +350,6 @@ class Basket
         if index > -1
             # @_sum = ( (+@_sum) - (+item.final_price) ).toFixed(2)
             # @_total_weight = ( (+@_total_weight) - (+item.buy_weight) ).toFixed(3)
-            
             i_id = "##{item.id}".replace(":", "\\:")
             $("#{i_id}").removeClass("in_basket")
 
@@ -365,7 +364,6 @@ class Basket
 
                 @change_basket()
 
-            
         # @change_basket()
 
     @get_count: ->
