@@ -358,13 +358,15 @@ class Basket
             @_item_list.splice(index,1)
             # alert(@_item_list)
 
+            @_sum = 0
+            @_total_weight = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
                 @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
 
-                @change_basket()
+                # @change_basket()
 
-        # @change_basket()
+        @change_basket()
 
     @get_count: ->
         @_count

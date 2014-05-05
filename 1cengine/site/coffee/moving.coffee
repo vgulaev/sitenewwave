@@ -141,9 +141,7 @@ $(document).ready ->
                     $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
-                    $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-                    $("#tags").show()
-                    $("#showGroupsDiv").hide()
+                    $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
 
                 if $(".item").length is 20
                     $("#show_next_prev").show()
@@ -218,10 +216,76 @@ $(document).ready ->
                 else
                     $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
 
-                if $(".item").length is 20
-                    $("#showAll").show()
-                else
-                    $("#showAll").hide()
+                $("#show_next_prev").hide()
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+
+    $(".next_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
+            success: (html) ->
+                $("#qRes").html html
+                PAGE = PAGE + 1
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+
+    $(".prev_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+        if PAGE != 1
+            n_page = PAGE - 1
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/get_items_bs.py"
+                async: true
+                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
+                success: (html) ->
+                    $("#qRes").html html
+                    PAGE = PAGE - 1
 
                     $(".bItem").click ->
 
@@ -242,35 +306,6 @@ $(document).ready ->
                             item = new App.Item $(this).closest( "tr" ).attr("id")
                         else
                             item.show_modal()
-
-
-    $(".next_result").click ->
-        value = $("#itemName").val()
-        value = value.replace("+", " ")
-
-        $.ajax
-            type: "GET"
-            url: "/1cengine/py_scripts/get_items_bs.py"
-            async: true
-            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
-            success: (html) ->
-                $("#qRes").html html
-                PAGE = PAGE + 1
-
-
-    $(".prev_result").click ->
-        value = $("#itemName").val()
-        value = value.replace("+", " ")
-        if PAGE != 1
-            n_page = PAGE - 1
-            $.ajax
-                type: "GET"
-                url: "/1cengine/py_scripts/get_items_bs.py"
-                async: true
-                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
-                success: (html) ->
-                    $("#qRes").html html
-                    PAGE = PAGE - 1
 
     $("#orderDiv").find(".next_step").click ->
         switch_tabs("switchDeliveryDiv")

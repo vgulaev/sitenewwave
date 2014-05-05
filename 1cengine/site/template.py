@@ -144,7 +144,7 @@ def set_show_nexr_prev():
     span_tag.append(prev_a_tag)
 
     current_span_tag = soup.new_tag("span")
-    current_span_tag["style"] = "display:none;"
+    # current_span_tag["style"] = "display:none;"
     current_span_tag["class"] = "current_page"
     current_span_tag.string = "1"
 

@@ -152,9 +152,7 @@
             $("#showGroupsDiv").show();
             $("#hollowResult").empty();
           } else {
-            $("#hollowResult").html("Извините, но по заданному запросу товар не найден");
-            $("#tags").show();
-            $("#showGroupsDiv").hide();
+            $("#hollowResult").html("<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>");
           }
           if ($(".item").length === 20) {
             $("#show_next_prev").show();
@@ -227,10 +225,79 @@
           } else {
             $("#hollowResult").html("Извините, но по заданному запросу товар не найден");
           }
-          if ($(".item").length === 20) {
-            return $("#showAll").show();
-          } else {
-            $("#showAll").hide();
+          $("#show_next_prev").hide();
+          $(".bItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          return $(".oItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+        }
+      });
+    });
+    $(".next_result").click(function() {
+      var value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      return $.ajax({
+        type: "GET",
+        url: "/1cengine/py_scripts/get_items_bs.py",
+        async: true,
+        data: "term=" + encodeURIComponent(value) + "&page=" + PAGE + 1 + "",
+        success: function(html) {
+          $("#qRes").html(html);
+          PAGE = PAGE + 1;
+          $(".bItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+          return $(".oItem").click(function() {
+            var elem_id;
+            elem_id = $(this).closest("tr").attr("id");
+            item = App.Item.elem_exist(elem_id);
+            if (item === false) {
+              return item = new App.Item($(this).closest("tr").attr("id"));
+            } else {
+              return item.show_modal();
+            }
+          });
+        }
+      });
+    });
+    $(".prev_result").click(function() {
+      var n_page, value;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      if (PAGE !== 1) {
+        n_page = PAGE - 1;
+        return $.ajax({
+          type: "GET",
+          url: "/1cengine/py_scripts/get_items_bs.py",
+          async: true,
+          data: "term=" + encodeURIComponent(value) + "&page=" + n_page + "",
+          success: function(html) {
+            $("#qRes").html(html);
+            PAGE = PAGE - 1;
             $(".bItem").click(function() {
               var elem_id;
               elem_id = $(this).closest("tr").attr("id");
@@ -251,39 +318,6 @@
                 return item.show_modal();
               }
             });
-          }
-        }
-      });
-    });
-    $(".next_result").click(function() {
-      var value;
-      value = $("#itemName").val();
-      value = value.replace("+", " ");
-      return $.ajax({
-        type: "GET",
-        url: "/1cengine/py_scripts/get_items_bs.py",
-        async: true,
-        data: "term=" + encodeURIComponent(value) + "&page=" + PAGE + 1 + "",
-        success: function(html) {
-          $("#qRes").html(html);
-          return PAGE = PAGE + 1;
-        }
-      });
-    });
-    $(".prev_result").click(function() {
-      var n_page, value;
-      value = $("#itemName").val();
-      value = value.replace("+", " ");
-      if (PAGE !== 1) {
-        n_page = PAGE - 1;
-        return $.ajax({
-          type: "GET",
-          url: "/1cengine/py_scripts/get_items_bs.py",
-          async: true,
-          data: "term=" + encodeURIComponent(value) + "&page=" + n_page + "",
-          success: function(html) {
-            $("#qRes").html(html);
-            return PAGE = PAGE - 1;
           }
         });
       }
