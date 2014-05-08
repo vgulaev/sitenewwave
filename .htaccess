@@ -11,6 +11,7 @@ RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)$ 1cengine/site/index.py?catalog=$1 [L]
 
+RewriteRule ^1cengine/site/json/ - [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^1cengine/py_scripts/ - [L]

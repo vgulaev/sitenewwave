@@ -200,8 +200,8 @@ class Index_Page():
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
-            "/1cengine/site/css/modern_style.css",
-            "/1cengine/site/css/kladr.css"
+            "/1cengine/site/css/modern_style.css"
+            # "/1cengine/site/css/kladr.css"
         ]
 
         head = self.compose_head_temlplate()

@@ -93,6 +93,34 @@ showGroup2 = (term) ->
     $("#itemName").change()
     $.unblockUI()
 
+load_delivery_cost = () ->
+    # alert("nya")
+    $.ajax
+        type: "GET"
+        url: "/1cengine/json/delivery.json"
+        async: false
+        data: ""
+        success: (html) ->
+            # alert $(".active_city").attr("name")
+            opt_string = "<option>--</option>"
+            # if $(".active_city").attr("name") is "city"
+            for key, value of html[$(".active_city").attr("name")]
+                # alert key + " : " + value
+                opt_string  = opt_string + "<option value='#{value}'>#{key}</option>"
+                # alert html["city"][key]
+
+            $(".city_select").html opt_string
+
+show_dop_uslugi = (chkbox) ->
+    if $(chkbox).is(":checked")
+        $(".is_in_city").show()
+        $(".city_choose").show()
+        load_delivery_cost()
+    else
+        $(".is_in_city").hide()
+        $(".city_choose").hide()
+
+
 
 $(document).ready ->
 
@@ -366,3 +394,15 @@ $(document).ready ->
     if is_empty.length < 3
         things = $("li.main_group")
         $(things[Math.floor(Math.random()*things.length)]).click()
+
+    $("#i_want_delivery").change ->
+        show_dop_uslugi(this)
+
+    $(".is_city_choose").click ->
+        $(".active_city").removeClass("active_city")
+        $(this).addClass("active_city")
+        load_delivery_cost()
+
+    $(".city_select").change ->
+        $(".delivery_cost").html $(".city_select option:selected").val()
+        # alert($(".city_select option:selected").val())
