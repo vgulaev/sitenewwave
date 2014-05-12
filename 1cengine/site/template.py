@@ -22,7 +22,7 @@ if "catalog" in form:
     import json
     seo_tags = json.loads(json_string)
 
-    seo_tag_exists = form["catalog"].value.decode("utf-8") in seo_tags
+    seo_tag_exists = form["catalog"].value.decode("utf-8").replace(" ", "_") in seo_tags
 
     # print seo_tags.has_key(form["catalog"].value.decode("utf-8"))
 
@@ -33,7 +33,7 @@ def set_title():
     if "ref" in form:
         title_string = form["ref"].value + " купить онлайн | Тримет ООО "
     elif seo_tag_exists:
-        title_string = seo_tags[form["catalog"].value.decode("utf-8")]["title"]
+        title_string = seo_tags[form["catalog"].value.decode("utf-8").replace(" ", "_")]["title"]
     else:
         title_string = "Купить Online"
 
@@ -78,7 +78,7 @@ def set_description():
     description_tag["name"] = "description"
     if seo_tag_exists:
         description_tag["content"] = seo_tags[
-            form["catalog"].value.decode("utf-8")]["description"]
+            form["catalog"].value.decode("utf-8").replace(" ", "_")]["description"]
     else:
         description_tag[
             "content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
@@ -193,7 +193,7 @@ def set_tags_div():
 
 def show_seo_text():
     if seo_tag_exists is True:
-        seo_value = seo_tags[form["catalog"].value.decode("utf-8")]
+        seo_value = seo_tags[form["catalog"].value.decode("utf-8").replace(" ", "_")]
         if "text" in seo_value:
             return BeautifulSoup(seo_value["text"])
 
