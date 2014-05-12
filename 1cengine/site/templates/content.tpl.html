@@ -14,40 +14,46 @@
             <td id="leftTr">
 
                 <div id='showBasketSpan'>
-                    <p><noindex><a href='Показать%20заказ' title='Заказ' id='tabBasket' onClick='return false' rel="nofollow">Показать заказ (<span class='basketCount'>0</span>)</a></noindex></p>
-                    <p>Скачать прайс:
-                        <ul>
-                            <li><a href="/download/files/price.xlsx" title="Скачать прайс в формате xls">xls</a></li>
-                            <li><a href="/download/files/price.pdf" title="Скачать прайс в формате pdf">pdf</a></li>
-                            <li><a href="/download/files/price.ods" title="Скачать прайс в формате ods">ods</a></li>
-                        </ul>
-                    </p>
+                    <pythonscript>
+                        {template.set_groups()}
+                    </pythonscript>
                 </div>
                 <div id='showPriceSpan'>
                     <p><noindex><a href='Показать%20прайс' title='В прайс' id='tabPrice' onClick='return false' rel="nofollow" >Добавить товар</a></noindex></p>
                     <p><noindex><a href='javascript:createOrder()' title='Сохранить заказ' rel="nofollow">Оформить заказ</a></noindex></p>
                     <p>Скачать заказ:
                         <ul>
-                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать прайс в формате xls">xls</a></li>
-                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать прайс в формате pdf">pdf</a></li>
-                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать прайс в формате ods">ods</a></li>
+                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать заказ в формате xls">xls</a></li>
+                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать заказ в формате pdf">pdf</a></li>
+                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать заказ в формате ods">ods</a></li>
                         </ul>
                     </p>
 
                 </div>
-                
+                <!-- <hr /> -->
             </td>
             <td id="mainTr" rowspan="2">
                 <div id="pTableContentTab">
                     <div id="searchDiv">
-                        
+
                         <pythonscript>
                             {template.set_search_value()}
-                        </pythonscript> 
+                        </pythonscript>
 
-                        <div id="searchButton">Найти</div>
+                        <div id="searchButton"></div>
+                        <div id="price_basket_container">
+                        <div id="price_get">
+                            <span>Прайс:</span>
+                            <ul>
+                            <li><a href='/download/files/price.xlsx' title="Скачать прайс в формате xls">xls</a></li>
+                            <li><a href='/download/files/price.pdf' title="Скачать прайс в формате pdf">pdf</a></li>
+                            <li><a href='/download/files/price.ods' title="Скачать прайс в формате ods">ods</a></li>
+                            </ul>
+                        </div>
+                        <div id="tabBasket">Корзина (<span class='basketCount'>0</span>)</div>
+                        </div>
+
                     </div><br />
-                    <noindex><a href="Показать группы" id="show_groups" title="Показать группы товаров" rel="nofollow" onclick="return false" ><div id="showGroupsDiv">Показать группы</div></a></noindex>
                     <span id="hollowResult"></span>
                     <div id="qRes">
                             <pythonscript>
@@ -55,28 +61,28 @@
                             </pythonscript>
                     </div>
                     <p>
+
                         <pythonscript>
-                            {template.set_show_all_result()}
+                            {template.set_show_nexr_prev()}
                         </pythonscript>
-  
+
                         <pythonscript>
                             {template.show_seo_text()}
                         </pythonscript>
                     </p>
 
-                    <pythonscript>
-                        {template.set_tags_div()}
-                    </pythonscript>
                 </div>
                 <div id="basketDiv" style="display:none">
                     <span id="basketCaption">Заказ покупателя</span>
 
                     <div id="switchDiv">
-                        <div class="activeDiv" id="switchOrderDiv">Товары</div>
-                        <div class="inactiveDiv" id="switchDeliveryDiv">Доставка</div>
-                        <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
-                        <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
+                        <div class="switchDivBackground">
+                            <div class="activeDiv" id="switchOrderDiv">Товары</div>
+                            <div class="inactiveDiv" id="switchDeliveryDiv">Дополнительные услуги</div>
+                            <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
+                        </div>
                     </div>
+                    <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
                     <div id="orderDiv">
                         <table id='basketTab' cellspacing='0' cellpadding='0'>
                           <thead>
@@ -84,19 +90,19 @@
                                 <th class='itemHeader'>
                                     №
                                 </th>
-                                
+
                                 <th class='itemHeader'>
                                     Номенклатура
                                 </th>
-                                
+
                                 <th class='itemHeader'>
                                     Хар-ка
                                 </th>
-                                
+
                                 <th class='itemHeader'>
                                     Кол-во
                                 </th>
-                                
+
                                 <th class='itemHeader'>
                                     Ед.
                                 </th>
@@ -104,7 +110,7 @@
                                 <th class='itemHeader'>
                                     Цена
                                 </th>
-                                
+
                                 <th class='itemHeader NDSHeader'>
                                     Ставка НДС
                                 </th>
@@ -112,20 +118,61 @@
                                 <th class='itemHeader NDSHeader'>
                                     Сумма НДС
                                 </th>
-                                
+
                                 <th class='itemHeader'>
                                     Сумма
                                 </th>
 
-                                <th style='display:none'>
+                                <th class='itemHeader'>
                                 </th>
                              </tr>
                           </thead>
-                          <tbody id='lItemTab'>
-      
+                          <tbody class="lItemTab т">
+
                           </tbody>
+                          <tbody class='lItemTab шт'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab м2'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab кв.м.'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab пог.м'>
+
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td><strong>Общий вес:</strong></td>
+                                  <td id='CountAll'></td>
+                                  <td></td>
+                                  <td class="itemNdsKfTd"></td>
+                                  <td class="itemNdsSumTd"></td>
+                                  <td><strong>Итого:</strong></td>
+                                  <td id='SumGoods'></td>
+                                  <td></td>
+                              </tr>
+                              <tr class="ndsAllsum" style="display:none">
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td</td>
+                                  <td></td>
+                                  <td class="itemNdsKfTd"></td>
+                                  <td class="itemNdsSumTd"></td>
+                                  <td><strong>НДС (в т. ч.):</strong></td>
+                                  <td id='NDSAll'></td>
+                                  <td></td>
+                              </tr>
+                          </tfoot>
                         </table>
-                        <div id='Summary'>
+                        <div id='Summary' style="display:none">
                             <table>
                                 <tr>
                                     <td>Общий вес:</td>
@@ -151,119 +198,82 @@
                                     <td>НДС (в т. ч.):</td>
                                     <td id='NDSAll'></td>
                                 </tr>
-                            </table>                     
+                            </table>
+                        </div>
+                        <div>
+                            <p class="basket_info">*Вес товаров, единица измерения которых отличается от тонны, будет рассчитан позже менеджером при уточнении заказа</p>
+                            <span class="next_step">Перейти к расчёту доп. услуг</span>
                         </div>
                     </div>
+                    <!-- ДОСТАВКА НАЧАЛО -->
                     <div id="deliveryDiv">
                         <!-- <div id='shipment'> -->
                             <!-- <form id='shipmentForm'> -->
 
-                        <div id="deliver_choise">
+                        <!-- <div id="deliver_choise">
                             <label for="selfCarry"> Самовывоз</label>
                             <input type="radio" id="selfCarry" name="deliver_selfCarry" checked />
                             <label for="toDeliver" class="tDC"> Доставка</label>
                             <input type="radio" id="toDeliver" name="deliver_selfCarry" />
                         </div>
+                        <div>
+                            <input type="text" id="destination_input" />
+                        </div> -->
 
-                        <table id='deliveryTab'>
-                            <tr>
-                                <td>Выберете город</td>
-                                <td>
-                                    <select id='townSelect'>
-                                        <option value='--' selected disabled>--</option>
-                                        <option value='72000001'>Тюмень</option>
-                                        <option price='44600' value='74002003'>Аша</option>
-                                        <option price='30700' value='660000280005'>Верхняя Салда</option>
-                                        <option price='19500' value='66000001'>Екатеринбург</option>
-                                        <option price='7900' value='72009001'>Заводоуковск</option>
-                                        <option price='17800' value='72011001'>Ишим</option>
-                                        <option price='12300' value='03020000139'>Курган</option>
-                                        <option price='7400' value='72013000001'>Нижняя Тавда</option>
-                                        <option price='27900' value='66000023'>Нижний Тагил</option>
-                                        <option price='41800' value='86000014'>Нефтеюганск</option>
-                                        <option price='58500' value='86000011'>Нижневартовск</option>
-                                        <option price='72500' value='54000001'>Новосибирск</option>
-                                        <option price='92000' value='89000006'>Новый Уренгой</option>
-                                        <option price='36200' value='55000001'>Омск</option>
-                                        <option price='22300' value='66000016'>Первоуральск</option>
-                                        <option price='22300' value='66000017'>Полевской</option>
-                                        <option price='39000' value='86000007'>Пыть-Ях</option>
-                                        <option price='44600' value='86000010'>Сургут</option>
-                                        <option price='8400' value='660000360005'>Тавда</option>
-                                        <option price='13900' value='72000002'>Тобольск</option>
-                                        <option price='22300' value='72018000001'>Уват</option>
-                                        <option price='53000' value='86000001'>Ханты-Мансийск</option>
-                                        <option price='27900' value='74000001'>Челябинск</option>
-                                        <option price='12300' value='45000002'>Шадринск</option>
-                                        <option price='6800' value='72021001'>Ялуторовск</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr class="ffield" style="display:none">
-                                <td>
-                                    <label class="ffield__lbl">
-                                        Город
-                                    </label>
-                                </td>
-                                <td>
-                                    <input name="city" type="text" class="long">
-                                    <img src="images/spinner.gif" class="spinner">
-                                </td>
-                            </tr>
-                            <tr class="ffield">
-                                <td>
-                                    <label class="ffield__lbl">
-                                        Улица
-                                    </label>
-                                </td>
-                                <td>
-                                    <input name="street" type="text" class="long" id='street'>
-                                    <img src="images/spinner.gif" class="spinner">
-                                </td>
-                            </tr>
-                            <tr class="ffield">
-                                <td>
-                                    <label class="ffield__lbl">
-                                        Номер дома
-                                    </label>
-                                </td>
-                                <td>
-                                    <input name="building" type="text" class="small" id='building'>
-                                    <img src="images/spinner.gif" class="spinner spinner2">
-                                </td>
-                            </tr>
-                            <tr class="ffield">
-                                <td>
-                                    <label class="ffield__lbl2">
-                                        Корпус/строение
-                                    </label>
-                                </td>
-                                <td>
-                                    <input name="building-add" type="text" class="small" id='additional'>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Выберете транспорт</td>
-                                <td>
-                                    <select id='carry' name='carry'>
-                                        <option disabled selected>--</option>
-                                        <option price='2400' value='Длинномер' checked > Длинномер </option>
-                                        <option price='1200' value='Газель'> Газель </option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Стоимость доставки</td>
-                                <td><span id="delivery_cost"></span></td>
-                            </tr>
-                            
-                        </table>
-                        <div class="ffield">
-                            <label class="ffield__lbl ltooltip"></label>
-                            <div id="map" class="add-panel__map"></div>
+                        <div class="delivery_div">
+                            <div class="p_div">
+                                <input type="checkbox" name="i_want_delivery" id="i_want_delivery" /><label for="i_want_delivery">Мне нужна доставка!</label>
+                                <div class="is_in_city" style="display:none"><span class="is_city_choose active_city" name="city"><font>Город</font></span><span class="is_city_choose" name="outcity"><font>Межгород</font></span></div>
+
+                            </div>
+                            <div class="p_div city_choose" style="display:none">
+                                <table class="delivery_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Выберите район доставки:</th>
+                                            <th>Введите точный адрес:</th>
+                                            <th>Стоимость доставки:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select class="city_select">
+                                                    <option>---</option>
+                                                    <option>БКУ, Раб. посёлок, Зайкова </option>
+                                                    <option>Лесобаза</option>
+                                                    <option>Центр</option>
+                                                    <option>п. Антипино</option>
+                                                    <option>п. Боровский</option>
+                                                    <option>МЖК — Восточный мкр. </option>
+                                                    <option>Червишевский тракт </option>
+                                                    <option>Московский тракт </option>
+                                                    <option>Дом обороны</option>
+                                                    <option>Бабарынка</option>
+                                                    <option>Заречные мкр. </option>
+                                                    <option>п. Мелиораторов</option>
+                                                    <option>п. Мыс </option>
+                                                </select>
+                                            </td>
+                                            <td><input type="textarea" /></td>
+                                            <td><span class="delivery_cost">0</span> руб.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="red_info">
+                                    *Если вы не знаете какой район выбрать, то введите только адрес, и менеджер расчитает стоимость доставки самостоятельно
+                                </p>
+                            </div>
                         </div>
-                        
+                        <hr />
+                        <div class="rezka_div">
+                            <p>
+                                <input type="checkbox" name="i_want_rezka" id="i_want_rezka" /><label for="i_want_rezka">Мне нужна резка металла!</label>
+                            </p>
+                        </div>
+
                     </div>
+                    <!-- ДОСТАВКА КОНЕЦ -->
                     <div id="notificationDiv">
 
                         <table class="orderFormTable">
@@ -303,7 +313,7 @@
 
                         <noindex><a href="Посмотреть%20заказ" onClick="$('#switchOrderDiv').click(); return false" rel="nofollow"><div id="backToBasketButton">Посмотреть заказ</div></a></noindex>
 
-                        <noindex><a href="javascript:createOrder()" style="text-decoration:none;" rel="nofollow"><div id="sendOrderButton">Оформить</div></a></noindex>
+                        <noindex><div id="sendOrderButton">Оформить</div></noindex>
 
                         <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
                     </div>

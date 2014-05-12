@@ -22,7 +22,7 @@ if "catalog" in form:
     import json
     seo_tags = json.loads(json_string)
 
-    seo_tag_exists = form["catalog"].value.decode("utf-8") in seo_tags
+    seo_tag_exists = form["catalog"].value.decode("utf-8").replace(" ", "_") in seo_tags
 
     # print seo_tags.has_key(form["catalog"].value.decode("utf-8"))
 
@@ -33,7 +33,7 @@ def set_title():
     if "ref" in form:
         title_string = form["ref"].value + " купить онлайн | Тримет ООО "
     elif seo_tag_exists:
-        title_string = seo_tags[form["catalog"].value.decode("utf-8")]["title"]
+        title_string = seo_tags[form["catalog"].value.decode("utf-8").replace(" ", "_")]["title"]
     else:
         title_string = "Купить Online"
 
@@ -78,7 +78,7 @@ def set_description():
     description_tag["name"] = "description"
     if seo_tag_exists:
         description_tag["content"] = seo_tags[
-            form["catalog"].value.decode("utf-8")]["description"]
+            form["catalog"].value.decode("utf-8").replace(" ", "_")]["description"]
     else:
         description_tag[
             "content"] = u"Покупка металлосайдинга, профнастила, металлопроката в Тюмени онлайн"
@@ -129,16 +129,50 @@ def set_search_results():
         return result_table.compose_table()
 
 
-def set_show_all_result():
-    a_tag = soup.new_tag("a")
+def set_show_nexr_prev():
+    span_tag = soup.new_tag("div")
+    span_tag["id"] = "show_next_prev"
+    # if "catalog" not in form:
+    #     span_tag["style"] = "display:none"
+
+    prev_a_tag = soup.new_tag("span")
+    prev_a_tag["class"] = "prev_result"
+    # prev_a_tag["href"] = u"Предыдущие 20"
+    # prev_a_tag["onClick"] = "return false"
+    prev_a_tag.string = u"Предыдущие 20"
+
+    span_tag.append(prev_a_tag)
+
+    current_span_tag = soup.new_tag("span")
+    # current_span_tag["style"] = "display:none;"
+    current_span_tag["class"] = "current_page"
+    current_span_tag.string = "1"
+
+    span_tag.append(current_span_tag)
+
+    a_tag = soup.new_tag("span")
     a_tag["id"] = "showAll"
-    a_tag["href"] = u"Все результаты"
-    a_tag["onClick"] = "return false"
-    a_tag.string = u"Показать все результаты"
+    a_tag.string = u"Еще результаты: "
     if "catalog" not in form:
         a_tag["style"] = "display:none"
 
-    return a_tag
+    span_count_tag = soup.new_tag("span")
+    span_count_tag["class"] = "count_all_result"
+    # span_count_tag.append("0")
+
+    a_tag.append(span_count_tag)
+
+    span_tag.append(a_tag)
+
+    next_a_tag = soup.new_tag("span")
+    next_a_tag["class"] = "next_result"
+    # next_a_tag["href"] = u"Следующие 20"
+    # next_a_tag["onClick"] = "return false"
+    next_a_tag.string = u"Следующие 20"
+
+    span_tag.append(next_a_tag)
+
+    return span_tag
 
 
 def set_tags_div():
@@ -159,6 +193,57 @@ def set_tags_div():
 
 def show_seo_text():
     if seo_tag_exists is True:
-        seo_value = seo_tags[form["catalog"].value.decode("utf-8")]
+        seo_value = seo_tags[form["catalog"].value.decode("utf-8").replace(" ", "_")]
         if "text" in seo_value:
             return BeautifulSoup(seo_value["text"])
+
+
+def set_groups():
+    tag_ul = soup.new_tag("ul")
+    tag_ul["id"] = "groups_list"
+
+    lib_path = os.path.abspath('../py_scripts/')
+    sys.path.append(lib_path)
+
+    # print lib_path
+    import imp
+    get_item_group = imp.load_source(
+        "get_item_group", lib_path + "/get_item_group" + ".py")
+
+    c_catalog = None
+    if "catalog" in form:
+        c_catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
+
+    groups = get_item_group.get_main_groups()
+
+    for group in groups:
+        tag_li = soup.new_tag("li")
+        tag_li["name"] = group.decode("utf-8")
+        tag_li.append(group.decode("utf-8"))
+
+        if c_catalog is not None and c_catalog in group.decode("utf-8"):
+            tag_li["class"] = "main_group active_group"
+
+            subgroups = get_item_group.get_subgroups(c_catalog)
+
+            if subgroups.__len__() > 0:
+                tag_ul_sg = soup.new_tag("ul")
+                tag_ul_sg["class"] = "subgroup_c"
+
+                for sgroup in subgroups:
+                    if sgroup.decode("utf-8") != group.decode("utf-8"):
+                        tag_li_sg = soup.new_tag("li")
+                        tag_li_sg["class"] = "subgroup"
+                        tag_li_sg["name"] = sgroup.decode("utf-8")
+                        tag_li_sg.append(sgroup.decode("utf-8"))
+
+                        tag_ul_sg.append(tag_li_sg)
+
+                tag_li.append(tag_ul_sg)
+
+        else:
+            tag_li["class"] = "main_group"
+
+        tag_ul.append(tag_li)
+
+    return tag_ul

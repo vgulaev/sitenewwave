@@ -93,8 +93,38 @@ showGroup2 = (term) ->
     $("#itemName").change()
     $.unblockUI()
 
+load_delivery_cost = () ->
+    # alert("nya")
+    $.ajax
+        type: "GET"
+        url: "/1cengine/json/delivery.json"
+        async: false
+        data: ""
+        success: (html) ->
+            # alert $(".active_city").attr("name")
+            opt_string = "<option>--</option>"
+            # if $(".active_city").attr("name") is "city"
+            for key, value of html[$(".active_city").attr("name")]
+                # alert key + " : " + value
+                opt_string  = opt_string + "<option value='#{value}'>#{key}</option>"
+                # alert html["city"][key]
+
+            $(".city_select").html opt_string
+
+show_dop_uslugi = (chkbox) ->
+    if $(chkbox).is(":checked")
+        $(".is_in_city").show()
+        $(".city_choose").show()
+        load_delivery_cost()
+    else
+        $(".is_in_city").hide()
+        $(".city_choose").hide()
+
+
 
 $(document).ready ->
+
+    PAGE = 1
 
     if $("#tags").css("display") is "none"
         $("#showGroupsDiv").show()
@@ -125,7 +155,7 @@ $(document).ready ->
         $("#groupDiv").hide()
         value = $("#itemName").val()
         value = value.replace("+", " ")
-
+        $("#qRes").fadeOut(400)
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
@@ -133,20 +163,18 @@ $(document).ready ->
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 $("#qRes").html html
-
+                $("#qRes").fadeIn(400)
                 if $(".item").length >= 1
                     $("#tags").hide()
                     $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
-                    $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-                    $("#tags").show()
-                    $("#showGroupsDiv").hide()
+                    $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
 
                 if $(".item").length is 20
-                    $("#showAll").show()
+                    $("#show_next_prev").show()
                 else
-                    $("#showAll").hide()
+                    $("#show_next_prev").hide()
 
                 window.history.pushState(
                     {term: value},
@@ -154,28 +182,35 @@ $(document).ready ->
                     '/1cengine/site/'+$.trim(value)+'/'
                 )
 
-                # $(".bItem").click ->
-                #     # alert("lol")
-                #     elem_id = $(this).closest( "tr" ).attr("id")
+                $(".bItem").click ->
+                    # alert("lol")
+                    elem_id = $(this).closest( "tr" ).attr("id")
 
-                #     item = App.Item.elem_exist(elem_id)
-                #     if item is false
-                #         item = new App.Item $(this).closest( "tr" ).attr("id")
-                #     else
-                #         item.show_modal()
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
 
-                # $(".oItem").click ->
+                $(".oItem").click ->
 
-                #     elem_id = $(this).closest( "tr" ).attr("id")
+                    elem_id = $(this).closest( "tr" ).attr("id")
 
-                #     item = App.Item.elem_exist(elem_id)
-                #     if item is false
-                #         item = new App.Item $(this).closest( "tr" ).attr("id")
-                #     else
-                #         item.show_modal()
-                # false
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+                false
 
-                $("#show_groups").show()
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_count_items.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + ""
+            success: (html) ->
+                $(".count_all_result").html html
 
 
     $(window).on "popstate", (e) ->
@@ -205,15 +240,169 @@ $(document).ready ->
                 $("#qRes").html html
 
                 if $(".item").length >= 1
-                    $("#tags").hide()
-                    $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
                     $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-                    $("#tags").show()
-                    $("#showGroupsDiv").hide()
 
-                if $(".item").length is 20
-                    $("#showAll").show()
-                else
-                    $("#showAll").hide()
+                $("#show_next_prev").hide()
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+
+    $(".next_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
+            success: (html) ->
+                $("#qRes").html html
+                PAGE = PAGE + 1
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+
+    $(".prev_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+        if PAGE != 1
+            n_page = PAGE - 1
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/get_items_bs.py"
+                async: true
+                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
+                success: (html) ->
+                    $("#qRes").html html
+                    PAGE = PAGE - 1
+
+                    $(".bItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
+
+                    $(".oItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
+
+    $("#orderDiv").find(".next_step").click ->
+        switch_tabs("switchDeliveryDiv")
+
+    $("#groups_list").find("li.main_group").each (index, element) =>
+        $(element).click ->
+            g_name = $(this).attr("name")
+            if $(element).hasClass("active_group") is false
+
+                $("#itemName").val g_name
+                $("#itemName").change()
+
+                $("#groups_list").find("li.main_group").removeClass("active_group")
+                $(element).addClass("active_group")
+
+            # alert($(this).attr("name"))
+            if $(element).children().is(".subgroup_c") is false
+                # alert($(element).children("ul"))
+                $(element).append("<ul class=\"subgroup_c\"></ul>")
+                $.ajax
+                    type: "GET"
+                    url: "/1cengine/py_scripts/item_autocomplete.py"
+                    async: false
+                    data: "term=" + encodeURIComponent(g_name) + ""
+                    success: (html) ->
+                        subgroups = JSON.parse html
+                        for subgroup in subgroups then do (subgroup) =>
+                            subgroup_name = subgroup.replace(g_name, "")
+                            $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}'>"+subgroup_name+"</li>")
+                            # alert(subgroup)
+
+                        $(element).find("li.subgroup").each (index, sgroup) =>
+                            $(sgroup).click ->
+                                $(".subgroup").removeClass("active_subgroup")
+                                $(sgroup).addClass("active_subgroup")
+                                i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+                                # alert(i_name)
+
+                                $("#itemName").val(i_name)
+                                $("#itemName").change()
+
+    $("li.subgroup").each (index, sgroup) =>
+        $(sgroup).click ->
+            $(".subgroup").removeClass("active_subgroup")
+            $(sgroup).addClass("active_subgroup")
+            group = $(sgroup).closest(".active_group")
+            g_name = $(group).attr("name")
+            i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+            # alert(i_name)
+
+            $("#itemName").val(i_name)
+            $("#itemName").change()
+
+    c_url = window.location.pathname
+    # alert(c_url)
+    is_empty = c_url.replace "/1cengine/site/", ""
+    # alert($(things[Math.floor(Math.random()*things.length)]).attr("name"))
+    if is_empty.length < 3
+        things = $("li.main_group")
+        $(things[Math.floor(Math.random()*things.length)]).click()
+
+    $("#i_want_delivery").change ->
+        show_dop_uslugi(this)
+
+    $(".is_city_choose").click ->
+        $(".active_city").removeClass("active_city")
+        $(this).addClass("active_city")
+        load_delivery_cost()
+
+    $(".city_select").change ->
+        $(".delivery_cost").html $(".city_select option:selected").val()
+        # alert($(".city_select option:selected").val())
