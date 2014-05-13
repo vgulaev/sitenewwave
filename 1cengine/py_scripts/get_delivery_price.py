@@ -44,6 +44,12 @@ def get_delivery_price():
     # client.set_options(cache=None)
     client.set_options(cache=DocumentCache())
 
+    # cache cleaning code
+    # import os
+    # import shutil
+    # from tempfile import gettempdir as tmp
+    # shutil.rmtree(os.path.join(tmp(), 'suds'), True)
+
     result = client.service.GetDeliveryPrice()
 
     # try:
@@ -51,18 +57,31 @@ def get_delivery_price():
     # except:
     #     return "<p>Ошибка в работе с веб сервисом</p>"
 
-    delivery_dict = {}
+    delivery_dict = {"city": {}, "outcity": {}}
 
     for x in result[0]:
-        if x[0] in delivery_dict:
-            delivery_dict[x[0]][x[1]] = x[2]
+        if u"Нет" in x[3]:
+            c_type = "city"
         else:
-            delivery_dict[x[0]] = {x[1]: x[2]}
+            c_type = "outcity"
 
-        # print x[0], " - ", x[1], " - ", x[2], "<br />--<br />"
+        if x[0] in delivery_dict[c_type]:
+            delivery_dict[c_type][str(x[0])][str(x[1]).decode("utf-8")] = str(x[2])
+        else:
+            delivery_dict[c_type][str(x[0])] = {str(x[1]).decode("utf-8"): str(x[2])}
 
-    print delivery_dict
+        # print x[0], " - ", x[1], " - ", x[2], " - ", x[3], "<br />--<br />"
 
+    delivery_json = json.dumps(delivery_dict)
+
+    f = open("../json/delivery.json", "w+")
+    f.write(delivery_json)
+    f.close()
+
+    print "success"
+
+    # for x in delivery_dict:
+    #     print x, "<br />"
     # return result
 
 get_delivery_price()

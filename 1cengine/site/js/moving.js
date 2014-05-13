@@ -114,12 +114,20 @@
       async: false,
       data: "",
       success: function(html) {
-        var key, opt_string, value, _ref;
+        var dlinomer, gazel, key, opt_string, p, t, value, _ref;
         opt_string = "<option>--</option>";
         _ref = html[$(".active_city").attr("name")];
         for (key in _ref) {
           value = _ref[key];
-          opt_string = opt_string + ("<option value='" + value + "'>" + key + "</option>");
+          for (t in value) {
+            p = value[t];
+            if (t === "Газель") {
+              gazel = p;
+            } else {
+              dlinomer = p;
+            }
+          }
+          opt_string = opt_string + ("<option value='" + gazel + "'>" + key + "</option>");
         }
         return $(".city_select").html(opt_string);
       }

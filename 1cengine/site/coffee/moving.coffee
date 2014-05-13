@@ -106,7 +106,13 @@ load_delivery_cost = () ->
             # if $(".active_city").attr("name") is "city"
             for key, value of html[$(".active_city").attr("name")]
                 # alert key + " : " + value
-                opt_string  = opt_string + "<option value='#{value}'>#{key}</option>"
+                for t, p of value
+                    if t is "Газель"
+                        gazel = p
+                    else
+                        dlinomer = p
+
+                opt_string  = opt_string + "<option value='#{gazel}'>#{key}</option>"
                 # alert html["city"][key]
 
             $(".city_select").html opt_string
