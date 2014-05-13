@@ -41,9 +41,15 @@ def report_1c(uid, sum):
     # client.set_options(cache=None)
     client.set_options(cache=DocumentCache())
 
+    f = open("testpay.txt", "w+")
+    f.write(sum)
+    f.close()
+
+    major_sum = sum[:-2] + "," + sum[-2:]
+
     # try:
     result = client.service.CreatePaymentOrder(
-        uid, sum.replace(sum[-2:],","+sum[-2:]))
+        uid, major_sum)
 
     return result
 
@@ -51,10 +57,6 @@ def report_1c(uid, sum):
 print("Content-Type: text/xml; charset=utf-8\n")
 
 form = cgi.FieldStorage()
-
-f = open("testpay.txt", "w+")
-f.write(form["result_code"].value)
-f.close()
 
 if "result_code" in form and form["result_code"].value == "1":
 
