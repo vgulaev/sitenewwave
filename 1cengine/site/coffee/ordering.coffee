@@ -185,17 +185,17 @@ class App.Item
                 $.unblockUI();
 
         if @is_measureable()
-            $(".buy_count").bind 'change', (event) =>
+            $(".buy_count").bind 'change keyup', (event) =>
                 @change_buy_count($(".buy_count").val())
 
-            $(".buy_length").bind 'change', (event) =>
+            $(".buy_length").bind 'change keyup', (event) =>
                 @change_buy_length($(".buy_length").val())
 
-        $(".buy_weight").bind 'change', (event) =>
+        $(".buy_weight").bind 'change keyup', (event) =>
             @change_buy_weight($(".buy_weight").val())
 
         if @is_kis
-            $(".char_length").bind 'change', (event) =>
+            $(".char_length").bind 'change keyup', (event) =>
                 @change_char_length($(".char_length").val())
 
         @change_modal_price()

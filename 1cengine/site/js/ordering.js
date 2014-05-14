@@ -191,18 +191,18 @@
         }
       });
       if (this.is_measureable()) {
-        $(".buy_count").bind('change', function(event) {
+        $(".buy_count").bind('change keyup', function(event) {
           return _this.change_buy_count($(".buy_count").val());
         });
-        $(".buy_length").bind('change', function(event) {
+        $(".buy_length").bind('change keyup', function(event) {
           return _this.change_buy_length($(".buy_length").val());
         });
       }
-      $(".buy_weight").bind('change', function(event) {
+      $(".buy_weight").bind('change keyup', function(event) {
         return _this.change_buy_weight($(".buy_weight").val());
       });
       if (this.is_kis) {
-        $(".char_length").bind('change', function(event) {
+        $(".char_length").bind('change keyup', function(event) {
           return _this.change_char_length($(".char_length").val());
         });
       }
