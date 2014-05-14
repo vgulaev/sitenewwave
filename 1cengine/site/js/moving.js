@@ -372,6 +372,9 @@
     $("#orderDiv").find(".next_step").click(function() {
       return switch_tabs("switchDeliveryDiv");
     });
+    $("#deliveryDiv").find(".next_step").click(function() {
+      return switch_tabs("switchNotificationDiv");
+    });
     $("#groups_list").find("li.main_group").each(function(index, element) {
       return $(element).click(function() {
         var g_name;

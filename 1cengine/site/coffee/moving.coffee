@@ -361,6 +361,9 @@ $(document).ready ->
     $("#orderDiv").find(".next_step").click ->
         switch_tabs("switchDeliveryDiv")
 
+    $("#deliveryDiv").find(".next_step").click ->
+        switch_tabs("switchNotificationDiv")
+
     $("#groups_list").find("li.main_group").each (index, element) =>
         $(element).click ->
             g_name = $(this).attr("name")
