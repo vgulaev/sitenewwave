@@ -141,7 +141,7 @@ class App.Item
 
     set_price_weight: ->
         if @ed_izm is "т"
-            price_index = Basket._active_price_measured
+            price_index = App.Basket._active_price_measured
         else
             price_index = 0
 
@@ -202,18 +202,18 @@ class App.Item
 
         $(".add_to_basket").bind 'click', (event) =>
 
-            Basket.add_item(this)
+            App.Basket.add_item(this)
             $.unblockUI()
 
         $(".change_in_basket").bind 'click', (event) =>
 
-            Basket.change_item(this)
+            App.Basket.change_item(this)
             $.unblockUI()
             # alert(Basket._total_weight)
 
 
     get_modal: ->
-        if Basket.is_in_basket(this)
+        if App.Basket.is_in_basket(this)
             modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>'
         else
             modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>'
@@ -282,14 +282,14 @@ class App.Item
 
         </table>
         <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
-        <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{Basket._sum}</span></div>
+        <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{App.Basket._sum}</span></div>
         <span class="popUpContinue">#{modal_link}</span>
         </div>""";
 
         message
 
 
-class Basket
+class App.Basket
     @_item_list: []
     @_sum: 0
     @_count: 0
@@ -381,7 +381,7 @@ class Basket
 
             $("tr[name='#{item.id}']").find(".delete_from_basket").bind "click", (event) =>
                 target = $(event.currentTarget)
-                Basket.delete_item(target.closest( "tr" ).attr("name"))
+                App.Basket.delete_item(target.closest( "tr" ).attr("name"))
 
             $("tr[name='#{item.id}']").find(".edit_from_basket").bind "click", (event) =>
                 target = $(event.currentTarget)
@@ -395,6 +395,7 @@ class Basket
         $("#CountAll").html(@_total_weight)
         $("#NDSAll").html(nds)
 
+        App.load_delivery_cost()
         # alert("changed")
 
     @rebuild_basket: ->
@@ -468,13 +469,12 @@ isValidEmail = (str) ->
 
 sendOrder = (orderString, is_async) ->
     is_async = true  if typeof is_async is "undefined"
-    if $("#selfCarry").is(":checked") is false
-        destination = $("#destination_input").val()
 
-    else
-        destination = ""
-        carry = ""
-        delivery_cost = ""
+    destination = $(".city_select option:selected").html() + " - " + $(".street_select").val()
+    carry = $(".delivery_car").html()
+    delivery_cost = $(".delivery_cost").html()
+
+
     email = $("input#emailInput").val()
     unless email is ""
         if isValidEmail(email) is false

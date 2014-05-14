@@ -97,7 +97,6 @@ def set_search_value():
     elif "catalog" in form:
         catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
         input_search_item["value"] = catalog + " "
-        # input_search_item["value"] = u'Сало!'
     else:
         input_search_item["value"] = ""
 
@@ -153,8 +152,8 @@ def set_show_nexr_prev():
     a_tag = soup.new_tag("span")
     a_tag["id"] = "showAll"
     a_tag.string = u"Еще результаты: "
-    if "catalog" not in form:
-        a_tag["style"] = "display:none"
+    # if "catalog" not in form:
+    #     a_tag["style"] = "display:none"
 
     span_count_tag = soup.new_tag("span")
     span_count_tag["class"] = "count_all_result"

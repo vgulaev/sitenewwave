@@ -233,6 +233,7 @@
                                             <th>Выберите район доставки:</th>
                                             <th>Введите точный адрес:</th>
                                             <th>Стоимость доставки:</th>
+                                            <th>Транспорт:</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -240,37 +241,30 @@
                                             <td>
                                                 <select class="city_select">
                                                     <option>---</option>
-                                                    <option>БКУ, Раб. посёлок, Зайкова </option>
-                                                    <option>Лесобаза</option>
-                                                    <option>Центр</option>
-                                                    <option>п. Антипино</option>
-                                                    <option>п. Боровский</option>
-                                                    <option>МЖК — Восточный мкр. </option>
-                                                    <option>Червишевский тракт </option>
-                                                    <option>Московский тракт </option>
-                                                    <option>Дом обороны</option>
-                                                    <option>Бабарынка</option>
-                                                    <option>Заречные мкр. </option>
-                                                    <option>п. Мелиораторов</option>
-                                                    <option>п. Мыс </option>
                                                 </select>
                                             </td>
-                                            <td><input type="textarea" /></td>
+                                            <td><input type="textarea" class="street_select" /></td>
                                             <td><span class="delivery_cost">0</span> руб.</td>
+                                            <td><span class="delivery_car"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <p class="red_info">
                                     *Если вы не знаете какой район выбрать, то введите только адрес, и менеджер расчитает стоимость доставки самостоятельно
                                 </p>
+                                <p class="red_info">
+                                    **Мы осуществляем доставку с помощью автомобилей «Газель» для товара не превышающий длинну в шесть метров и вес в 2 тонны в пределах города. В остальных случаях доставка осуществляется на автомобилях «Камаз»
+                                </p>
                             </div>
                         </div>
-                        <hr />
+                        <!-- <hr />
                         <div class="rezka_div">
                             <p>
                                 <input type="checkbox" name="i_want_rezka" id="i_want_rezka" /><label for="i_want_rezka">Мне нужна резка металла!</label>
                             </p>
                         </div> -->
+
+                        <span class="next_step">Перейти к оформлению заказа</span>
 
                     </div>
                     <!-- ДОСТАВКА КОНЕЦ -->
