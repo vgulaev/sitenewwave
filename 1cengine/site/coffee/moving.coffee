@@ -93,7 +93,7 @@ showGroup2 = (term) ->
     $("#itemName").change()
     $.unblockUI()
 
-load_delivery_cost = () ->
+App.load_delivery_cost = () ->
     # alert("nya")
     $.ajax
         type: "GET"
@@ -106,22 +106,39 @@ load_delivery_cost = () ->
             # if $(".active_city").attr("name") is "city"
             for key, value of html[$(".active_city").attr("name")]
                 # alert key + " : " + value
-                for t, p of value
-                    if t is "Газель"
-                        gazel = p
-                    else
-                        dlinomer = p
+                n_car = "Газель"
+                if App.Basket._total_weight > 2
+                    n_car = "Длинномер"
+                else if $(".active_city").attr("name") is "outcity"
+                    n_car = "Длинномер"
+                else
+                    for item in App.Basket._item_list
+                        if item.length > 6
+                            n_car = "Длинномер"
 
-                opt_string  = opt_string + "<option value='#{gazel}'>#{key}</option>"
+                cost_car = value[n_car]
+
+                # for t, p of value
+                #     alert(t)
+                    # if t is "Газель"
+                    #     cost_car = p
+                    #     c_car = "Газель"
+                    # else
+                    #     cost_car = p
+                    #     c_car = "Камаз"
+
+                opt_string  = opt_string + "<option value='#{cost_car}'>#{key}</option>"
+                $(".delivery_car").html n_car
                 # alert html["city"][key]
 
             $(".city_select").html opt_string
+            $(".delivery_cost").html 0
 
 show_dop_uslugi = (chkbox) ->
     if $(chkbox).is(":checked")
         $(".is_in_city").show()
         $(".city_choose").show()
-        load_delivery_cost()
+        App.load_delivery_cost()
     else
         $(".is_in_city").hide()
         $(".city_choose").hide()
@@ -407,7 +424,7 @@ $(document).ready ->
     $(".is_city_choose").click ->
         $(".active_city").removeClass("active_city")
         $(this).addClass("active_city")
-        load_delivery_cost()
+        App.load_delivery_cost()
 
     $(".city_select").change ->
         $(".delivery_cost").html $(".city_select option:selected").val()

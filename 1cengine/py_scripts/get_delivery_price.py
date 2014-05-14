@@ -26,8 +26,8 @@ else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut/ws/"
-# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
+# _DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/DemoTrimet/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
@@ -65,10 +65,10 @@ def get_delivery_price():
         else:
             c_type = "outcity"
 
-        if x[0] in delivery_dict[c_type]:
-            delivery_dict[c_type][str(x[0])][str(x[1]).decode("utf-8")] = str(x[2])
+        if str(x[0]) in delivery_dict[c_type]:
+            delivery_dict[c_type][str(x[0])][str(x[1])] = str(x[2])
         else:
-            delivery_dict[c_type][str(x[0])] = {str(x[1]).decode("utf-8"): str(x[2])}
+            delivery_dict[c_type][str(x[0])] = {str(x[1]): str(x[2])}
 
         # print x[0], " - ", x[1], " - ", x[2], " - ", x[3], "<br />--<br />"
 
