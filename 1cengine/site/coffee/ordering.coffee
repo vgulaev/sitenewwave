@@ -291,6 +291,7 @@ class App.Item
 
 class App.Basket
     @_item_list: []
+    @_rezka_list: []
     @_sum: 0
     @_count: 0
     @_total_weight: 0
@@ -590,6 +591,89 @@ getOrderFomat = (format) ->
 
 ### DEPRECATED END!!!! ###
 
+show_rezka_ch_modal = () ->
+
+    table_rows = ""
+    for item in App.Basket._item_list
+        if item.id in App.Basket._rezka_list
+            checked = "checked"
+        else
+            checked = ""
+        d_name = item.name + " " + item.char
+        table_rows = table_rows + "<tr><td>#{d_name}</td><td><input name='#{item.id}' type='checkbox' #{checked} /></td></tr>"
+
+    # alert(table_rows)
+
+    table = """<div>
+            <p>Отметьте позиции, которые вы хотите порезать</p>
+            <table class='rezka_choose_table'>
+            <thead><tr><th>Наименование</th><th>Резать?</th></tr></thead>
+            <tbody>#{table_rows}</tbody></table>
+            <div class="rezka_confirm_button">Применить</div>
+            </div>"""
+
+    $.blockUI.defaults.css.borderRadius = '10px';
+    $.blockUI.defaults.fadeIn = 100;
+    $.blockUI.defaults.fadeOut = 100;
+    $.blockUI.defaults.css.backgroundColor = 'white'
+    $.blockUI.defaults.css.cursor = 'defaults'
+    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+    $.blockUI.defaults.css.fontSize = '14px'
+    $.blockUI.defaults.css.width = '450px'
+    $.blockUI.defaults.css.paddingTop = '10px'
+
+    $.blockUI
+        message: table
+
+    $(".blockMsg").draggable();
+
+    $(".rezka_confirm_button").click ->
+        # alert(1)
+        apply_rezka()
+
+    $(document).on "keyup", (e) ->
+        e.preventDefault()
+        if e.which is 27
+            $.unblockUI();
+
+apply_rezka = () ->
+    # alert("nya")
+    App.Basket._rezka_list.length = 0
+
+    $(".rezka_choose_table").find("input").each ->
+        if $(this).is(":checked")
+            # alert($(this).attr("name"))
+            App.Basket._rezka_list.push($(this).attr("name"))
+
+            create_rezka()
+
+            $.unblockUI();
+
+create_rezka = () ->
+    new_tbody_string = ""
+    for item in App.Basket._item_list
+        if item.id in App.Basket._rezka_list
+            new_tr = """
+                <tr>
+                    <td class="rezka_item_name">#{item.name} #{item.char}</td>
+                    <td class="rezka_item_description">
+                        <textarea></textarea>
+                    </td>
+                    <td class="rezka_item_delete"><div idname="#{item.id}"></div>
+                </tr>
+            """
+            new_tbody_string = new_tbody_string + new_tr
+
+    $(".rezka_table").find("tbody").html new_tbody_string
+
+    $(".rezka_item_delete").find("div").each (index, element) ->
+        $(element).click ->
+            delete_rezka_item($(element).attr("idname"))
+
+delete_rezka_item = (id) ->
+    App.Basket._rezka_list.splice(App.Basket._rezka_list.indexOf(id), 1)
+    create_rezka()
+
 $(document).ready ->
 
 
@@ -635,3 +719,6 @@ $(document).ready ->
 
 
     ### /DEPRECATED ###
+
+    $(".rezka_item_add").click ->
+        show_rezka_ch_modal()
