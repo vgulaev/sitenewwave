@@ -473,7 +473,8 @@ sendOrder = (orderString, is_async) ->
 
     destination = $(".city_select option:selected").html() + " - " + $(".street_select").val()
     carry = $(".delivery_car").html()
-    delivery_cost = $(".delivery_cost").html().replace(" ", "")
+
+    delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "")
 
 
     email = $("input#emailInput").val()
