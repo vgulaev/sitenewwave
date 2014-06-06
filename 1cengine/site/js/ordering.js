@@ -516,7 +516,7 @@
       $.blockUI.defaults.css.height = "220px";
       $.blockUI.defaults.css.paddingTop = "10px";
       $.blockUI({
-        message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span><span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш запрос обработан</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"
+        message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>\n    Ваш заказ сейчас отправляется на наш сервер и будет обработан менеджером.<br />\n    На указанный вами электронный адрес так же отправлена предварительная форма заказа.\n</span>\n<span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш заказ успешно зарегистрирован</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"
       });
       sendRow = "";
       $("tr.itemTr").each(function() {
