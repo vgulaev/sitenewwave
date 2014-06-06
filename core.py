@@ -128,6 +128,15 @@ def makecontent(path):
         else:
             currentelement.extract()
 
+    # loading template content
+
+    nodes = soupForImport.html.find_all("templatetag")
+
+    for currentelement in nodes:
+        template_content = insertcontent("locate/ru/templates/"+currentelement.contents[0])
+
+        currentelement.replaceWith(template_content)
+
     nodes = soupForImport.html.body.contents
     for currentelement in nodes:
         if str(type(currentelement)) == "<class 'bs4.element.Tag'>":
