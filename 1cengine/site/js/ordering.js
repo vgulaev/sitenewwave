@@ -460,7 +460,7 @@
     }
     destination = $(".city_select option:selected").html() + " - " + $(".street_select").val();
     carry = $(".delivery_car").html();
-    delivery_cost = $(".delivery_cost").html();
+    delivery_cost = $(".delivery_cost").html().replace(" ", "");
     email = $("input#emailInput").val();
     if (email !== "") {
       if (isValidEmail(email) === false) {

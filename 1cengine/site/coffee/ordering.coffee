@@ -473,7 +473,7 @@ sendOrder = (orderString, is_async) ->
 
     destination = $(".city_select option:selected").html() + " - " + $(".street_select").val()
     carry = $(".delivery_car").html()
-    delivery_cost = $(".delivery_cost").html()
+    delivery_cost = $(".delivery_cost").html().replace(" ", "")
 
 
     email = $("input#emailInput").val()
@@ -553,7 +553,7 @@ openLink = (linkUID, type) ->
         async: false
         data: "linkUID=" + linkUID + "&type=" + type + ""
         success: (html) ->
-            
+
             #var success = 'true';
             window.location.href = html
             return

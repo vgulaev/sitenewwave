@@ -38,7 +38,9 @@ $OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', c
 $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
-
+$OrderFromSite["Доставка"] = array();
+$OrderFromSite["Доставка"]["Адрес"] = $_POST['destination'];
+$OrderFromSite["Доставка"]["Цена"] = $_POST['delivery_cost'];
 
 $orderStringArray = split(';', $orderString);
 $GoodsList["СтрокиТаблицы"] = array();
