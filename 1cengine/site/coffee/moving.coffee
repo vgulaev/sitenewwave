@@ -143,6 +143,13 @@ show_dop_uslugi = (chkbox) ->
         $(".is_in_city").hide()
         $(".city_choose").hide()
 
+show_rezka = (chkbox) ->
+    if $(chkbox).is(":checked")
+        $(".rezka_wrapper").show()
+    else
+        $(".rezka_wrapper").hide()
+
+
 
 
 $(document).ready ->
@@ -423,6 +430,9 @@ $(document).ready ->
 
     $("#i_want_delivery").change ->
         show_dop_uslugi(this)
+
+    $("#i_want_rezka").change ->
+        show_rezka(this)
 
     $(".is_city_choose").click ->
         $(".active_city").removeClass("active_city")

@@ -77,9 +77,9 @@
 
                     <div id="switchDiv">
                         <div class="switchDivBackground">
-                            <div class="activeDiv" id="switchOrderDiv">Товары</div>
-                            <div class="inactiveDiv" id="switchDeliveryDiv">Дополнительные услуги</div>
-                            <div class="inactiveDiv" id="switchNotificationDiv">Оформить заказ</div>
+                            <div class="activeDiv" id="switchOrderDiv">Корзина</div>
+                            <div class="inactiveDiv" id="switchDeliveryDiv">Выбор доп. услуг</div>
+                            <div class="inactiveDiv" id="switchNotificationDiv">Оформление заказа</div>
                         </div>
                     </div>
                     <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
@@ -202,7 +202,7 @@
                         </div>
                         <div>
                             <p class="basket_info">*Вес товаров, единица измерения которых отличается от тонны, будет рассчитан позже менеджером при уточнении заказа</p>
-                            <span class="next_step">Перейти к расчёту доп. услуг</span>
+                            <span class="next_step">Перейти к выбору доп. услуг</span>
                         </div>
                     </div>
                     <!-- ДОСТАВКА НАЧАЛО -->
@@ -257,12 +257,30 @@
                                 </p>
                             </div>
                         </div>
-                        <!-- <hr />
+                        <hr />
                         <div class="rezka_div">
                             <p>
                                 <input type="checkbox" name="i_want_rezka" id="i_want_rezka" /><label for="i_want_rezka">Мне нужна резка металла!</label>
                             </p>
-                        </div> -->
+                            <div class="rezka_wrapper">
+                                <p class="red_info">
+                                    *Расчет стоимости резки производит менеджер при согласовании заказа
+                                </p>
+                                <div class="rezka_item_add"><font>Добавить позицию</font></div>
+                                <table class="rezka_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Номенклатура</th>
+                                            <th>Как и сколько порезать</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
                         <span class="next_step">Перейти к оформлению заказа</span>
 
@@ -296,14 +314,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Дополнительный телефон для связи</td>
+                                <td>Доп. телефон для связи</td>
                                 <td>
                                     <input type="textarea" class="orderFormInput" id="otherPhoneInput" />
                                 </td>
                             </tr>
                         </table>
 
-                        <p>*Обязательны для заполнения</p>
+                        <p class="red_info">*Обязательны для заполнения</p>
 
                         <noindex><a href="Посмотреть%20заказ" onClick="$('#switchOrderDiv').click(); return false" rel="nofollow"><div id="backToBasketButton">Посмотреть заказ</div></a></noindex>
 
@@ -323,7 +341,7 @@
             </td>
         </tr>
     </table>
-    <a class='scrollTop' href='#header' style='display:none;'></a>  
+    <a class='scrollTop' href='#header' style='display:none;'></a>
 
 
 </div> <!-- /main -->

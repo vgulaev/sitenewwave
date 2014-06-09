@@ -38,7 +38,9 @@ $OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', c
 $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
-
+$OrderFromSite["Доставка"] = array();
+$OrderFromSite["Доставка"]["Адрес"] = $_POST['destination'];
+$OrderFromSite["Доставка"]["Стоимость"] = $_POST['delivery_cost'];
 
 $orderStringArray = split(';', $orderString);
 $GoodsList["СтрокиТаблицы"] = array();
@@ -53,6 +55,7 @@ foreach($orderStringArray as $orderItem){
         $GoodsRow["КоличествоШтук"] = $orderItemArray[2];
         $GoodsRow["КоличествоВес"] = $orderItemArray[3];
         $GoodsRow["Цена"] = $orderItemArray[4];
+        $GoodsRow["КомментарийРезки"] = "  ";
 
     $sumOverall = $sumOverall + $orderItemArray[4];
         array_push($GoodsList["СтрокиТаблицы"], $GoodsRow);
@@ -69,7 +72,9 @@ $params["XDTOStructure"] = $OrderFromSite;
 
 //print_r($params["XDTOStructure"]);
 
-$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+$develop_server = "http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl";
+$peoduct_server = "http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl";
+$server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
 
 $server->decode_utf8 = false;
