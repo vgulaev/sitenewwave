@@ -539,10 +539,13 @@ createOrder = () ->
         $.blockUI.defaults.css.paddingTop = "10px"
         $.blockUI message: """
             <span class='oInProcess' style='margin-top:50px;font-size:16px'>
-                Ваш заказ сейчас отправляется на наш сервер и будет обработан менеджером.<br />
-                На указанный вами электронный адрес так же отправлена предварительная форма заказа.
+                Ваш заказ сейчас регистрируется в нашей системе<br />
             </span>
-            <span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>Ваш заказ успешно зарегистрирован</span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"""
+            <span class='oProcessed' style='display:none;margin-top:50px;font-size:16px'>
+                Ваш заказ успешно зарегистрирован<br />
+                и позднее будет обработан менеджером.<br />
+                На указанный вами электронный адрес так же отправлена предварительная форма заказа.
+            </span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"""
         sendRow = ""
         $("tr.itemTr").each ->
             unless $(this).find("input.itemCharInput").length is 0
