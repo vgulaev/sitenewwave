@@ -34,7 +34,7 @@ if($_SESSION['1cusername']!=''){
 
 $dt = date('d.m.Y');
 
-$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', mail: '.$_POST['email'].', phone: '.$_POST["main_phone"].', other phone: '.$_POST["other_phone"].', name: '.$_POST["name_surname"].' '.$_POST["last_name"].' !! РЕЗКА : '.$POST["rezka"];
+$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', mail: '.$_POST['email'].', phone: '.$_POST["main_phone"].', other phone: '.$_POST["other_phone"].', name: '.$_POST["name_surname"].' '.$_POST["last_name"].' !! РЕЗКА : '.$_POST["rezka"];
 $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
