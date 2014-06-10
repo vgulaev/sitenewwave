@@ -54,6 +54,8 @@ url_dictionary = {
     "products/request": "htmlstaticcontent/037_products_request_/",
     "products/krovl/dobornye-jelementy":
                 "htmlstaticcontent/046_products_krovl_dobornye-jelementy_/",
+    "products/shtrips":
+                "htmlstaticcontent/055_products_shtrips/",
     # блок меню "Услуги"
     "services": "htmlstaticcontent/020_services_metalwork_/",
     "services/metalwork": "htmlstaticcontent/020_services_metalwork_/",
