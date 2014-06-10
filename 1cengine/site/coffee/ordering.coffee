@@ -488,11 +488,20 @@ sendOrder = (orderString, is_async) ->
     name_surname = $("#nameSurnameInput").val()
     other_phone = $("#otherPhoneInput").val()
     ret = ""
+
+
+    rezka_text = ""
+    $(".rezka_body").find("tr").each (index, element) =>
+        rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: "
+        rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; "
+
+
+
     $.ajax
         type: "POST"
         url: "/1cengine/php_scripts/createOrder.php"
         async: is_async
-        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name
+        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text
         success: (html) ->
             #var success = 'true';
             ret = "номер " + html
@@ -666,7 +675,7 @@ create_rezka = () ->
                 <tr>
                     <td class="rezka_item_name">#{item.name} #{item.char}</td>
                     <td class="rezka_item_description">
-                        <textarea></textarea>
+                        <textarea class="rezka_item_text"></textarea>
                     </td>
                     <td class="rezka_item_delete"><div idname="#{item.id}"></div>
                 </tr>

@@ -34,7 +34,7 @@ if($_SESSION['1cusername']!=''){
 
 $dt = date('d.m.Y');
 
-$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', carry: '.$_POST["carry"].', destination: '.$_POST["destination"].', delivery cost: '.$_POST["delivery_cost"].', mail: '.$_POST['email'].', phone: '.$_POST["main_phone"].', other phone: '.$_POST["other_phone"].', name: '.$_POST["name_surname"].' '.$_POST["last_name"];
+$OrderFromSite["Заказчик"] = $user.', ip: '.$_SERVER["REMOTE_ADDR"].', mail: '.$_POST['email'].', phone: '.$_POST["main_phone"].', other phone: '.$_POST["other_phone"].', name: '.$_POST["name_surname"].' '.$_POST["last_name"].' !! РЕЗКА : '.$POST["rezka"];
 $OrderFromSite["Дата"] = $dt;
 $OrderFromSite["НомерЗаказа"] = "";
 $OrderFromSite["Редактируемый"] = "ДА";
@@ -127,11 +127,11 @@ $to = $_POST['email']; //Кому
 $from = "admin@trimet.ru"; //От кого
 $subject = '=?utf-8?B?'.base64_encode('On-line shop trimet.ru').'?=';
 $mess =  'Добрый день, '. "<br />";
-$mess .= 'Вы заказали металл на сайте компании Тримет. '."\r\n";
-$mess .= 'Ваш заказ успешно зарегистрирован в нашей системе и позднее будет обработан менеджером, который позвонит вам по номеру, который вы указали, или напишет вам письмо.'."\r\n";
-$mess .= 'Номер вашего заказа: '.$r1[0]."\r\n";
+$mess .= 'Вы заказали металл на сайте компании Тримет. '."<br />";
+$mess .= 'Ваш заказ успешно зарегистрирован в нашей системе и позднее будет обработан менеджером, который позвонит вам по номеру, который вы указали, или напишет вам письмо.'."<br />";
+$mess .= 'Номер вашего заказа: '.$r1[0]."<br />";
 //$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
-$mess .= 'Контактный телефон: +7 (3452) 520-670'."\r\n";
+$mess .= 'Контактный телефон: +7 (3452) 520-670'."<br />";
 $mess .= 'С уважением, компания Тримет';
 $boundary = "---"; //Разделитель
 /* Заголовки */

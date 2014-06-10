@@ -454,7 +454,8 @@
   };
 
   sendOrder = function(orderString, is_async) {
-    var carry, delivery_cost, destination, email, last_name, main_phone, name_surname, other_phone, ret;
+    var carry, delivery_cost, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text,
+      _this = this;
     if (typeof is_async === "undefined") {
       is_async = true;
     }
@@ -473,11 +474,16 @@
     name_surname = $("#nameSurnameInput").val();
     other_phone = $("#otherPhoneInput").val();
     ret = "";
+    rezka_text = "";
+    $(".rezka_body").find("tr").each(function(index, element) {
+      rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: ";
+      return rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; ";
+    });
     $.ajax({
       type: "POST",
       url: "/1cengine/php_scripts/createOrder.php",
       async: is_async,
-      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name,
+      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text,
       success: function(html) {
         var oA, order;
         ret = "номер " + html;
@@ -636,7 +642,7 @@
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
       if (_ref1 = item.id, __indexOf.call(App.Basket._rezka_list, _ref1) >= 0) {
-        new_tr = "<tr>\n    <td class=\"rezka_item_name\">" + item.name + " " + item.char + "</td>\n    <td class=\"rezka_item_description\">\n        <textarea></textarea>\n    </td>\n    <td class=\"rezka_item_delete\"><div idname=\"" + item.id + "\"></div>\n</tr>";
+        new_tr = "<tr>\n    <td class=\"rezka_item_name\">" + item.name + " " + item.char + "</td>\n    <td class=\"rezka_item_description\">\n        <textarea class=\"rezka_item_text\"></textarea>\n    </td>\n    <td class=\"rezka_item_delete\"><div idname=\"" + item.id + "\"></div>\n</tr>";
         new_tbody_string = new_tbody_string + new_tr;
       }
     }
