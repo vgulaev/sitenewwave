@@ -182,10 +182,12 @@ $(document).ready ->
         $(this).autocomplete "search", $(this).val()
 
     $("#itemName").change ->
-        $("#groupDiv").hide()
+
+        $("#seotext").html ""
         value = $("#itemName").val()
         value = value.replace("+", " ")
         $("#qRes").fadeOut(400)
+
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
@@ -195,8 +197,6 @@ $(document).ready ->
                 $("#qRes").html html
                 $("#qRes").fadeIn(400)
                 if $(".item").length >= 1
-                    $("#tags").hide()
-                    $("#showGroupsDiv").show()
                     $("#hollowResult").empty()
                 else
                     $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
