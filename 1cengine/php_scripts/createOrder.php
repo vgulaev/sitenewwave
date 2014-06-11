@@ -172,8 +172,9 @@ $mess .= "На сайте Тримет был оформлен новый зак
 $mess .= "Его номер: <strong>".$r1[0]."</strong><br />";
 $mess .= "<hr />";
 $mess .= "<ins>Автоматическая рассылка сайта trimet.ru</ins>";
+$boundary = "---"; //Разделитель
 $headers = "From: $from\nReply-To: $from\n";
-$headers .= "Content-Type: text\html; charset=utf-8\n";
+$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
 $body = "--$boundary\n";
 /* Присоединяем текстовое сообщение */
 $body .= "Content-type: text/html; charset=utf-8\n";
