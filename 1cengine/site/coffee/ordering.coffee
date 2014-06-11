@@ -520,6 +520,7 @@ sendOrder = (orderString, is_async) ->
 
 $("#sendOrderButton").click ->
     createOrder()
+    yaCounter23067595.reachGoal('FinishOrder');
     return
 
 
