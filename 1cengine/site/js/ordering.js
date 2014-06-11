@@ -503,6 +503,7 @@
 
   $("#sendOrderButton").click(function() {
     createOrder();
+    yaCounter23067595.reachGoal('FinishOrder');
   });
 
   createOrder = function() {
