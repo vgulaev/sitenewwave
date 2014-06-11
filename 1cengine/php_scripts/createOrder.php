@@ -174,7 +174,12 @@ $mess .= "<hr />";
 $mess .= "<ins>Автоматическая рассылка сайта trimet.ru</ins>";
 $headers = "From: $from\nReply-To: $from\n";
 $headers .= "Content-Type: text\html; charset=utf-8\n";
-$body = $mess;
+$body = "--$boundary\n";
+/* Присоединяем текстовое сообщение */
+$body .= "Content-type: text/html; charset=utf-8\n";
+$body .= "Content-Transfer-Encoding: quoted-printablenn";
+$body .= $mess."\n";
+$body .= "--$boundary\n";
 
 mail($to, $subject, $body, $headers);
 
