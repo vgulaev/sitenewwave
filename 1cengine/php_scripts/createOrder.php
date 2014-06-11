@@ -171,7 +171,7 @@ $mess = "Доброго времени суток, "."<br />";
 $mess .= "На сайте Тримет был оформлен новый заказ."."<br />";
 $mess .= "Его номер: <strong>".$r1[0]."</strong><br />";
 $mess .= "<hr />";
-$mess .= "<ins>Автоматическая рассылка сайта trimet.ru</ins>"
+$mess .= "<ins>Автоматическая рассылка сайта trimet.ru</ins>";
 $headers = "From: $from\nReply-To: $from\n";
 $headers .= "Content-Type: text\html; charset=utf-8\n";
 $body = $mess;
