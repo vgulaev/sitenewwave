@@ -164,7 +164,7 @@ mail($to, $subject, $body, $headers);
 
 /// Send Mail to Us
 
-$to = "otwo@trimet.ru, webmaster@trimet.ru";
+$to = "otwo@trimet.ru, webmaster@trimet.ru, parshin@trimet.ru";
 $from = "admin@trimet.ru";
 $subject = '=?utf-8?B?'.base64_encode('Attention On-line shop trimet.ru').'?=';
 $mess = "Доброго времени суток, "."<br />";
