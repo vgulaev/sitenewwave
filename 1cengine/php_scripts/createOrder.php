@@ -122,6 +122,8 @@ require_once('getfilelink.php');
 // fwrite($handle, $answerArray[3]." PLEASE WORK!\n");
 // fclose($handle);
 
+/// Send Mail to Client
+
 $filename = $answerArray[3]; //Имя файла для прикрепления
 $to = $_POST['email']; //Кому
 $from = "admin@trimet.ru"; //От кого
@@ -157,6 +159,22 @@ $body .= "Content-Transfer-Encoding: base64\n";
 $body .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode("Заказ №".$r1[0].".pdf")."?=\n\n";
 $body .= chunk_split(base64_encode($contents))."\n";
 $body .= "--".$boundary ."--\n";
+
+mail($to, $subject, $body, $headers);
+
+/// Send Mail to Us
+
+$to = "otwo@trimet.ru, webmaster@trimet.ru";
+$from = "admin@trimet.ru";
+$subject = '=?utf-8?B?'.base64_encode('Attention On-line shop trimet.ru').'?=';
+$mess = "Доброго времени суток, "."<br />";
+$mess .= "На сайте Тримет был оформлен новый заказ."."<br />";
+$mess .= "Его номер: <strong>".$r1[0]."</strong><br />";
+$mess .= "<hr />";
+$mess .= "<ins>Автоматическая рассылка сайта trimet.ru</ins>"
+$headers = "From: $from\nReply-To: $from\n";
+$headers .= "Content-Type: text\html; charset=utf-8\n";
+$body = $mess;
 
 mail($to, $subject, $body, $headers);
 
