@@ -208,7 +208,7 @@ mail($to, $subject, $body, $headers);
 
 /// Send Mail to Us
 
-$to = "otwo@trimet.ru, webmaster@trimet.ru, parshin@trimet.ru";
+$to = "otwo@trimet.ru, webmaster@trimet.ru, parshin@trimet.ru, aleksey@trimet.ru";
 $from = "admin@trimet.ru";
 $subject = '=?utf-8?B?'.base64_encode('Attention On-line shop trimet.ru').'?=';
 $mess = "Доброго времени суток, "."<br />";
@@ -218,7 +218,7 @@ $mess .= "<hr color=lightgrey />";
 $mess .= "<font color=grey><small><i><tt>Автоматическая рассылка сайта trimet.ru</tt></i></small></font>";
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-$headers .= 'To: $to' . "\r\n";
+$headers .= 'To: '.$to."\r\n";
 $headers .= 'From: '. $from . "\r\n";
 
 
