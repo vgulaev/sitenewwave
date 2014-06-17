@@ -18,6 +18,44 @@ function array_to_objecttree($array) {
   return $Object;
 }
 
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+
+
+function register_user($mail, $passwd, $name) {
+    $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
+    // $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/Register.1cws'));
+//$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
+
+    $server->decode_utf8 = false;
+    $server->soap_defencoding = 'UTF-8';
+
+    $params['Login'] = $mail;
+    $params['Password'] = hash('sha256', $passwd);
+    $params['Email'] = $mail;
+    $params['FullName'] = $name;
+
+    $result=$server->AddUser($params);
+    $content = $server->__getLastResponse();
+
+    if (strpos($content,'создан') !== false) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+$pwd = generateRandomString();
+$nm = $_POST["name_surname"].' '.$_POST["last_name"];
+
+$reg_result = register_user($_POST['email'], $pwd, $nm);
+
 $orderString = $_POST['orderString'];
 // $orderString = "8f97e0cd-5fc1-11d9-a6d2-505054503030:8f97e0cd-5fc1-11d9-a6d2-505054503030:-:23:32150.00;8dc51296-c7dc-11e0-a1a9-00155dc20a18:8dc51296-c7dc-11e0-a1a9-00155dc20a18:-:31:55110.00;";
 if($_SESSION['1cusername']!=''){
@@ -41,6 +79,7 @@ $OrderFromSite["Редактируемый"] = "ДА";
 $OrderFromSite["Доставка"] = array();
 $OrderFromSite["Доставка"]["Адрес"] = $_POST['destination'];
 $OrderFromSite["Доставка"]["Стоимость"] = $_POST['delivery_cost'];
+$OrderFromSite["Почта"] = $_POST['email'];
 
 $orderStringArray = split(';', $orderString);
 $GoodsList["СтрокиТаблицы"] = array();
@@ -129,12 +168,17 @@ $to = $_POST['email']; //Кому
 $from = "admin@trimet.ru"; //От кого
 $subject = '=?utf-8?B?'.base64_encode('On-line shop trimet.ru').'?=';
 $mess =  'Добрый день, '. "<br />";
-$mess .= 'Вы заказали металл на сайте компании Тримет. '."<br />";
-$mess .= 'Ваш заказ успешно зарегистрирован в нашей системе и позднее будет обработан менеджером, который позвонит вам по номеру, который вы указали, или напишет вам письмо.'."<br />";
-$mess .= 'Номер вашего заказа: '.$r1[0]."<br />";
+$mess .= '<p>Вы заказали металл на сайте компании Тримет.</p>';
+$mess .= '<p>Ваш заказ успешно зарегистрирован в нашей системе и позднее будет обработан менеджером, который позвонит вам по номеру, который вы указали, или напишет вам письмо.</p>';
+$mess .= '<p>Номер вашего заказа: <strong>'.$r1[0]."</strong></p>";
+$mess .= '<p>Вы так же можете просмотреть свои заказы в ';
+$mess .= '<a href="https://trimet.ru/kabinet/">личном кабинете</a></p>';
+if( $reg_result ){
+    $mess .= '<p>Для входа используйте указанный вами email и следующий пароль: <strong>'.$pwd.'</strong></p>';
+}
 //$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
-$mess .= 'Контактный телефон: +7 (3452) 520-670'."<br />";
-$mess .= 'С уважением, компания Тримет';
+$mess .= '<p>Контактный телефон: +7 (3452) 520-670'."</p>";
+$mess .= '<p>С уважением, компания Тримет</p>';
 $boundary = "---"; //Разделитель
 /* Заголовки */
 $headers = "From: $from\nReply-To: $from\n";
