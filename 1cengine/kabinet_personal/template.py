@@ -54,12 +54,14 @@ def compose_info_part():
     counterparty_text_td = soup.new_tag("td")
     counterparty_text_td["id"] = "counterparty_text"
     counterparty_ul = soup.new_tag("ul")
-    for x in user_info["counterparty"][0]:
-        counterparty_li = soup.new_tag("li")
-        counterparty_li.append(str(x))
-        counterparty_ul.append(counterparty_li)
 
-    counterparty_text_td.append(counterparty_ul)
+    if user_info["counterparty"].__len__() > 0:
+        for x in user_info["counterparty"][0]:
+            counterparty_li = soup.new_tag("li")
+            counterparty_li.append(str(x))
+            counterparty_ul.append(counterparty_li)
+
+        counterparty_text_td.append(counterparty_ul)
 
     counterparty_tr.append(counterparty_label_td)
     counterparty_tr.append(counterparty_text_td)
