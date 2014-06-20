@@ -32,6 +32,7 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+# _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 post = {}
 
 
@@ -154,6 +155,8 @@ def get_order_list_html(UID, date_from, date_to):
                     location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
     client.set_options(cache=DocumentCache())
 
+    # client.set_options(cache=None)
+
     result = client.service.OrderLists(UID, date_from, date_to)
 
     # print "nya"
@@ -162,14 +165,20 @@ def get_order_list_html(UID, date_from, date_to):
     listOrder = ""
 
     listOrder = listOrder + """
-        <div class="orderListHeader">
-            <span>Номер</span>
-            <span>Сумма</span>
-            <span><a href="javascript:pass()">Дата
+        <table>
+        <thead>
+        <tr class="orderListHeader">
+            <th>Номер</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Контрагент</th>
+            <th>Ответственный</th>
+            <th><a href="javascript:pass()">Дата
             <img class="date_arrow"
-            src="/1cengine/kabinet_orders/arrow_down.svg" /></a></span>
-        </div>
-        <div id="ordersContainer">
+            src="/1cengine/kabinet_orders/arrow_down.svg" /></a></th>
+        </tr>
+        </thead>
+        <tbody id="ordersContainer">
     """
 
     odd = "odd"
@@ -177,31 +186,55 @@ def get_order_list_html(UID, date_from, date_to):
     orders = ""
     for order in result[2][0]:
         orders = orders + """
-            <div class="orderItem """ + odd + """ ">
-                <div>
-                    <span class="openOrderDownload">
+            <tr class="orderItem """ + odd + """ ">
+                    <td class="openOrderDownload">
                         <img class="ar_img"
                         src="/1cengine/kabinet_orders/arrow.svg" />
                         """ + str(order[3]) + """
-                    </span>
-                    <span>""" + str(order[2]) + """</span>
-                    <span class="orderDate">
-                    """ + str(order[1].split(" ")[0]) + """</span>
-                </div>
+<p class="orderDownload">
+Скачать заказ:
+</p>
+                    </td>
+                    <td>""" + str(order[2]) + """
+<p class="orderDownload">
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","xlsx")'
+title="Скачать заказ в формате xls"> xls </a>
+</p>
 
-                <p class="orderDownload">
-                    Скачать заказ:
-                    <a href='javascript:openLink(
-                    \"""" + str(order[0]) + """\","xlsx")'
-                    title="Скачать заказ в формате xls"> xls </a>
-                    <a href='javascript:openLink(
-                    \"""" + str(order[0]) + """\","pdf")'
-                    title="Скачать заказ в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(
-                    \"""" + str(order[0]) + """\","ods")'
-                    title="Скачать заказ в формате ods"> ods </a>
-                </p>
-            </div>
+                    </td>
+                    <td>""" + str(order[6]) + """
+<p class="orderDownload">
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","pdf")'
+title="Скачать заказ в формате pdf"> pdf </a>
+</p>
+                    </td>
+                    <td>""" + str(order[5]) + """
+<p class="orderDownload">
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","ods")'
+title="Скачать заказ в формате ods"> ods </a>
+</p>
+                    </td>
+                    <td>""" + str(order[4]) + """
+                    </td>
+                    <td class="orderDate">
+                    """ + str(order[1].split(" ")[0]) + """</td>
+                    </tr>
+                    <tr><td colspan=5> <p class="orderDownload">
+Скачать заказ:
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","xlsx")'
+title="Скачать заказ в формате xls"> xls </a>
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","pdf")'
+title="Скачать заказ в формате pdf"> pdf </a>
+<a href='javascript:openLink(
+\"""" + str(order[0]) + """\","ods")'
+title="Скачать заказ в формате ods"> ods </a>
+</p></td>
+            </tr>
         """
 
         if odd == "odd":
@@ -209,7 +242,7 @@ def get_order_list_html(UID, date_from, date_to):
         else:
             odd = "odd"
 
-    listOrder = listOrder + orders + "</div>"
+    listOrder = listOrder + orders + "</tbody></table>"
 
     return listOrder
 
