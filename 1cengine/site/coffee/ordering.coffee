@@ -164,18 +164,17 @@ class App.Item
         @change_buy_count($(".buy_count").val())
 
     show_modal: ->
-        $.blockUI.defaults.css.borderRadius = '10px';
-        $.blockUI.defaults.fadeIn = 100;
-        $.blockUI.defaults.fadeOut = 100;
-        $.blockUI.defaults.css.backgroundColor = 'white'
-        $.blockUI.defaults.css.cursor = 'defaults'
-        $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-        $.blockUI.defaults.css.fontSize = '14px'
-        $.blockUI.defaults.css.width = '450px'
-        $.blockUI.defaults.css.paddingTop = '10px'
+
+        my_css = {
+            width: '450px',
+            height: 'auto',
+            paddingTop: '10px',
+            paddingBottom: '10px'
+        }
 
         $.blockUI
-            message: @get_modal()
+            message: @get_modal(),
+            css: my_css
 
         $(".blockMsg").draggable();
 
@@ -231,7 +230,7 @@ class App.Item
             cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="'+@weight+'" />'
 
             set_length = """
-                <span>Укажите требуемую длину листа: #{cl_input}</span>
+                <p>Укажите требуемую длину листа: #{cl_input}</p>
             """
         else
             set_length = ""

@@ -171,18 +171,17 @@
     };
 
     Item.prototype.show_modal = function() {
-      var _this = this;
-      $.blockUI.defaults.css.borderRadius = '10px';
-      $.blockUI.defaults.fadeIn = 100;
-      $.blockUI.defaults.fadeOut = 100;
-      $.blockUI.defaults.css.backgroundColor = 'white';
-      $.blockUI.defaults.css.cursor = 'defaults';
-      $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)';
-      $.blockUI.defaults.css.fontSize = '14px';
-      $.blockUI.defaults.css.width = '450px';
-      $.blockUI.defaults.css.paddingTop = '10px';
+      var my_css,
+        _this = this;
+      my_css = {
+        width: '450px',
+        height: 'auto',
+        paddingTop: '10px',
+        paddingBottom: '10px'
+      };
       $.blockUI({
-        message: this.get_modal()
+        message: this.get_modal(),
+        css: my_css
       });
       $(".blockMsg").draggable();
       $(document).on("keyup", function(e) {
@@ -235,7 +234,7 @@
       w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
       if (this.is_kis) {
         cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="' + this.weight + '" />';
-        set_length = "<span>Укажите требуемую длину листа: " + cl_input + "</span>";
+        set_length = "<p>Укажите требуемую длину листа: " + cl_input + "</p>";
       } else {
         set_length = "";
       }
