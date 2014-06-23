@@ -1781,3 +1781,21 @@ hr{
     width: 100px;
     margin: 15px auto;
 }
+
+.closeHowToMakeOrder{
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 700px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 7px;
+    display: inline-block;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    margin: auto 30px;
+}
