@@ -156,10 +156,12 @@ show_how_to_make_order = () ->
 
     m_css = {
         width: '770px',
-        height: w_height+"px",
+        maxHeight: w_height+"px",
+        height: 'auto',
         overflow: 'auto',
         paddingTop: '10px',
         paddingRight: '20px',
+        paddingBottom: '30px',
         textAlign: 'justify',
         top: '130px',
         left: offset.left+"px"
@@ -182,10 +184,14 @@ show_how_to_make_order = () ->
 После чего Вам нужно оплатить и забрать покупки, или же дождаться, когда их привезут.
 </p><p>
 Удачных покупок в нашем интернет магазине.</p>
+<div class="closeHowToMakeOrder">Я понял, спасибо</div>
         """,
         css: m_css
 
     $(".blockMsg").draggable();
+
+    $(".closeHowToMakeOrder").click ->
+        $.unblockUI()
 
     $(document).on "keyup", (e) ->
         e.preventDefault()
