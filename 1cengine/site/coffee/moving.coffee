@@ -150,9 +150,61 @@ show_rezka = (chkbox) ->
         $(".rezka_wrapper").hide()
 
 
+show_how_to_make_order = () ->
+    offset = $("#pTableContentTab").offset()
+    w_height = $(window).height() - 260
 
+    m_css = {
+        width: '770px',
+        height: w_height+"px",
+        overflow: 'auto',
+        paddingTop: '10px',
+        paddingRight: '20px',
+        textAlign: 'justify',
+        top: '130px',
+        left: offset.left+"px"
+    }
+
+
+    $.blockUI
+        message: """
+        <h2>Как выписать счёт</h2>
+<p>
+Уважаемый клиент,<br />
+Раздел "купить онлайн" представляет собой каталог, где Вы можете найти интересующий Вас металлопрокат.
+Вы можете как выбрать группу номенклатуры в левом меню, так и ввести нужное наименование в строку поиска.
+Затем нужно добавить товар в корзину - для этого достаточно нажать на значок корзины в строке номенклатуры, ввести требуемое количество и нажать кнопку "в корзину".
+</p><p>
+Для последующего оформления Вашего заказа нажмите на кнопку "Корзина", расположенную в строке со ссылками на прайс. Там Вы можете просмотреть выбранный товар с его стоимостью, выбрать доставку и резку номенклатуры, и завершить оформление заказа.
+</p><p>
+Нажав на кнопку "Оформить", Вы отправите заказ на регистрацию в нашей системе, это займёт не больше минуты. На указанный Вами адрес электронной почты будет выслано сообщение с номером заказа и приглашением в личный кабинет, где Вы сможете увидеть текущий статус заказа. Вскоре с Вами свяжется наш менеджер, который уточнит детали заказа.
+</p><p>
+После чего Вам нужно оплатить и забрать покупки, или же дождаться, когда их привезут.
+</p><p>
+Удачных покупок в нашем интернет магазине.</p>
+        """,
+        css: m_css
+
+    $(".blockMsg").draggable();
+
+    $(document).on "keyup", (e) ->
+        e.preventDefault()
+        if e.which is 27
+            $.unblockUI();
 
 $(document).ready ->
+
+    $.blockUI.defaults.css.borderRadius = '10px'
+    $.blockUI.defaults.fadeIn = 100
+    $.blockUI.defaults.fadeOut = 100
+    $.blockUI.defaults.css.backgroundColor = 'white'
+    $.blockUI.defaults.css.cursor = 'defaults'
+    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+    $.blockUI.defaults.css.fontSize = '14px'
+    $.blockUI.defaults.css.width = '700px'
+    $.blockUI.defaults.css.height = '370px'
+    $.blockUI.defaults.css.paddingTop = '70px'
+    $.blockUI.defaults.css.paddingLeft = '20px'
 
     PAGE = 1
 
@@ -442,3 +494,6 @@ $(document).ready ->
     $(".city_select").change ->
         $(".delivery_cost").html $(".city_select option:selected").val()
         # alert($(".city_select option:selected").val())
+
+    $(".howtomakeorder").click ->
+        show_how_to_make_order()
