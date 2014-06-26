@@ -63,6 +63,7 @@ def mail_new_passwd(email, passwd):
     msg["From"] = me
     msg["To"] = you
     msg["Subject"] = "Сброс пароля личного кабинета сайта trimet.ru"
+    msg.set_charset("utf-8")
 
 
     s = smtplib.SMTP('localhost')
