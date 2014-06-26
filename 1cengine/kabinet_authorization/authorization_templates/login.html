@@ -1,15 +1,15 @@
 <div>
 <p>
-    Войдите в систему для просмотра заказов
+    Введите ваш логин и пароль для входа в систему
 </p>
 <form method="POST" action="/kabinet/authorization/" id="regForm">
 <table class="loginTable">
     <tr>
-        <td>Ваш e-mail</td>
+        <td>Введите ваш e-mail</td>
         <td><input class="emailInput" name="email" /></td>
     </tr>
     <tr>
-        <td>Ваш пароль</td>
+        <td>Введите ваш пароль</td>
         <td><input type="password" class="passwdInput" /><input type="passwd" name="passwd" class="hidden_passwd"></td>
     </tr>
     <tr class="passwdRepeatTr" style="display:none;">
@@ -21,7 +21,10 @@
     <label for="newUser">Новый пользователь </label><input type="checkbox" name="newUser" class="newUser" />
 </div>
 
+
+
 <div>
+    <div class="iForgotPasswd">Я забыл пароль</div>
     <div class="enterButton submitButton">Войти</div>
     <!-- <div class="regButton submitButton">Зарегистрироваться</div> -->
 </div>
