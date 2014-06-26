@@ -130,5 +130,89 @@ $(document).ready( function (){
         }
     }
 
+    function reset_password(){
+        my_css = {
+            borderRadius: '10px',
+            fadeIn: 100,
+            fadeOut: 100,
+            backgroundColor: 'white',
+            cursor: 'defaults',
+            boxShadow: '0px 0px 5px 5px rgb(207, 207, 207)',
+            fontSize: '14px',
+            width: '500px',
+            height: 'auto',
+            paddingTop: '10px',
+            textAlign: 'left',
+            paddingBottom: '30px'
+        }
+
+        msg = "<div class='wrapper'><h3>Сброс пароля</h3>"
+        msg += "<div class='reset_text'>"
+        msg += "<p>Введите адрес вашей электронной почты, чтобы мы выслали на него новый пароль</p>"
+        msg += "<input class='reset_email' type='teaxarea' /><div class='reset_button'>Сбросить</div></div></div>"
+
+        $.blockUI({
+            message: msg,
+            css: my_css
+        });
+
+        $(".blockMsg").draggable();
+
+        $(".reset_button").click(function() {
+            email = $(".reset_email").val()
+            downloader_array = new Array("285","365","377","379","382","385")
+
+            wait_message = "<img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />"
+            wait_message += "<p>Сбрасываем ваш пароль...</p>"
+
+            $(".reset_text").html(wait_message)
+
+            window.setTimeout(function(){ send_reset(email) },1000)
+
+        });
+
+        $(document).on("keyup", function(e) {
+            e.preventDefault();
+            if (e.which === 27) {
+                return $.unblockUI();
+            }
+        });
+
+        $(document).on("keyup", function(e) {
+            e.preventDefault();
+            if (e.which === 13) {
+                $(".reset_button").click()
+            }
+        });
+
+
+    }
+
+    function send_reset(email){
+        // alert(email)
+        $.ajax({
+                type: "POST",
+                url: "/1cengine/py_scripts/reset_passwd.py",
+                async: true,
+                data: "email=" + email,
+                success: function(html) {
+                    result_message = "<p>"+html+"</p>"
+                    result_message += "<div class='reset_close'>Закрыть</div>"
+                    $(".reset_text").html(result_message)
+                    // $.unblockUI();
+
+                    $(".reset_close").click( function(){
+                        $.unblockUI()
+                    })
+                }
+
+            });
+    }
+
+    $(".iForgotPasswd").click( function(){
+
+        reset_password()
+    })
+
 })
 
