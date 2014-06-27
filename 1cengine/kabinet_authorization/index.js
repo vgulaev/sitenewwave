@@ -4,10 +4,30 @@ $(document).ready( function (){
         window.location = "/kabinet/authorization/"
     })
 
+    $(document).on("keyup", function(e) {
+        e.preventDefault();
+        if (e.which === 27) {
+            return $.unblockUI();
+        }
+    });
 
-    $(".enterButton").click( function(){ 
+    $(".passwdInput").on("keyup", function(e) {
+            e.preventDefault();
+            if (e.which === 13) {
+                $(".enterButton").click()
+            }
+        });
+
+    $(".enterButton").click( function(){
+
+        if($(".passwdInput").val() == "") {
+            $(".passwdInput").focus()
+            $(".passwdInput").addClass("input_empty")
+            return false
+        }
+
         downloader_array = new Array("285","365","377","379","382","385")
-    
+
         $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
         $.blockUI.defaults.fadeIn = 100; //ускоряем появление
         $.blockUI.defaults.fadeOut = 100; //и исчезновение
@@ -17,11 +37,26 @@ $(document).ready( function (){
         $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
         $.blockUI.defaults.css.fontSize = '14px'
         $.blockUI.defaults.css.width = '450px'
-        $.blockUI.defaults.css.height = '220px'
+        $.blockUI.defaults.css.height = 'auto'
         $.blockUI.defaults.css.paddingTop = '10px'
 
+
+        downloader_array = new Array("285","365","377","379","382","385")
+
+        wait_message = "<div id='wait_please'><h3>Авторизация</h3>"
+        wait_message += "<div class='authorize_message'>"
+        wait_message += "<img src='/1cengine/kabinet_authorization/" + downloader_array[getRandomInt(0, 5)] + ".png' />"
+        wait_message += "<p >Пытаемся Вас авторизовать...</p></div></div>"
+
         $.blockUI({
-            message: $("#wait_please")
+            message: wait_message
+        });
+
+        $(document).on("keyup", function(e) {
+            e.preventDefault();
+            if (e.which === 27) {
+                return $.unblockUI();
+            }
         });
 
         window.setTimeout(function(){ loginUser() },1000)
@@ -63,6 +98,9 @@ $(document).ready( function (){
                 authorization = html
                 eval(authorization)
                 
+                $(".reset_close").click( function(){
+                    $.unblockUI()
+                })
             }
 
         });    
@@ -178,7 +216,7 @@ $(document).ready( function (){
             }
         });
 
-        $(document).on("keyup", function(e) {
+        $(".reset_email").on("keyup", function(e) {
             e.preventDefault();
             if (e.which === 13) {
                 $(".reset_button").click()

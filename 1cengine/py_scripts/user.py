@@ -249,10 +249,13 @@ class User():
                     """
                 else:
 
+                    message = "\
+                        <p>Пользователь с таким логином и паролем не найден</p>\
+                        <div class='reset_close'>Закрыть</div>\
+                    "
                     return """
                             $.removeCookie("sid",{ expires: 30, path: '/'})
-                            alert("Не авторизованы")
-                            $.unblockUI()
+                            $(".authorize_message").html(" """ + message + """ ")
                     """
 
             else:
