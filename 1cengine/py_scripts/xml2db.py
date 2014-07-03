@@ -8,7 +8,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-pricefile = open('/web/trimetru/site/www/import/price.xml', 'r')
+pricefile = open('/home/saur/web/sitenewwave/import/price.xml', 'r')
 xml_string = pricefile.read()
 pricefile.close()
 # print xml_string
@@ -126,7 +126,7 @@ def insertItem(
         conn.commit()
 
 
-def groupEater(group):
+def groupEater(group, pHash):
 
     if u'Предмет' in group:
 
@@ -203,9 +203,9 @@ def groupEater(group):
 
         if type(group[u'Группа']) == type(list()):
             for subgroup in group[u'Группа']:
-                groupEater(subgroup)
+                groupEater(subgroup, group[u'НоменклатураСсылка'])
         elif type(group[u'Группа']) == type(dict()):
-            groupEater(group[u'Группа'])
+            groupEater(group[u'Группа'], group[u'НоменклатураСсылка'])
 
 if __name__ == '__main__':
     parser = sax.make_parser()
@@ -239,10 +239,10 @@ if __name__ == '__main__':
 
         if u'Группа' in group:
             if type(group[u'Группа']) == type(dict()):
-                groupEater(group[u'Группа'])
+                groupEater(group[u'Группа'], pHash)
             elif type(group[u'Группа']) == type(list()):
                 for subgroup in group[u'Группа']:
-                    groupEater(subgroup)
+                    groupEater(subgroup, pHash)
 
     cursor.close()
     conn.close()

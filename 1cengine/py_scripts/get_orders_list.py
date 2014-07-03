@@ -112,13 +112,30 @@ def get_order_list_ajax(UID, date_from, date_to):
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/orders/" id="dateForm">
-                Показать заказы в период:
-                 <input type="textarea" name="dateFrom"
-                class="dateInput dateFrom"
-                value=\"""" + date_from_value + """\" />
-                 - <input type="textarea" name="dateTo"
-                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
-                <div class="datePickButton">Обновить журнал</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Показать заказы в период:<br />
+                                <input type="textarea" name="dateFrom"
+                                class="dateInput dateFrom"
+                                value=\"""" + date_from_value + """\" />
+                                 - <input type="textarea" name="dateTo"
+                                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
+                            </td>
+                            <td>
+                                Отображать заказы контрагента:<br />
+                                <select>
+                                    <option>Все</option>
+                                    <option>Без контрагента</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="datePickButton">Обновить журнал</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div id="order_ajax_div">

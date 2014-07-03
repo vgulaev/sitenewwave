@@ -175,6 +175,64 @@ show_how_to_make_order = () ->
         if e.which is 27
             $.unblockUI();
 
+get_subgroup = (element, g_name, g_hash) ->
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_item_subgroup.py"
+        async: false
+        data: "term=" + encodeURIComponent(g_hash) + ""
+        success: (html) ->
+            subgroups = JSON.parse html
+            for subgroup in subgroups then do (subgroup) =>
+                subgroup_name = subgroup[0].replace(g_name, "")
+                $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}' idin='#{subgroup[1]}'>"+subgroup_name+"</li>")
+                # alert(subgroup)
+
+            $(element).find("li.subgroup").each (index, sgroup) =>
+                $(sgroup).click ->
+                    alert($(sgroup).attr("name"))
+                    $(".subgroup").removeClass("active_subgroup")
+                    $(sgroup).addClass("active_subgroup")
+                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+                    # alert(i_name)
+                    $(sgroup).append("<ul class=\"subgroup_c\"></ul>")
+                    get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("hash"))
+
+                    $("#itemName").val(i_name)
+                    $("#itemName").change()
+
+group_click = (element) ->
+    $(element).click ->
+        g_name = $(this).attr("name")
+        g_hash = $(this).attr("inid")
+        if $(element).hasClass("active_group") is false
+
+            $("#itemName").val g_name
+            $("#itemName").change()
+
+            $("#groups_list").find("li.main_group").removeClass("active_group")
+            $(element).addClass("active_group")
+
+        # alert($(this).attr("name"))
+        if $(element).children().is(".subgroup_c") is false
+            # alert($(element).children("ul"))
+            $(element).append("<ul class=\"subgroup_c\"></ul>")
+            get_subgroup(element, g_name, g_hash)
+
+subgroup_click = (sgroup) ->
+    $(sgroup).click ->
+        $(".subgroup").removeClass("active_subgroup")
+        $(sgroup).addClass("active_subgroup")
+        group = $(sgroup).closest(".active_group")
+        g_name = $(group).attr("name")
+        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+        # alert(i_name)
+        $(sgroup).append("<ul class=\"subgroup_c\"></ul>")
+        get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("hash"))
+
+        $("#itemName").val(i_name)
+        $("#itemName").change()
+
 $(document).ready ->
 
     $.blockUI.defaults.css.borderRadius = '10px'
@@ -407,53 +465,10 @@ $(document).ready ->
         switch_tabs("switchNotificationDiv")
 
     $("#groups_list").find("li.main_group").each (index, element) =>
-        $(element).click ->
-            g_name = $(this).attr("name")
-            if $(element).hasClass("active_group") is false
-
-                $("#itemName").val g_name
-                $("#itemName").change()
-
-                $("#groups_list").find("li.main_group").removeClass("active_group")
-                $(element).addClass("active_group")
-
-            # alert($(this).attr("name"))
-            if $(element).children().is(".subgroup_c") is false
-                # alert($(element).children("ul"))
-                $(element).append("<ul class=\"subgroup_c\"></ul>")
-                $.ajax
-                    type: "GET"
-                    url: "/1cengine/py_scripts/item_autocomplete.py"
-                    async: false
-                    data: "term=" + encodeURIComponent(g_name) + ""
-                    success: (html) ->
-                        subgroups = JSON.parse html
-                        for subgroup in subgroups then do (subgroup) =>
-                            subgroup_name = subgroup.replace(g_name, "")
-                            $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}'>"+subgroup_name+"</li>")
-                            # alert(subgroup)
-
-                        $(element).find("li.subgroup").each (index, sgroup) =>
-                            $(sgroup).click ->
-                                $(".subgroup").removeClass("active_subgroup")
-                                $(sgroup).addClass("active_subgroup")
-                                i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
-                                # alert(i_name)
-
-                                $("#itemName").val(i_name)
-                                $("#itemName").change()
+        group_click(element)
 
     $("li.subgroup").each (index, sgroup) =>
-        $(sgroup).click ->
-            $(".subgroup").removeClass("active_subgroup")
-            $(sgroup).addClass("active_subgroup")
-            group = $(sgroup).closest(".active_group")
-            g_name = $(group).attr("name")
-            i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
-            # alert(i_name)
-
-            $("#itemName").val(i_name)
-            $("#itemName").change()
+        subgroup_click(sgroup)
 
     c_url = window.location.pathname
     # alert(c_url)
