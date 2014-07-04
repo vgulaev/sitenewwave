@@ -175,7 +175,64 @@ show_how_to_make_order = () ->
         if e.which is 27
             $.unblockUI();
 
+get_item_list = (hash) ->
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_items_bs.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            $("#qRes").html html
+            $("#qRes").fadeIn(400)
+            if $(".item").length >= 1
+                $("#hollowResult").empty()
+            else
+                $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
+
+            if $(".item").length is 20
+                $("#show_next_prev").show()
+            else
+                $("#show_next_prev").hide()
+
+            # window.history.pushState(
+            #     {term: value},
+            #     '',
+            #     '/1cengine/site/'+$.trim(value)+'/'
+            # )
+
+            $(".bItem").click ->
+                # alert("lol")
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+
+            $(".oItem").click ->
+
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+            false
+
+
+    # $.ajax
+    #     type: "GET"
+    #     url: "/1cengine/py_scripts/get_count_items.py"
+    #     async: true
+    #     data: "term=" + encodeURIComponent(value) + ""
+    #     success: (html) ->
+    #         $(".count_all_result").html html
+
+
 get_subgroup = (element, g_name, g_hash) ->
+    # alert(g_name+" :: "+g_hash)
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_item_subgroup.py"
@@ -190,16 +247,18 @@ get_subgroup = (element, g_name, g_hash) ->
 
             $(element).find("li.subgroup").each (index, sgroup) =>
                 $(sgroup).click ->
-                    alert($(sgroup).attr("name"))
+                    # alert($(sgroup).attr("name"))
                     $(".subgroup").removeClass("active_subgroup")
                     $(sgroup).addClass("active_subgroup")
                     i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
                     # alert(i_name)
-                    $(sgroup).append("<ul class=\"subgroup_c\"></ul>")
-                    get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("hash"))
+                    if $(sgroup).children().is(".subgroup_c2") is false
+                        $(sgroup).append("<ul class=\"subgroup_c2\"></ul>")
+                        get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"))
 
-                    $("#itemName").val(i_name)
-                    $("#itemName").change()
+                    get_item_list($(sgroup).attr("idin"))
+                    # $("#itemName").val(i_name)
+                    # $("#itemName").change()
 
 group_click = (element) ->
     $(element).click ->
@@ -207,10 +266,12 @@ group_click = (element) ->
         g_hash = $(this).attr("inid")
         if $(element).hasClass("active_group") is false
 
-            $("#itemName").val g_name
-            $("#itemName").change()
+            # $("#itemName").val g_name
+            # $("#itemName").change()
+            get_item_list(g_hash)
 
             $("#groups_list").find("li.main_group").removeClass("active_group")
+            $(".subgroup").removeClass("active_subgroup")
             $(element).addClass("active_group")
 
         # alert($(this).attr("name"))
@@ -227,11 +288,14 @@ subgroup_click = (sgroup) ->
         g_name = $(group).attr("name")
         i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
         # alert(i_name)
-        $(sgroup).append("<ul class=\"subgroup_c\"></ul>")
-        get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("hash"))
+        if $(sgroup).children().is(".subgroup_c2") is false
+            $(sgroup).append("<ul class=\"subgroup_c2\"></ul>")
+            # alert($(sgroup).attr("name") + " :: " + $(sgroup).attr("hash"))
+            get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"))
 
-        $("#itemName").val(i_name)
-        $("#itemName").change()
+        # $("#itemName").val(i_name)
+        # $("#itemName").change()
+        get_item_list($(sgroup).attr("idin"))
 
 $(document).ready ->
 

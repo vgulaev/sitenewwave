@@ -117,7 +117,7 @@ def set_search_results():
 
         result_table = get_items_bs.ResultTable(form["ref"].value, "strict")
 
-        return result_table.compose_table()
+        return result_table.compose_table(False)
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
@@ -125,7 +125,7 @@ def set_search_results():
         result_table = get_items_bs.ResultTable(
             catalog, "catalog")
 
-        return result_table.compose_table()
+        return result_table.compose_table(False)
 
 
 def set_show_nexr_prev():
