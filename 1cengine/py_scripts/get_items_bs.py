@@ -71,6 +71,7 @@ class ResultTable():
 
         connector.dbClose()
 
+
         return r
 
     def get_items_from_ghash(self, item_limit, item_offset):
@@ -88,14 +89,15 @@ class ResultTable():
                 `offers`.`char_name`, `offers`.`price`,
                 `offers`.`price_type`, `groups`.`name`,
                 `offers`.`hash`, `offers`.`edIzm`,
-                `offers`.`father_hash`, `offers`.`stock`
+                `offers`.`parent_hash`, `offers`.`stock`
                 FROM `offers`, `groups`
-                WHERE `offers`.`parent_hash`='"""+r_cond+"""'
-                AND `offers`.`parent_hash`=`groups`.`hash`
+                WHERE ( `offers`.`parent_hash`='""" + r_cond + """' )
+                AND `groups`.`hash`=`offers`.`parent_hash`
                 """ + limit + """
             """)
 
         connector.dbClose()
+
         return r
 
     def get_sgrous(self):

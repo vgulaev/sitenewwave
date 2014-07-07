@@ -93,7 +93,7 @@ def print_until_last(subgroup, hash):
 
 
 
-def get_sgrous(ghash):
+def get_sgroups(ghash):
     connector = myDBC("goods")
     connector.dbConnect()
 
@@ -144,4 +144,10 @@ def get_items_from_ghash(ghash):
 
 c = "b5941407-8872-11e1-a7b1-00155dc20a18"
 b = "b5941408-8872-11e1-a7b1-00155dc20a18"
-get_items_from_ghash(c)
+
+arr = get_sgroups(c)
+
+for x in arr:
+    print("<li>{0}</li>".format(x))
+
+# get_items_from_ghash(c)
