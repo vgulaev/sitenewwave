@@ -87,7 +87,7 @@ class ResultTable():
         r = connector.dbExecute("""
                 SELECT DISTINCT `offers`.`display_name`,
                 `offers`.`char_name`, `offers`.`price`,
-                `offers`.`price_type`, `groups`.`name`,
+                `offers`.`price_type`, `groups`.`fullname`,
                 `offers`.`hash`, `offers`.`edIzm`,
                 `offers`.`parent_hash`, `offers`.`stock`
                 FROM `offers`, `groups`

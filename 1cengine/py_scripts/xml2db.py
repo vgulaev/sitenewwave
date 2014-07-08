@@ -95,12 +95,12 @@ class ObjBuilder(sax.ContentHandler):
             self.__buffer = ''
 
 
-def insertGroup(gName, gHash, pHash):
+def insertGroup(gName, gHash, pHash, pName):
 
     cursor.execute(
         """ INSERT INTO `trimetru_goods`.`groups`
-        (`name`,`hash`,`parent_hash`) VALUES ( %s,%s,%s ) """,
-        (gName, gHash, pHash))
+        (`name`,`hash`,`parent_hash`, `fullname`) VALUES ( %s,%s,%s,%s ) """,
+        (gName, gHash, pHash, pName))
     row = cursor.fetchone()
     conn.commit()
 
@@ -126,7 +126,7 @@ def insertItem(
         conn.commit()
 
 
-def groupEater(group, pHash):
+def groupEater(group, pHash, pName):
 
     if u'Предмет' in group:
 
@@ -198,14 +198,16 @@ def groupEater(group, pHash):
 
     if u'Группа' in group:
 
+        fName = ( pName.replace(group[u'НаименованиеГруппы'], "" ) + " \ " + group[u'НаименованиеГруппы'] )
+
         insertGroup(
-            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash, fName)
 
         if type(group[u'Группа']) == type(list()):
             for subgroup in group[u'Группа']:
-                groupEater(subgroup, group[u'НоменклатураСсылка'])
+                groupEater(subgroup, group[u'НоменклатураСсылка'], fName)
         elif type(group[u'Группа']) == type(dict()):
-            groupEater(group[u'Группа'], group[u'НоменклатураСсылка'])
+            groupEater(group[u'Группа'], group[u'НоменклатураСсылка'], fName)
 
 if __name__ == '__main__':
     parser = sax.make_parser()
@@ -234,15 +236,17 @@ if __name__ == '__main__':
 
         pHash = group[u'НоменклатураСсылка']
 
+        fName = group[u'НаименованиеГруппы']
+
         insertGroup(
-            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash)
+            group[u'НаименованиеГруппы'], group[u'НоменклатураСсылка'], pHash, fName)
 
         if u'Группа' in group:
             if type(group[u'Группа']) == type(dict()):
-                groupEater(group[u'Группа'], pHash)
+                groupEater(group[u'Группа'], pHash, fName)
             elif type(group[u'Группа']) == type(list()):
                 for subgroup in group[u'Группа']:
-                    groupEater(subgroup, pHash)
+                    groupEater(subgroup, pHash, fName)
 
     cursor.close()
     conn.close()
