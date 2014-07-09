@@ -176,6 +176,7 @@ show_how_to_make_order = () ->
             $.unblockUI();
 
 get_item_list = (hash) ->
+    $("#itemName").val ""
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_items_bs.py"
@@ -223,13 +224,13 @@ get_item_list = (hash) ->
             false
 
 
-    # $.ajax
-    #     type: "GET"
-    #     url: "/1cengine/py_scripts/get_count_items.py"
-    #     async: true
-    #     data: "term=" + encodeURIComponent(value) + ""
-    #     success: (html) ->
-    #         $(".count_all_result").html html
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_count_items.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            $(".count_all_result").html html
 
 
 get_subgroup = (element, g_name, g_hash) ->
@@ -420,11 +421,19 @@ $(document).ready ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true"
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&show_all=true"
+
+
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
-            data: "term=" + encodeURIComponent(value) + "&show_all=true"
+            data: data_string
             success: (html) ->
                 $("#qRes").html html
 

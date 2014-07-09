@@ -171,7 +171,8 @@
   };
 
   get_item_list = function(hash) {
-    return $.ajax({
+    $("#itemName").val("");
+    $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_items_bs.py",
       async: true,
@@ -211,6 +212,15 @@
           }
         });
         return false;
+      }
+    });
+    return $.ajax({
+      type: "GET",
+      url: "/1cengine/py_scripts/get_count_items.py",
+      async: true,
+      data: "hash=" + encodeURIComponent(hash) + "",
+      success: function(html) {
+        return $(".count_all_result").html(html);
       }
     });
   };
@@ -396,14 +406,21 @@
       return show_groups();
     });
     $("#showAll").click(function() {
-      var value;
+      var data_string, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
+      if (value === "") {
+        what = "hash";
+        data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true";
+      } else {
+        what = "term";
+        data_string = what + "=" + encodeURIComponent(value) + "&show_all=true";
+      }
       return $.ajax({
         type: "GET",
         url: "/1cengine/py_scripts/get_items_bs.py",
         async: true,
-        data: "term=" + encodeURIComponent(value) + "&show_all=true",
+        data: data_string,
         success: function(html) {
           $("#qRes").html(html);
           if ($(".item").length >= 1) {
