@@ -177,6 +177,7 @@
       async: true,
       data: "hash=" + encodeURIComponent(hash) + "",
       success: function(html) {
+        App.C_HASH = hash;
         $("#qRes").html(html);
         $("#qRes").fadeIn(400);
         if ($(".item").length >= 1) {
@@ -435,17 +436,25 @@
       });
     });
     $(".next_result").click(function() {
-      var value;
+      var data_string, n_page, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
+      n_page = (PAGE * 1) + 1;
+      if (value === "") {
+        what = "hash";
+        data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
+      } else {
+        what = "term";
+        data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
+      }
       return $.ajax({
         type: "GET",
         url: "/1cengine/py_scripts/get_items_bs.py",
         async: true,
-        data: "term=" + encodeURIComponent(value) + "&page=" + PAGE + 1 + "",
+        data: data_string,
         success: function(html) {
           $("#qRes").html(html);
-          PAGE = PAGE + 1;
+          PAGE = n_page;
           $(".bItem").click(function() {
             var elem_id;
             elem_id = $(this).closest("tr").attr("id");
@@ -470,16 +479,23 @@
       });
     });
     $(".prev_result").click(function() {
-      var n_page, value;
+      var data_string, n_page, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
       if (PAGE !== 1) {
         n_page = PAGE - 1;
+        if (value === "") {
+          what = "hash";
+          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
+        } else {
+          what = "term";
+          data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
+        }
         return $.ajax({
           type: "GET",
           url: "/1cengine/py_scripts/get_items_bs.py",
           async: true,
-          data: "term=" + encodeURIComponent(value) + "&page=" + n_page + "",
+          data: data_string,
           success: function(html) {
             $("#qRes").html(html);
             PAGE = PAGE - 1;

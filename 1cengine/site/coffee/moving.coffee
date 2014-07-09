@@ -182,6 +182,7 @@ get_item_list = (hash) ->
         async: true
         data: "hash=" + encodeURIComponent(hash) + ""
         success: (html) ->
+            App.C_HASH = hash
             $("#qRes").html html
             $("#qRes").fadeIn(400)
             if $(".item").length >= 1
@@ -233,6 +234,7 @@ get_item_list = (hash) ->
 
 get_subgroup = (element, g_name, g_hash) ->
     # alert(g_name+" :: "+g_hash)
+
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_item_subgroup.py"
@@ -457,15 +459,23 @@ $(document).ready ->
     $(".next_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
+        n_page = ( PAGE * 1 ) + 1
+
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
 
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
-            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
+            data: data_string
             success: (html) ->
                 $("#qRes").html html
-                PAGE = PAGE + 1
+                PAGE = n_page
 
                 $(".bItem").click ->
 
@@ -491,13 +501,23 @@ $(document).ready ->
     $(".prev_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
+
+
         if PAGE != 1
             n_page = PAGE - 1
+
+            if value is ""
+                what = "hash"
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+            else
+                what = "term"
+                data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
+
             $.ajax
                 type: "GET"
                 url: "/1cengine/py_scripts/get_items_bs.py"
                 async: true
-                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
+                data: data_string
                 success: (html) ->
                     $("#qRes").html html
                     PAGE = PAGE - 1

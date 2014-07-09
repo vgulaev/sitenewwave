@@ -477,7 +477,12 @@ if "term" in form:
         print "Content-Type: text/html; charset=utf-8\n"
 
         if "page" in form:
-            offset = int(form["page"].value) + 20
+            xy = int(form["page"].value)
+            if xy == 1:
+                offset = 0
+            else:
+                offset = ((xy + (xy-1)-1) * 10)
+            # offset = int(form["page"].value) + 20
             limit = 20
             print str(result_table.compose_table(False, limit, offset))
         else:
@@ -493,7 +498,12 @@ if "hash" in form:
         print "Content-Type: text/html; charset=utf-8\n"
 
         if "page" in form:
-            offset = int(form["page"].value) + 20
+            xy = int(form["page"].value)
+            if xy == 1:
+                offset = 0
+            else:
+                offset = ((xy + (xy-1)-1) * 10)
+            # offset = int(form["page"].value) + 20
             limit = 20
             print str(result_table.compose_table(True, limit, offset))
         else:
