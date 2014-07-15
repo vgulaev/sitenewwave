@@ -245,13 +245,13 @@ get_subgroup = (element, g_name, g_hash) ->
             subgroups = JSON.parse html
             for subgroup in subgroups then do (subgroup) =>
                 subgroup_name = subgroup[0].replace(g_name, "")
-                $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}' idin='#{subgroup[1]}'>"+subgroup_name+"</li>")
+                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'>"+subgroup_name+"</li>")
                 # alert(subgroup)
 
-            $(element).find("li.subgroup").each (index, sgroup) =>
+            $(element).find("li.subgroup2").each (index, sgroup) =>
                 $(sgroup).click ->
                     # alert($(sgroup).attr("name"))
-                    $(".subgroup").removeClass("active_subgroup")
+                    $(".subgroup2").removeClass("active_subgroup")
                     $(sgroup).addClass("active_subgroup")
                     i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
                     # alert(i_name)
@@ -342,7 +342,8 @@ $(document).ready ->
         $(this).autocomplete "search", $(this).val()
 
     $("#itemName").change ->
-
+        $(".active_group").removeClass("active_group")
+        $(".active_subgroup").removeClass("active_subgroup")
         $("#seotext").html ""
         value = $("#itemName").val()
         value = value.replace("+", " ")
@@ -561,6 +562,9 @@ $(document).ready ->
         group_click(element)
 
     $("li.subgroup").each (index, sgroup) =>
+        subgroup_click(sgroup)
+
+    $("li.subgroup2").each (index, sgroup) =>
         subgroup_click(sgroup)
 
     c_url = window.location.pathname

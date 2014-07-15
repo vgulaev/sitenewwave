@@ -238,16 +238,16 @@
         _fn = function(subgroup) {
           var subgroup_name;
           subgroup_name = subgroup[0].replace(g_name, "");
-          return $(element).find("ul").append(("<li class='subgroup' name='" + subgroup_name + "' idin='" + subgroup[1] + "'>") + subgroup_name + "</li>");
+          return $(element).find("ul").append(("<li class='subgroup2' name='" + subgroup_name + "' idin='" + subgroup[1] + "'>") + subgroup_name + "</li>");
         };
         for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
           subgroup = subgroups[_i];
           _fn(subgroup);
         }
-        return $(element).find("li.subgroup").each(function(index, sgroup) {
+        return $(element).find("li.subgroup2").each(function(index, sgroup) {
           return $(sgroup).click(function() {
             var i_name;
-            $(".subgroup").removeClass("active_subgroup");
+            $(".subgroup2").removeClass("active_subgroup");
             $(sgroup).addClass("active_subgroup");
             i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
             if ($(sgroup).children().is(".subgroup_c2") === false) {
@@ -333,6 +333,8 @@
     });
     $("#itemName").change(function() {
       var value;
+      $(".active_group").removeClass("active_group");
+      $(".active_subgroup").removeClass("active_subgroup");
       $("#seotext").html("");
       value = $("#itemName").val();
       value = value.replace("+", " ");
@@ -550,6 +552,9 @@
       return group_click(element);
     });
     $("li.subgroup").each(function(index, sgroup) {
+      return subgroup_click(sgroup);
+    });
+    $("li.subgroup2").each(function(index, sgroup) {
       return subgroup_click(sgroup);
     });
     c_url = window.location.pathname;
