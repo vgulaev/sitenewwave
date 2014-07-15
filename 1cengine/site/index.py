@@ -82,7 +82,7 @@ class Index_Page():
             js_tag["type"] = "text/javascript"
             js_tag["src"] = js
 
-            head.append(js_tag)
+            head.head.append(js_tag)
 
         # load css tags ####
         for style in self.style_list:
@@ -92,9 +92,9 @@ class Index_Page():
             style_tag["type"] = "text/css"
             style_tag["href"] = style
 
-            head.append(style_tag)
+            head.head.append(style_tag)
 
-        return head
+        return head.head
 
     def compose_header_temlplate(self):
         if self.header_template == "":
