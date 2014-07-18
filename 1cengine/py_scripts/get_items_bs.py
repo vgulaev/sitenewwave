@@ -211,6 +211,8 @@ class ItemGroup():
             header_tag.append(price_tag)
 
         header_buy_tag = soup.new_tag("td")
+        header_buy_tag.append(u"Рассчитать")
+        header_buy_tag.append(soup.new_tag("br"))
         header_buy_tag.append(u"В корзину")
         header_tag.append(header_buy_tag)
 

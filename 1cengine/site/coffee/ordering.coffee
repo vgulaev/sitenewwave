@@ -183,6 +183,9 @@ class App.Item
             if e.which is 27
                 $.unblockUI();
 
+        $(".close_button").click ->
+            $.unblockUI()
+
         if @is_measureable()
             $(".buy_count").bind 'change keyup', (event) =>
                 @change_buy_count($(".buy_count").val())
@@ -252,7 +255,9 @@ class App.Item
 
         message = """
         <div class="buy_item_div">
-        <span class="buy_item_name">#{@name} #{@char}</span>
+        <span class="close_button">X</span>
+        <span class="buy_item_name">#{@name} <br />
+        Длинна: #{@char}</span>
         #{set_length}
         <table class="buy_item_table">
         <tr class="buy_item_head">
