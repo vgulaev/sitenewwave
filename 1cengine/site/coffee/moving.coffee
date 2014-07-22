@@ -592,3 +592,6 @@ $(document).ready ->
 
     $(".howtomakeorder").click ->
         show_how_to_make_order()
+
+    $(".return_to_catalog").click ->
+        $("#tabPrice").click()

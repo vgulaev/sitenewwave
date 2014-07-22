@@ -577,8 +577,11 @@
     $(".city_select").change(function() {
       return $(".delivery_cost").html($(".city_select option:selected").val());
     });
-    return $(".howtomakeorder").click(function() {
+    $(".howtomakeorder").click(function() {
       return show_how_to_make_order();
+    });
+    return $(".return_to_catalog").click(function() {
+      return $("#tabPrice").click();
     });
   });
 
