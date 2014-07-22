@@ -188,6 +188,7 @@ class App.Item
 
         if @is_measureable()
             $(".buy_count").bind 'change keyup', (event) =>
+                
                 @change_buy_count($(".buy_count").val())
 
             $(".buy_length").bind 'change keyup', (event) =>
@@ -255,7 +256,7 @@ class App.Item
 
         message = """
         <div class="buy_item_div">
-        <span class="close_button">X</span>
+        <span class="close_button">x</span>
         <span class="buy_item_name">#{@name} <br />
         Длинна: #{@char}</span>
         #{set_length}
