@@ -856,7 +856,7 @@ tr.iHeader{
     text-decoration:none;
     color:white;
     height: 30px;
-    width: 250px;
+    width: 405px;
     cursor: pointer;
     padding-right: 10px;
     text-align: center;
@@ -1395,24 +1395,28 @@ tr.iHeader{
     /*border:1px solid black;*/
     width:450px;
     font-size: 14px;
-    text-align: center;
+    text-align: left;
     padding-top:10px;
     padding-bottom:10px;
 }
 .buy_item_name{
     font-weight: bold;
+    margin-left:10px;
     /*border:1px dotted gray;*/
+}
+.list_length{
+    margin-left:10px;
 }
 .buy_item_head th{
     font-size: 16px;
     font-weight: normal;
     border-right:0;
     border-bottom:0;
-    background-color: lightgray;
+    background-color: rgba(134,134,134,0.3);
     padding:5px;
 }
 .buy_item_head th:first-child{
-    background-color: white;
+    background-color: none;
 }
 .buy_item_count td, .buy_item_price td{
     border-right:0;
@@ -1423,7 +1427,7 @@ tr.iHeader{
     text-align: right;
 }
 .buy_item_count td:first-child, .buy_item_price td:first-child{
-    background-color: lightgray;
+    background-color: rgba(134,134,134,0.3);
     text-align: right;
 }
 .buy_item_table{
@@ -1434,10 +1438,12 @@ tr.iHeader{
 
 }
 .buy_item_count input{
-    width:80px;
+    width:140px;
 }
 .buy_item_overall{
-    border:1px dotted gray;
+    text-align:right;
+    font-weight: 700;
+    /*border:1px dotted gray;*/
     font-size: 16px;
     margin:10px;
 }
@@ -1854,7 +1860,7 @@ hr{
     color:#585858;
     cursor: pointer;
     /*padding-right:30px;*/
-    margin-right:-35px;
+    margin-right:-50px;
     margin-top:-55px;
     font-weight: 700;
     font-size:14px;
@@ -1877,4 +1883,24 @@ hr{
     background-image: url("../images/input_preloader.png");
     background-position: right;
     background-repeat: no-repeat;
+}
+
+.blockPage{
+    z-index: 1011;
+    position: fixed;
+    padding: 10px 20px 10px 20px !important;
+    margin: 0px;
+    width: 450px;
+    top: 175px;
+    left: 639.8px;
+    text-align: center;
+    color: #000;
+    border: none !important;
+    background-color:#f3f3f3 !important;
+    background-image:url("../images/dotted_back.png");
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.5),  inset 1px 1px 5px 4px #fff, inset -1px -1px 5px 2px rgba(0,0,0,0.7) !important;
+    font-size: 14px;
+    height: auto;
+}
 }

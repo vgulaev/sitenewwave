@@ -245,7 +245,7 @@ class App.Item
             cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="'+@weight+'" />'
 
             set_length = """
-                <p>Укажите требуемую длину листа: #{cl_input}</p>
+                <p class="list_length">Укажите требуемую длину листа: #{cl_input}</p>
             """
         else
             set_length = ""
@@ -268,8 +268,8 @@ class App.Item
         message = """
         <div class="buy_item_div">
         <span class="close_button">x</span>
-        <span class="buy_item_name">#{@name} <br />
-        Длинна: #{@char}</span>
+        <span class="buy_item_name">#{@name}</span> <br />
+        <span class="buy_item_name">Длинна: #{@char}</span>
         #{set_length}
         <table class="buy_item_table">
         <tr class="buy_item_head">
