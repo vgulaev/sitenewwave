@@ -1872,3 +1872,9 @@ hr{
 .close_button:hover{
     color:#a23;
 }
+
+.preloading{
+    background-image: url("../images/input_preloader.png");
+    background-position: right;
+    background-repeat: no-repeat;
+}

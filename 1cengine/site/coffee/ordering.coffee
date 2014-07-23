@@ -91,7 +91,8 @@ class App.Item
         @buy_length = (@buy_count * @length).toFixed(2)
 
         @buy_weight = (( @buy_length * @weight ) / 1000 ).toFixed(3)
-
+        $(".buy_weight").removeClass("preloading")
+        $(".buy_count").removeClass("preloading")
         @change_modal()
 
     change_buy_length: (length) ->
@@ -110,6 +111,7 @@ class App.Item
             @change_modal()
             $(".buy_length").change()
 
+
         @change_modal()
 
     change_modal: ->
@@ -122,6 +124,7 @@ class App.Item
             $(".char_length").val(@weight)
 
         $(".buy_weight").val(@buy_weight)
+
 
         @change_modal_price()
 
@@ -187,15 +190,23 @@ class App.Item
             $.unblockUI()
 
         if @is_measureable()
-            $(".buy_count").bind 'change keyup', (event) =>
-                
+            $(".buy_count").bind 'change', (event) =>
                 @change_buy_count($(".buy_count").val())
 
-            $(".buy_length").bind 'change keyup', (event) =>
-                @change_buy_length($(".buy_length").val())
+            $(".buy_count").bind 'keyup', (event) =>
+                $(".buy_weight").addClass("preloading")
+                setTimeout (=> @change_buy_count($(".buy_count").val())), 1000
 
-        $(".buy_weight").bind 'change keyup', (event) =>
+
+            $(".buy_length").bind 'change keyup', (event) =>
+                setTimeout (=> @change_buy_length($(".buy_length").val())), 1000
+
+        $(".buy_weight").bind 'change', (event) =>
             @change_buy_weight($(".buy_weight").val())
+
+        $(".buy_weight").bind 'keyup', (event) =>
+            $(".buy_count").addClass("preloading")
+            setTimeout (=> @change_buy_weight($(".buy_weight").val())), 1000
 
         if @is_kis
             $(".char_length").bind 'change keyup', (event) =>

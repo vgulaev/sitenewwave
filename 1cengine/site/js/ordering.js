@@ -100,6 +100,8 @@
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
       this.buy_weight = ((this.buy_length * this.weight) / 1000).toFixed(3);
+      $(".buy_weight").removeClass("preloading");
+      $(".buy_count").removeClass("preloading");
       return this.change_modal();
     };
 
@@ -194,15 +196,29 @@
         return $.unblockUI();
       });
       if (this.is_measureable()) {
-        $(".buy_count").bind('change keyup', function(event) {
+        $(".buy_count").bind('change', function(event) {
           return _this.change_buy_count($(".buy_count").val());
         });
+        $(".buy_count").bind('keyup', function(event) {
+          $(".buy_weight").addClass("preloading");
+          return setTimeout((function() {
+            return _this.change_buy_count($(".buy_count").val());
+          }), 1000);
+        });
         $(".buy_length").bind('change keyup', function(event) {
-          return _this.change_buy_length($(".buy_length").val());
+          return setTimeout((function() {
+            return _this.change_buy_length($(".buy_length").val());
+          }), 1000);
         });
       }
-      $(".buy_weight").bind('change keyup', function(event) {
+      $(".buy_weight").bind('change', function(event) {
         return _this.change_buy_weight($(".buy_weight").val());
+      });
+      $(".buy_weight").bind('keyup', function(event) {
+        $(".buy_count").addClass("preloading");
+        return setTimeout((function() {
+          return _this.change_buy_weight($(".buy_weight").val());
+        }), 1000);
       });
       if (this.is_kis) {
         $(".char_length").bind('change keyup', function(event) {
