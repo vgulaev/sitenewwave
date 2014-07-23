@@ -269,7 +269,7 @@ class App.Item
         <div class="buy_item_div">
         <span class="close_button">x</span>
         <span class="buy_item_name">#{@name}</span> <br />
-        <span class="buy_item_name">Длинна: #{@char}</span>
+        <span class="buy_item_name">Длина: #{@char}</span>
         #{set_length}
         <table class="buy_item_table">
         <tr class="buy_item_head">
