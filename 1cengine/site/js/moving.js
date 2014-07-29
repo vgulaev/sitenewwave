@@ -238,23 +238,24 @@
         _fn = function(subgroup) {
           var subgroup_name;
           subgroup_name = subgroup[0].replace(g_name, "");
-          return $(element).find("ul").append(("<li class='subgroup2' name='" + subgroup_name + "' idin='" + subgroup[1] + "'>") + subgroup_name + "</li>");
+          return $(element).find("ul").append(("<li class='subgroup2' name='" + subgroup_name + "' idin='" + subgroup[1] + "'><span class='subgroup2_name'>") + subgroup_name + "</span></li>");
         };
         for (_i = 0, _len = subgroups.length; _i < _len; _i++) {
           subgroup = subgroups[_i];
           _fn(subgroup);
         }
-        return $(element).find("li.subgroup2").each(function(index, sgroup) {
+        return $(element).find("span.subgroup2_name").each(function(index, sgroup) {
           return $(sgroup).click(function() {
-            var i_name;
+            var i_name, li_group;
+            li_group = $(sgroup).parent();
             $(".subgroup2").removeClass("active_subgroup");
-            $(sgroup).addClass("active_subgroup");
-            i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
-            if ($(sgroup).children().is(".subgroup_c2") === false) {
-              $(sgroup).append("<ul class=\"subgroup_c2\"></ul>");
-              get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"));
+            $(li_group).addClass("active_subgroup");
+            i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace(/^\s+|\s+$/g, ""));
+            if ($(li_group).children().is(".subgroup_c2") === false) {
+              $(li_group).append("<ul class=\"subgroup_c2\"></ul>");
+              get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"));
             }
-            return get_item_list($(sgroup).attr("idin"));
+            return get_item_list($(li_group).attr("idin"));
           });
         });
       }
@@ -281,17 +282,18 @@
 
   subgroup_click = function(sgroup) {
     return $(sgroup).click(function() {
-      var g_name, group, i_name;
+      var g_name, group, i_name, li_group;
+      li_group = $(sgroup).parent();
       $(".subgroup").removeClass("active_subgroup");
-      $(sgroup).addClass("active_subgroup");
-      group = $(sgroup).closest(".active_group");
+      $(li_group).addClass("active_subgroup");
+      group = $(li_group).closest(".active_group");
       g_name = $(group).attr("name");
-      i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace(/^\s+|\s+$/g, ""));
-      if ($(sgroup).children().is(".subgroup_c2") === false) {
-        $(sgroup).append("<ul class=\"subgroup_c2\"></ul>");
-        get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"));
+      i_name = g_name.replace(/^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace(/^\s+|\s+$/g, ""));
+      if ($(li_group).children().is(".subgroup_c2") === false) {
+        $(li_group).append("<ul class=\"subgroup_c2\"></ul>");
+        get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"));
       }
-      return get_item_list($(sgroup).attr("idin"));
+      return get_item_list($(li_group).attr("idin"));
     });
   };
 
@@ -554,7 +556,7 @@
     $("li.subgroup").each(function(index, sgroup) {
       return subgroup_click(sgroup);
     });
-    $("li.subgroup2").each(function(index, sgroup) {
+    $("span.subgroup2_name").each(function(index, sgroup) {
       return subgroup_click(sgroup);
     });
     c_url = window.location.pathname;

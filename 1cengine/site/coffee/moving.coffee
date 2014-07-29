@@ -245,21 +245,22 @@ get_subgroup = (element, g_name, g_hash) ->
             subgroups = JSON.parse html
             for subgroup in subgroups then do (subgroup) =>
                 subgroup_name = subgroup[0].replace(g_name, "")
-                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'>"+subgroup_name+"</li>")
+                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'><span class='subgroup2_name'>"+subgroup_name+"</span></li>")
                 # alert(subgroup)
 
-            $(element).find("li.subgroup2").each (index, sgroup) =>
+            $(element).find("span.subgroup2_name").each (index, sgroup) =>
                 $(sgroup).click ->
+                    li_group = $(sgroup).parent()
                     # alert($(sgroup).attr("name"))
                     $(".subgroup2").removeClass("active_subgroup")
-                    $(sgroup).addClass("active_subgroup")
-                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+                    $(li_group).addClass("active_subgroup")
+                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
                     # alert(i_name)
-                    if $(sgroup).children().is(".subgroup_c2") is false
-                        $(sgroup).append("<ul class=\"subgroup_c2\"></ul>")
-                        get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"))
+                    if $(li_group).children().is(".subgroup_c2") is false
+                        $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
+                        get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
 
-                    get_item_list($(sgroup).attr("idin"))
+                    get_item_list($(li_group).attr("idin"))
                     # $("#itemName").val(i_name)
                     # $("#itemName").change()
 
@@ -285,20 +286,21 @@ group_click = (element) ->
 
 subgroup_click = (sgroup) ->
     $(sgroup).click ->
+        li_group = $(sgroup).parent()
         $(".subgroup").removeClass("active_subgroup")
-        $(sgroup).addClass("active_subgroup")
-        group = $(sgroup).closest(".active_group")
+        $(li_group).addClass("active_subgroup")
+        group = $(li_group).closest(".active_group")
         g_name = $(group).attr("name")
-        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
+        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
         # alert(i_name)
-        if $(sgroup).children().is(".subgroup_c2") is false
-            $(sgroup).append("<ul class=\"subgroup_c2\"></ul>")
+        if $(li_group).children().is(".subgroup_c2") is false
+            $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
             # alert($(sgroup).attr("name") + " :: " + $(sgroup).attr("hash"))
-            get_subgroup(sgroup, $(sgroup).attr("name"), $(sgroup).attr("idin"))
+            get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
 
         # $("#itemName").val(i_name)
         # $("#itemName").change()
-        get_item_list($(sgroup).attr("idin"))
+        get_item_list($(li_group).attr("idin"))
 
 $(document).ready ->
 
@@ -564,7 +566,7 @@ $(document).ready ->
     $("li.subgroup").each (index, sgroup) =>
         subgroup_click(sgroup)
 
-    $("li.subgroup2").each (index, sgroup) =>
+    $("span.subgroup2_name").each (index, sgroup) =>
         subgroup_click(sgroup)
 
     c_url = window.location.pathname
