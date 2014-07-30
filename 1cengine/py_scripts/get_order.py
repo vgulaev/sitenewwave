@@ -73,6 +73,7 @@ def get_order(UID):
 
         try:
             result = client.service.GetOrders(UID)
+            # return result
         except:
             return "<p>Ошибка в работе с веб сервисом</p>"
 
@@ -85,7 +86,7 @@ def get_order(UID):
         # try:
 
         result_table = "<table class='checkoutTable'>"
-        result_table = result_table + "<caption>" + result[3]
+        result_table = result_table + "<caption>Заказ №" + result[3]
         order_number = ""
         for letter in result[3]:
             order_number = order_number + translit(letter)
@@ -95,8 +96,8 @@ def get_order(UID):
             value=\"""" + order_number + """\" /></caption>"""
 
         result_table = result_table + \
-            "<tr><th>Номенклатура</th><th>Количество шт.</th>\
-            <th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr>"
+            "<thead><tr><th>Номенклатура</th><th>Количество шт.</th>\
+            <th>Вес тн.</th><th>Цена за тн.</th><th>Сумма</th></tr></thead>"
 
         for good in result[2][0]:
             result_table = result_table + "<tr>"
@@ -112,6 +113,22 @@ def get_order(UID):
         display_sum = display_sum + "&nbsp;" + result[5][:-3][:-3][-3:]
         display_sum = display_sum + "&nbsp;" + result[5][:-3][-3:]
         display_sum = display_sum + result[5][-3:]
+
+
+        result_table = result_table + "<tr class='sep_tr'><td></td><td></td><td></td><td></td><td></td></tr>"
+
+
+        if u"Доставка" in result:
+            result_table = result_table + "<tr>"
+            result_table = result_table + "<td></td><td></td><td></td>"
+            result_table = result_table + "<td>Доставка:</td>"
+            result_table = result_table + "<td>" + str(result[6][1]) + "</td>"
+
+
+        result_table = result_table + "</tr>"
+
+
+        result_table = result_table + "<tr class='sep_tr'><td></td><td></td><td></td><td></td><td></td></tr>"
 
         result_table = result_table + """
         <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
