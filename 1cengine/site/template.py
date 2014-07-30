@@ -117,7 +117,7 @@ def set_search_results():
 
         result_table = get_items_bs.ResultTable(form["ref"].value, "strict")
 
-        return result_table.compose_table()
+        return result_table.compose_table(False)
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
@@ -125,7 +125,7 @@ def set_search_results():
         result_table = get_items_bs.ResultTable(
             catalog, "catalog")
 
-        return result_table.compose_table()
+        return result_table.compose_table(False)
 
 
 def set_show_nexr_prev():
@@ -217,24 +217,26 @@ def set_groups():
 
     for group in groups:
         tag_li = soup.new_tag("li")
-        tag_li["name"] = group.decode("utf-8")
-        tag_li.append(group.decode("utf-8"))
+        tag_li["name"] = group[0].decode("utf-8")
+        tag_li["inid"] = group[1].decode("utf-8")
+        tag_li.append(group[0].decode("utf-8"))
 
-        if c_catalog is not None and c_catalog in group.decode("utf-8"):
+        if c_catalog is not None and c_catalog in group[0].decode("utf-8"):
             tag_li["class"] = "main_group active_group"
 
-            subgroups = get_item_group.get_subgroups(c_catalog)
+            subgroups = get_item_group.get_subgroups(group[1].decode("utf-8"))
 
             if subgroups.__len__() > 0:
                 tag_ul_sg = soup.new_tag("ul")
                 tag_ul_sg["class"] = "subgroup_c"
 
                 for sgroup in subgroups:
-                    if sgroup.decode("utf-8") != group.decode("utf-8"):
+                    if sgroup[0].decode("utf-8") != group[0].decode("utf-8"):
                         tag_li_sg = soup.new_tag("li")
                         tag_li_sg["class"] = "subgroup"
-                        tag_li_sg["name"] = sgroup.decode("utf-8")
-                        tag_li_sg.append(sgroup.decode("utf-8"))
+                        tag_li_sg["name"] = sgroup[0].decode("utf-8")
+                        tag_li_sg["inid"] = sgroup[1].decode("utf-8")
+                        tag_li_sg.append(sgroup[0].decode("utf-8"))
 
                         tag_ul_sg.append(tag_li_sg)
 

@@ -22,10 +22,11 @@ synonims = {
 
 class ResultTable():
 
-    def __init__(self, req, rtype):
+    def __init__(self, req, rtype, ghash=""):
         self.group_list = []
         self.req = req
         self.rtype = rtype
+        self.ghash = ghash
 
     def get_items(self, item_limit, item_offset):
 
@@ -70,16 +71,76 @@ class ResultTable():
 
         connector.dbClose()
 
+
         return r
 
-    def compose_table(self, limit=20, offset=0):
+    def get_items_from_ghash(self, item_limit, item_offset):
+        connector = myDBC("goods")
+        connector.dbConnect()
+
+        groups_array = self.get_sgrous()
+
+        r_cond = "' OR `offers`.`parent_hash`='".join(groups_array)
+
+        limit = "ORDER BY `offers`.`stock` DESC, `offers`.`parent_hash` DESC LIMIT " + str(item_offset) + "," + str(item_limit)
+
+        r = connector.dbExecute("""
+                SELECT DISTINCT `offers`.`display_name`,
+                `offers`.`char_name`, `offers`.`price`,
+                `offers`.`price_type`, `groups`.`fullname`,
+                `offers`.`hash`, `offers`.`edIzm`,
+                `offers`.`parent_hash`, `offers`.`stock`
+                FROM `offers`, `groups`
+                WHERE ( `offers`.`parent_hash`='""" + r_cond + """' )
+                AND `groups`.`hash`=`offers`.`parent_hash`
+                """ + limit + """
+            """)
+
+        connector.dbClose()
+
+        return r
+
+    def get_sgrous(self):
+        connector = myDBC("goods")
+        connector.dbConnect()
+
+        groups_array = [self.ghash]
+
+        r = connector.dbExecute("""
+            SELECT `groups`.`hash`, `groups`.`name`
+            FROM `groups`
+            WHERE `groups`.`parent_hash`='"""+self.ghash+"""'
+            AND NOT `groups`.`hash`=`groups`.`parent_hash`
+            """)
+
+        while r.__len__() > 0:
+            x_arr = []
+            for x in r:
+                # print("<li>{0} :: {1}</li>".format(x[0], x[1]))
+                x_arr.append(x[0])
+                groups_array.append(x[0])
+
+            r_cond = "' OR `groups`.`parent_hash`='".join(x_arr)
+            # print r_cond
+            r = connector.dbExecute("""
+                SELECT `groups`.`hash`, `groups`.`name`
+                FROM `groups`
+                WHERE `groups`.`parent_hash`='"""+r_cond+"""'
+            """)
+
+        return groups_array
+
+    def compose_table(self, is_from_ghash, limit=20, offset=0):
         result_table_tag = soup.new_tag("table")
 
         result_table_tag["id"] = "tableRes"
 
         parent_array = []
 
-        r = self.get_items(limit, offset)
+        if is_from_ghash:
+            r = self.get_items_from_ghash(limit, offset)
+        else:
+            r = self.get_items(limit, offset)
 
         for row in r:
             if not row[4] in parent_array:
@@ -150,6 +211,8 @@ class ItemGroup():
             header_tag.append(price_tag)
 
         header_buy_tag = soup.new_tag("td")
+        header_buy_tag.append(u"Рассчитать")
+        header_buy_tag.append(soup.new_tag("br"))
         header_buy_tag.append(u"В корзину")
         header_tag.append(header_buy_tag)
 
@@ -411,16 +474,42 @@ if "term" in form:
 
     if "show_all" in form:
         print "Content-Type: text/html; charset=utf-8\n"
-        print str(result_table.compose_table(231))
+        print str(result_table.compose_table(False, 231))
     else:
         print "Content-Type: text/html; charset=utf-8\n"
 
         if "page" in form:
-            offset = int(form["page"].value) + 20
+            xy = int(form["page"].value)
+            if xy == 1:
+                offset = 0
+            else:
+                offset = ((xy + (xy-1)-1) * 10)
+            # offset = int(form["page"].value) + 20
             limit = 20
-            print str(result_table.compose_table(limit, offset))
+            print str(result_table.compose_table(False, limit, offset))
         else:
-            print str(result_table.compose_table())
+            print str(result_table.compose_table(False))
+
+if "hash" in form:
+
+    result_table = ResultTable("", "catalog", form["hash"].value)
+    if "show_all" in form:
+        print "Content-Type: text/html; charset=utf-8\n"
+        print str(result_table.compose_table(True, 231))
+    else:
+        print "Content-Type: text/html; charset=utf-8\n"
+
+        if "page" in form:
+            xy = int(form["page"].value)
+            if xy == 1:
+                offset = 0
+            else:
+                offset = ((xy + (xy-1)-1) * 10)
+            # offset = int(form["page"].value) + 20
+            limit = 20
+            print str(result_table.compose_table(True, limit, offset))
+        else:
+            print str(result_table.compose_table(True))
 
 # g = ResultTable("Арматура","catalog")
 # print g.compose_table().prettify()

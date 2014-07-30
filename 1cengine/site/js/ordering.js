@@ -100,6 +100,8 @@
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
       this.buy_weight = ((this.buy_length * this.weight) / 1000).toFixed(3);
+      $(".buy_weight").removeClass("preloading");
+      $(".buy_count").removeClass("preloading");
       return this.change_modal();
     };
 
@@ -190,16 +192,33 @@
           return $.unblockUI();
         }
       });
+      $(".close_button").click(function() {
+        return $.unblockUI();
+      });
       if (this.is_measureable()) {
-        $(".buy_count").bind('change keyup', function(event) {
+        $(".buy_count").bind('change', function(event) {
           return _this.change_buy_count($(".buy_count").val());
         });
+        $(".buy_count").bind('keyup', function(event) {
+          $(".buy_weight").addClass("preloading");
+          return setTimeout((function() {
+            return _this.change_buy_count($(".buy_count").val());
+          }), 1000);
+        });
         $(".buy_length").bind('change keyup', function(event) {
-          return _this.change_buy_length($(".buy_length").val());
+          return setTimeout((function() {
+            return _this.change_buy_length($(".buy_length").val());
+          }), 1000);
         });
       }
-      $(".buy_weight").bind('change keyup', function(event) {
+      $(".buy_weight").bind('change', function(event) {
         return _this.change_buy_weight($(".buy_weight").val());
+      });
+      $(".buy_weight").bind('keyup', function(event) {
+        $(".buy_count").addClass("preloading");
+        return setTimeout((function() {
+          return _this.change_buy_weight($(".buy_weight").val());
+        }), 1000);
       });
       if (this.is_kis) {
         $(".char_length").bind('change keyup', function(event) {
@@ -234,7 +253,7 @@
       w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
       if (this.is_kis) {
         cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="' + this.weight + '" />';
-        set_length = "<p>Укажите требуемую длину листа: " + cl_input + "</p>";
+        set_length = "<p class=\"list_length\">Укажите требуемую длину листа: " + cl_input + "</p>";
       } else {
         set_length = "";
       }
@@ -248,7 +267,7 @@
         "пог. м": "Метры пог."
       };
       c_izm = edizm_dict["" + this.ed_izm];
-      message = "<div class=\"buy_item_div\">\n<span class=\"buy_item_name\">" + this.name + " " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td style=\"display:none\">\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td style=\"display:none\">\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.Basket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 

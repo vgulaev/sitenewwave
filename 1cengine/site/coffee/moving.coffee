@@ -175,6 +175,133 @@ show_how_to_make_order = () ->
         if e.which is 27
             $.unblockUI();
 
+get_item_list = (hash) ->
+    $("#itemName").val ""
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_items_bs.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            App.C_HASH = hash
+            $("#qRes").html html
+            $("#qRes").fadeIn(400)
+            if $(".item").length >= 1
+                $("#hollowResult").empty()
+            else
+                $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
+
+            if $(".item").length is 20
+                $("#show_next_prev").show()
+            else
+                $("#show_next_prev").hide()
+
+            # window.history.pushState(
+            #     {term: value},
+            #     '',
+            #     '/1cengine/site/'+$.trim(value)+'/'
+            # )
+
+            $(".bItem").click ->
+                # alert("lol")
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+
+            $(".oItem").click ->
+
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+            false
+
+
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_count_items.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            $(".count_all_result").html html
+
+
+get_subgroup = (element, g_name, g_hash) ->
+    # alert(g_name+" :: "+g_hash)
+
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_item_subgroup.py"
+        async: false
+        data: "term=" + encodeURIComponent(g_hash) + ""
+        success: (html) ->
+            subgroups = JSON.parse html
+            for subgroup in subgroups then do (subgroup) =>
+                subgroup_name = subgroup[0].replace(g_name, "")
+                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'><span class='subgroup2_name'>"+subgroup_name+"</span></li>")
+                # alert(subgroup)
+
+            $(element).find("span.subgroup2_name").each (index, sgroup) =>
+                $(sgroup).click ->
+                    li_group = $(sgroup).parent()
+                    # alert($(sgroup).attr("name"))
+                    $(".subgroup2").removeClass("active_subgroup")
+                    $(li_group).addClass("active_subgroup")
+                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
+                    # alert(i_name)
+                    if $(li_group).children().is(".subgroup_c2") is false
+                        $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
+                        get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
+
+                    get_item_list($(li_group).attr("idin"))
+                    # $("#itemName").val(i_name)
+                    # $("#itemName").change()
+
+group_click = (element) ->
+    $(element).click ->
+        g_name = $(this).attr("name")
+        g_hash = $(this).attr("inid")
+        if $(element).hasClass("active_group") is false
+
+            # $("#itemName").val g_name
+            # $("#itemName").change()
+            get_item_list(g_hash)
+
+            $("#groups_list").find("li.main_group").removeClass("active_group")
+            $(".subgroup").removeClass("active_subgroup")
+            $(element).addClass("active_group")
+
+        # alert($(this).attr("name"))
+        if $(element).children().is(".subgroup_c") is false
+            # alert($(element).children("ul"))
+            $(element).append("<ul class=\"subgroup_c\"></ul>")
+            get_subgroup(element, g_name, g_hash)
+
+subgroup_click = (sgroup) ->
+    $(sgroup).click ->
+        li_group = $(sgroup).parent()
+        $(".subgroup").removeClass("active_subgroup")
+        $(li_group).addClass("active_subgroup")
+        group = $(li_group).closest(".active_group")
+        g_name = $(group).attr("name")
+        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
+        # alert(i_name)
+        if $(li_group).children().is(".subgroup_c2") is false
+            $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
+            # alert($(sgroup).attr("name") + " :: " + $(sgroup).attr("hash"))
+            get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
+
+        # $("#itemName").val(i_name)
+        # $("#itemName").change()
+        get_item_list($(li_group).attr("idin"))
+
 $(document).ready ->
 
     $.blockUI.defaults.css.borderRadius = '10px'
@@ -217,7 +344,8 @@ $(document).ready ->
         $(this).autocomplete "search", $(this).val()
 
     $("#itemName").change ->
-
+        $(".active_group").removeClass("active_group")
+        $(".active_subgroup").removeClass("active_subgroup")
         $("#seotext").html ""
         value = $("#itemName").val()
         value = value.replace("+", " ")
@@ -296,11 +424,19 @@ $(document).ready ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true"
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&show_all=true"
+
+
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
-            data: "term=" + encodeURIComponent(value) + "&show_all=true"
+            data: data_string
             success: (html) ->
                 $("#qRes").html html
 
@@ -335,15 +471,23 @@ $(document).ready ->
     $(".next_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
+        n_page = ( PAGE * 1 ) + 1
+
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
 
         $.ajax
             type: "GET"
             url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
-            data: "term=" + encodeURIComponent(value) + "&page=" + PAGE+1 + ""
+            data: data_string
             success: (html) ->
                 $("#qRes").html html
-                PAGE = PAGE + 1
+                PAGE = n_page
 
                 $(".bItem").click ->
 
@@ -369,13 +513,23 @@ $(document).ready ->
     $(".prev_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
+
+
         if PAGE != 1
             n_page = PAGE - 1
+
+            if value is ""
+                what = "hash"
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+            else
+                what = "term"
+                data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
+
             $.ajax
                 type: "GET"
                 url: "/1cengine/py_scripts/get_items_bs.py"
                 async: true
-                data: "term=" + encodeURIComponent(value) + "&page=" + n_page + ""
+                data: data_string
                 success: (html) ->
                     $("#qRes").html html
                     PAGE = PAGE - 1
@@ -407,53 +561,13 @@ $(document).ready ->
         switch_tabs("switchNotificationDiv")
 
     $("#groups_list").find("li.main_group").each (index, element) =>
-        $(element).click ->
-            g_name = $(this).attr("name")
-            if $(element).hasClass("active_group") is false
-
-                $("#itemName").val g_name
-                $("#itemName").change()
-
-                $("#groups_list").find("li.main_group").removeClass("active_group")
-                $(element).addClass("active_group")
-
-            # alert($(this).attr("name"))
-            if $(element).children().is(".subgroup_c") is false
-                # alert($(element).children("ul"))
-                $(element).append("<ul class=\"subgroup_c\"></ul>")
-                $.ajax
-                    type: "GET"
-                    url: "/1cengine/py_scripts/item_autocomplete.py"
-                    async: false
-                    data: "term=" + encodeURIComponent(g_name) + ""
-                    success: (html) ->
-                        subgroups = JSON.parse html
-                        for subgroup in subgroups then do (subgroup) =>
-                            subgroup_name = subgroup.replace(g_name, "")
-                            $(element).find("ul").append("<li class='subgroup' name='#{subgroup_name}'>"+subgroup_name+"</li>")
-                            # alert(subgroup)
-
-                        $(element).find("li.subgroup").each (index, sgroup) =>
-                            $(sgroup).click ->
-                                $(".subgroup").removeClass("active_subgroup")
-                                $(sgroup).addClass("active_subgroup")
-                                i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
-                                # alert(i_name)
-
-                                $("#itemName").val(i_name)
-                                $("#itemName").change()
+        group_click(element)
 
     $("li.subgroup").each (index, sgroup) =>
-        $(sgroup).click ->
-            $(".subgroup").removeClass("active_subgroup")
-            $(sgroup).addClass("active_subgroup")
-            group = $(sgroup).closest(".active_group")
-            g_name = $(group).attr("name")
-            i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(sgroup).attr("name").replace /^\s+|\s+$/g, ""
-            # alert(i_name)
+        subgroup_click(sgroup)
 
-            $("#itemName").val(i_name)
-            $("#itemName").change()
+    $("span.subgroup2_name").each (index, sgroup) =>
+        subgroup_click(sgroup)
 
     c_url = window.location.pathname
     # alert(c_url)
@@ -480,3 +594,6 @@ $(document).ready ->
 
     $(".howtomakeorder").click ->
         show_how_to_make_order()
+
+    $(".return_to_catalog").click ->
+        $("#tabPrice").click()
