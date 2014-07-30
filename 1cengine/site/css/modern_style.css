@@ -1774,7 +1774,7 @@ li.special_nav{
     border:none;
     width:145px;
     font-weight: 400;
-    list-style-type: disc;
+    /*list-style-type: disc;*/
     margin-left: -5px;
     list-style-position: inside;
 
@@ -1782,7 +1782,7 @@ li.special_nav{
 
 #groups_list li.active_group li.active_subgroup{
     background-color: #a0a4d0;
-    list-style-type: circle;
+    /*list-style-type: circle;*/
     color: white;
     font-weight: 700;
 }
@@ -1793,11 +1793,24 @@ li.special_nav{
 
 #groups_list li.active_group li:hover{
     background-color: #a0a4d0;
-    list-style-type: circle;
+    /*list-style-type: circle;*/
 }
 
 #groups_list li ul{
     display:none;
+}
+
+#groups_list li.active_group li .subgroup2_name{
+    list-style-type: disc;
+    display:list-item;
+}
+
+#groups_list li.active_group li:hover .subgroup2_name{
+    list-style-type: circle;
+}
+
+#groups_list li.active_group li.active_subgroup .subgroup2_name{
+    list-style-type: circle;
 }
 
 /* ДОСТАВКА */
