@@ -127,5 +127,10 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 
 
 .sep_tr td{
-    border-top: 2px solid black;
+    border-top: 1px solid black;
+}
+
+.f_sum td{
+    font-weight:700;
+    font-size:12pt;
 }

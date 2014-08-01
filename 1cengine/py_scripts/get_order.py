@@ -122,16 +122,23 @@ def get_order(UID):
             result_table = result_table + "<tr>"
             result_table = result_table + "<td></td><td></td><td></td>"
             result_table = result_table + "<td>Доставка:</td>"
-            result_table = result_table + "<td>" + str(result[6][1]) + "</td>"
+            result_table = result_table + "<td>" + str(result[u'Доставка'][1]) + "</td>"
 
+            result_table = result_table + "</tr>"
 
-        result_table = result_table + "</tr>"
+        if u"Резка" in result:
+            result_table = result_table + "<tr>"
+            result_table = result_table + "<td></td><td></td><td></td>"
+            result_table = result_table + "<td>Резка:</td>"
+            result_table = result_table + "<td>" + str(result[u'Резка']) + "</td>"
+
+            result_table = result_table + "</tr>"
 
 
         result_table = result_table + "<tr class='sep_tr'><td></td><td></td><td></td><td></td><td></td></tr>"
 
         result_table = result_table + """
-        <tr><td></td><td></td><td></td><td><strong>Итого: </strong>
+        <tr class='f_sum'><td></td><td></td><td></td><td><strong>Итого: </strong>
         </td><td>""" + display_sum + """
         <input style="display:none" name="o.amount" type="text" id="o.amount" value=\"""" + str(result[5]).replace(".",",") + """\" />
          </td></tr></table>
