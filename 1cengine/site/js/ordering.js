@@ -328,7 +328,27 @@
         this._count++;
         this.change_basket();
         i_id = ("#" + item.id).replace(":", "\\:");
-        return $("" + i_id).addClass("in_basket");
+        $("" + i_id).addClass("in_basket");
+        $("#tabBasket").tooltip({
+          content: "Товар добавлен в корзину",
+          position: {
+            my: "left+15 center",
+            at: "right center"
+          },
+          show: {
+            effect: "drop"
+          },
+          open: function(event, ui) {
+            setTimeout((function() {
+              $(ui.tooltip).hide({
+                effect: "drop"
+              });
+            }), 3000);
+          }
+        });
+        $("#tabBasket").tooltip().off("mouseover mouseout");
+        $("#tabBasket").tooltip("enable");
+        return $("#tabBasket").tooltip("open");
       }
     };
 

@@ -219,6 +219,7 @@ class App.Item
             App.Basket.add_item(this)
             $.unblockUI()
 
+
         $(".change_in_basket").bind 'click', (event) =>
 
             App.Basket.change_item(this)
@@ -347,6 +348,28 @@ class App.Basket
             # alert($("#{i_id}").attr("class"))
             # $("#tableRes").find("##{item.id}")
             $("#{i_id}").addClass("in_basket")
+
+
+
+            $( "#tabBasket" ).tooltip({
+                content: "Товар добавлен в корзину",
+                position: { my: "left+15 center", at: "right center" },
+                show: { effect: "drop" },
+                # hide: { effect: "fadeOut", duration: 1800 },
+                open: (event, ui) ->
+                    setTimeout (->
+                        $(ui.tooltip).hide { effect: "drop" }
+                        return
+                    ), 3000
+                    return
+            })
+            $("#tabBasket").tooltip().off("mouseover mouseout");
+
+            $( "#tabBasket" ).tooltip( "enable" )
+            # $( "#tabBasket" ).tooltip( "create" )
+            $( "#tabBasket" ).tooltip( "open" )
+            # setTimeout (=> $( "#tabBasket" ).tooltip( "close" )), 3000
+
 
     @change_item: (item) ->
         # alert("lol")
@@ -757,3 +780,7 @@ $(document).ready ->
 
     $(".rezka_item_add").click ->
         show_rezka_ch_modal()
+
+
+    # $( "#tabBasket" ).tooltip( "disable" )
+    # $( "#tabBasket" ).tooltip( "open" );

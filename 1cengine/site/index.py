@@ -185,8 +185,8 @@ class Index_Page():
             "templates/content.tpl.html")
 
         self.js_list = [
-            "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js",
-            "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js",
+            "/lib/frameworks/jquery/2.1.1/jquery.min.js",
+            "/lib/frameworks/jqueryui/1.11.0/jquery-ui.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/global.js",
@@ -200,6 +200,7 @@ class Index_Page():
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
+            "/lib/frameworks/jqueryui/1.11.0/jquery-ui.min.css",
             "/1cengine/site/css/modern_style.css"
             # "/1cengine/site/css/kladr.css"
         ]
