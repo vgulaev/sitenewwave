@@ -969,11 +969,26 @@ tr.iHeader{
 * html .ui-autocomplete {
     height: 100px;
 }
+
+.ui-autocomplete li{
+    font-size:10pt;
+    line-height:20px;
+}
 .ui-autocomplete li:hover{
     background-color:rgb(45, 54, 148);
-}
-.ui-autocomplete li:hover a{
     color:white;
+    font-weight:700;
+}
+.ui-autocomplete li:focus{
+    background-color:rgb(45, 54, 148);
+    color:white;
+    font-weight:700;
+}
+
+.ui-state-focus{
+    background-color:rgb(45, 54, 148);
+    color:white;
+    font-weight:700;
 }
 
 #selfCarry{

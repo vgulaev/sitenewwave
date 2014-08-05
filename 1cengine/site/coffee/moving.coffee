@@ -330,7 +330,7 @@ $(document).ready ->
 
     $("#itemName").autocomplete(
         source: "/1cengine/py_scripts/item_autocomplete.py",
-        autoFocus: true,
+        autoFocus: false,
         minLength: 0,
         select: (event, ui) ->
             #remember the selected item
