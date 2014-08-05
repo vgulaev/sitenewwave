@@ -351,24 +351,23 @@ class App.Basket
 
 
 
-            $( "#tabBasket" ).tooltip({
-                content: "Товар добавлен в корзину",
-                position: { my: "left+15 center", at: "right center" },
-                show: { effect: "drop" },
-                # hide: { effect: "fadeOut", duration: 1800 },
-                open: (event, ui) ->
-                    setTimeout (->
-                        $(ui.tooltip).hide { effect: "drop" }
-                        return
-                    ), 3000
-                    return
-            })
-            $("#tabBasket").tooltip().off("mouseover mouseout");
+            # $( "#tabBasket" ).tooltip({
+            #     content: "Товар добавлен в корзину",
+            #     position: { my: "left+15 center", at: "right center" },
+            #     show: { effect: "drop" },
+            #     open: (event, ui) ->
+            #         setTimeout (->
+            #             $(ui.tooltip).hide { effect: "drop" }
+            #             return
+            #         ), 3000
+            #         return
+            # })
+            # $("#tabBasket").tooltip().off("mouseover mouseout");
 
-            $( "#tabBasket" ).tooltip( "enable" )
-            # $( "#tabBasket" ).tooltip( "create" )
-            $( "#tabBasket" ).tooltip( "open" )
-            # setTimeout (=> $( "#tabBasket" ).tooltip( "close" )), 3000
+            # $( "#tabBasket" ).tooltip( "enable" )
+            # $( "#tabBasket" ).tooltip( "open" )
+
+            $("#tabBasket").tooltipster("show")
 
 
     @change_item: (item) ->
@@ -782,5 +781,14 @@ $(document).ready ->
         show_rezka_ch_modal()
 
 
+    $("#tabBasket").tooltipster({
+        content: "Товар добавлен в корзину",
+        animation: 'fade',
+        delay: 200,
+        position: 'right',
+        timer: 3000,
+        trigger: "custom",
+        theme: "tooltipster-my"
+    })
     # $( "#tabBasket" ).tooltip( "disable" )
     # $( "#tabBasket" ).tooltip( "open" );

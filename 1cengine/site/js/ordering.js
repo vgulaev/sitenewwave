@@ -329,26 +329,7 @@
         this.change_basket();
         i_id = ("#" + item.id).replace(":", "\\:");
         $("" + i_id).addClass("in_basket");
-        $("#tabBasket").tooltip({
-          content: "Товар добавлен в корзину",
-          position: {
-            my: "left+15 center",
-            at: "right center"
-          },
-          show: {
-            effect: "drop"
-          },
-          open: function(event, ui) {
-            setTimeout((function() {
-              $(ui.tooltip).hide({
-                effect: "drop"
-              });
-            }), 3000);
-          }
-        });
-        $("#tabBasket").tooltip().off("mouseover mouseout");
-        $("#tabBasket").tooltip("enable");
-        return $("#tabBasket").tooltip("open");
+        return $("#tabBasket").tooltipster("show");
       }
     };
 
@@ -742,8 +723,17 @@
     }
     /* /DEPRECATED*/
 
-    return $(".rezka_item_add").click(function() {
+    $(".rezka_item_add").click(function() {
       return show_rezka_ch_modal();
+    });
+    return $("#tabBasket").tooltipster({
+      content: "Товар добавлен в корзину",
+      animation: 'fade',
+      delay: 200,
+      position: 'right',
+      timer: 3000,
+      trigger: "custom",
+      theme: "tooltipster-my"
     });
   });
 

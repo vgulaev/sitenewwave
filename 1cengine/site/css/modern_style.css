@@ -2076,15 +2076,19 @@ hr{
     height: auto;
 }
 
-.ui-tooltip {
-    padding: 8px;
-    position: absolute;
-    z-index: 9999;
-    max-width: 300px;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 0 0 5px #aaa;
-}
+/* tooltipster */
 
-body .ui-tooltip {
-    border-width: 2px;
+.tooltipster-my {
+    border-radius: 15px;
+    border: 1px solid #cccccc;
+    background: #ededed;
+    color: #666666;
+    box-shadow: 0 0 5px 0px rgba(0,0,0,0.3);
+}
+.tooltipster-my .tooltipster-content {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    font-weight:700;
+    line-height: 16px;
+    padding: 8px 10px;
 }

@@ -187,6 +187,7 @@ class Index_Page():
         self.js_list = [
             "/lib/frameworks/jquery/2.1.1/jquery.min.js",
             "/lib/frameworks/jqueryui/1.11.0/jquery-ui.min.js",
+            "/lib/frameworks/jqrequired/tooltipster-master/js/jquery.tooltipster.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
             "/1cengine/site/js/global.js",
@@ -200,7 +201,7 @@ class Index_Page():
         self.style_list = [
             "/mainpage_template.css",
             "/footer.css",
-            "/lib/frameworks/jqueryui/1.11.0/jquery-ui.min.css",
+            "/lib/frameworks/jqrequired/tooltipster-master/css/tooltipster.css",
             "/1cengine/site/css/modern_style.css"
             # "/1cengine/site/css/kladr.css"
         ]
