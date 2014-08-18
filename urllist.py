@@ -59,7 +59,7 @@ url_dictionary = {
     # блок меню "Услуги"
     "services": "htmlstaticcontent/020_services_metalwork_/",
     "services/metalwork": "htmlstaticcontent/020_services_metalwork_/",
-    "services/storage": "htmlstaticcontent/023_services_storage_/",
+    # "services/storage": "htmlstaticcontent/023_services_storage_/",
     "services/delivery": "htmlstaticcontent/021_services_delivery_/",
     "services/weighing": "htmlstaticcontent/022_services_weighing_/",
     "services/metalwork/gaz_rezka":
