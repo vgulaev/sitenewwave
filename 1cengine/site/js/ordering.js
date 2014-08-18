@@ -550,7 +550,7 @@
       sendRow = "";
       $("tr.itemTr").each(function() {
         if ($(this).find("input.itemCharInput").length !== 0) {
-          return sendRow += "" + $(this).find("input.itemCharInput").val() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
+          return sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
         } else {
           return sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
         }

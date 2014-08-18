@@ -29,8 +29,8 @@ function generateRandomString($length = 10) {
 
 
 function register_user($mail, $passwd, $name) {
-    $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
-    // $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/Register.1cws'));
+    // $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
+    $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/Register.1cws'));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
 
     $server->decode_utf8 = false;
@@ -109,12 +109,16 @@ $OrderFromSite["ИтоговаяСумма"] = "ДА";
 
 $params["XDTOStructure"] = $OrderFromSite;
 
+// $handle = fopen("/home/saur/web/sitenewwave/1cengine/php_scripts/text.txt", "w+");
+// fwrite($handle, serialize($params));
+// fclose($handle);
+
 //print_r($params["XDTOStructure"]);
 
 $develop_server = "http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl";
-$peoduct_server = "http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl";
-$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
-// $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+$product_server = "http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl";
+// $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+$server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
 
 $server->decode_utf8 = false;

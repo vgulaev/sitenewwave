@@ -597,7 +597,7 @@ createOrder = () ->
         sendRow = ""
         $("tr.itemTr").each ->
             unless $(this).find("input.itemCharInput").length is 0
-                sendRow += "" + $(this).find("input.itemCharInput").val() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
+                sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
             else
                 sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
 
