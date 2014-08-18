@@ -173,8 +173,9 @@
     };
 
     Item.prototype.show_modal = function() {
-      var my_css,
+      var my_css, time_out_handle,
         _this = this;
+      time_out_handle = 0;
       my_css = {
         width: '450px',
         height: 'auto',
@@ -201,12 +202,14 @@
         });
         $(".buy_count").bind('keyup', function(event) {
           $(".buy_weight").addClass("preloading");
-          return setTimeout((function() {
+          window.clearTimeout(time_out_handle);
+          return time_out_handle = window.setTimeout((function() {
             return _this.change_buy_count($(".buy_count").val());
           }), 1000);
         });
         $(".buy_length").bind('change keyup', function(event) {
-          return setTimeout((function() {
+          window.clearTimeout(time_out_handle);
+          return time_out_handle = window.setTimeout((function() {
             return _this.change_buy_length($(".buy_length").val());
           }), 1000);
         });
@@ -216,7 +219,8 @@
       });
       $(".buy_weight").bind('keyup', function(event) {
         $(".buy_count").addClass("preloading");
-        return setTimeout((function() {
+        window.clearTimeout(time_out_handle);
+        return time_out_handle = window.setTimeout((function() {
           return _this.change_buy_weight($(".buy_weight").val());
         }), 1000);
       });
