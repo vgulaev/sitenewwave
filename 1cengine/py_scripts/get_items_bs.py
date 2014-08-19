@@ -287,7 +287,9 @@ class Item():
                         price_array.index(price))
                     span_tag = soup.new_tag("span")
 
-                    span_tag.append(locale.format("%.2f", float(price), grouping=True, monetary=True))
+                    price_repr = "{}{}".format(locale.format("%d", float(price), grouping=True), locale.format("%.2f", float(price))[-3:])
+
+                    span_tag.append(price_repr)
 
 
                     price_item_tag.append(span_tag)
@@ -301,7 +303,9 @@ class Item():
 
                     span_tag = soup.new_tag("span")
                     span_tag["itemprop"] = "price"
-                    span_tag.append(locale.format("%.2f", float(price), grouping=True, monetary=True))
+                    price_repr = "{}{}".format(locale.format("%d", float(price), grouping=True), locale.format("%.2f", float(price))[-3:])
+
+                    span_tag.append(price_repr)
                     price_item_tag.append(span_tag)
 
                     meta_tag = soup.new_tag("meta")
