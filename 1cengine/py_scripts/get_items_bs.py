@@ -12,6 +12,9 @@ from bs4 import BeautifulSoup
 
 from secrets import *
 
+import locale
+locale.setlocale(locale.LC_ALL, ("ru_RU.utf8"))
+
 soup = BeautifulSoup()
 
 
@@ -142,6 +145,7 @@ class ResultTable():
         else:
             r = self.get_items(limit, offset)
 
+        odd = False
         for row in r:
             if not row[4] in parent_array:
                 parent_array.append(row[4])
@@ -150,8 +154,11 @@ class ResultTable():
 
                 result_table_tag.append(group.compose_header())
 
-            item = Item(row[0], row[1], row[2], row[5], row[7], row[6], row[8])
+                odd = False
+
+            item = Item(row[0], row[1], row[2], row[5], row[7], row[6], row[8], odd)
             result_table_tag.append(item.compose_item())
+            odd = odd.__xor__(True)
 
         return result_table_tag
 
@@ -177,13 +184,6 @@ class ItemGroup():
                 price_header_tag.append(BeautifulSoup("<br />"))
 
                 span_tag = soup.new_tag("span")
-
-                if price_type_array.index(price) == 0:
-                    span_tag.string = u"Цена "
-                    span_tag.append(
-                        BeautifulSoup("<font color=\"red\">Я</font>ндекса"))
-                else:
-                    span_tag.string = u"Цена"
 
                 price_header_tag.append(span_tag)
 
@@ -223,13 +223,14 @@ class Item():
 
     def __init__(
             self, name, char, price_string,
-            item_hash, parent_hash, ed_izm, stock):
+            item_hash, parent_hash, ed_izm, stock, odd):
         self.name = name
         self.char = char
         self.price_string = price_string
         self.item_hash = item_hash
         self.parent_hash = parent_hash
         self.ed_izm = ed_izm
+        self.odd = odd
 
         if stock == 0:
             self.stock = "Под заказ"
@@ -285,7 +286,7 @@ class Item():
                     price_item_tag["class"] = "price itemPrice" + str(
                         price_array.index(price))
                     span_tag = soup.new_tag("span")
-                    span_tag.append(price)
+                    span_tag.append(locale.format("%d", int(price), grouping=True) + ",00")
 
                     price_item_tag.append(span_tag)
 
@@ -298,7 +299,7 @@ class Item():
 
                     span_tag = soup.new_tag("span")
                     span_tag["itemprop"] = "price"
-                    span_tag.append(price)
+                    span_tag.append(locale.format("%d", int(price), grouping=True) + ",00")
                     price_item_tag.append(span_tag)
 
                     meta_tag = soup.new_tag("meta")
@@ -366,6 +367,8 @@ class Item():
         item_tag["class"] = "item"
         item_tag["id"] = self.item_hash + ":" + self.parent_hash
         item_tag["itemscope itemtype"] = "http://schema.org/Product"
+        if self.odd:
+            item_tag["class"] = "item ti_odd"
 
         # name&buy td composing ####
 
@@ -421,6 +424,7 @@ class Item():
 
         item_buy_span_tag = soup.new_tag("span")
         item_buy_span_tag["class"] = "buySpan"
+        item_buy_span_tag.string = "Рассчитать"
 
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
