@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from secrets import *
 
 import locale
-locale.setlocale(locale.LC_ALL, ("ru_RU.utf8"))
+locale.setlocale(locale.LC_ALL, ("ru_RU.UTF-8"))
 
 soup = BeautifulSoup()
 
