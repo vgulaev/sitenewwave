@@ -82,7 +82,6 @@ class App.Item
                 @char = $(element).text()
 
             if ( $(element).attr("class").indexOf "price", 0 ) is 0
-                alert(($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(",00", ""))
                 @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(",00", "")
 
 
