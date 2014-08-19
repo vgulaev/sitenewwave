@@ -91,7 +91,7 @@
           _this.char = $(element).text();
         }
         if (($(element).attr("class").indexOf("price", 0)) === 0) {
-          return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(",00", ""));
+          return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", ""));
         }
       });
     };
