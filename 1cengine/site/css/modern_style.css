@@ -440,6 +440,8 @@ tr.iHeader{
 }
 .price{
     text-align: right;
+    width:47px;
+    max-width:47px;
 }
 .iHeader td.price{
     font-size:12px;
@@ -842,6 +844,7 @@ tr.iHeader{
     padding-top: 1px;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
     padding-left: 10px;
+    width:62px;
 
 }
 
@@ -850,15 +853,14 @@ tr.iHeader{
 }
 
 .in_basket .itemBuy a.bItem .buySpan{
-    background-image: url("../images/cart_edit.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    color:#6D7064;
 }
 
 .item .itemBuy a.oItem .buySpan{
 
     display: block;
-    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(center top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 25px;
     cursor: pointer;
@@ -871,17 +873,18 @@ tr.iHeader{
     padding-top: 1px;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
     padding-left: 10px;
+    width:62px;
 
 }
 
-.item .itemBuy a.bItem .buySpan:hover{
-    background: -moz-linear-gradient(center top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+.item .itemBuy a.oItem .buySpan:hover{
+    background: -moz-linear-gradient(center top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
 }
 
 .in_basket .itemBuy a.oItem .buySpan{
-    background-image: url("../images/cart_edit.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    color:#6D7064;
+
 }
 
 .itemBuy{

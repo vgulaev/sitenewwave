@@ -430,10 +430,11 @@ class Item():
 
         item_buy_span_tag = soup.new_tag("span")
         item_buy_span_tag["class"] = "buySpan"
-        item_buy_span_tag.string = "Рассчитать"
+
 
         item_buy_a_tag = soup.new_tag("a")
         if self.stocked:
+            item_buy_span_tag.string = "Рассчитать"
             item_buy_a_tag["class"] = u"bItem"
             item_buy_a_tag["href"] = u"Добавить в корзину"
 
@@ -450,6 +451,7 @@ class Item():
 
             item_buy_a_tag.append(item_buy_span_tag)
         else:
+            item_buy_span_tag.string = "Под заказ"
             item_buy_a_tag["class"] = "oItem"
             item_buy_a_tag["href"] = u"Добавить в корзину"
 
