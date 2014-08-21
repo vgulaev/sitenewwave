@@ -82,7 +82,7 @@ class App.Item
                 @char = $(element).text()
 
             if ( $(element).attr("class").indexOf "price", 0 ) is 0
-                @prices.push $(element).children( "span" ).text()
+                @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "")
 
 
     change_buy_count: (count) ->
@@ -168,6 +168,8 @@ class App.Item
 
     show_modal: ->
 
+        time_out_handle = 0
+
         my_css = {
             width: '450px',
             height: 'auto',
@@ -195,18 +197,21 @@ class App.Item
 
             $(".buy_count").bind 'keyup', (event) =>
                 $(".buy_weight").addClass("preloading")
-                setTimeout (=> @change_buy_count($(".buy_count").val())), 1000
+                window.clearTimeout(time_out_handle)
+                time_out_handle = window.setTimeout (=> @change_buy_count($(".buy_count").val())), 1000
 
 
             $(".buy_length").bind 'change keyup', (event) =>
-                setTimeout (=> @change_buy_length($(".buy_length").val())), 1000
+                window.clearTimeout(time_out_handle)
+                time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").val())), 1000
 
         $(".buy_weight").bind 'change', (event) =>
             @change_buy_weight($(".buy_weight").val())
 
         $(".buy_weight").bind 'keyup', (event) =>
             $(".buy_count").addClass("preloading")
-            setTimeout (=> @change_buy_weight($(".buy_weight").val())), 1000
+            window.clearTimeout(time_out_handle)
+            time_out_handle = window.setTimeout (=> @change_buy_weight($(".buy_weight").val())), 1000
 
         if @is_kis
             $(".char_length").bind 'change keyup', (event) =>

@@ -383,12 +383,18 @@ ul li, ul ul li, ul ul ul li {
 }
 
 #tableRes td{
-    border-bottom:1px dotted gray;
-    border-left:1px dotted gray;
+    /*border-bottom:1px dotted gray;*/
+    border-left:1px dashed #E6E6FA;
     padding:2px;
     padding-right:10px;
     padding-left:10px;
+    height:36px;
+    text-align:right;
 
+}
+
+#tableRes .ti_odd td{
+    border-left:1px dashed white;
 }
 
 #tableRes td:first-child{
@@ -404,12 +410,17 @@ ul li, ul ul li, ul ul ul li {
     line-height: 22px;
 }
 
+.ti_odd{
+    background-color:#E6E6FA;
+}
+
 tr.iHeader{
     font-size:13px;
     font-weight:bold;
     border-top:1px solid black !important;
     height:auto;
     width:750px;
+    background-color: #a0a4d0;
     /*display:block;*/
 }
 .iHeader td{
@@ -429,6 +440,8 @@ tr.iHeader{
 }
 .price{
     text-align: right;
+    width:47px;
+    max-width:47px;
 }
 .iHeader td.price{
     font-size:12px;
@@ -816,41 +829,66 @@ tr.iHeader{
     text-align: center;
 }
 .item .itemBuy a.bItem .buySpan{
-    background-image: url("../images/cart_add.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    width:32px;
-    height:32px;
-    display:block;
+
+    display: block;
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 25px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 9pt;
+    padding-top: 1px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    width:62px;
+
+}
+
+.item .itemBuy a.bItem .buySpan:hover{
+    background: -moz-linear-gradient(center top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
 }
 
 .in_basket .itemBuy a.bItem .buySpan{
-    background-image: url("../images/cart_edit.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    color:#6D7064;
 }
 
-.itemBuy a.oItem .buySpan{
-    background-image: url("../images/cart_order.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    width:32px;
-    height:32px;
-    display:block;
+.item .itemBuy a.oItem .buySpan{
+
+    display: block;
+    background: -moz-linear-gradient(center top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 25px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 9pt;
+    padding-top: 1px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    width:62px;
+
+}
+
+.item .itemBuy a.oItem .buySpan:hover{
+    background: -moz-linear-gradient(center top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
 }
 
 .in_basket .itemBuy a.oItem .buySpan{
-    background-image: url("../images/cart_edit.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    color:#6D7064;
+
 }
 
-.itemBuy a{
-    /*color:white;
-    text-decoration: none;
-    font-weight:bold;*/
-    float:right;
-
+.itemBuy{
+    width:90px;
 }
 
 .delEdSpan{
@@ -869,6 +907,7 @@ tr.iHeader{
 
 .item:hover, .itemTr:hover{
     font-weight:bold;
+    box-shadow:0 2px 2px -1px rgba(0,0,0,0.7), 0 -2px 2px -1px rgba(0,0,0,0.7);
 }
 
 #Summary td:last-child{
@@ -969,11 +1008,26 @@ tr.iHeader{
 * html .ui-autocomplete {
     height: 100px;
 }
+
+.ui-autocomplete li{
+    font-size:10pt;
+    line-height:20px;
+}
 .ui-autocomplete li:hover{
     background-color:rgb(45, 54, 148);
-}
-.ui-autocomplete li:hover a{
     color:white;
+    font-weight:700;
+}
+.ui-autocomplete li:focus{
+    background-color:rgb(45, 54, 148);
+    color:white;
+    font-weight:700;
+}
+
+.ui-state-focus{
+    background-color:rgb(45, 54, 148);
+    color:white;
+    font-weight:700;
 }
 
 #selfCarry{
