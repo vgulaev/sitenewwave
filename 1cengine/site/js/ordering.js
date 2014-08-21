@@ -477,7 +477,7 @@
   };
 
   sendOrder = function(orderString, is_async) {
-    var carry, delivery_cost, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text,
+    var carry, comment_text, delivery_cost, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text,
       _this = this;
     if (typeof is_async === "undefined") {
       is_async = true;
@@ -502,11 +502,12 @@
       rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: ";
       return rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; ";
     });
+    comment_text = $("#commentInput").val();
     $.ajax({
       type: "POST",
       url: "/1cengine/php_scripts/createOrder.php",
       async: is_async,
-      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text,
+      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text,
       success: function(html) {
         var oA, order;
         ret = "номер " + html;

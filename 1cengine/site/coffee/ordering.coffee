@@ -538,13 +538,14 @@ sendOrder = (orderString, is_async) ->
         rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: "
         rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; "
 
+    comment_text = $("#commentInput").val()
 
 
     $.ajax
         type: "POST"
         url: "/1cengine/php_scripts/createOrder.php"
         async: is_async
-        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text
+        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text
         success: (html) ->
             #var success = 'true';
             ret = "номер " + html
