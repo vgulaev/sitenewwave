@@ -1205,7 +1205,7 @@ tr.iHeader{
     max-width:450px;
     border:1px solid #a1a1a1;
     box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
-    font-size:14pt;
+    font-size:10pt;
     float:right;
     padding: 0 5px;
 }
@@ -2160,4 +2160,15 @@ hr{
     font-weight:700;
     line-height: 16px;
     padding: 8px 10px;
+}
+
+.eye{
+    float:right;
+    cursor:pointer;
+    font-weight:900;
+    color:#acacac;
+}
+
+.eye:hover{
+    color: #2D3694;
 }

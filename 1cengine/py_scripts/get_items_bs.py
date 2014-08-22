@@ -22,6 +22,28 @@ synonims = {
     "Сталь": "ст."
 }
 
+def translit(word):
+
+    new_word = ""
+    for letter in word:
+        ru_en_dict = {
+            "а" :  "a",  "б" : "b",  "в" : "v",   "г" : "g",
+            "д" :  "d",  "е" : "e",  "ё" : "yo",  "ж" : "zh",
+            "з" :  "z",  "и" : "i",  "й" : "j",   "к" : "k",
+            "л" :  "l",  "м" : "m",  "н" : "n",   "о" : "o",
+            "п" :  "p",  "р" : "r",  "с" : "s",   "т" : "t",
+            "у" :  "u",  "ф" : "f",  "х" : "x",   "ц" : "cz",
+            "ч" :  "ch", "ш" : "sh", "щ" : "shh", "ъ" : "",
+            "ы" :  "y",  "ь" : "",   "э" : "e",   "ю" : "yu",
+            "я" :  "ya", "0" : "0",  "1" : "1",   "2" : "2",
+            "3" :  "3",  "4" : "4",  "5" : "5",   "6" : "6",
+            "7" :  "7",  "8" : "8",  "9" : "9",   " " : " "
+        }
+
+        letter = letter.lower().encode("utf-8")
+        new_word = new_word + ru_en_dict[letter]
+
+    return new_word
 
 class ResultTable():
 
@@ -384,7 +406,16 @@ class Item():
 
         item_name_span_tag = soup.new_tag("span")
         item_name_span_tag["itemprop"] = "name"
+
+        # item_name_eye_span_tag = soup.new_tag("span")
+        # item_name_eye_span_tag["class"] = "eye " + translit(self.name.decode("utf-8").split(" ")[0])
+        # item_name_eye_span_tag["title"] = ""
+
+
+        # item_name_eye_span_tag.append(u"⊙")
+
         item_name_span_tag.append(self.name.decode("utf-8"))
+        # item_name_span_tag.append(item_name_eye_span_tag)
         item_name_tag.append(item_name_span_tag)
 
 

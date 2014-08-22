@@ -234,10 +234,11 @@
         App.Basket.add_item(_this);
         return $.unblockUI();
       });
-      return $(".change_in_basket").bind('click', function(event) {
+      $(".change_in_basket").bind('click', function(event) {
         App.Basket.change_item(_this);
         return $.unblockUI();
       });
+      return yaCounter23067595.reachGoal('OpenItem');
     };
 
     Item.prototype.get_modal = function() {
@@ -333,7 +334,8 @@
         this.change_basket();
         i_id = ("#" + item.id).replace(":", "\\:");
         $("" + i_id).addClass("in_basket");
-        return $("#tabBasket").tooltipster("show");
+        $("#tabBasket").tooltipster("show");
+        return yaCounter23067595.reachGoal('AddItem');
       }
     };
 
@@ -707,7 +709,8 @@
       }
     });
     $("#sendOrderButton").click(function() {
-      return createOrder();
+      createOrder();
+      return yaCounter23067595.reachGoal('FinishOrder');
     });
     /* DEPRECATED*/
 
