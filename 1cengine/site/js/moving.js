@@ -73,7 +73,10 @@
       $("#" + id).addClass(tabs_dict[id]['active_class']);
     }
     if (tabs_dict[id]["inactive_class"]) {
-      return $("#" + id).removeClass(tabs_dict[id]['inactive_class']);
+      $("#" + id).removeClass(tabs_dict[id]['inactive_class']);
+    }
+    if (tabs_dict[id] === "tabBasket") {
+      return yaCounter23067595.reachGoal('GoToBasket');
     }
   };
 
@@ -178,6 +181,7 @@
       async: true,
       data: "hash=" + encodeURIComponent(hash) + "",
       success: function(html) {
+        var _this = this;
         App.C_HASH = hash;
         $("#qRes").html(html);
         $("#qRes").fadeIn(400);
@@ -211,7 +215,19 @@
             return item.show_modal();
           }
         });
-        return false;
+        false;
+        return $(".eye").each(function(index, element) {
+          var img_class;
+          img_class = $(element).attr('class').split(' ')[1];
+          return $(element).tooltipster({
+            content: "<img src='images/eye_pic/" + img_class + ".png' />",
+            animation: 'fade',
+            position: 'top',
+            trigger: "click",
+            theme: "tooltipster-my",
+            contentAsHTML: true
+          });
+        });
       }
     });
     return $.ajax({

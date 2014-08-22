@@ -65,6 +65,9 @@ switch_tabs = (id) ->
     if tabs_dict[id]["inactive_class"]
         $("##{id}").removeClass(tabs_dict[id]['inactive_class'])
 
+    if tabs_dict[id] is "tabBasket"
+        yaCounter23067595.reachGoal('GoToBasket');
+
 showGroup2 = (term) ->
     $("#itemName").val(term)
     $("#itemName").change()
@@ -222,6 +225,18 @@ get_item_list = (hash) ->
                 else
                     item.show_modal()
             false
+
+            $(".eye").each (index, element) =>
+                img_class = $(element).attr('class').split(' ')[1]
+                $(element).tooltipster({
+                    content: "<img src='images/eye_pic/"+img_class+".png' />",
+                    animation: 'fade',
+                    position: 'top',
+                    trigger: "click",
+                    theme: "tooltipster-my",
+                    contentAsHTML: true
+                })
+
 
 
     $.ajax

@@ -232,6 +232,9 @@ class App.Item
             # alert(Basket._total_weight)
 
 
+        yaCounter23067595.reachGoal('OpenItem');
+
+
     get_modal: ->
         if App.Basket.is_in_basket(this)
             modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>'
@@ -373,6 +376,8 @@ class App.Basket
             # $( "#tabBasket" ).tooltip( "open" )
 
             $("#tabBasket").tooltipster("show")
+
+            yaCounter23067595.reachGoal('AddItem');
 
 
     @change_item: (item) ->
@@ -763,6 +768,8 @@ $(document).ready ->
     $("#sendOrderButton").click ->
         createOrder()
 
+        yaCounter23067595.reachGoal('FinishOrder');
+
     ### DEPRECATED ###
 
     #/ Разбор GET-параметров ///
@@ -798,3 +805,4 @@ $(document).ready ->
     })
     # $( "#tabBasket" ).tooltip( "disable" )
     # $( "#tabBasket" ).tooltip( "open" );
+
