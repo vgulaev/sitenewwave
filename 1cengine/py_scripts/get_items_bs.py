@@ -114,7 +114,7 @@ class ResultTable():
                 `offers`.`char_name`, `offers`.`price`,
                 `offers`.`price_type`, `groups`.`fullname`,
                 `offers`.`hash`, `offers`.`edIzm`,
-                `offers`.`parent_hash`, `offers`.`stock`
+                `offers`.`father_hash`, `offers`.`stock`
                 FROM `offers`, `groups`
                 WHERE ( `offers`.`parent_hash`='""" + r_cond + """' )
                 AND `groups`.`hash`=`offers`.`parent_hash`

@@ -91,7 +91,7 @@
           _this.char = $(element).text();
         }
         if (($(element).attr("class").indexOf("price", 0)) === 0) {
-          return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", ""));
+          return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", "."));
         }
       });
     };
@@ -226,7 +226,11 @@
       });
       if (this.is_kis) {
         $(".char_length").bind('change keyup', function(event) {
-          return _this.change_char_length($(".char_length").val());
+          $(".buy_weight").addClass("preloading");
+          window.clearTimeout(time_out_handle);
+          return time_out_handle = window.setTimeout((function() {
+            return _this.change_char_length($(".char_length").val());
+          }), 1000);
         });
       }
       this.change_modal_price();
@@ -264,7 +268,7 @@
       }
       edizm_dict = {
         "т": "Тонны",
-        "шт": "Штуки",
+        "шт": "Метры пог.",
         "м2": "Метры кв.",
         "кв.м.": "Метры кв.",
         "кв. м.": "Метры кв.",
@@ -504,6 +508,9 @@
       rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: ";
       return rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; ";
     });
+    if (rezka_text === "") {
+      rezka_text = "NOREZKA ;;";
+    }
     comment_text = $("#commentInput").val();
     $.ajax({
       type: "POST",
