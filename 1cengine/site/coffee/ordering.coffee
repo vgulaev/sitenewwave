@@ -82,7 +82,7 @@ class App.Item
                 @char = $(element).text()
 
             if ( $(element).attr("class").indexOf "price", 0 ) is 0
-                @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "")
+                @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
 
 
     change_buy_count: (count) ->
@@ -215,7 +215,10 @@ class App.Item
 
         if @is_kis
             $(".char_length").bind 'change keyup', (event) =>
-                @change_char_length($(".char_length").val())
+                $(".buy_weight").addClass("preloading")
+                window.clearTimeout(time_out_handle)
+                time_out_handle = window.setTimeout (=> @change_char_length($(".char_length").val())), 1000
+                # @change_char_length($(".char_length").val())
 
         @change_modal_price()
 
@@ -261,7 +264,7 @@ class App.Item
 
         edizm_dict = {
             "т":"Тонны",
-            "шт":"Штуки",
+            "шт":"Метры пог.",
             "м2":"Метры кв.",
             "кв.м.":"Метры кв.",
             "кв. м.":"Метры кв.",
@@ -542,6 +545,9 @@ sendOrder = (orderString, is_async) ->
     $(".rezka_body").find("tr").each (index, element) =>
         rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: "
         rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; "
+
+    if rezka_text is ""
+        rezka_text = "NOREZKA ;;"
 
     comment_text = $("#commentInput").val()
 
