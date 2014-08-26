@@ -184,7 +184,7 @@ if( $reg_result ){
     $mess .= '<p>Для входа используйте указанный вами email и следующий пароль: <strong>'.$pwd.'</strong></p>';
 }
 if( $sccss == "1" ){
-    $mess .= '<p>Вы можете оплатить свой заказ онлайн по ссылке <strong><a href="https://trimet.ru/payment/'. $linkToPay.'">https://trimet.ru/payment/'. $linkToPay.'</a></strong></p>';
+    $mess .= '<p>Вы можете оплатить свой заказ онлайн по ссылке <a href="https://trimet.ru/payment/'. $linkToPay.'">ссылке</a></p>';
 }
 //$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
 $mess .= '<p>Контактный телефон: +7 (3452) 520-670'."</p>";
