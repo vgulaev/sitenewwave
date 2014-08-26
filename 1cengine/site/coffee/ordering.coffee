@@ -613,7 +613,7 @@ createOrder = () ->
             </span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"""
         sendRow = ""
         $("tr.itemTr").each ->
-            unless $(this).attr("name").split(":")[0] is "0"
+            if $(this).attr("name").split(":")[0] is "0"
                 sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
             else
                 sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"

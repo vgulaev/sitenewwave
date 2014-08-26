@@ -563,7 +563,7 @@
       });
       sendRow = "";
       $("tr.itemTr").each(function() {
-        if ($(this).attr("name").split(":")[0] !== "0") {
+        if ($(this).attr("name").split(":")[0] === "0") {
           return sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
         } else {
           return sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
