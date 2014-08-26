@@ -87,7 +87,7 @@
         if ($(element).attr("class") === "itemName") {
           _this.name = $(element).children("[itemprop='name']").text();
         }
-        if ($(element).attr("class") === "itemChar") {
+        if ($(element).attr("class") === "itemChar" && _this.is_kis === false) {
           _this.char = $(element).text();
         }
         if (($(element).attr("class").indexOf("price", 0)) === 0) {
@@ -563,7 +563,7 @@
       });
       sendRow = "";
       $("tr.itemTr").each(function() {
-        if ($(this).find("input.itemCharInput").length !== 0) {
+        if ($(this).attr("name").split(":")[0] !== "0") {
           return sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";
         } else {
           return sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";";

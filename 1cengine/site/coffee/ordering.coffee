@@ -78,7 +78,7 @@ class App.Item
         $(obj).children().each (index, element) =>
             if $(element).attr("class") is "itemName"
                 @name = $(element).children("[itemprop='name']").text()
-            if $(element).attr("class") is "itemChar"
+            if $(element).attr("class") is "itemChar" and @is_kis is false
                 @char = $(element).text()
 
             if ( $(element).attr("class").indexOf "price", 0 ) is 0
@@ -613,7 +613,7 @@ createOrder = () ->
             </span><div style='disply:block;margin-top:70px'><a href='' onClick='$.unblockUI(); return false' id='popUpOrderClose' style='display:none;cursor:pointer;'>Закрыть</a></div>"""
         sendRow = ""
         $("tr.itemTr").each ->
-            unless $(this).find("input.itemCharInput").length is 0
+            unless $(this).attr("name").split(":")[0] is "0"
                 sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
             else
                 sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"

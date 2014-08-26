@@ -29,8 +29,8 @@ function generateRandomString($length = 10) {
 
 
 function register_user($mail, $passwd, $name) {
-    $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
-    // $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/Register.1cws'));
+    // $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
+    $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/Register.1cws'));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
 
     $server->decode_utf8 = false;
@@ -117,8 +117,8 @@ $params["XDTOStructure"] = $OrderFromSite;
 
 $develop_server = "http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl";
 $product_server = "http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl";
-$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
-// $server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+// $server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+$server = new SoapClient('http://WebService:teradel@192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/fedorov_trimet_ut/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
 //$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
 
 $server->decode_utf8 = false;
@@ -180,6 +180,9 @@ $mess .= '<p>Вы так же можете просмотреть свои за�
 $mess .= '<a href="https://trimet.ru/kabinet/">личном кабинете</a></p>';
 if( $reg_result ){
     $mess .= '<p>Для входа используйте указанный вами email и следующий пароль: <strong>'.$pwd.'</strong></p>';
+}
+if( $response[2] == "1" ){
+    $mess .= '<p>Вы можете оплатить свой заказ онлайн по ссылке <strong><a href="https://trimet.ru/payment/'. $response[1].'">https://trimet.ru/payment/'. $response[1].'</a></strong></p>';
 }
 //$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
 $mess .= '<p>Контактный телефон: +7 (3452) 520-670'."</p>";
