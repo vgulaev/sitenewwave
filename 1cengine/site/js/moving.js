@@ -73,10 +73,7 @@
       $("#" + id).addClass(tabs_dict[id]['active_class']);
     }
     if (tabs_dict[id]["inactive_class"]) {
-      $("#" + id).removeClass(tabs_dict[id]['inactive_class']);
-    }
-    if (tabs_dict[id] === "tabBasket") {
-      return yaCounter23067595.reachGoal('GoToBasket');
+      return $("#" + id).removeClass(tabs_dict[id]['inactive_class']);
     }
   };
 
@@ -336,7 +333,10 @@
     for (item in tabs_dict) {
       name = item;
       $("#" + name).click(function() {
-        return switch_tabs(this.id);
+        switch_tabs(this.id);
+        if (name === "switchNotificationDiv") {
+          return yaCounter23067595.reachGoal('GoToBasket');
+        }
       });
     }
     $("#itemName").autocomplete({

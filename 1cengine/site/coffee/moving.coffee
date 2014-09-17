@@ -65,8 +65,7 @@ switch_tabs = (id) ->
     if tabs_dict[id]["inactive_class"]
         $("##{id}").removeClass(tabs_dict[id]['inactive_class'])
 
-    if tabs_dict[id] is "tabBasket"
-        yaCounter23067595.reachGoal('GoToBasket');
+
 
 showGroup2 = (term) ->
     $("#itemName").val(term)
@@ -341,6 +340,11 @@ $(document).ready ->
         name = item
         $("##{name}").click ->
             switch_tabs(this.id)
+
+            # alert(name)
+
+            if name is "switchNotificationDiv"
+                yaCounter23067595.reachGoal('GoToBasket');
 
 
     $("#itemName").autocomplete(
