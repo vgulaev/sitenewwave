@@ -487,7 +487,10 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 }
 
 .next_result{
@@ -507,7 +510,11 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+
 }
 
 .prev_result{
@@ -527,12 +534,18 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 }
 
 .next_result:hover, .prev_result:hover, #showAll:hover{
     /*box-shadow: inset 0 0 20px 3px rgba(0,0,0,0.3);*/
-    background: -moz-linear-gradient(center top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
 }
 
 #show_next_prev{
@@ -619,20 +632,33 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 }
 
 .next_step:hover{
-    background: -moz-linear-gradient(center top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+
 }
 
 #deliveryDiv .next_step{
-    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
 }
 
 #deliveryDiv .next_step:hover{
-    background: -moz-linear-gradient(center top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
 
 }
 
@@ -654,11 +680,17 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
  }
 
 .return_to_catalog:hover{
-    background: -moz-linear-gradient(center top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
 }
 
 #mainTr{
@@ -831,7 +863,10 @@ tr.iHeader{
 .item .itemBuy a.bItem .buySpan{
 
     display: block;
-    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 25px;
     cursor: pointer;
@@ -849,18 +884,27 @@ tr.iHeader{
 }
 
 .item .itemBuy a.bItem .buySpan:hover{
-    background: -moz-linear-gradient(center top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
 }
 
 .in_basket .itemBuy a.bItem .buySpan{
-    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
     color:#6D7064;
 }
 
 .item .itemBuy a.oItem .buySpan{
 
     display: block;
-    background: -moz-linear-gradient(center top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 25px;
     cursor: pointer;
@@ -878,11 +922,17 @@ tr.iHeader{
 }
 
 .item .itemBuy a.oItem .buySpan:hover{
-    background: -moz-linear-gradient(center top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
 }
 
 .in_basket .itemBuy a.oItem .buySpan{
-    background: -moz-linear-gradient(center top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #DBE1C8 0%, #DBE1C8 47%, #DBE1C8 100%) repeat scroll 0% 0% transparent;
     color:#6D7064;
 
 }
@@ -1062,7 +1112,11 @@ tr.iHeader{
 
     margin-left:10px;
     padding:5px 15px;
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+
     text-decoration:none;
     color:white;
     height: 30px;
@@ -1080,7 +1134,10 @@ tr.iHeader{
 }
 
 .popUpContinue a:hover{
-    background: -moz-linear-gradient(center top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
 }
 
 }
@@ -1226,7 +1283,10 @@ tr.iHeader{
     /*font-size:14px;*/
     /*padding-top:7px;*/
     /*margin-left: 250px;*/
-    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 30px;
     width: 250px;
@@ -1243,7 +1303,10 @@ tr.iHeader{
 }
 
 #sendOrderButton:hover{
-    background: -moz-linear-gradient(center top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
 }
 
 #sendOrderButton a{
@@ -1365,12 +1428,18 @@ tr.iHeader{
     padding-top: 7px;
     display: inline-block;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 
 }
 
 #backToBasketButton:hover{
-    background: -moz-linear-gradient(center top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
 }
 
 #tabPrice{
@@ -1929,7 +1998,10 @@ hr{
     border-radius: 10px;
     display:block;
     width:250px;
-    background: -moz-linear-gradient(center top , #FFF 0%, #E6E6FA 47%, #CDCDCD 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #FFF 0%, #E6E6FA 47%, #CDCDCD 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #FFF 0%, #E6E6FA 47%, #CDCDCD 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #FFF 0%, #E6E6FA 47%, #CDCDCD 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #FFF 0%, #E6E6FA 47%, #CDCDCD 100%) repeat scroll 0% 0% transparent;
 }
 .is_in_city span{
     height:29px;
@@ -1947,7 +2019,10 @@ hr{
     float:right;
 }
 .is_in_city span.active_city{
-    background: -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
     color:white;
     font-weight: bold;
 }
@@ -2078,7 +2153,10 @@ hr{
 }
 
 .closeHowToMakeOrder{
-    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -moz-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 30px;
     width: 700px;
