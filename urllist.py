@@ -24,29 +24,29 @@ url_dictionary = {
     "about/news": "htmlstaticcontent/016_about_news_/",
     "about/leaderships": "htmlstaticcontent/013_about_leaderships_/",
     # блок меню "Продукция"
-    "products/faq/924": "htmlstaticcontent/039_products_faq_924_/",
+    # "products/faq/924": "htmlstaticcontent/039_products_faq_924_/",
     "products": "htmlstaticcontent/004_products_/",
-    "products/faq/902": "htmlstaticcontent/035_products_faq_902_/",
+    # "products/faq/902": "htmlstaticcontent/035_products_faq_902_/",
     "products/krovl/profnastil":
                 "htmlstaticcontent/026_products_krovl_profnastil_/",
     "products/krovl/vodostochnye_sistemy":
                 "htmlstaticcontent/028_products_krovl_vodostochnye_sistemy_/",
     "products/krovl/metallosajding":
                 "htmlstaticcontent/027_products_krovl_metallosajding_/",
-    "products/faq/937": "htmlstaticcontent/045_products_faq_937_/",
+    # "products/faq/937": "htmlstaticcontent/045_products_faq_937_/",
     "products/krovl/metallocherepica":
                 "htmlstaticcontent/029_products_krovl_metallocherepica_/",
     "products/faq": "htmlstaticcontent/034_products_faq_/",
-    "products/faq/933": "htmlstaticcontent/043_products_faq_933_/",
+    # "products/faq/933": "htmlstaticcontent/043_products_faq_933_/",
     "products/gost": "htmlstaticcontent/033_products_gost_/",
-    "products/faq/929": "htmlstaticcontent/041_products_faq_929_/",
+    # "products/faq/929": "htmlstaticcontent/041_products_faq_929_/",
     "products/krovl/soputstvujuwie_tovary":
                 "htmlstaticcontent/030_products_krovl_soputstvujuwie_tovary_/",
     "products/dealers": "htmlstaticcontent/031_products_dealers_/",
     "products/special": "htmlstaticcontent/036_products_special_/",
-    "products/faq/915": "htmlstaticcontent/038_products_faq_915_/",
+    # "products/faq/915": "htmlstaticcontent/038_products_faq_915_/",
     "products/krovl": "htmlstaticcontent/025_products_krovl_/",
-    "products/faq/935": "htmlstaticcontent/044_products_faq_935_/",
+    # "products/faq/935": "htmlstaticcontent/044_products_faq_935_/",
     "products/metalloprokat":
                 "htmlstaticcontent/024_products_metalloprokat_/",
     "products/faq/931": "htmlstaticcontent/042_products_faq_931_/",

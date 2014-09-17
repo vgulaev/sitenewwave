@@ -87,12 +87,12 @@ App.load_delivery_cost = () ->
             for key, value of html[$(".active_city").attr("name")]
                 # alert key + " : " + value
                 n_car = "Газель"
-                if App.Basket._total_weight > 2
+                if App.MyBasket._total_weight > 2
                     n_car = "Длинномер"
                 else if $(".active_city").attr("name") is "outcity"
                     n_car = "Длинномер"
                 else
-                    for item in App.Basket._item_list
+                    for item in App.MyBasket._item_list
                         if item.length > 6
                             n_car = "Длинномер"
 
