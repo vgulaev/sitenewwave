@@ -78,7 +78,7 @@
     };
 
     MyBasket.delete_item = function(id) {
-      var elem, i_id, index, item, _i, _len, _ref, _results;
+      var elem, i_id, index, item, _i, _len, _ref;
       item = this.find_by_id(id);
       index = this._item_list.indexOf(item);
       if (index > -1) {
@@ -89,16 +89,15 @@
         this._sum = 0;
         this._total_weight = 0;
         _ref = this._item_list;
-        _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           elem = _ref[_i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
           this._total_weight = ((+elem.buy_weight) + (+this._total_weight)).toFixed(3);
           this.on_weight_change_handler(this._total_weight);
-          _results.push(this.on_active_price_measured_change_handler());
+          this.on_active_price_measured_change_handler();
         }
-        return _results;
       }
+      return this.change_basket();
     };
 
     MyBasket.get_count = function() {

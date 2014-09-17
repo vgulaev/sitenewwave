@@ -107,7 +107,7 @@ class App.MyBasket
                 @on_weight_change_handler(@_total_weight)
                 @on_active_price_measured_change_handler()
 
-        # @change_basket()
+        @change_basket()
 
     @get_count: ->
         @_count
