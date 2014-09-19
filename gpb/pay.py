@@ -100,3 +100,36 @@ else:
             """
 
 print(rs)
+
+
+try:
+
+    import imp
+
+    lib_path = os.path.abspath('gpb/')
+    sys.path.append(lib_path)
+    _PATH_ = os.path.abspath(os.path.dirname(__file__))
+
+
+    def mail_checkout():
+        python_lib_name = "mail_checkout"
+        mail_lib = imp.load_source(
+            python_lib_name, lib_path + "/" + python_lib_name + ".py")
+
+        f = open("checkout.tpl.html", "r")
+        f_template = f.read()
+        f.close()
+
+        f_template = f_template.replace("{{NUMBER}}", str(form["o.number"].value))
+        f_template = f_template.replace("{{TIMESTAMP}}", str(form["ts"].value))
+        f_template = f_template.replace("{{SUM}}", str(form["amount"].value))
+        f_template = f_template.replace("{{ID}}", str(form["trx.id"].value))
+        f_template = f_template.replace("{{FIO}}", str(form["p.cardholder"].value))
+        f_template = f_template.replace("{{MAIL}}", str(form["p.maskedPan"].value))
+
+        mail_lib.mail_checkout(f_template)
+
+    mail_checkout()
+
+except:
+    pass

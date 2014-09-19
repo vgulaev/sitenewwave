@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Checkout</title>
+        <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,700&subset=latin,cyrillic,greek,latin-ext' rel='stylesheet' type='text/css'>
+        <style>
+            .check_body{
+    border:1px solid gray;
+    width:200px;
+    min-height:200px;
+    margin: auto auto;
+    font-family:'Anonymous Pro';
+    padding:5px;
+    font-weight:400;
+    font-size:10pt;
+    box-shadow: 0 0 2px 1px rgba(0,0,0,0.3);
+    padding-bottom:10px;
+}
+.check_body img{
+    margin:5px auto;
+    display:block;
+}
+.star_delimeter{
+    text-align: center;
+    line-height: 10pt;
+    margin: 0px;
+    padding: 0px;
+}
+.status_p{
+    font-variant: small-caps;
+    text-align: center;
+    line-height: 10pt;
+    margin: 0px;
+    padding: 2px;
+    letter-spacing: 1pt;
+}
+.description{
+    font-variant: small-caps;
+    line-height: 10pt;
+    margin:0 13px;
+}
+.description td:first-child{
+    width:90px;
+}
+.description td:last-child{
+    font-size:8pt;
+    font-weight:bold;
+    font-variant: normal;
+}
+        </style>
+    </head>
+    <body>
+        <div class="check_body">
+            <img src="http://trimet.ru/img/logo.png" />
+            <p class="star_delimeter">*************************</p>
+            <p class="status_p">Платеж успешно выполнен</p>
+            <p class="star_delimeter">=========================</p>
+            <p class="status_p">Данные платежа</p>
+            <table class="description">
+                <tr>
+                    <td>Заказ №</td>
+                    <td>{{NUMBER}}</td>
+                </tr>
+                <tr>
+                    <td>Дата и время</td>
+                    <td>{{TIMESTAMP}}</td>
+                </tr>
+                <tr>
+                    <td>Сумма</td>
+                    <td>{{SUM}}</td>
+                </tr>
+                <tr>
+                    <td>Валюта</td>
+                    <td>RUB</td>
+                </tr>
+                <tr>
+                    <td>Внутренний id</td>
+                    <td>{{ID}}</td>
+                </tr>
+            </table>
+            <p class="star_delimeter">=========================</p>
+            <p class="status_p">Данные плательщика</p>
+            <table class="description">
+                <tr>
+                    <td>ФИО</td>
+                    <td>{{FIO}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{MAIL}}</td>
+                </tr>
+            </table>
+            <p class="star_delimeter">*************************</p>
+        </div>
+    </body>
+</html>

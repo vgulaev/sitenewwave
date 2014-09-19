@@ -86,7 +86,7 @@ def get_order(UID):
         # try:
 
         result_table = "<table class='checkoutTable'>"
-        result_table = result_table + "<caption>Заказ №" + result[3]
+        result_table = result_table + "<caption>Заказ № " + result[3]
         order_number = ""
         for letter in result[3]:
             order_number = order_number + translit(letter)
