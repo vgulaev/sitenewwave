@@ -110,26 +110,54 @@ try:
     sys.path.append(lib_path)
     _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
+    python_lib_name = "mail_checkout"
+    mail_lib = imp.load_source(
+        python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
-    def mail_checkout():
-        python_lib_name = "mail_checkout"
-        mail_lib = imp.load_source(
-            python_lib_name, lib_path + "/" + python_lib_name + ".py")
+    f = open(lib_path+"/checkout.tpl.html", "r")
+    f_template = f.read()
+    f.close()
 
-        f = open(lib_path+"/checkout.tpl.html", "r")
-        f_template = f.read()
-        f.close()
+    if form.has_key("o.number"):
+        number = str(form["o.number"].value)
+    else:
+        number = "xxx"
 
-        f_template = f_template.replace("{{NUMBER}}", str(form["o.number"].value))
-        f_template = f_template.replace("{{TIMESTAMP}}", str(form["ts"].value))
-        f_template = f_template.replace("{{SUM}}", str(form["amount"].value))
-        f_template = f_template.replace("{{ID}}", str(form["trx.id"].value))
-        f_template = f_template.replace("{{FIO}}", str(form["p.cardholder"].value))
-        f_template = f_template.replace("{{MAIL}}", str(form["p.maskedPan"].value))
+    if form.has_key("ts"):
+        timestamp = str(form["ts"].value)
+    else:
+        timestamp = "xxx"
 
-        mail_lib.mail_checkout(f_template)
+    if form.has_key("amount"):
+        summ = str(form["amount"].value)
+    else:
+        summ = "xxx"
 
-    mail_checkout()
+    if form.has_key("trx.id"):
+        idd = str(form["trx.id"].value)
+    else:
+        idd = "xxx"
+
+    if form.has_key("p.cardholder"):
+        fio = str(form["p.cardholder"].value)
+    else:
+        fio = "xxx"
+
+    if form.has_key("p.maskedPan"):
+        mail = str(form["p.maskedPan"].value)
+    else:
+        mail = "xxx"
+
+    f_template = f_template.replace("{{NUMBER}}", number)
+    f_template = f_template.replace("{{TIMESTAMP}}", timestamp)
+    f_template = f_template.replace("{{SUM}}", summ)
+    f_template = f_template.replace("{{ID}}", idd)
+    f_template = f_template.replace("{{FIO}}", fio)
+    f_template = f_template.replace("{{MAIL}}", mail)
+
+    mail_lib.mail_checkout(f_template)
+
+
 
 except:
     pass
