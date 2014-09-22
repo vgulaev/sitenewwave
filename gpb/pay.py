@@ -116,7 +116,7 @@ try:
         mail_lib = imp.load_source(
             python_lib_name, lib_path + "/" + python_lib_name + ".py")
 
-        f = open("checkout.tpl.html", "r")
+        f = open(lib_path+"/checkout.tpl.html", "r")
         f_template = f.read()
         f.close()
 
