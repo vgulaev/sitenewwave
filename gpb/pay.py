@@ -106,7 +106,7 @@ try:
 
     import imp
 
-    lib_path = os.path.abspath('gpb/')
+    lib_path = os.path.abspath('')
     sys.path.append(lib_path)
     _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
