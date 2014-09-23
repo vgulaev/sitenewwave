@@ -67,8 +67,6 @@ def get_order(UID):
 
 def set_trx():
 
-
-
     conn = MySQLdb.connect(host=databases["trx"]["host"],
                            user=databases["trx"]["user"],
                            passwd=databases["trx"]["passwd"],
@@ -135,7 +133,7 @@ if "o.uid" in form:
                 <code>1</code>
                 <desc>"""+order[1]+"""</desc>
               </result>
-              <merchant-trx>"""+set_trx()+"""</metchat-trx>
+              <merchant-trx>"""+set_trx()+"""</merchant-trx>
               <purchase>
                 <shortDesc> </shortDesc>
                 <longDesc>Заказ #"""+order[1]+"""</longDesc>
