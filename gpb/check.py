@@ -4,6 +4,7 @@
 import sys
 import os
 import cgi
+import random
 
 import cgitb
 cgitb.enable()
@@ -59,6 +60,44 @@ def get_order(UID):
     else:
         return False
 
+def set_trx():
+
+    import random
+    import MySQLdb
+    from secrets import *
+
+    conn = MySQLdb.connect(host=databases["trx"]["host"],
+                           user=databases["trx"]["user"],
+                           passwd=databases["trx"]["passwd"],
+                           db=databases["trx"]["db"])
+
+    conn.set_character_set('utf8')
+    cursor = conn.cursor()
+    cursor.execute('SET NAMES utf8;')
+
+    choices = '0123456789abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_$#%'
+    trx_string = "Trx_"
+    for i in range(32):
+        trx_string = trx_string + str(random.choice(choices))
+
+    import datetime
+    time = datetime.datetime.now()
+    time = time.strftime('%Y-%m-%d')
+
+    cursor.execute(""" INSERT INTO `trimetru_trx`.`trx_codes`
+        (`id`, `trx`, `date`, `is_active`)
+        VALUES ( %s,%s,%s,%s ) """, (
+        '', trx_string, time, True ))
+
+    row = cursor.fetchone()
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
+    return trx_string
+
 
 form = cgi.FieldStorage()
 
@@ -94,6 +133,7 @@ if "o.uid" in form:
                 <code>1</code>
                 <desc>"""+order[1]+"""</desc>
               </result>
+              <merchant-trx>"""+set_trx()+"""</metchat-trx>
               <purchase>
                 <shortDesc> </shortDesc>
                 <longDesc>Заказ #"""+order[1]+"""</longDesc>

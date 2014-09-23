@@ -148,7 +148,17 @@ def get_order(UID):
             <input style="display:none" name="o.uid" type="text" id="o.uid"
             value=\"""" + str(UID) + """\"/>
 
-            <input type="submit" name="SubmitName" value="Создать платеж" />
+            <table class="submit_table">
+                <tr>
+                    <td>
+                        <label for="o.mail">*Вы можете указать адрес электронной почты, чтобы мы могли выслать на него электронный чек:</label>
+                        <input type="textarea" class="set_mail" id="o.mail" name="o.mail" />
+                    </td>
+                    <td>
+                        <input type="submit" class="submit_button" name="SubmitName" value="Оплатить" />
+                    </td>
+                </tr>
+            </table>
         """
 
     else:
