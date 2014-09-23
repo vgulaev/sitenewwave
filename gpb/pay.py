@@ -5,6 +5,14 @@ import sys
 import os
 import cgi
 import cgitb
+import locale
+locale.setlocale(locale.LC_ALL, ("ru_RU.UTF-8"))
+
+import imp
+import random
+import MySQLdb
+import datetime
+
 cgitb.enable()
 
 sys.path.insert(0, os.path.expanduser('~/site/python'))
@@ -54,8 +62,7 @@ def report_1c(uid, sum):
     return result
 
 def get_trx(trx_string):
-    import random
-    import MySQLdb
+
     # from secrets import *
 
     # conn = MySQLdb.connect(host=databases["trx"]["host"],
@@ -72,7 +79,7 @@ def get_trx(trx_string):
     cursor = conn.cursor()
     cursor.execute('SET NAMES utf8;')
 
-    import datetime
+
     time = datetime.datetime.now()
     time = time.strftime('%Y-%m-%d')
 
@@ -109,11 +116,6 @@ def get_trx(trx_string):
 
 def send_mail():
     try:
-
-        import locale
-        locale.setlocale(locale.LC_ALL, ("ru_RU.UTF-8"))
-
-        import imp
 
         lib_path = os.path.abspath('')
         sys.path.append(lib_path)

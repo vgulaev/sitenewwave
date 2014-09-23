@@ -6,6 +6,11 @@ import os
 import cgi
 import random
 
+import random
+import MySQLdb
+from secrets import *
+import datetime
+
 import cgitb
 cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
@@ -62,9 +67,7 @@ def get_order(UID):
 
 def set_trx():
 
-    import random
-    import MySQLdb
-    from secrets import *
+
 
     conn = MySQLdb.connect(host=databases["trx"]["host"],
                            user=databases["trx"]["user"],
@@ -80,7 +83,6 @@ def set_trx():
     for i in range(32):
         trx_string = trx_string + str(random.choice(choices))
 
-    import datetime
     time = datetime.datetime.now()
     time = time.strftime('%Y-%m-%d')
 
