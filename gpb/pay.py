@@ -13,6 +13,8 @@ import random
 import MySQLdb
 import datetime
 
+from secrets import *
+
 cgitb.enable()
 
 sys.path.insert(0, os.path.expanduser('~/site/python'))
@@ -63,17 +65,11 @@ def report_1c(uid, sum):
 
 def get_trx(trx_string):
 
-    # from secrets import *
+    conn = MySQLdb.connect(host=databases["trx"]["host"],
+                           user=databases["trx"]["user"],
+                           passwd=databases["trx"]["passwd"],
+                           db=databases["trx"]["db"])
 
-    # conn = MySQLdb.connect(host=databases["trx"]["host"],
-    #                        user=databases["trx"]["user"],
-    #                        passwd=databases["trx"]["passwd"],
-    #                        db=databases["trx"]["db"])
-
-    conn = MySQLdb.connect(host="localhost",
-                           user="root",
-                           passwd="111",
-                           db="trimetru_trx")
 
     conn.set_character_set('utf8')
     cursor = conn.cursor()
