@@ -1,0 +1,343 @@
+<div id="main2">
+
+    <a id="top" title="Перейти к содержимому" tabindex="1" href="#sm"></a>
+    <div id="header"></div>
+      <!-- /header -->
+    <div class="clear"></div>
+    <div id="post-header"></div>
+
+
+    <h1 style="font-size:14px;display:none">Продажа металлопроката, профнастила и металлосайдинга онлайн в Тюмени и Тюменской Области</h1>
+
+    <table style="width:100%;">
+        <tr>
+            <td id="leftTr">
+
+                <div id='showBasketSpan'>
+                    <pythonscript>
+                        {template.set_groups()}
+                    </pythonscript>
+                </div>
+                <div id='showPriceSpan'>
+                    <p><noindex><a href='Показать%20прайс' title='В прайс' id='tabPrice' onClick='return false' rel="nofollow" >Добавить товар</a></noindex></p>
+                    <p><noindex><a href='javascript:createOrder()' title='Сохранить заказ' rel="nofollow">Оформить заказ</a></noindex></p>
+                    <p>Скачать заказ:
+                        <ul>
+                            <li><a href='javascript:getOrderFomat("xlsx")' title="Скачать заказ в формате xls">xls</a></li>
+                            <li><a href='javascript:getOrderFomat("pdf")' title="Скачать заказ в формате pdf">pdf</a></li>
+                            <li><a href='javascript:getOrderFomat("odf")' title="Скачать заказ в формате ods">ods</a></li>
+                        </ul>
+                    </p>
+
+                </div>
+                <!-- <hr /> -->
+            </td>
+            <td id="mainTr" rowspan="2">
+                <div id="pTableContentTab">
+                    <div id="searchDiv">
+
+                        <pythonscript>
+                            {template.set_search_value()}
+                        </pythonscript>
+
+                        <div id="searchButton"></div>
+                        <div id="price_basket_container">
+                        <div id="price_get">
+                            <span>Прайс:</span>
+                            <ul>
+                            <li><a href='/download/files/price.xlsx' title="Скачать прайс в формате xls">xls</a></li>
+                            <li><a href='/download/files/price.pdf' title="Скачать прайс в формате pdf">pdf</a></li>
+                            <li><a href='/download/files/price.ods' title="Скачать прайс в формате ods">ods</a></li>
+                            </ul>
+                        </div>
+                        <div id="tabBasket">Корзина (<span class='basketCount'>0</span>)</div>
+                        </div>
+
+                    </div><br />
+                    <span id="hollowResult"></span>
+                    <div id="qRes">
+                            <pythonscript>
+                                {template.set_search_results()}
+                            </pythonscript>
+                    </div>
+                    <p>
+
+                        <pythonscript>
+                            {template.set_show_nexr_prev()}
+                        </pythonscript>
+
+                        <pythonscript>
+                            {template.show_seo_text()}
+                        </pythonscript>
+                    </p>
+
+                </div>
+                <div id="basketDiv" style="display:none">
+                    <span id="basketCaption">Заказ покупателя</span>
+
+                    <div id="switchDiv">
+                        <div class="switchDivBackground">
+                            <div class="activeDiv" id="switchOrderDiv">Корзина</div>
+                            <div class="inactiveDiv" id="switchDeliveryDiv">Выбор доп. услуг</div>
+                            <div class="inactiveDiv" id="switchNotificationDiv">Оформление заказа</div>
+                        </div>
+                    </div>
+                    <div id="showNDSlabel"><input type="checkbox" id="showNds" /><label for="showNds">Показать НДС</label></div>
+                    <div id="orderDiv">
+                        <table id='basketTab' cellspacing='0' cellpadding='0'>
+                          <thead>
+                             <tr>
+                                <th class='itemHeader'>
+                                    №
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Номенклатура
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Хар-ка
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Кол-во
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Ед.
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Цена
+                                </th>
+
+                                <th class='itemHeader NDSHeader'>
+                                    Ставка НДС
+                                </th>
+
+                                <th class='itemHeader NDSHeader'>
+                                    Сумма НДС
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Сумма
+                                </th>
+
+                                <th class='itemHeader'>
+                                    Изменить <br /> Удалить
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody class="lItemTab т">
+
+                          </tbody>
+                          <tbody class='lItemTab шт'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab м2'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab кв.м.'>
+
+                          </tbody>
+
+                          <tbody class='lItemTab пог.м'>
+
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td><strong>Общий вес:</strong></td>
+                                  <td id='CountAll'></td>
+                                  <td></td>
+                                  <td class="itemNdsKfTd"></td>
+                                  <td class="itemNdsSumTd"></td>
+                                  <td><strong>Итого:</strong></td>
+                                  <td id='SumGoods'></td>
+                                  <td></td>
+                              </tr>
+                              <tr class="ndsAllsum" style="display:none">
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td</td>
+                                  <td></td>
+                                  <td class="itemNdsKfTd"></td>
+                                  <td class="itemNdsSumTd"></td>
+                                  <td><strong>НДС (в т. ч.):</strong></td>
+                                  <td id='NDSAll'></td>
+                                  <td></td>
+                              </tr>
+                          </tfoot>
+                        </table>
+                        <div id='Summary' style="display:none">
+                            <table>
+                                <tr>
+                                    <td>Общий вес:</td>
+                                    <td id='CountAll'></td>
+                                </tr>
+                                <tr>
+                                    <td>Стоимость товара:</td>
+                                    <td id='SumGoods'></td>
+                                </tr>
+                                <tr>
+                                    <td><span class='withDelivery' style='display:none'>Стоимость доставки:</span><span class='withoutDelivery'>Без доставки</span></td>
+                                    <td id='SumDelivery'></td>
+                                </tr>
+                                <tr>
+                                    <td>Стоимость доп. услуг:</td>
+                                    <td id='SumRezka'></td>
+                                </tr>
+                                <tr>
+                                    <td>Общая стоимость:</td>
+                                    <td name='0' id='SumAll'></td>
+                                </tr>
+                                <tr class="ndsAllsum" style="display:none">
+                                    <td>НДС (в т. ч.):</td>
+                                    <td id='NDSAll'></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p class="basket_info">*Вес товаров, единица измерения которых отличается от тонны, будет рассчитан позже менеджером при уточнении заказа</p>
+                            <span class="return_to_catalog">Вернуться к подбору товара</span>
+                            <span class="next_step">Перейти к выбору доп. услуг</span>
+                        </div>
+                    </div>
+                    <!-- ДОСТАВКА НАЧАЛО -->
+                    <div id="deliveryDiv">
+
+                        <div class="delivery_div">
+                            <div class="p_div">
+                                <input type="checkbox" name="i_want_delivery" id="i_want_delivery" /><label for="i_want_delivery">Мне нужна доставка!</label>
+                                <div class="is_in_city" style="display:none"><span class="is_city_choose active_city" name="city"><font>Город</font></span><span class="is_city_choose" name="outcity"><font>Межгород</font></span></div>
+
+                            </div>
+                            <div class="p_div city_choose" style="display:none">
+                                <table class="delivery_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Выберите район доставки:</th>
+                                            <th>Введите точный адрес:</th>
+                                            <th>Стоимость доставки:</th>
+                                            <th>Транспорт:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select class="city_select">
+                                                    <option>---</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="textarea" class="street_select" /></td>
+                                            <td><span class="delivery_cost">0</span> руб.</td>
+                                            <td><span class="delivery_car"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="red_info">
+                                    *Если вы не знаете какой район выбрать, то введите только адрес, и менеджер расчитает стоимость доставки самостоятельно
+                                </p>
+                                <p class="red_info">
+                                    **Мы осуществляем доставку с помощью автомобилей «Газель» для товара не превышающий длинну в шесть метров и вес в 2 тонны в пределах города. В остальных случаях доставка осуществляется на автомобилях «Камаз»
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="rezka_div">
+                            <p>
+                                <input type="checkbox" name="i_want_rezka" id="i_want_rezka" /><label for="i_want_rezka">Мне нужна резка металла!</label>
+                            </p>
+                            <div class="rezka_wrapper">
+                                <p class="red_info">
+                                    *Расчет стоимости резки производит менеджер при согласовании заказа
+                                </p>
+                                <div class="rezka_item_add"><font>Добавить позицию</font></div>
+                                <table class="rezka_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Номенклатура</th>
+                                            <th>Как и сколько порезать</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="rezka_body">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <span class="next_step">Перейти к оформлению заказа</span>
+
+                    </div>
+                    <!-- ДОСТАВКА КОНЕЦ -->
+                    <div id="notificationDiv">
+
+                        <table class="orderFormTable">
+                            <tr>
+                                <td>Фамилия</td>
+                                <td>
+                                    <input type="textarea" class="orderFormInput" id="lastNameInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Имя и Отчество</td>
+                                <td>
+                                    <input type="textarea" class="orderFormInput" id="nameSurnameInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>*Электронная почта</td>
+                                <td>
+                                    <input type="textarea" id='emailInput' class="orderFormInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>*Телефон для связи</td>
+                                <td>
+                                    <input type="textarea" class="orderFormInput" id="mainPhoneInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Доп. телефон для связи</td>
+                                <td>
+                                    <input type="textarea" class="orderFormInput" id="otherPhoneInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Комментарий к заказу</td>
+                                <td>
+                                    <textarea class="orderFormTextarea" id="commentInput" ></textarea>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class="red_info">*Обязательны для заполнения</p>
+
+                        <noindex><a href="Посмотреть%20заказ" onClick="$('#switchOrderDiv').click(); return false" rel="nofollow"><div id="backToBasketButton">Посмотреть заказ</div></a></noindex>
+
+                        <noindex><div id="sendOrderButton">Оформить</div></noindex>
+
+                        <!-- <span id='email'>E-mail для уведомлений: <input id='emailInput' type='textarea' value='' /></span> -->
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td id="leftTrBottomTd">
+                <p><a href="/banking/">Правила онлайн оплаты</a></p>
+                <p><a href="#" onclick="return false" class="howtomakeorder">Как выписать счёт?</a></p>
+                <p><a href="/1cengine/site/howitcreating.php">Оставить отзыв</a></p>
+            </td>
+        </tr>
+    </table>
+    <a class='scrollTop' href='#header' style='display:none;'></a>
+
+
+</div> <!-- /main -->

@@ -11,12 +11,18 @@ RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)$ 1cengine/site/index.py?catalog=$1 [L]
 
+RewriteRule ^1cengine/nsite/$ 1cengine/nsite/index.py$1 [L]
+RewriteRule ^1cengine/nsite/(?!index.py|js|css|images)(.*)/$ 1cengine/nsite/index.py?catalog=$1 [L]
+RewriteRule ^1cengine/nsite/(?!index.py|js|css|images)(.*)$ 1cengine/nsite/index.py?catalog=$1 [L]
+
 RewriteRule ^1cengine/site/json/ - [L]
 RewriteRule ^wiki/ - [L]
 RewriteRule ^wordpress/ - [L]
 RewriteRule ^1cengine/py_scripts/ - [L]
 RewriteRule ^1cengine/old_site/ - [L]
 RewriteRule ^1cengine/pda_site/ - [L]
+RewriteRule ^1cengine/site/ - [L]
+RewriteRule ^1cengine/nsite/ - [L]
 RewriteRule ^gpb/ -
 RewriteRule ^gpb/check$ gpb/check.py$1 [L]
 RewriteRule ^gpb/pay$ gpb/pay.py$1 [L]

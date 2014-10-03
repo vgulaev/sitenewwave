@@ -18,7 +18,7 @@ class Item:
         self.item_char_weight = item_array[10].strip()
         self.item_char_kf = item_array[11].strip()
         self.item_unit = item_array[12].strip()
-        self.item_price = item_array[13].replace(" ", "").replace(",", ".").strip()
+        self.item_price = item_array[13].replace("\xc2\xa0", "").replace(",", ".").strip()
         self.item_price_type = item_array[14].replace("';", "").strip()
         self.optional_length = False
 

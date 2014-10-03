@@ -1,0 +1,86 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<style>
+.buy_item_div{
+    border:1px solid black;
+    width:450px;
+    font-size: 14px;
+    text-align: center;
+    padding-top:10px;
+}
+.buy_item_name{
+    font-weight: bold;
+    border:1px dotted gray;
+}
+.buy_item_head th{
+    font-size: 16px;
+    font-weight: normal;
+    border-right:0;
+    border-bottom:0;
+    background-color: lightgray;
+    padding:5px;
+}
+.buy_item_head th:first-child{
+    background-color: white;
+}
+.buy_item_count td, .buy_item_price td{
+    border-right:0;
+    border-bottom:0;
+    padding:5px;
+}
+.buy_item_price td{
+    text-align: right;
+}
+.buy_item_count td:first-child, .buy_item_price td:first-child{
+    background-color: lightgray;
+    text-align: right;
+}
+.buy_item_table{
+    border-top:0;
+    border-left:0;
+    margin: 10px auto;
+    border-collapse: collapse;
+
+}
+.buy_item_count input{
+    width:80px;
+}
+.buy_item_overall{
+    border:1px dotted gray;
+    font-size: 16px;
+    margin:10px;
+}
+
+</style>
+
+<div class="buy_item_div">
+<span class="buy_item_name"><<Имя товара>></span>
+<table class="buy_item_table">
+    <tr class="buy_item_head">
+        <th></th>
+        <th>Метры</th>
+        <th>Штуки</th>
+        <th>Тонны</th>
+    </tr>
+    <tr class="buy_item_count">
+        <td>Количество</td>
+        <td>
+            <input />
+        </td>
+        <td>
+            <input />
+        </td>
+        <td>
+            <input />
+        </td>
+    </tr>
+    <tr class="buy_item_price">
+        <td>Стоимость</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+    </tr>
+
+</table>
+<div class="buy_item_overall">Итого: </div>
+</div>
