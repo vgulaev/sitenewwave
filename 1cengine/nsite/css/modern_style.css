@@ -2250,3 +2250,26 @@ hr{
 .eye:hover{
     color: #2D3694;
 }
+
+.subgroup_c{
+    padding-left:10px;
+}
+
+.subgroup_c .choice_header{
+    display:block;
+    width:100%;
+}
+
+.subgroup_c label{
+    font-weight: 400;
+    padding-left:10px;
+    vertical-align: middle;
+}
+
+.subgroup_c input{
+    vertical-align: middle;
+}
+
+.subgroup_c .choice_container{
+    display:list-item;
+}

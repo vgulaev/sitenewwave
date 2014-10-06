@@ -84,11 +84,11 @@ def get_subgroups(group_hash):
     """)
 
     for row in r:
-        if "thickness" in ret:
-            ret["thickness"].append(str(row[0]))
+        if "diameter" in ret:
+            ret["diameter"].append(str(row[0]))
         else:
-            ret["thickness"] = []
-            ret["thickness"].append(str(row[0]))
+            ret["diameter"] = []
+            ret["diameter"].append(str(row[0]))
 
 
     connector.dbClose()
