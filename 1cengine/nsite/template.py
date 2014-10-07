@@ -110,22 +110,21 @@ def set_search_results():
     # print lib_path
     import imp
     get_items_bs = imp.load_source(
-        "get_items_bs", lib_path + "/get_items_bs" + ".py")
+        "get_ncatalog_items", lib_path + "/get_ncatalog_items" + ".py")
 
     if "ref" in form:
         # form["term"] = form["ref"].value.decode("utf-8")
 
-        result_table = get_items_bs.ResultTable(form["ref"].value, "strict")
+        result_table = get_items_bs.compose_table(form["ref"].value)
 
-        return result_table.compose_table(False)
+        return result_table
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
         catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
-        result_table = get_items_bs.ResultTable(
-            catalog, "catalog")
+        result_table = get_items_bs.compose_table(catalog)
 
-        return result_table.compose_table(False)
+        return result_table
 
 
 def set_show_nexr_prev():
@@ -257,59 +256,62 @@ def set_groups():
 
                 tag_div_sg.append(tag_div_parents)
 
-                tag_div_thickness = soup.new_tag("div")
-                tag_div_thickness["class"] = "thickness_choice"
+                if "thickness" in subgroups:
 
-                tag_div_thickness_header = soup.new_tag("span")
-                tag_div_thickness_header["class"] = "choice_header"
-                tag_div_thickness_header.append(u"Толщина стали")
-                tag_div_thickness.append(tag_div_thickness_header)
+                    tag_div_thickness = soup.new_tag("div")
+                    tag_div_thickness["class"] = "thickness_choice"
+                    tag_div_thickness_header = soup.new_tag("span")
+                    tag_div_thickness_header["class"] = "choice_header"
+                    tag_div_thickness_header.append(u"Толщина стали")
+                    tag_div_thickness.append(tag_div_thickness_header)
 
-                for thickness in subgroups["thickness"]:
-                    tag_choice_container = soup.new_tag("span")
-                    tag_choice_container["class"] = "choice_container"
+                    for thickness in subgroups["thickness"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
 
-                    tag_checkbox = soup.new_tag("input")
-                    tag_checkbox["type"] = "checkbox"
-                    tag_checkbox["id"] = thickness.decode("utf-8")
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["id"] = thickness.decode("utf-8")
 
-                    tag_checkbox_label = soup.new_tag("label")
-                    tag_checkbox_label["for"] = thickness.decode("utf-8")
-                    tag_checkbox_label.append(thickness.decode("utf-8"))
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = thickness.decode("utf-8")
+                        tag_checkbox_label.append(thickness.decode("utf-8"))
 
-                    tag_choice_container.append(tag_checkbox)
-                    tag_choice_container.append(tag_checkbox_label)
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
 
-                    tag_div_thickness.append(tag_choice_container)
+                        tag_div_thickness.append(tag_choice_container)
 
-                tag_div_sg.append(tag_div_thickness)
+                    tag_div_sg.append(tag_div_thickness)
 
-                tag_div_diameter = soup.new_tag("div")
-                tag_div_diameter["class"] = "diameter_choice"
+                if "diameter" in subgroups:
 
-                tag_div_diameter_header = soup.new_tag("span")
-                tag_div_diameter_header["class"] = "choice_header"
-                tag_div_diameter_header.append(u"Внешний диаметр")
-                tag_div_diameter.append(tag_div_diameter_header)
+                    tag_div_diameter = soup.new_tag("div")
+                    tag_div_diameter["class"] = "diameter_choice"
 
-                for diameter in subgroups["diameter"]:
-                    tag_choice_container = soup.new_tag("span")
-                    tag_choice_container["class"] = "choice_container"
+                    tag_div_diameter_header = soup.new_tag("span")
+                    tag_div_diameter_header["class"] = "choice_header"
+                    tag_div_diameter_header.append(u"Внешний диаметр")
+                    tag_div_diameter.append(tag_div_diameter_header)
 
-                    tag_checkbox = soup.new_tag("input")
-                    tag_checkbox["type"] = "checkbox"
-                    tag_checkbox["id"] = diameter.decode("utf-8")
+                    for diameter in subgroups["diameter"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
 
-                    tag_checkbox_label = soup.new_tag("label")
-                    tag_checkbox_label["for"] = diameter.decode("utf-8")
-                    tag_checkbox_label.append(diameter.decode("utf-8"))
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["id"] = diameter.decode("utf-8")
 
-                    tag_choice_container.append(tag_checkbox)
-                    tag_choice_container.append(tag_checkbox_label)
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = diameter.decode("utf-8")
+                        tag_checkbox_label.append(diameter.decode("utf-8"))
 
-                    tag_div_diameter.append(tag_choice_container)
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
 
-                tag_div_sg.append(tag_div_diameter)
+                        tag_div_diameter.append(tag_choice_container)
+
+                    tag_div_sg.append(tag_div_diameter)
 
                 # for sgroup in subgroups:
 

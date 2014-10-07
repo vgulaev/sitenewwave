@@ -102,86 +102,92 @@ class ResultTable():
         return self.items_list
 
 
-rt = ResultTable("Арматура")
 
-# ITEM_LIST = rt.get_items()
-groups = rt.get_items()
+def compose_table(term):
 
-# # print """
-# #     <style>
-# #         table td{
-# #             padding:15px;
-# #             border-right:1px dotted gray;
-# #             border-bottom:1px dotted gray;
-# #         }
-# #     </style>
-# # """
+    rt = ResultTable(term.encode("utf-8"))
 
+    groups = rt.get_items()
 
-print """
-    <table id="tableRes">
-        <tbody>
-"""
+    result = """
+        <table id="tableRes">
+            <tbody>
+    """
 
-odd=False
+    odd=False
 
-for _item_group in groups:
-    ITEM_LIST = groups[_item_group]
+    for _item_group in groups:
+        ITEM_LIST = groups[_item_group]
 
-    header = """
-        <tr class="iHeader">
-            <td><strong>{0}</strong></td>
-            <td class="priceHeader">Цена</td>
-            <td>Расчитать<br />В корзину</td>
-        </tr>
-    """.format(_item_group)
-
-    print header
-
-    for item_n in ITEM_LIST:
-        item = ITEM_LIST[item_n]
-
-        min_price = ""
-
-        char_list = "<select>"
-        for char in item.char_array:
-            char_list = char_list + "<option>" + char + "</option>"
-
-            for price in item.char_array[char].price_array:
-                if min_price is "" or price[1] < min_price:
-                    min_price = price[1]
-                else:
-                    pass
-
-        char_list = char_list + "</select>"
-
-        if odd:
-            oddity = " ti_odd"
-        else:
-            oddity = ""
-
-        print("""
-            <tr id="{4}" class="item{5}">
-                <td class="itemName">{0}</td>
-                <td>Цена от {2} за {3}.</td>
-                <td><span name="{4}" class="more">Подробнее ∨</span></td>
+        result = result + """
+            <tr class="iHeader">
+                <td><strong>{0}</strong></td>
+                <td class="priceHeader">Цена</td>
+                <td>Расчитать<br />В корзину</td>
             </tr>
-            <tr class="{4} item{5}" style="display:none">
-                <td colspan=3>
-                    <div>
-                        <span>{0}</span><span name="{4}" class="less">Скрыть ∧</span>
-                        <p>Возможные размеры: {1} м.</p>
-                    </div>
-                </td>
-            </tr>
+        """.format(_item_group)
 
-        """.format(
-            item.name, char_list, min_price, item.unit, item.hash, oddity
-        ))
+        # print header
 
-        odd = odd.__xor__(True)
+        for item_n in ITEM_LIST:
+            item = ITEM_LIST[item_n]
 
-    print """
+            min_price = ""
+
+            char_list = "<select>"
+            for char in item.char_array:
+                char_list = char_list + "<option>" + char + "</option>"
+
+                for price in item.char_array[char].price_array:
+                    if min_price is "" or price[1] < min_price:
+                        min_price = price[1]
+                    else:
+                        pass
+
+            char_list = char_list + "</select>"
+
+            if odd:
+                oddity = " ti_odd"
+            else:
+                oddity = ""
+
+            result = result + """
+                <tr id="{4}" class="item{5}">
+                    <td class="itemName">{0}</td>
+                    <td>Цена от {2} за {3}.</td>
+                    <td><span name="{4}" class="more">Подробнее ∨</span></td>
+                </tr>
+                <tr class="{4} item{5}" style="display:none">
+                    <td colspan=3>
+                        <div>
+                            <span>{0}</span><span name="{4}" class="less">Скрыть ∧</span>
+                            <p>Возможные размеры: {1} м.</p>
+                        </div>
+                    </td>
+                </tr>
+
+            """.format(
+                item.name, char_list, min_price, item.unit, item.hash, oddity
+            )
+
+            odd = odd.__xor__(True)
+
+    result = result + """
         </tbody>
     </table>
     """
+
+    return result
+
+form = cgi.FieldStorage()
+if "term" in form:
+    # print form["term"].value
+    result_table = compose_table(form["term"].value.decode("utf-8"))
+
+    print result_table
+
+if "hash" in form:
+
+    result_table = compose_table(form["term"].value)
+
+    print result_table

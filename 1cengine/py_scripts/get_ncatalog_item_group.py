@@ -51,6 +51,7 @@ def get_subgroups(group_hash):
             WHERE `site_group`.`id`='"""+group_hash+"""'
             AND `item`.`site_group_ref`=`site_group`.`id`
             AND `item_parent`.`id`=`item`.`item_parent_ref`
+            ORDER BY `item_parent`.`name`
         """)
 
     for row in r:
@@ -65,30 +66,32 @@ def get_subgroups(group_hash):
         FROM `item`, `site_group`
         WHERE `site_group`.`id`='"""+group_hash+"""'
         AND `item`.`site_group_ref`=`site_group`.`id`
-
+        ORDER BY `item`.`thickness`
     """)
 
     for row in r:
-        if "thickness" in ret:
-            ret["thickness"].append(str(row[0]))
-        else:
-            ret["thickness"] = []
-            ret["thickness"].append(str(row[0]))
+        if not row[0] == 0.0:
+            if "thickness" in ret:
+                ret["thickness"].append(str(row[0]))
+            else:
+                ret["thickness"] = []
+                ret["thickness"].append(str(row[0]))
 
     r = connector.dbExecute("""
         SELECT DISTINCT `item`.`diameter`
         FROM `item`, `site_group`
         WHERE `site_group`.`id`='"""+group_hash+"""'
         AND `item`.`site_group_ref`=`site_group`.`id`
-
+        ORDER BY `item`.`diameter`
     """)
 
     for row in r:
-        if "diameter" in ret:
-            ret["diameter"].append(str(row[0]))
-        else:
-            ret["diameter"] = []
-            ret["diameter"].append(str(row[0]))
+        if not row[0] == 0.0:
+            if "diameter" in ret:
+                ret["diameter"].append(str(row[0]))
+            else:
+                ret["diameter"] = []
+                ret["diameter"].append(str(row[0]))
 
 
     connector.dbClose()
