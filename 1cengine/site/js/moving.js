@@ -174,7 +174,7 @@
     $("#itemName").val("");
     $.ajax({
       type: "GET",
-      url: "/1cengine/py_scripts/get_items_bs.py",
+      url: "/1cengine/py_scripts/get_ncatalog_items.py",
       async: true,
       data: "hash=" + encodeURIComponent(hash) + "",
       success: function(html) {
@@ -211,7 +211,18 @@
             return item.show_modal();
           }
         });
-        false;
+        $(".more").click(function() {
+          var name;
+          name = $(this).attr("name");
+          $("#" + name).hide();
+          $("." + name).show();
+        });
+        $(".less").click(function() {
+          var name;
+          name = $(this).attr("name");
+          $("#" + name).show();
+          $("." + name).hide();
+        });
         return $(".eye").each((function(_this) {
           return function(index, element) {
             var img_class;
@@ -362,7 +373,7 @@
       $("#qRes").fadeOut(400);
       $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_items_bs.py",
+        url: "/1cengine/py_scripts/get_ncatalog_items.py",
         async: true,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
@@ -401,7 +412,16 @@
               return item.show_modal();
             }
           });
-          return false;
+          $(".more").click(function() {
+            name = $(this).attr("name");
+            $("#" + name).hide();
+            $("." + name).show();
+          });
+          return $(".less").click(function() {
+            name = $(this).attr("name");
+            $("#" + name).show();
+            $("." + name).hide();
+          });
         }
       });
       return $.ajax({
@@ -441,7 +461,7 @@
       }
       return $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_items_bs.py",
+        url: "/1cengine/py_scripts/get_ncatalog_items.py",
         async: true,
         data: data_string,
         success: function(html) {
@@ -489,7 +509,7 @@
       }
       return $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_items_bs.py",
+        url: "/1cengine/py_scripts/get_ncatalog_items.py",
         async: true,
         data: data_string,
         success: function(html) {
@@ -533,7 +553,7 @@
         }
         return $.ajax({
           type: "GET",
-          url: "/1cengine/py_scripts/get_items_bs.py",
+          url: "/1cengine/py_scripts/get_ncatalog_items.py",
           async: true,
           data: data_string,
           success: function(html) {
@@ -607,8 +627,18 @@
     $(".howtomakeorder").click(function() {
       return show_how_to_make_order();
     });
-    return $(".return_to_catalog").click(function() {
+    $(".return_to_catalog").click(function() {
       return $("#tabPrice").click();
+    });
+    $(".more").click(function() {
+      name = $(this).attr("name");
+      $("#" + name).hide();
+      $("." + name).show();
+    });
+    return $(".less").click(function() {
+      name = $(this).attr("name");
+      $("#" + name).show();
+      $("." + name).hide();
     });
   });
 

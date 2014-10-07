@@ -50,121 +50,22 @@ function isValidEmail(str) {
     return(str.indexOf(".") > 2) && (str.indexOf("@") > 0);
 }
 
-/// переключение по табам корзины ///
-$(function() {
-
-    $("#closeBasket").click(function() {
-        $('#basketDiv').hide()
-        $('#pTableContentTab').show()
-        $('#showPriceSpan').hide()
-        $('#showBasketSpan').show()
-    })
-
-    $("#tabBasket").click(function() {
-
-        $('#pTableContentTab').hide()
-        $('#basketDiv').show()
-        $('#showBasketSpan').hide()
-        $('#showPriceSpan').show()
-    })
-    $("#tabPrice").click(function() {
-
-        $('#basketDiv').hide()
-        $('#pTableContentTab').show()
-        $('#showPriceSpan').hide()
-        $('#showBasketSpan').show()
-    })
-
-    $("#switchOrderDiv").click(function() {
-        $("#orderDiv").show()
-        $("#deliveryDiv").hide()
-        $("#notificationDiv").hide()
-        $("#switchOrderDiv").removeClass("inactiveDiv").addClass("activeDiv")
-        $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
-
-        $("#showNDSlabel").show()
-        return false
-    })
-    $("#switchDeliveryDiv").click(function() {
-        $("#deliveryDiv").show()
-        $("#orderDiv").hide()
-        $("#notificationDiv").hide()
-        $("#switchDeliveryDiv").removeClass("inactiveDiv").addClass("activeDiv")
-        $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#switchNotificationDiv").removeClass("activeDiv").addClass("inactiveDiv")
-
-        $("#showNDSlabel").hide()
-    })
-    $("#switchNotificationDiv").click(function() {
-        $("#notificationDiv").show()
-        $("#deliveryDiv").hide()
-        $("#orderDiv").hide()
-        $("#switchNotificationDiv").removeClass("inactiveDiv").addClass("activeDiv")  
-        $("#switchDeliveryDiv").removeClass("activeDiv").addClass("inactiveDiv")
-        $("#switchOrderDiv").removeClass("activeDiv").addClass("inactiveDiv")
-
-        $("#showNDSlabel").hide()
-    })
-    /// REWRITE IT PLEASE!!! ///
-    /// into one function ///
-});
-
-/// показать группы товаров ///
-
-function showGroups() {
-
-    $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
-    $.blockUI.defaults.fadeIn = 100; //ускоряем появление
-    $.blockUI.defaults.fadeOut = 100; //и исчезновение
-    //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
-    $.blockUI.defaults.css.backgroundColor = 'white'
-    $.blockUI.defaults.css.cursor = 'defaults'
-    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-    $.blockUI.defaults.css.fontSize = '14px'
-    $.blockUI.defaults.css.width = '700px'
-    $.blockUI.defaults.css.height = '370px'
-    $.blockUI.defaults.css.paddingTop = '70px'
-    $.blockUI.defaults.css.paddingLeft = '20px'
-
-
-    $.blockUI({
-        message: $("#tags")
-    });
-    $(".blockMsg").draggable();
-
-}
-
-/// показать товары группы ///
-
-function showGroup2(groupName) {
-    groupName = groupName.replace("+"," ")
-    $("#itemName").val(groupName)
-    $("#itemName").change()
-    $.unblockUI()
-
-    return false;
-}
-
-/// поиск товара по наименованию ///
-
-function searchItem2(item) {
-    var squery = item.replace(/%2F/g, "/")
-    var squery = squery.replace(/\s\s/g, " ")
-    var squery = squery.replace(/%2C/g, ",")
-    var squery = squery.replace(/\.com/, '')
-    $("#itemName").val(squery)
-    $(".buySpan").find("a").attr("style", "float:right;color:white;border:1px outset rgb(48, 57, 154);border-radius:40px 10px;background-color: #5da130;width:50px;padding-left:10px;")
-    //$("#itemName").change()
-}
-
-/// отправка заказа на сервер 1с ///
-
-function sendOrder(orderString) {
+/**
+ * [отправка заказа на сервер 1с]
+ * @param  {[type]} orderString [description]
+ * @return {[type]}             [description]
+ */
+function sendOrder(orderString, is_async) {
+    if (typeof is_async == 'undefined'){
+        is_async = true
+    }
 
     if($('#selfCarry').is(':checked') == false) {
-        if($('#destination').val() != "--") {
-            destination = $('input#destination').val()
+        if($('#townSelect').val() != "--") {
+            destination = $('#townSelect').text()
+            destination += ", " + $('#street').val()
+            destination += " " + $('#building').text()
+            destination += " / " + $('#additional').text()
             delivery_cost = $("#delivery_cost").html()
         } else {
             destination = ''
@@ -200,8 +101,8 @@ function sendOrder(orderString) {
 
     $.ajax({
         type: "POST",
-        url: "createOrder.php",
-        async: true,
+        url: "/1cengine/php_scripts/createOrder.php",
+        async: is_async,
         data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name,
         success: function(html) {
             //var success = 'true';
@@ -228,10 +129,14 @@ function sendOrder(orderString) {
 }
 
 /// создание заказа клиента ///
-$("#sendOrderButtom").click(function() {
+$("#sendOrderButton").click(function() {
     createOrder()
 })
 
+/**
+ * [createOrder description]
+ * @return {[type]} [description]
+ */
 function createOrder() {
     if($("#emailInput").val() == "") {
         // $.unblockUI()
@@ -272,12 +177,16 @@ function createOrder() {
 
 }
 
-/// получить заказ клиента ///
 
+/**
+ * [получить заказ клиента]
+ * @param  {[type]} uid [description]
+ * @return {[type]}     [description]
+ */
 function getOrder(uid) {
     $.ajax({
         type: "POST",
-        url: "getOrder.php",
+        url: "/1cengine/php_scripts/getOrder.php",
         data: "uid=" + uid + "",
         success: function(html) {
 
@@ -288,8 +197,12 @@ function getOrder(uid) {
     });
 }
 
-/// парсер заказа для отображения заказа клиента ///
 
+/**
+ * [парсер заказа для отображения заказа клиента]
+ * @param  {[type]} order [description]
+ * @return {[type]}       [description]
+ */
 function parseOrder(order) {
 
     orderArray = order.split("||");
@@ -359,12 +272,17 @@ function parseOrder(order) {
     $("#tabBasket").click()
 }
 
-/// Открытие файла заказа ///
 
+/**
+ * [Открытие файла заказа]
+ * @param  {[type]} linkUID [description]
+ * @param  {[type]} type    [description]
+ * @return {[type]}         [description]
+ */
 function openLink(linkUID, type) {
     $.ajax({
         type: "POST",
-        url: "getfilelink.php",
+        url: "/1cengine/php_scripts/getfilelink.php",
         async: false,
         data: "linkUID=" + linkUID + "&type=" + type + "",
         success: function(html) {
@@ -375,9 +293,31 @@ function openLink(linkUID, type) {
     });
 }
 
-/// не могу найти референса к этому. по крайней мере ещё ///
+/// не могу найти референса к этому. по крайней мере ещё
+/// а эта штука, кстати, открывает заказ по ссылке >_>
+/// ///
 
+/**
+ * [getOrderFomat description]
+ * @param  {[type]} format [description]
+ * @return {[type]}        [description]
+ */
 function getOrderFomat(format) {
+    $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
+    $.blockUI.defaults.fadeIn = 100; //ускоряем появление
+    $.blockUI.defaults.fadeOut = 100; //и исчезновение
+    //$.blockUI.defaults.css.left = '39%'; //окно будет в центре
+    $.blockUI.defaults.css.backgroundColor = 'white'
+    $.blockUI.defaults.css.cursor = 'defaults'
+    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
+    $.blockUI.defaults.css.fontSize = '14px'
+    $.blockUI.defaults.css.width = '450px'
+    $.blockUI.defaults.css.height = '220px'
+    $.blockUI.defaults.css.paddingTop = '10px'
+    $.blockUI({
+        message: "<span class='oInProcess' style='margin-top:50px;font-size:16px'>Ваш запрос обрабатывается</span>"
+    })
+
     var sendRow = '';
     $('tr.itemTr').each(function() {
 
@@ -388,10 +328,14 @@ function getOrderFomat(format) {
         }
 
     })
-    var order = sendOrder(sendRow);
-    var q = order.split(',')
+    window.setTimeout(function() {
+        var order = sendOrder(sendRow, false);
 
-    openLink(q[1], format)
+        var q = order.split(',')
+
+        openLink(q[1], format)
+    }, 1000);
+
 }
 
 
@@ -408,174 +352,17 @@ $(document).ready(function() {
         $.unblockUI()
     })
 
-    /// Попап наименований групп ///
-    $("td.iRefTd").mouseenter(function() {
-        // alert('in')
-        var elem = this
-        var spWidth = 0
-        myTimer = window.setTimeout(function() {
-            $(elem).css({
-                border: "1px solid rgb(45, 54, 148)",
-                position: "absolute",
-                backgroundColor: "white",
-                boxShadow: "0px 0px 5px 5px rgb(207, 207, 207)",
-                zIndex: "11"
-            })
-            $(elem).find("span").each(function() {
-                spWidth = this.offsetWidth
-                spWidth = spWidth + 170
-            })
-            $(elem).animate({
-                width: spWidth + "px",
-                height: "80px"
-            }, 450)
-            $(elem).find("span").each(function() {
-                $(this).animate({
-                    fontWeight: "bold",
-                    paddingTop: "30px",
-                    height: "51px",
-                    display: "block"
 
-                }, 500)
-
-            })
-            $(elem).find("div").each(function() {
-                $(this).animate({
-                    width: "100px",
-                    height: "51px",
-                    marginTop: "15px",
-                    marginLeft: "10px"
-                })
-                $(this).css({
-                    backgroundPosition: "0 0"
-                })
-            })
-
-        }, 1000)
-
-
-    }).mouseleave(function() {
-        clearTimeout(myTimer)
-        $(this).css({
-            border: "none",
-            position: "relative",
-            backgroundColor: "none",
-            boxShadow: "none",
-            zIndex: "1"
-        })
-        $(this).css({
-            width: "200px",
-            height: "70px"
-        })
-        $(this).find("span").each(function() {
-            $(this).css({
-                fontWeight: "lighter",
-                paddingTop: "0px",
-                height: "auto",
-                display: "block",
-                float: "left"
-            })
-
-        })
-        $(this).find("div").each(function() {
-            $(this).css({
-                width: "50px",
-                height: "36px",
-                backgroundPosition: "50px 36px",
-                marginTop: "0px",
-                marginLeft: "0px"
-            })
-        })
-    })
-
-    /// Кнопка показать НДС ///
-    $("#showNds").change(function() {
-        // alert($("#showNds").attr("checked"))
-        if($("#showNds").attr("checked") == "checked") {
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").show()
-        } else {
-            $(".NDSHeader, .itemNdsSumTd, .itemNdsKfTd, .ndsAllsum").hide()
-        }
-    })
-
-
-    /// Вывод товаров по запросу ///
-    $("#itemName").focus();
-
-    $("#showAll").click(function() {
-        value = $("#itemName").val()
-        $.ajax({
-            type: "GET",
-            url: "get_items.py",
-            async: false,
-            data: "term=" + encodeURIComponent(value) + "&show_all=true",
-            success: function(html) {
-                $("#tableRes").empty()
-
-                $(html).appendTo("#tableRes")
-                $("#showAll").hide();
-            }
-
-        });
-    })
-
-    tmOutId = 0
-
-    $("#itemName").change(function() {
-        $("#groupDiv").hide()
-        value = $("#itemName").val();
-        value = value.replace("+"," ");
-        // alert($("#itemName").attr("placeholder"))
-
-        $.ajax({
-            type: "GET",
-            url: "get_items.py",
-            async: false,
-            data: "term=" + encodeURIComponent(value) + "",
-            success: function(html) {
-                $("#tableRes").empty()
-
-                $(html).appendTo("#tableRes")
-                if($(".item").length >= 1) {
-
-                    $("#tags").hide();
-                    $("#showGroupsDiv").show()
-                    $('#hollowResult').empty()
-                } else {
-                    $('#hollowResult').html('Извините, но по заданному запросу товар не найден')
-                    // $('#myCanvasContainer').show();
-                    $('#tags').show();
-                    $("#showGroupsDiv").hide()
-                }
-                if($(".item").length == 20) {
-                    $("#showAll").show();
-                    // $('#hollowResult').empty()
-                } else {
-                    $("#showAll").hide();
-                    // $('#hollowResult').empty()
-                }
-
-            }
-
-        });
-
-    })
-
-    $("#itemName").keyup(function() {
-
-        keyEvent = this;
-        window.clearTimeout(tmOutId);
-        tmOutId = window.setTimeout(
-
-        function() {
-            $(keyEvent).change();
-        }, 1000);
-    });
 
     /// Разбор GET-параметров ///
     var squery = String(document.location).replace(/\%2F/g, "\\")
     var squery = String(document.location).replace(/\s\s/g, "\s")
     // var squery = String(document.location).replace(/\+/g, "\s")
+
+    if(squery.indexOf("/catalog/") != -1){
+        $("#showGroupsDiv").show()
+    }
+
     if(squery.split("?", 2)[1]) {
         parts = squery.split("?", 2)[1].split("&");
         GET = {};
@@ -583,17 +370,10 @@ $(document).ready(function() {
             curr = parts[i].split('=');
             GET[curr[0]] = curr[1];
         }
-        if(GET['ref'] != undefined) {
-            searchItem2(decodeURI(GET['ref']))
-            $('#myCanvasContainer').hide();
-            $('#tags').hide();
-        }
 
 
         if(GET['catalog'] != undefined) {
-            showGroup2(decodeURI(GET['catalog']))
-            $('#myCanvasContainer').hide();
-            $('#tags').hide();
+            $("#showGroupsDiv").show()
         }
 
         if(GET['linkUID'] != undefined) {
@@ -608,7 +388,7 @@ $(document).ready(function() {
     townS = $('#townSelect option:selected').val()
 
     $("#destination").autocomplete({
-        source: "get_street.py?town=" + townS,
+        source: "/1cengine/py_scripts/get_street.py?town=" + townS,
         delay: 10,
         minChars: 2,
         matchSubset: 1,
@@ -622,56 +402,58 @@ $(document).ready(function() {
     $("select").change(function() {
 
         townS = $('#townSelect option:selected').val()
-        $("#destination").autocomplete("option", "source", "get_street.py?town=" + townS)
+        $("#destination").autocomplete("option", "source", "/1cengine/py_scripts/get_street.py?town=" + townS)
     })
 
     $("#townSelect").change(function() {
+        $(".ui-autocomplete-input[name=city]").val($('#townSelect option:selected').text())
+        $(".ui-autocomplete-input[name=city]").change()
+        // alert($("#townSelect :selected").val())
         if($("#townSelect :selected").val() != "72000001") {
             $("#carry [value='Длинномер']").attr("selected", "selected")
             $("#carry").attr("disabled", "disabled")
 
             $("#delivery_cost").empty()
             var d_price = $("#townSelect :selected").attr("price")
-            if($("#selfCarry").is(":checked") == false) {
-
+            $("#delivery_cost").attr("name", d_price)
+            if($("#toDeliver").is(":checked")) {
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
 
+                d_price = (d_price - 0).toFixed(2)
+                d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
+                $("#delivery_cost").html(d_price)
+                $("#SumDelivery").html(totalCost)
             }
-            d_price = (d_price - 0).toFixed(2)
-            d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            if($("#toDeliver").is(":checked")) {
-                $("#delivery_cost").append(d_price)
-                $("#SumDelivery").html(d_price)
-            }
-            $("#delivery_cost").attr("name", d_price)
+            
 
 
         } else if($("#townSelect :selected").val() == "72000001") {
+            
             $("#carry").removeAttr("disabled")
 
             if($("#carry :selected").val() == "--") {
                 $("#carry [value='Газель']").attr("selected", "selected")
             }
-
+            
             $("#delivery_cost").empty()
             var d_price = $("#carry :selected").attr("price")
-            if($("#selfCarry").is(":checked") == false) {
-
+            $("#delivery_cost").attr("name", d_price)
+            if($("#toDeliver").is(":checked")) {
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
+            // alert(1)
+                d_price = (d_price - 0).toFixed(2)
+                d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
+                $("#delivery_cost").html(d_price)
+                $("#SumDelivery").html(totalCost)
             }
-            d_price = (d_price - 0).toFixed(2)
-            d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            if($("#toDeliver").is(":checked")) {
-                $("#delivery_cost").append(d_price)
-                $("#SumDelivery").html(d_price)
-            }
-            $("#delivery_cost").attr("name", d_price)
+            
+            
 
         }
         $("#destination").val('');
@@ -680,18 +462,22 @@ $(document).ready(function() {
         if($("#townSelect :selected").val() == "72000001") {
             $("#delivery_cost").empty()
             var d_price = $("#carry :selected").attr("price")
+            $("#delivery_cost").html(d_price)
+            $("#delivery_cost").attr("name", d_price)
+
             if($("#selfCarry").is(":checked") == false) {
 
                 var totalCost = getTotalCost(1)
 
-                $("#SumAll").empty()
-                $("#SumAll").append(totalCost)
+                // $("#SumAll").empty()
+                $("#SumAll").html(totalCost)
+
+                $("#SumDelivery").html(totalCost)
             }
-            d_price = (d_price - 0).toFixed(2)
-            d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            $("#delivery_cost").append(d_price)
-            $("#delivery_cost").attr("name", d_price)
-            $("#SumDelivery").html(d_price)
+            //d_price = (d_price - 0).toFixed(2)
+            //d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
+            
+            //$("#SumDelivery").html(d_price)
         }
     })
     $("#selfCarry").change(function() {
@@ -702,30 +488,40 @@ $(document).ready(function() {
             var totalCost = getTotalCost(0)
             $(".withoutDelivery").show()
             $(".withDelivery").hide()
-            $("#SumAll").empty()
-            $("#SumAll").append(totalCost)
+            // $("#SumAll").empty()
+            $("#SumAll").html(totalCost)
             $("#SumDelivery").empty()
             $("#delivery_cost").empty()
         }
     })
     $("#toDeliver").change(function() {
+        // alert($("#townSelect :selected").val())
+        if($("#townSelect :selected").val() == "--"){
+            $("#townSelect [value='72000001']").attr("selected", "selected")
+            $("#townSelect").change()
+            // alert($("#delivery_cost"))
+        } 
+        if($("#townSelect :selected").val() != "72000001"){
+            $("#carry [value='Длинномер']").attr("selected", "selected")
+            $("#carry").change()
+        }
+        
         var d_price = $("#delivery_cost").attr("name").replace(/\s/g, "")
         if($("#toDeliver").is(":checked")) {
             // alert(2)
             var totalCost = getTotalCost(1)
             $(".withDelivery").show()
             $(".withoutDelivery").hide()
-            $("#SumAll").empty()
-            $("#SumAll").append(totalCost)
+            // $("#SumAll").empty()
+            $("#SumAll").html(totalCost)
             d_price = (d_price - 0).toFixed(2)
             d_price = d_price.split('.')[0].replace(/(\d{1,3})(?=(?:\d{3})+$)/g, '$1 ') + '.' + d_price.split('.')[1]
-            $("#delivery_cost").append(d_price)
-            $("#SumDelivery").html(d_price)
+            $("#delivery_cost").html(d_price)
+            $("#SumDelivery").html(totalCost)
         }
     })
 
     function getTotalCost(d) {
-        alert($("#delivery_cost").attr("name"))
         var d_price = $("#delivery_cost").attr("name").replace(/\s/g, "")
         var totalCost = $("#SumAll").attr("name")
         if(d == 1) {

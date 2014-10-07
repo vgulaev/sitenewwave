@@ -181,7 +181,7 @@ get_item_list = (hash) ->
     $("#itemName").val ""
     $.ajax
         type: "GET"
-        url: "/1cengine/py_scripts/get_ncatalog_items.py"
+        url: "/1cengine/py_scripts/get_items_bs.py"
         async: true
         data: "hash=" + encodeURIComponent(hash) + ""
         success: (html) ->
@@ -223,18 +223,7 @@ get_item_list = (hash) ->
                     item = new App.Item $(this).closest( "tr" ).attr("id")
                 else
                     item.show_modal()
-
-            $(".more").click ->
-                name = $(this).attr("name")
-                $("##{name}").hide()
-                $(".#{name}").show()
-                return
-
-            $(".less").click ->
-                name = $(this).attr("name")
-                $("##{name}").show()
-                $(".#{name}").hide()
-                return
+            false
 
             $(".eye").each (index, element) =>
                 img_class = $(element).attr('class').split(' ')[1]
@@ -383,7 +372,7 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
@@ -424,18 +413,7 @@ $(document).ready ->
                         item = new App.Item $(this).closest( "tr" ).attr("id")
                     else
                         item.show_modal()
-
-                $(".more").click ->
-                    name = $(this).attr("name")
-                    $("##{name}").hide()
-                    $(".#{name}").show()
-                    return
-
-                $(".less").click ->
-                    name = $(this).attr("name")
-                    $("##{name}").show()
-                    $(".#{name}").hide()
-                    return
+                false
 
 
         $.ajax
@@ -475,7 +453,7 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
             data: data_string
             success: (html) ->
@@ -523,7 +501,7 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
             data: data_string
             success: (html) ->
@@ -568,7 +546,7 @@ $(document).ready ->
 
             $.ajax
                 type: "GET"
-                url: "/1cengine/py_scripts/get_ncatalog_items.py"
+                url: "/1cengine/py_scripts/get_items_bs.py"
                 async: true
                 data: data_string
                 success: (html) ->
@@ -638,15 +616,3 @@ $(document).ready ->
 
     $(".return_to_catalog").click ->
         $("#tabPrice").click()
-
-    $(".more").click ->
-        name = $(this).attr("name")
-        $("##{name}").hide()
-        $(".#{name}").show()
-        return
-
-    $(".less").click ->
-        name = $(this).attr("name")
-        $("##{name}").show()
-        $(".#{name}").hide()
-        return

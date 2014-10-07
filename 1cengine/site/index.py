@@ -190,13 +190,13 @@ class Index_Page():
             "/lib/frameworks/jqrequired/tooltipster-master/js/jquery.tooltipster.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
-            "/1cengine/site/js/global.js",
-            "/1cengine/site/js/moving.js",
+            "/1cengine/nsite/js/global.js",
+            "/1cengine/nsite/js/moving.js",
             # "/1cengine/site/js/modern_uiJs.js.js",
             # "/1cengine/site/js/modern_ui_goods_handler.js",
-            "/1cengine/site/js/basket_class.js",
-            "/1cengine/site/js/item_class.js",
-            "/1cengine/site/js/ordering.js",
+            "/1cengine/nsite/js/basket_class.js",
+            "/1cengine/nsite/js/item_class.js",
+            "/1cengine/nsite/js/ordering.js",
             "/lib/frameworks/raf_sha256.js"
         ]
 
@@ -204,7 +204,7 @@ class Index_Page():
             "/mainpage_template.css",
             "/footer.css",
             "/lib/frameworks/jqrequired/tooltipster-master/css/tooltipster.css",
-            "/1cengine/site/css/modern_style.css"
+            "/1cengine/nsite/css/modern_style.css"
             # "/1cengine/site/css/kladr.css"
         ]
 
