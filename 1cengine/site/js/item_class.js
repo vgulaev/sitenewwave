@@ -97,7 +97,7 @@
     Item.prototype.change_buy_count = function(count) {
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
-      this.buy_weight = ((this.buy_length * this.weight) / 1000).toFixed(3);
+      this.buy_weight = ((this.buy_length * this.weight * this.kf) / 1000).toFixed(3);
       $(".buy_weight").removeClass("preloading");
       $(".buy_count").removeClass("preloading");
       return this.change_modal();
