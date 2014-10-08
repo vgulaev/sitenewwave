@@ -2253,6 +2253,7 @@ hr{
 
 .subgroup_c{
     padding-left:10px;
+    padding-right:10px;
 }
 
 .subgroup_c .choice_header{
@@ -2272,4 +2273,25 @@ hr{
 
 .subgroup_c .choice_container{
     display:list-item;
+}
+
+.subgroup_c .sungroup_show_button{
+    text-align: center;
+    border-bottom-right-radius:12px;
+    border-top-right-radius:12px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    width:100%;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 10pt;
+    margin-top:5px;
+    margin-bottom:5px;
+    line-height: 13pt;
+    display: inline-block;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 }

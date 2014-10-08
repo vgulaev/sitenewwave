@@ -17,8 +17,6 @@ locale.setlocale(locale.LC_ALL, ("ru_RU.UTF-8"))
 
 soup = BeautifulSoup()
 
-print "Content-Type: text/html; charset=utf-8\n"
-
 ITEM_LIST = {}
 
 
@@ -109,34 +107,69 @@ def compose_table(term):
 
     groups = rt.get_items()
 
-    result = """
-        <table id="tableRes">
-            <tbody>
-    """
+    result_table = soup.new_tag("table")
+    result_table["id"] = "tableRes"
+
+    result_table_tbody = soup.new_tag("tbody")
+
+    result_table.append(result_table_tbody)
+
+    # result = """
+    #     <table id="tableRes">
+    #         <tbody>
+    # """
 
     odd=False
 
     for _item_group in groups:
         ITEM_LIST = groups[_item_group]
 
-        result = result + """
-            <tr class="iHeader">
-                <td><strong>{0}</strong></td>
-                <td class="priceHeader">Цена</td>
-                <td>Расчитать<br />В корзину</td>
-            </tr>
-        """.format(_item_group)
+        item_header_tr = soup.new_tag("tr")
+        item_header_tr["class"] = "iHeader"
 
-        # print header
+        item_header_td_gname = soup.new_tag("td")
+        strong = soup.new_tag("strong")
+        strong.append(_item_group)
+        item_header_td_gname.append(strong)
+
+        item_header_td_price = soup.new_tag("td")
+        item_header_td_price["class"] = "priceHeader"
+        item_header_td_price.append(u"Цена")
+
+        item_header_td_more = soup.new_tag("td")
+        item_header_td_more.append(u"Рассчитать")
+        item_header_td_more.append(soup.new_tag("br"))
+        item_header_td_more.append(u"В корзину")
+
+        item_header_tr.append(item_header_td_gname)
+        item_header_tr.append(item_header_td_price)
+        item_header_tr.append(item_header_td_more)
+
+        result_table_tbody.append(item_header_tr)
+
+        # result = result + """
+        #     <tr class="iHeader">
+        #         <td><strong>{0}</strong></td>
+        #         <td class="priceHeader">Цена</td>
+        #         <td>Расчитать<br />В корзину</td>
+        #     </tr>
+        # """.format(_item_group)
+
 
         for item_n in ITEM_LIST:
             item = ITEM_LIST[item_n]
 
             min_price = ""
 
-            char_list = "<select>"
+            char_select = soup.new_tag("select")
+
+            # char_list = "<select>"
             for char in item.char_array:
-                char_list = char_list + "<option>" + char + "</option>"
+                char_option = soup.new_tag("option")
+                char_option.append(char)
+
+                char_select.append(char_option)
+                # char_list = char_list + "<option>" + char + "</option>"
 
                 for price in item.char_array[char].price_array:
                     if min_price is "" or price[1] < min_price:
@@ -144,50 +177,107 @@ def compose_table(term):
                     else:
                         pass
 
-            char_list = char_list + "</select>"
+            # char_list = char_list + "</select>"
 
             if odd:
                 oddity = " ti_odd"
             else:
                 oddity = ""
 
-            result = result + """
-                <tr id="{4}" class="item{5}">
-                    <td class="itemName">{0}</td>
-                    <td>Цена от {2} за {3}.</td>
-                    <td><span name="{4}" class="more">Подробнее ∨</span></td>
-                </tr>
-                <tr class="{4} item{5}" style="display:none">
-                    <td colspan=3>
-                        <div>
-                            <span>{0}</span><span name="{4}" class="less">Скрыть ∧</span>
-                            <p>Возможные размеры: {1} м.</p>
-                        </div>
-                    </td>
-                </tr>
+            item_list_tr = soup.new_tag("tr")
+            item_list_tr["id"] = item.hash
+            item_list_tr["class"] = "item{0}".format(oddity)
 
-            """.format(
-                item.name, char_list, min_price, item.unit, item.hash, oddity
+            items_list_name_td = soup.new_tag("td")
+            items_list_name_td["class"] = "itemName"
+            items_list_name_td.append(item.name)
+
+            item_list_price_td = soup.new_tag("td")
+            item_list_price_td.append(
+                "от {0} за {1}.".format(min_price, item.unit)
             )
+
+            item_list_more_td = soup.new_tag("td")
+            item_list_more_span = soup.new_tag("span")
+            item_list_more_span["name"] = item.hash
+            item_list_more_span["class"] = "more"
+            item_list_more_span.append(u"Подробнее ∨")
+            item_list_more_td.append(item_list_more_span)
+
+            item_list_tr.append(items_list_name_td)
+            item_list_tr.append(item_list_price_td)
+            item_list_tr.append(item_list_more_td)
+
+            result_table_tbody.append(item_list_tr)
+
+            item_billet_tr = soup.new_tag("tr")
+            item_billet_tr["style"] = "display:none"
+            item_billet_tr["class"] = "{0} item{1}".format(item.hash, oddity)
+
+            item_billet_main_td = soup.new_tag("td")
+            item_billet_main_td["colspan"] = 3
+
+            item_billet_div = soup.new_tag("div")
+            item_billet_name_span = soup.new_tag("span")
+            item_billet_name_span.append(item.name)
+            item_billet_less_span = soup.new_tag("span")
+            item_billet_less_span["name"] = item.hash
+            item_billet_less_span["class"] = "less"
+            item_billet_less_span.append(u"Скрыть ∧")
+            item_billet_length_p = soup.new_tag("p")
+            item_billet_length_p.append(u"Возможные размеры: ")
+            item_billet_length_p.append(char_select)
+            item_billet_length_p.append(u" м.")
+
+            item_billet_div.append(item_billet_name_span)
+            item_billet_div.append(item_billet_less_span)
+            item_billet_div.append(item_billet_length_p)
+
+            item_billet_main_td.append(item_billet_div)
+            item_billet_tr.append(item_billet_main_td)
+
+            result_table_tbody.append(item_billet_tr)
+
+
+            # result = result + """
+
+            #     # <tr id="{4}" class="item{5}">
+            #     #     <td class="itemName">{0}</td>
+            #     #     <td>Цена от {2} за {3}.</td>
+            #     #     <td><span name="{4}" class="more">Подробнее ∨</span></td>
+            #     # </tr>
+            #     <tr class="{4} item{5}" style="display:none">
+            #         <td colspan=3>
+            #             <div>
+            #                 <span>{0}</span><span name="{4}" class="less">Скрыть ∧</span>
+            #                 <p>Возможные размеры: {1} м.</p>
+            #             </div>
+            #         </td>
+            #     </tr>
+
+            # """.format(
+            #     item.name, char_list, min_price, item.unit, item.hash, oddity
+            # )
 
             odd = odd.__xor__(True)
 
-    result = result + """
-        </tbody>
-    </table>
-    """
+    # result = result + """
+    #     </tbody>
+    # </table>
+    # """
 
-    return result
+    return result_table
 
 form = cgi.FieldStorage()
 if "term" in form:
+    print "Content-Type: text/html; charset=utf-8\n"
+    print str(compose_table(form["term"].value.decode("utf-8")))
     # print form["term"].value
-    result_table = compose_table(form["term"].value.decode("utf-8"))
+    # result_table = compose_table(form["term"].value.decode("utf-8"))
 
-    print result_table
+    # print result_table
 
 if "hash" in form:
 
-    result_table = compose_table(form["term"].value)
-
-    print result_table
+    print "Content-Type: text/html; charset=utf-8\n"
+    print str(compose_table(form["hash"].value.decode("utf-8")))

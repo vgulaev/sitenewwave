@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-# import cgi
-# import cgitb
-# cgitb.enable()
+import cgi
+import cgitb
+cgitb.enable()
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup()
 
 # print("Content-Type: text/html; charset=utf-8\n")
 
@@ -99,29 +102,121 @@ def get_subgroups(group_hash):
     return ret
 
 
-def get_items(term):
-    space_count = term.decode("utf-8").count(' ') + 1
-    ret = []
-    connector = myDBC("goods")
-    connector.dbConnect()
-    r = connector.dbExecute("""
-            SELECT DISTINCT `name`
-            FROM `groups`
-            WHERE `parent_hash` = (SELECT `hash` FROM `groups` WHERE `name`='"""+term+"""' )
-                AND `parent_hash` != `hash`
-        """)
 
-    for row in r:
-        ret.append(str(row[0]) + " ")
+def get_ajax_subgroups(g_hash):
+    subgroups = get_subgroups(g_hash)
 
-    connector.dbClose()
+    if subgroups.__len__() > 0:
+        tag_div_sg = soup.new_tag("div")
+        tag_div_sg["class"] = "subgroup_c"
 
-    return ret
+        tag_div_parents = soup.new_tag("div")
+        tag_div_parents["class"] = "parents_choice"
+
+        tag_div_parents_header = soup.new_tag("span")
+        tag_div_parents_header["class"] = "choice_header"
+        tag_div_parents_header.append(u"Марка стали")
+        tag_div_parents.append(tag_div_parents_header)
+
+        for parent in subgroups["parents"]:
+            tag_choice_container = soup.new_tag("span")
+            tag_choice_container["class"] = "choice_container"
+
+            tag_checkbox = soup.new_tag("input")
+            tag_checkbox["type"] = "checkbox"
+            tag_checkbox["id"] = parent[0].decode("utf-8")
+
+            tag_checkbox_label = soup.new_tag("label")
+            tag_checkbox_label["for"] = parent[0].decode("utf-8")
+            tag_checkbox_label.append(parent[0].decode("utf-8"))
+
+            tag_choice_container.append(tag_checkbox)
+            tag_choice_container.append(tag_checkbox_label)
+
+            tag_div_parents.append(tag_choice_container)
+
+        tag_div_sg.append(tag_div_parents)
+
+        if "thickness" in subgroups:
+
+            tag_div_thickness = soup.new_tag("div")
+            tag_div_thickness["class"] = "thickness_choice"
+            tag_div_thickness_header = soup.new_tag("span")
+            tag_div_thickness_header["class"] = "choice_header"
+            tag_div_thickness_header.append(u"Толщина стали")
+            tag_div_thickness.append(tag_div_thickness_header)
+
+            for thickness in subgroups["thickness"]:
+                tag_choice_container = soup.new_tag("span")
+                tag_choice_container["class"] = "choice_container"
+
+                tag_checkbox = soup.new_tag("input")
+                tag_checkbox["type"] = "checkbox"
+                tag_checkbox["id"] = thickness.decode("utf-8")
+
+                tag_checkbox_label = soup.new_tag("label")
+                tag_checkbox_label["for"] = thickness.decode("utf-8")
+                tag_checkbox_label.append(thickness.decode("utf-8"))
+
+                tag_choice_container.append(tag_checkbox)
+                tag_choice_container.append(tag_checkbox_label)
+
+                tag_div_thickness.append(tag_choice_container)
+
+            tag_div_sg.append(tag_div_thickness)
+
+        if "diameter" in subgroups:
+
+            tag_div_diameter = soup.new_tag("div")
+            tag_div_diameter["class"] = "diameter_choice"
+
+            tag_div_diameter_header = soup.new_tag("span")
+            tag_div_diameter_header["class"] = "choice_header"
+            tag_div_diameter_header.append(u"Внешний диаметр")
+            tag_div_diameter.append(tag_div_diameter_header)
+
+            for diameter in subgroups["diameter"]:
+                tag_choice_container = soup.new_tag("span")
+                tag_choice_container["class"] = "choice_container"
+
+                tag_checkbox = soup.new_tag("input")
+                tag_checkbox["type"] = "checkbox"
+                tag_checkbox["id"] = diameter.decode("utf-8")
+
+                tag_checkbox_label = soup.new_tag("label")
+                tag_checkbox_label["for"] = diameter.decode("utf-8")
+                tag_checkbox_label.append(diameter.decode("utf-8"))
+
+                tag_choice_container.append(tag_checkbox)
+                tag_choice_container.append(tag_checkbox_label)
+
+                tag_div_diameter.append(tag_choice_container)
+
+            tag_div_sg.append(tag_div_diameter)
+
+        show_button = soup.new_tag("span")
+        show_button["class"] = "sungroup_show_button"
+        show_button.append(u"Выбрать")
+
+        tag_div_sg.append(show_button)
+
+        return tag_div_sg
+
+    else:
+
+        return ""
 
 
-# def show_items(ret):
-#     print json.dumps(ret)
+form = cgi.FieldStorage()
+if "term" in form:
+    print "Content-Type: text/html; charset=utf-8\n"
+    print str(get_ajax_subgroups(form["term"].value.decode("utf-8")))
+    # print form["term"].value
+    # result_table = compose_table(form["term"].value.decode("utf-8"))
 
+    # print result_table
 
-# ret = get_items(term)
-# show_items(ret)
+if "hash" in form:
+
+    print "Content-Type: text/html; charset=utf-8\n"
+    print str(get_ajax_subgroups(form["hash"].value.decode("utf-8")))

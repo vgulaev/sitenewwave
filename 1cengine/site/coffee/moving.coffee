@@ -186,68 +186,7 @@ get_item_list = (hash) ->
         data: "hash=" + encodeURIComponent(hash) + ""
         success: (html) ->
             App.C_HASH = hash
-            $("#qRes").html html
-            $("#qRes").fadeIn(400)
-            if $(".item").length >= 1
-                $("#hollowResult").empty()
-            else
-                $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
-
-            if $(".item").length is 20
-                $("#show_next_prev").show()
-            else
-                $("#show_next_prev").hide()
-
-            # window.history.pushState(
-            #     {term: value},
-            #     '',
-            #     '/1cengine/site/'+$.trim(value)+'/'
-            # )
-
-            $(".bItem").click ->
-                # alert("lol")
-                elem_id = $(this).closest( "tr" ).attr("id")
-
-                item = App.Item.elem_exist(elem_id)
-                if item is false
-                    item = new App.Item $(this).closest( "tr" ).attr("id")
-                else
-                    item.show_modal()
-
-            $(".oItem").click ->
-
-                elem_id = $(this).closest( "tr" ).attr("id")
-
-                item = App.Item.elem_exist(elem_id)
-                if item is false
-                    item = new App.Item $(this).closest( "tr" ).attr("id")
-                else
-                    item.show_modal()
-
-            $(".more").click ->
-                name = $(this).attr("name")
-                $("##{name}").hide()
-                $(".#{name}").show()
-                return
-
-            $(".less").click ->
-                name = $(this).attr("name")
-                $("##{name}").show()
-                $(".#{name}").hide()
-                return
-
-            $(".eye").each (index, element) =>
-                img_class = $(element).attr('class').split(' ')[1]
-                $(element).tooltipster({
-                    content: "<img src='images/eye_pic/"+img_class+".png' />",
-                    animation: 'fade',
-                    position: 'top',
-                    trigger: "click",
-                    theme: "tooltipster-my",
-                    contentAsHTML: true
-                })
-
-
+            get_item_table(html)
 
     $.ajax
         type: "GET"
@@ -263,41 +202,26 @@ get_subgroup = (element, g_name, g_hash) ->
 
     $.ajax
         type: "GET"
-        url: "/1cengine/py_scripts/get_item_subgroup.py"
+        url: "/1cengine/py_scripts/get_ncatalog_item_group.py"
         async: false
         data: "term=" + encodeURIComponent(g_hash) + ""
         success: (html) ->
-            subgroups = JSON.parse html
-            for subgroup in subgroups then do (subgroup) =>
-                subgroup_name = subgroup[0].replace(g_name, "")
-                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'><span class='subgroup2_name'>"+subgroup_name+"</span></li>")
-                # alert(subgroup)
+            # alert(html)
+            $(element).append(html)
 
-            $(element).find("span.subgroup2_name").each (index, sgroup) =>
-                $(sgroup).click ->
-                    li_group = $(sgroup).parent()
-                    # alert($(sgroup).attr("name"))
-                    $(".subgroup2").removeClass("active_subgroup")
-                    $(li_group).addClass("active_subgroup")
-                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
-                    # alert(i_name)
-                    if $(li_group).children().is(".subgroup_c2") is false
-                        $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
-                        get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
+            get_item_list(g_name)
 
-                    get_item_list($(li_group).attr("idin"))
-                    # $("#itemName").val(i_name)
-                    # $("#itemName").change()
 
 group_click = (element) ->
     $(element).click ->
         g_name = $(this).attr("name")
         g_hash = $(this).attr("inid")
+        $(".subgroup_c").hide()
         if $(element).hasClass("active_group") is false
 
             # $("#itemName").val g_name
             # $("#itemName").change()
-            get_item_list(g_hash)
+            get_item_list(g_name)
 
             $("#groups_list").find("li.main_group").removeClass("active_group")
             $(".subgroup").removeClass("active_subgroup")
@@ -306,8 +230,9 @@ group_click = (element) ->
         # alert($(this).attr("name"))
         if $(element).children().is(".subgroup_c") is false
             # alert($(element).children("ul"))
-            $(element).append("<ul class=\"subgroup_c\"></ul>")
             get_subgroup(element, g_name, g_hash)
+        else
+            $(element).children().show()
 
 subgroup_click = (sgroup) ->
     $(sgroup).click ->
@@ -325,7 +250,69 @@ subgroup_click = (sgroup) ->
 
         # $("#itemName").val(i_name)
         # $("#itemName").change()
-        get_item_list($(li_group).attr("idin"))
+        get_item_list($(li_group).attr("name"))
+
+get_item_table = (html) ->
+    $("#qRes").html html
+    $("#qRes").fadeIn(400)
+    if $(".item").length >= 1
+        $("#hollowResult").empty()
+    else
+        $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
+
+    if $(".item").length is 20
+        $("#show_next_prev").show()
+    else
+        $("#show_next_prev").hide()
+
+    # window.history.pushState(
+    #     {term: value},
+    #     '',
+    #     '/1cengine/site/'+$.trim(value)+'/'
+    # )
+
+    $(".bItem").click ->
+        # alert("lol")
+        elem_id = $(this).closest( "tr" ).attr("id")
+
+        item = App.Item.elem_exist(elem_id)
+        if item is false
+            item = new App.Item $(this).closest( "tr" ).attr("id")
+        else
+            item.show_modal()
+
+    $(".oItem").click ->
+
+        elem_id = $(this).closest( "tr" ).attr("id")
+
+        item = App.Item.elem_exist(elem_id)
+        if item is false
+            item = new App.Item $(this).closest( "tr" ).attr("id")
+        else
+            item.show_modal()
+
+    $(".more").click ->
+        name = $(this).attr("name")
+        $("##{name}").hide()
+        $(".#{name}").show()
+        return
+
+    $(".less").click ->
+        name = $(this).attr("name")
+        $("##{name}").show()
+        $(".#{name}").hide()
+        return
+
+    $(".eye").each (index, element) =>
+        img_class = $(element).attr('class').split(' ')[1]
+        $(element).tooltipster({
+            content: "<img src='images/eye_pic/"+img_class+".png' />",
+            animation: 'fade',
+            position: 'top',
+            trigger: "click",
+            theme: "tooltipster-my",
+            contentAsHTML: true
+        })
 
 $(document).ready ->
 
@@ -387,55 +374,7 @@ $(document).ready ->
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
-                $("#qRes").html html
-                $("#qRes").fadeIn(400)
-                if $(".item").length >= 1
-                    $("#hollowResult").empty()
-                else
-                    $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
-
-                if $(".item").length is 20
-                    $("#show_next_prev").show()
-                else
-                    $("#show_next_prev").hide()
-
-                window.history.pushState(
-                    {term: value},
-                    '',
-                    '/1cengine/site/'+$.trim(value)+'/'
-                )
-
-                $(".bItem").click ->
-                    # alert("lol")
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
-
-                $(".oItem").click ->
-
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
-
-                $(".more").click ->
-                    name = $(this).attr("name")
-                    $("##{name}").hide()
-                    $(".#{name}").show()
-                    return
-
-                $(".less").click ->
-                    name = $(this).attr("name")
-                    $("##{name}").show()
-                    $(".#{name}").hide()
-                    return
+                get_item_table(html)
 
 
         $.ajax
@@ -479,34 +418,7 @@ $(document).ready ->
             async: true
             data: data_string
             success: (html) ->
-                $("#qRes").html html
-
-                if $(".item").length >= 1
-                    $("#hollowResult").empty()
-                else
-                    $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
-
-                $("#show_next_prev").hide()
-
-                $(".bItem").click ->
-
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
-
-                $(".oItem").click ->
-
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
+                get_item_table(html)
 
 
     $(".next_result").click ->
@@ -527,28 +439,8 @@ $(document).ready ->
             async: true
             data: data_string
             success: (html) ->
-                $("#qRes").html html
                 PAGE = n_page
-
-                $(".bItem").click ->
-
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
-
-                $(".oItem").click ->
-
-                    elem_id = $(this).closest( "tr" ).attr("id")
-
-                    item = App.Item.elem_exist(elem_id)
-                    if item is false
-                        item = new App.Item $(this).closest( "tr" ).attr("id")
-                    else
-                        item.show_modal()
+                get_item_table(html)
 
 
     $(".prev_result").click ->
@@ -572,28 +464,8 @@ $(document).ready ->
                 async: true
                 data: data_string
                 success: (html) ->
-                    $("#qRes").html html
                     PAGE = PAGE - 1
-
-                    $(".bItem").click ->
-
-                        elem_id = $(this).closest( "tr" ).attr("id")
-
-                        item = App.Item.elem_exist(elem_id)
-                        if item is false
-                            item = new App.Item $(this).closest( "tr" ).attr("id")
-                        else
-                            item.show_modal()
-
-                    $(".oItem").click ->
-
-                        elem_id = $(this).closest( "tr" ).attr("id")
-
-                        item = App.Item.elem_exist(elem_id)
-                        if item is false
-                            item = new App.Item $(this).closest( "tr" ).attr("id")
-                        else
-                            item.show_modal()
+                    get_item_table(html)
 
     $("#orderDiv").find(".next_step").click ->
         switch_tabs("switchDeliveryDiv")
