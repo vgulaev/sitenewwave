@@ -54,24 +54,29 @@ class ResultTable():
         self.items_list = {}
 
 
-    def get_items(self):
+    def get_items(self, parms={}):
 
         connector = myDBC("ncatalog")
         connector.dbConnect()
 
-        query = """
-            SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
-            `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-            `item_parent`.`name`
-            FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
-            `item_parent`
-            WHERE `site_group`.`name`='{0}'
-            AND `item`.`site_group_ref`=`site_group`.`id`
-            AND `char`.`item_ref`=`item`.`id`
-            AND `item_price`.`item_ref`=`item`.`id`
-            AND `item_price`.`price_type_ref`=`price_type`.`id`
-            AND `item_parent`.`id` = `item`.`item_parent_ref`
-        """.format(self.group_name)
+        if parms.__len__() < 1:
+
+            query = """
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                `item_parent`.`name`
+                FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
+                `item_parent`
+                WHERE `site_group`.`name`='{0}'
+                AND `item`.`site_group_ref`=`site_group`.`id`
+                AND `char`.`item_ref`=`item`.`id`
+                AND `item_price`.`item_ref`=`item`.`id`
+                AND `item_price`.`price_type_ref`=`price_type`.`id`
+                AND `item_parent`.`id` = `item`.`item_parent_ref`
+            """.format(self.group_name)
+
+        else:
+            pass
 
         r = connector.dbExecute(query)
 
@@ -101,11 +106,11 @@ class ResultTable():
 
 
 
-def compose_table(term):
+def compose_table(term, params={}):
 
     rt = ResultTable(term.encode("utf-8"))
 
-    groups = rt.get_items()
+    groups = rt.get_items(params)
 
     result_table = soup.new_tag("table")
     result_table["id"] = "tableRes"
@@ -155,7 +160,6 @@ def compose_table(term):
         #     </tr>
         # """.format(_item_group)
 
-
         for item_n in ITEM_LIST:
             item = ITEM_LIST[item_n]
 
@@ -176,6 +180,12 @@ def compose_table(term):
                         min_price = price[1]
                     else:
                         pass
+
+            min_price = (
+                locale.format(
+                    "%d", float(min_price), grouping=True
+                ) + locale.format("%.2f", float(min_price))[-3:]
+            ).replace(" ", "\xc2\xa0")
 
             # char_list = char_list + "</select>"
 
@@ -280,4 +290,40 @@ if "term" in form:
 if "hash" in form:
 
     print "Content-Type: text/html; charset=utf-8\n"
-    print str(compose_table(form["hash"].value.decode("utf-8")))
+
+
+    if "params" in form:
+        params = {}
+        param_string = form["params"].value.decode("utf-8")
+        param_arr = param_string.replace(
+            "'", "", 1
+        ).replace(
+            "';", ""
+        ).split("','")
+
+        for param in param_arr:
+            if "pa_" in param:
+                if "pa" in params:
+                    params["pa"].append(param.replace("pa_", "", 1))
+                else:
+                    params["pa"] = []
+                    params["pa"].append(param.replace("pa_", "", 1))
+
+            if "th_" in param:
+                if "th" in params:
+                    params["th"].append(param.replace("th_", "", 1))
+                else:
+                    params["th"] = []
+                    params["th"].append(param.replace("th_", "", 1))
+
+            if "di_" in param:
+                if "di" in params:
+                    params["di"].append(param.replace("di_", "", 1))
+                else:
+                    params["di"] = []
+                    params["di"].append(param.replace("di_", "", 1))
+
+        print str(compose_table(form["hash"].value.decode("utf-8"), params))
+
+    else:
+        print str(compose_table(form["hash"].value.decode("utf-8")))

@@ -218,7 +218,10 @@ def set_groups():
         tag_li = soup.new_tag("li")
         tag_li["name"] = group[0].decode("utf-8")
         tag_li["inid"] = group[1].decode("utf-8")
-        tag_li.append(group[0].decode("utf-8"))
+        tag_span_name = soup.new_tag("span")
+        tag_span_name["class"] = "click_name"
+        tag_span_name.append(group[0].decode("utf-8"))
+        tag_li.append(tag_span_name)
 
         if c_catalog is not None and c_catalog in group[0].decode("utf-8"):
             tag_li["class"] = "main_group active_group"

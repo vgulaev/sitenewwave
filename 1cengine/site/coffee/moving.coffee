@@ -208,31 +208,60 @@ get_subgroup = (element, g_name, g_hash) ->
         success: (html) ->
             # alert(html)
             $(element).append(html)
-
             get_item_list(g_name)
+            $(".menu_back_button").click ->
+                group_menu_back()
+
+            $(".sungroup_show_button").click ->
+                get_parameters()
 
 
 group_click = (element) ->
     $(element).click ->
-        g_name = $(this).attr("name")
-        g_hash = $(this).attr("inid")
-        $(".subgroup_c").hide()
-        if $(element).hasClass("active_group") is false
+        li_element = $(this).parent()
+
+        g_name = $(this).parent().attr("name")
+        g_hash = $(this).parent().attr("inid")
+        # $(".subgroup_c").hide()
+        if $(li_element).hasClass("active_group") is false
 
             # $("#itemName").val g_name
             # $("#itemName").change()
             get_item_list(g_name)
 
             $("#groups_list").find("li.main_group").removeClass("active_group")
-            $(".subgroup").removeClass("active_subgroup")
-            $(element).addClass("active_group")
+            $("li.main_group").hide()
+            $(li_element).addClass("active_group")
+            $(li_element).show()
 
         # alert($(this).attr("name"))
-        if $(element).children().is(".subgroup_c") is false
-            # alert($(element).children("ul"))
-            get_subgroup(element, g_name, g_hash)
+        if $(li_element).children().is(".subgroup_c") is false
+            # alert($(li_element).children("ul"))
+            get_subgroup(li_element, g_name, g_hash)
         else
-            $(element).children().show()
+            $(li_element).children().show()
+
+group_menu_back = () ->
+    $("li.main_group").show()
+    $("#groups_list").find("li.main_group").removeClass("active_group")
+    $(".subgroup_c").hide()
+
+get_parameters = () ->
+    params = ""
+    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
+        params = params + "'$(element).attr(\"name\")',"
+        alert($(element).attr("name"))
+    params = params + ";"
+    $("#itemName").val ""
+    hash = $(".active_group").attr("inid")
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_ncatalog_items.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + "&params=" + encodeURIComponent(params) + ""
+        success: (html) ->
+            App.C_HASH = hash
+            get_item_table(html)
 
 subgroup_click = (sgroup) ->
     $(sgroup).click ->
@@ -473,11 +502,11 @@ $(document).ready ->
     $("#deliveryDiv").find(".next_step").click ->
         switch_tabs("switchNotificationDiv")
 
-    $("#groups_list").find("li.main_group").each (index, element) =>
+    $("#groups_list").find("span.click_name").each (index, element) =>
         group_click(element)
 
-    $("li.subgroup").each (index, sgroup) =>
-        subgroup_click(sgroup)
+    # $("span.click_name").each (index, sgroup) =>
+    #     subgroup_click(sgroup)
 
     $("span.subgroup2_name").each (index, sgroup) =>
         subgroup_click(sgroup)
@@ -522,3 +551,9 @@ $(document).ready ->
         $("##{name}").show()
         $(".#{name}").hide()
         return
+
+    $(".menu_back_button").click ->
+        group_menu_back()
+
+    $(".sungroup_show_button").click ->
+        get_parameters()

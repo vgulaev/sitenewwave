@@ -110,6 +110,11 @@ def get_ajax_subgroups(g_hash):
         tag_div_sg = soup.new_tag("div")
         tag_div_sg["class"] = "subgroup_c"
 
+        back_span = soup.new_tag("span")
+        back_span["class"] = "menu_back_button"
+        back_span.append(u" ⮪ назад")
+        tag_div_sg.append(back_span)
+
         tag_div_parents = soup.new_tag("div")
         tag_div_parents["class"] = "parents_choice"
 
@@ -124,10 +129,11 @@ def get_ajax_subgroups(g_hash):
 
             tag_checkbox = soup.new_tag("input")
             tag_checkbox["type"] = "checkbox"
-            tag_checkbox["id"] = parent[0].decode("utf-8")
+            tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+            tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
 
             tag_checkbox_label = soup.new_tag("label")
-            tag_checkbox_label["for"] = parent[0].decode("utf-8")
+            tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
             tag_checkbox_label.append(parent[0].decode("utf-8"))
 
             tag_choice_container.append(tag_checkbox)
@@ -152,10 +158,11 @@ def get_ajax_subgroups(g_hash):
 
                 tag_checkbox = soup.new_tag("input")
                 tag_checkbox["type"] = "checkbox"
-                tag_checkbox["id"] = thickness.decode("utf-8")
+                tag_checkbox["name"] = "th_{0}".format(thickness.decode("utf-8"))
+                tag_checkbox["id"] = "th_{0}".format(thickness.decode("utf-8"))
 
                 tag_checkbox_label = soup.new_tag("label")
-                tag_checkbox_label["for"] = thickness.decode("utf-8")
+                tag_checkbox_label["for"] = "th_{0}".format(thickness.decode("utf-8"))
                 tag_checkbox_label.append(thickness.decode("utf-8"))
 
                 tag_choice_container.append(tag_checkbox)
@@ -181,10 +188,11 @@ def get_ajax_subgroups(g_hash):
 
                 tag_checkbox = soup.new_tag("input")
                 tag_checkbox["type"] = "checkbox"
-                tag_checkbox["id"] = diameter.decode("utf-8")
+                tag_checkbox["name"] = "di_{0}".format(diameter.decode("utf-8"))
+                tag_checkbox["id"] = "di_{0}".format(diameter.decode("utf-8"))
 
                 tag_checkbox_label = soup.new_tag("label")
-                tag_checkbox_label["for"] = diameter.decode("utf-8")
+                tag_checkbox_label["for"] = "di_{0}".format(diameter.decode("utf-8"))
                 tag_checkbox_label.append(diameter.decode("utf-8"))
 
                 tag_choice_container.append(tag_checkbox)
