@@ -76,8 +76,50 @@ class ResultTable():
             """.format(self.group_name)
 
         else:
-            pass
+            if "pa" in params:
+                if params["pa"].__len__() > 1:
+                    parent = " OR ".join(params["pa"])
+                else:
+                    parent = params["pa"][0]
+                parent = "AND ({0})".format(parent)
+            else:
+                parent = ""
 
+            if "th" in params:
+                if params["th"].__len__() > 1:
+                    thickness = " OR ".join(params["th"])
+                else:
+                    thickness = params["th"][0]
+                thickness = "AND ({0})".format(thickness)
+            else:
+                thickness = ""
+
+            if "di" in params:
+                if params["di"].__len__() > 1:
+                    diameter = " OR ".join(params["di"])
+                else:
+                    diameter = params["di"][0]
+                diameter = "AND ({0})".format(diameter)
+            else:
+                diameter = ""
+
+            query = """
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                `item_parent`.`name`
+                FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
+                `item_parent`
+                WHERE `site_group`.`name`='{0}'
+                AND `item`.`site_group_ref`=`site_group`.`id`
+                AND `char`.`item_ref`=`item`.`id`
+                AND `item_price`.`item_ref`=`item`.`id`
+                AND `item_price`.`price_type_ref`=`price_type`.`id`
+                AND `item_parent`.`id` = `item`.`item_parent_ref`
+                {1}
+                {2}
+                {3}
+            """.format(self.group_name, parent, thickness, diameter)
+            # print query
         r = connector.dbExecute(query)
 
         connector.dbClose()
@@ -292,37 +334,39 @@ if "hash" in form:
     print "Content-Type: text/html; charset=utf-8\n"
 
 
-    if "params" in form:
+    if "params" in form and form["params"].value != ";":
+        # print "|"+form["params"].value+"|"
         params = {}
-        param_string = form["params"].value.decode("utf-8")
+        param_string = form["params"].value
         param_arr = param_string.replace(
             "'", "", 1
         ).replace(
-            "';", ""
+            "',;", ""
         ).split("','")
 
         for param in param_arr:
             if "pa_" in param:
                 if "pa" in params:
-                    params["pa"].append(param.replace("pa_", "", 1))
+                    params["pa"].append("`item_parent`.`name`='"+param.replace("pa_", "", 1)+"'")
                 else:
                     params["pa"] = []
-                    params["pa"].append(param.replace("pa_", "", 1))
+                    params["pa"].append("`item_parent`.`name`='"+param.replace("pa_", "", 1)+"'")
 
             if "th_" in param:
                 if "th" in params:
-                    params["th"].append(param.replace("th_", "", 1))
+                    params["th"].append("`item`.`thickness`='"+param.replace("th_", "", 1)+"'")
                 else:
                     params["th"] = []
-                    params["th"].append(param.replace("th_", "", 1))
+                    params["th"].append("`item`.`thickness`='"+param.replace("th_", "", 1)+"'")
 
             if "di_" in param:
                 if "di" in params:
-                    params["di"].append(param.replace("di_", "", 1))
+                    params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
                 else:
                     params["di"] = []
-                    params["di"].append(param.replace("di_", "", 1))
+                    params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
 
+        # print param_string
         print str(compose_table(form["hash"].value.decode("utf-8"), params))
 
     else:

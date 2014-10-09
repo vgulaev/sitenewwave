@@ -245,21 +245,23 @@ group_menu_back = () ->
     $("li.main_group").show()
     $("#groups_list").find("li.main_group").removeClass("active_group")
     $(".subgroup_c").hide()
+    $(".subgroup_c").find("input[type=checkbox]").prop('checked', false)
 
 get_parameters = () ->
     params = ""
     $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-        params = params + "'$(element).attr(\"name\")',"
-        alert($(element).attr("name"))
+        params = params + "'"+$(element).attr("name")+"',"
+        # alert($(element).attr("name"))
     params = params + ";"
     $("#itemName").val ""
-    hash = $(".active_group").attr("inid")
+    hash = $(".active_group").attr("name")
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_ncatalog_items.py"
         async: true
         data: "hash=" + encodeURIComponent(hash) + "&params=" + encodeURIComponent(params) + ""
         success: (html) ->
+            # alert(html)
             App.C_HASH = hash
             get_item_table(html)
 

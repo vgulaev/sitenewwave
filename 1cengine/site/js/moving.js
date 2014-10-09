@@ -236,7 +236,8 @@
   group_menu_back = function() {
     $("li.main_group").show();
     $("#groups_list").find("li.main_group").removeClass("active_group");
-    return $(".subgroup_c").hide();
+    $(".subgroup_c").hide();
+    return $(".subgroup_c").find("input[type=checkbox]").prop('checked', false);
   };
 
   get_parameters = function() {
@@ -244,13 +245,12 @@
     params = "";
     $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
       return function(index, element) {
-        params = params + "'$(element).attr(\"name\")',";
-        return alert($(element).attr("name"));
+        return params = params + "'" + $(element).attr("name") + "',";
       };
     })(this));
     params = params + ";";
     $("#itemName").val("");
-    hash = $(".active_group").attr("inid");
+    hash = $(".active_group").attr("name");
     return $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_ncatalog_items.py",
