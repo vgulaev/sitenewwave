@@ -1,6 +1,7 @@
 #-*- coding:utf8 -*-
 
 import MySQLdb
+from secrets import *
 
 
 class Item:
@@ -253,10 +254,10 @@ class Item:
         self.insert_price()
         self.cursor.close()
 
-conn = MySQLdb.connect(host="localhost",
-                       user="root",
-                       passwd="111",
-                       db="trimetru_catalog")
+conn = MySQLdb.connect(host=databases["catalog"]["host"],
+                       user=databases["catalog"]["user"],
+                       passwd=databases["catalog"]["passwd"],
+                       db=databases["catalog"]["db"])
 
 
 conn.set_character_set('utf8')
