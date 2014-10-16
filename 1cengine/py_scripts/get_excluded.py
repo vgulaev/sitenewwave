@@ -1,7 +1,8 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 
-
+import sys
+import os
 import cgi
 import cgitb
 cgitb.enable()
