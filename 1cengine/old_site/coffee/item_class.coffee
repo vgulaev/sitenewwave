@@ -90,7 +90,7 @@ class App.Item
         @buy_count = Math.ceil(count)
         @buy_length = (@buy_count * @length).toFixed(2)
 
-        @buy_weight = (( @buy_length * @weight ) / 1000 ).toFixed(3)
+        @buy_weight = (( @buy_length * @weight * @kf ) / 1000 ).toFixed(3)
         $(".buy_weight").removeClass("preloading")
         $(".buy_count").removeClass("preloading")
         @change_modal()
