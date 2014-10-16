@@ -1,3 +1,4 @@
+#!/web/trimetru/python/bin/python2.6
 #-*- coding:utf8 -*-
 
 import MySQLdb
