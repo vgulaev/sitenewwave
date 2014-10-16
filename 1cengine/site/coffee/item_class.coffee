@@ -13,6 +13,7 @@ class App.Item
             false
 
     constructor: (@id) ->
+        # alert(@id)
         @set_chars()
 
         # console.log @name
@@ -64,7 +65,8 @@ class App.Item
         @stock  = char_array[4]
 
         i_hash = @id.slice 0, @id.indexOf(":")
-
+        i_class = @id.slice @id.indexOf(":") + 1
+        # alert(i_hash)
         if i_hash is "0"
             @is_kis = true
             @weight = 2
@@ -73,16 +75,27 @@ class App.Item
         else
             @is_kis = false
 
+        # alert(i_class)
         @prices = []
-        obj = $("tr[id='#{@id}']")
-        $(obj).children().each (index, element) =>
-            if $(element).attr("class") is "itemName"
-                @name = $(element).children("[itemprop='name']").text()
-            if $(element).attr("class") is "itemChar" and @is_kis is false
-                @char = $(element).text()
+        obj = $("tr[lolid='#{i_class}']")
+        # alert($(obj).attr("class"))
+        @name = $(obj).find("span.billet_item_name").text()
+        if @is_kis is false
+            @char = $(obj).find($(".item_billet_select_char option:selected")).val()
 
-            if ( $(element).attr("class").indexOf "price", 0 ) is 0
-                @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
+        price_ul = $(obj).find(".selected_price")
+        $(price_ul).find("li").each (index, element) =>
+            # alert($(element).children( "strong" ).text())
+            @prices.push ($(element).children( "strong" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
+
+        # $(obj).find().each (index, element) =>
+            # if $(element).attr("class") is "billet_item_name"
+            #     @name = $(element).children("[itemprop='name']").text()
+            # if $(element).attr("class") is "item_billet_select_char" and @is_kis is false
+            #     @char = $(element).find($("option:selected")).val()
+
+            # if ( $(element).attr("class").indexOf "price", 0 ) is 0
+            #     @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
 
 
     change_buy_count: (count) ->

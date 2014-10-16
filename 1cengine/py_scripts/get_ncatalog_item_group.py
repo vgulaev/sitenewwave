@@ -120,7 +120,7 @@ def get_ajax_subgroups(g_hash):
 
         tag_div_parents_header = soup.new_tag("span")
         tag_div_parents_header["class"] = "choice_header"
-        tag_div_parents_header.append(u"Марка стали")
+        tag_div_parents_header.append(u"Подгруппа")
         tag_div_parents.append(tag_div_parents_header)
 
         for parent in subgroups["parents"]:
@@ -129,6 +129,7 @@ def get_ajax_subgroups(g_hash):
 
             tag_checkbox = soup.new_tag("input")
             tag_checkbox["type"] = "checkbox"
+            tag_checkbox["class"] = "sidebar_checkbox"
             tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
             tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
 
@@ -149,7 +150,7 @@ def get_ajax_subgroups(g_hash):
             tag_div_thickness["class"] = "thickness_choice"
             tag_div_thickness_header = soup.new_tag("span")
             tag_div_thickness_header["class"] = "choice_header"
-            tag_div_thickness_header.append(u"Толщина стали")
+            tag_div_thickness_header.append(u"Толщина")
             tag_div_thickness.append(tag_div_thickness_header)
 
             for thickness in subgroups["thickness"]:
@@ -157,6 +158,7 @@ def get_ajax_subgroups(g_hash):
                 tag_choice_container["class"] = "choice_container"
 
                 tag_checkbox = soup.new_tag("input")
+                tag_checkbox["class"] = "sidebar_checkbox"
                 tag_checkbox["type"] = "checkbox"
                 tag_checkbox["name"] = "th_{0}".format(thickness.decode("utf-8"))
                 tag_checkbox["id"] = "th_{0}".format(thickness.decode("utf-8"))
@@ -179,7 +181,7 @@ def get_ajax_subgroups(g_hash):
 
             tag_div_diameter_header = soup.new_tag("span")
             tag_div_diameter_header["class"] = "choice_header"
-            tag_div_diameter_header.append(u"Внешний диаметр")
+            tag_div_diameter_header.append(u"Диаметр/Ширина")
             tag_div_diameter.append(tag_div_diameter_header)
 
             for diameter in subgroups["diameter"]:
@@ -187,6 +189,7 @@ def get_ajax_subgroups(g_hash):
                 tag_choice_container["class"] = "choice_container"
 
                 tag_checkbox = soup.new_tag("input")
+                tag_checkbox["class"] = "sidebar_checkbox"
                 tag_checkbox["type"] = "checkbox"
                 tag_checkbox["name"] = "di_{0}".format(diameter.decode("utf-8"))
                 tag_checkbox["id"] = "di_{0}".format(diameter.decode("utf-8"))

@@ -159,27 +159,51 @@ class Item:
             return self.cursor.lastrowid
 
     def insert_price(self):
-        check_existance = """
-            SELECT `price` FROM `item_price`
-            WHERE `item_ref`='{0}' AND `price_type_ref`='{1}' AND `is_char`=1
-        """.format(self.item_id, self.price_type_id)
-        self.cursor.execute(check_existance)
+        if self.char_price:
+            check_existance = """
+                SELECT `price` FROM `item_price`
+                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}' AND `is_char`=1
+            """.format(self.char_id, self.price_type_id)
+            self.cursor.execute(check_existance)
 
-        r = self.cursor.fetchall()
+            r = self.cursor.fetchall()
 
-        if r.__len__() > 0:
-            for row in r:
-                if row[0] == self.item_price:
-                    return False
+            if r.__len__() > 0:
+                for row in r:
+                    if row[0] == self.item_price:
+                        return False
 
-        insert_text = """
-            INSERT INTO `trimetru_ncatalog`.`item_price` (`item_ref`,
-            `price_type_ref`, `price`, `is_char`)
-            VALUES ('{0}', '{1}', '{2}', {3})
-        """.format(
-            self.item_id, self.price_type_id,
-            self.item_price, self.char_price
-        )
+            insert_text = """
+                INSERT INTO `trimetru_ncatalog`.`item_price` (`item_ref`,
+                `price_type_ref`, `price`, `is_char`)
+                VALUES ('{0}', '{1}', '{2}', {3})
+            """.format(
+                self.char_id, self.price_type_id,
+                self.item_price, self.char_price
+            )
+
+        else:
+            check_existance = """
+                SELECT `price` FROM `item_price`
+                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}' AND `is_char`=0
+            """.format(self.item_id, self.price_type_id)
+            self.cursor.execute(check_existance)
+
+            r = self.cursor.fetchall()
+
+            if r.__len__() > 0:
+                for row in r:
+                    if row[0] == self.item_price:
+                        return False
+
+            insert_text = """
+                INSERT INTO `trimetru_ncatalog`.`item_price` (`item_ref`,
+                `price_type_ref`, `price`, `is_char`)
+                VALUES ('{0}', '{1}', '{2}', {3})
+            """.format(
+                self.item_id, self.price_type_id,
+                self.item_price, self.char_price
+            )
 
         self.cursor.execute(insert_text)
         r = self.cursor.fetchall()

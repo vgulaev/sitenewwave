@@ -188,6 +188,18 @@ get_item_list = (hash) ->
             App.C_HASH = hash
             get_item_table(html)
 
+            $(".item_billet_select_char").change ->
+                char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
+
+                $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price")
+                $(this).parent().parent().parent().parent().find(".item_billet_select_price").each (index, element) =>
+                    if $(element).attr("for") is char
+                        # alert(char)
+                        $(element).addClass("selected_price")
+                    else
+                        # alert("XYN")
+
+
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_count_items.py"
@@ -214,6 +226,9 @@ get_subgroup = (element, g_name, g_hash) ->
 
             $(".sungroup_show_button").click ->
                 get_parameters()
+
+            $(".sidebar_checkbox").click ->
+                exclude_parameters(this)
 
 
 group_click = (element) ->
@@ -246,6 +261,9 @@ group_menu_back = () ->
     $("#groups_list").find("li.main_group").removeClass("active_group")
     $(".subgroup_c").hide()
     $(".subgroup_c").find("input[type=checkbox]").prop('checked', false)
+    $(".subgroup_c").find("input[type=checkbox]").prop('disabled', false)
+    $(".choice_container").removeClass("choice_disabled")
+
 
 get_parameters = () ->
     params = ""
@@ -265,23 +283,33 @@ get_parameters = () ->
             App.C_HASH = hash
             get_item_table(html)
 
-subgroup_click = (sgroup) ->
-    $(sgroup).click ->
-        li_group = $(sgroup).parent()
-        $(".subgroup").removeClass("active_subgroup")
-        $(li_group).addClass("active_subgroup")
-        group = $(li_group).closest(".active_group")
-        g_name = $(group).attr("name")
-        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
-        # alert(i_name)
-        if $(li_group).children().is(".subgroup_c2") is false
-            $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
-            # alert($(sgroup).attr("name") + " :: " + $(sgroup).attr("hash"))
-            get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
+exclude_parameters = () ->
+    params = ""
+    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
+        params = params + "'"+$(element).attr("name")+"',"
+        # alert($(element).attr("name"))
+    params = params + ";"
+    $("#itemName").val ""
+    hash = $(".active_group").attr("name")
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_excluded.py"
+        async: true
+        data: "params=" + encodeURIComponent(params) + "&hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            param_string = html
+            # alert(param_string)
+            $(".active_group").find("input[type=checkbox]").each (index, element) =>
+                $(element).parent().removeClass("choice_disabled")
+                $(element).prop('disabled', false)
+                if param_string.indexOf($(element).attr("name")) > -1
+                    $(element).prop('checked', false)
+                    $(element).prop('disabled', true)
+                    $(element).parent().addClass("choice_disabled")
+                    # alert($(element).attr("name"))
 
-        # $("#itemName").val(i_name)
-        # $("#itemName").change()
-        get_item_list($(li_group).attr("name"))
+            # App.C_HASH = hash
+            # get_item_table(html)
 
 get_item_table = (html) ->
     $("#qRes").html html
@@ -304,11 +332,14 @@ get_item_table = (html) ->
 
     $(".bItem").click ->
         # alert("lol")
-        elem_id = $(this).closest( "tr" ).attr("id")
-
-        item = App.Item.elem_exist(elem_id)
+        elem_id = $(this).attr("name")
+        char_id = $(this).closest( "table" ).find($(".item_billet_select_char option:selected")).attr("name")
+        if char_id is undefined
+            char_id = "0"
+        nid = (char_id+":"+elem_id)
+        item = App.Item.elem_exist(nid)
         if item is false
-            item = new App.Item $(this).closest( "tr" ).attr("id")
+            item = new App.Item nid
         else
             item.show_modal()
 
@@ -559,3 +590,9 @@ $(document).ready ->
 
     $(".sungroup_show_button").click ->
         get_parameters()
+
+    $(".sidebar_checkbox").click ->
+        exclude_parameters()
+
+    $(".item_billet_select_char").change ->
+        alert($(".item_billet_select_char option:selected").val())

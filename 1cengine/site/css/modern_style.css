@@ -879,7 +879,7 @@ tr.iHeader{
     padding-top: 1px;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
     padding-left: 10px;
-    width:62px;
+    width:74px;
 
 }
 
@@ -2326,4 +2326,132 @@ hr{
 .click_name{
     display:block;
     width:100%;
+}
+
+.subgroup_c .choice_disabled label{
+    color: #b5b5b5;
+}
+
+.item .more{
+    float:right;
+    width: 74px;
+    font-size:9pt;
+    display:block;
+    cursor:pointer;
+    color:#fff;
+    border-radius:6px;
+    height:25px;
+    padding-left:10px;
+    padding-right:10px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+}
+
+.item_billet .less{
+    float:right;
+    width: 74px;
+    font-size:9pt;
+    display:block;
+    cursor:pointer;
+    color:#fff;
+    border-radius:6px;
+    height:25px;
+    padding-left:10px;
+    padding-right:10px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
+    float:right;
+}
+
+.item .more:hover{
+    background: -moz-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+}
+
+.item_billet .less:hover{
+    background: -moz-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #6168A9 0%, #6168A9 76%, #6168A9 100%) repeat scroll 0% 0% transparent;
+}
+
+.item_billet{
+    box-shadow:0 2px 2px -1px rgba(0,0,0,0.7), 0 -2px 2px -1px rgba(0,0,0,0.7);
+}
+
+.item_billet table{
+    width:100%;
+}
+
+.item_billet table td:last-child{
+    padding-right:0 !important;
+}
+
+.item_billet table td{
+    text-align: left;
+}
+
+.item_billet .billet_item_name{
+    font-weight:700;
+    font-size:11pt;
+    float:left;
+}
+
+.item_billet .billet_item_name_td{
+    width:200px;
+}
+
+.item_billet .itemBuy a.bItem .buySpan{
+
+    display: block;
+    background: -moz-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #CF0 0%, #CF0 47%, #B9D742 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 25px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 9pt;
+    padding-top: 1px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    width:74px;
+
+}
+
+.item_billet .itemBuy a.bItem .buySpan:hover{
+    background: -moz-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+}
+
+.item_billet .billet_item_image{
+    width:128px;
+}
+
+.item_billet .item_billet_select_price{
+    display:none;
+    font-size:10pt;
+}
+
+.item_billet .item_billet_select_price li{
+    background: none;
+}
+
+.item_billet .selected_price{
+    display:block;
 }

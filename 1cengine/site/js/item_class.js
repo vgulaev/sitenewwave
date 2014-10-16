@@ -60,7 +60,7 @@
     };
 
     Item.prototype.set_chars = function(chars) {
-      var char_array, i_hash, obj;
+      var char_array, i_class, i_hash, obj, price_ul;
       chars = this.get_chars().replace(/\s+$/g, "");
       char_array = chars.split("|");
       this.length = char_array[0];
@@ -69,6 +69,7 @@
       this.ed_izm = char_array[3];
       this.stock = char_array[4];
       i_hash = this.id.slice(0, this.id.indexOf(":"));
+      i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
         this.is_kis = true;
         this.weight = 2;
@@ -78,18 +79,15 @@
         this.is_kis = false;
       }
       this.prices = [];
-      obj = $("tr[id='" + this.id + "']");
-      return $(obj).children().each((function(_this) {
+      obj = $("tr[lolid='" + i_class + "']");
+      this.name = $(obj).find("span.billet_item_name").text();
+      if (this.is_kis === false) {
+        this.char = $(obj).find($(".item_billet_select_char option:selected")).val();
+      }
+      price_ul = $(obj).find(".selected_price");
+      return $(price_ul).find("li").each((function(_this) {
         return function(index, element) {
-          if ($(element).attr("class") === "itemName") {
-            _this.name = $(element).children("[itemprop='name']").text();
-          }
-          if ($(element).attr("class") === "itemChar" && _this.is_kis === false) {
-            _this.char = $(element).text();
-          }
-          if (($(element).attr("class").indexOf("price", 0)) === 0) {
-            return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", "."));
-          }
+          return _this.prices.push(($(element).children("strong").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", "."));
         };
       })(this));
     };

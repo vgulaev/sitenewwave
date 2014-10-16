@@ -36,15 +36,20 @@ class Item():
         self.unit = ""
         self.char_array = {}
         self.price_array = []
+        self.is_char_price = True
 
     def add_char(self, char_name, char):
         if char_name not in self.char_array:
             self.char_array[char_name] = char
 
-    def add_price(self, price_type, price, char_name):
-        char = self.char_array[char_name]
-        if (price_type, price) not in char.price_array:
-            char.price_array.append((price_type, price))
+    def add_price(self, price_type, price, char_name=""):
+        if self.is_char_price:
+            char = self.char_array[char_name]
+            if (price_type, price) not in char.price_array:
+                char.price_array.append((price_type, price))
+        else:
+            if (price_type, price) not in self.price_array:
+                self.price_array.append((price_type, price))
 
 
 class ResultTable():
@@ -64,15 +69,22 @@ class ResultTable():
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                 `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                `item_parent`.`name`
+                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
                 FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
                 `item_parent`
                 WHERE `site_group`.`name`='{0}'
                 AND `item`.`site_group_ref`=`site_group`.`id`
-                AND `char`.`item_ref`=`item`.`id`
-                AND `item_price`.`item_ref`=`item`.`id`
+                AND ((
+                    `char`.`item_ref`=`item`.`id`
+                    AND `item_price`.`item_ref`=`char`.`id`
+                    AND `item_price`.`is_char`='1'
+                ) OR (
+                    `item_price`.`item_ref`=`item`.`id`
+                    AND `item_price`.`is_char`='0'
+                ))
                 AND `item_price`.`price_type_ref`=`price_type`.`id`
                 AND `item_parent`.`id` = `item`.`item_parent_ref`
+                limit 20
             """.format(self.group_name)
 
         else:
@@ -106,18 +118,25 @@ class ResultTable():
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                 `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                `item_parent`.`name`
+                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
                 FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
                 `item_parent`
                 WHERE `site_group`.`name`='{0}'
                 AND `item`.`site_group_ref`=`site_group`.`id`
-                AND `char`.`item_ref`=`item`.`id`
-                AND `item_price`.`item_ref`=`item`.`id`
+                AND ((
+                    `char`.`item_ref`=`item`.`id`
+                    AND `item_price`.`item_ref`=`char`.`id`
+                    AND `item_price`.`is_char`='1'
+                ) OR (
+                    `item_price`.`item_ref`=`item`.`id`
+                    AND `item_price`.`is_char`='0'
+                ))
                 AND `item_price`.`price_type_ref`=`price_type`.`id`
                 AND `item_parent`.`id` = `item`.`item_parent_ref`
                 {1}
                 {2}
                 {3}
+                limit 20
             """.format(self.group_name, parent, thickness, diameter)
             # print query
         r = connector.dbExecute(query)
@@ -140,9 +159,15 @@ class ResultTable():
 
                 _item_list[line[0]] = item
 
-            char = Char(line[1])
-            item.add_char(line[1], char)
-            item.add_price(line[4], line[3], line[1])
+            if line[7] == 1:
+                item.is_char_price = True
+                char = Char(line[1])
+                char.hash = line[8]
+                item.add_char(line[1], char)
+                item.add_price(line[4], line[3], line[1])
+            elif line[7] == 0:
+                item.is_char_price = False
+                item.add_price(line[4], line[3])
 
         return self.items_list
 
@@ -207,27 +232,102 @@ def compose_table(term, params={}):
 
             min_price = ""
 
-            char_select = soup.new_tag("select")
+            prices_container = soup.new_tag("div")
 
-            # char_list = "<select>"
-            for char in item.char_array:
-                char_option = soup.new_tag("option")
-                char_option.append(char)
+            if item.is_char_price:
+                char_select = soup.new_tag("select")
+                char_select["class"] = "item_billet_select_char"
 
-                char_select.append(char_option)
-                # char_list = char_list + "<option>" + char + "</option>"
+                is_first = " selected_price"
+                # char_list = "<select>"
+                for char in item.char_array:
+                    char_hash = item.char_array[char].hash
+                    char_option = soup.new_tag("option")
+                    char_option["name"] = char_hash.decode("utf-8")
+                    char_option.append(char)
 
-                for price in item.char_array[char].price_array:
+                    char_select.append(char_option)
+                    # char_list = char_list + "<option>" + char + "</option>"
+
+                    price_ul = soup.new_tag("ul")
+                    price_ul["class"] = "item_billet_select_price{0}".format(
+                        is_first
+                    )
+                    is_first = ""
+                    price_ul["for"] =  char_hash.decode("utf-8")
+
+                    for price in item.char_array[char].price_array:
+
+                        price_li = soup.new_tag("li")
+                        price_li.append(price[0])
+                        price_li.append(": ")
+                        price_li_strong = soup.new_tag("strong")
+                        price_li_strong.append(
+                            (
+                                locale.format(
+                                    "%d", float(price[1]), grouping=True
+                                ) + locale.format("%.2f", float(price[1]))[-3:]
+                            ).replace(" ", "\xc2\xa0")
+                        )
+                        price_li.append(price_li_strong)
+
+                        price_ul.append(price_li)
+
+                        if min_price is "" or price[1] < min_price:
+                            min_price = price[1]
+                        else:
+                            pass
+
+                    prices_container.append(price_ul)
+                # print min_price
+                min_price = (
+                    locale.format(
+                        "%d", float(min_price), grouping=True
+                    ) + locale.format("%.2f", float(min_price))[-3:]
+                ).replace(" ", "\xc2\xa0")
+
+            else:
+                char_select = soup.new_tag("span")
+                char_select.append(u"""
+                    Вы можете задать нужную длину листа в установленных пределах.
+                    """)
+
+                # char_list = "<select>"
+                price_ul = soup.new_tag("ul")
+                price_ul["class"] = "item_billet_select_price{0}".format(
+                    " selected_price"
+                )
+                price_ul["for"] =  "0"
+
+                for price in item.price_array:
+
+                    price_li = soup.new_tag("li")
+                    price_li.append(price[0])
+                    price_li.append(": ")
+                    price_li_strong = soup.new_tag("strong")
+                    price_li_strong.append(
+                        (
+                            locale.format(
+                                "%d", float(price[1]), grouping=True
+                            ) + locale.format("%.2f", float(price[1]))[-3:]
+                        ).replace(" ", "\xc2\xa0")
+                    )
+                    price_li.append(price_li_strong)
+
+                    price_ul.append(price_li)
+
                     if min_price is "" or price[1] < min_price:
                         min_price = price[1]
                     else:
                         pass
+                # print min_price
+                min_price = (
+                    locale.format(
+                        "%d", float(min_price), grouping=True
+                    ) + locale.format("%.2f", float(min_price))[-3:]
+                ).replace(" ", "\xc2\xa0")
 
-            min_price = (
-                locale.format(
-                    "%d", float(min_price), grouping=True
-                ) + locale.format("%.2f", float(min_price))[-3:]
-            ).replace(" ", "\xc2\xa0")
+                prices_container.append(price_ul)
 
             # char_list = char_list + "</select>"
 
@@ -264,13 +364,16 @@ def compose_table(term, params={}):
 
             item_billet_tr = soup.new_tag("tr")
             item_billet_tr["style"] = "display:none"
-            item_billet_tr["class"] = "{0} item{1}".format(item.hash, oddity)
+            item_billet_tr["class"] = "{0} item_billet{1}".format(item.hash, oddity)
+            item_billet_tr["lolid"] = item.hash
 
             item_billet_main_td = soup.new_tag("td")
             item_billet_main_td["colspan"] = 3
 
             item_billet_div = soup.new_tag("div")
             item_billet_name_span = soup.new_tag("span")
+            item_billet_name_span["class"] = "billet_item_name"
+            item_billet_name_span["itemprop"] = "name"
             item_billet_name_span.append(item.name)
             item_billet_less_span = soup.new_tag("span")
             item_billet_less_span["name"] = item.hash
@@ -281,9 +384,78 @@ def compose_table(term, params={}):
             item_billet_length_p.append(char_select)
             item_billet_length_p.append(u" м.")
 
-            item_billet_div.append(item_billet_name_span)
-            item_billet_div.append(item_billet_less_span)
-            item_billet_div.append(item_billet_length_p)
+            ###
+
+            item_billet_table = soup.new_tag("table")
+
+            item_billet_table_upper_tr = soup.new_tag("tr")
+
+            item_billet_table_upper_img_td = soup.new_tag("td")
+            item_billet_table_upper_img_td["rowspan"] = "2"
+            item_billet_table_upper_img_td["class"] = "billet_item_image"
+
+            item_billet_table_upper_img = soup.new_tag("img")
+            item_billet_table_upper_img["src"] = "/1cengine/site/images/eye_pic/default.png"
+
+            item_billet_table_upper_img_td.append(item_billet_table_upper_img)
+
+            item_billet_table_upper_name_td = soup.new_tag("td")
+            item_billet_table_upper_name_td["class"] = "billet_item_name_td"
+            item_billet_table_upper_name_td.append(item_billet_name_span)
+
+            item_billet_table_upper_price_td = soup.new_tag("td")
+            item_billet_table_upper_price_td["rowspan"] = "2"
+            item_billet_table_upper_price_td.append(prices_container)
+
+            item_billet_table_upper_less_td = soup.new_tag("td")
+            item_billet_table_upper_less_td.append(item_billet_less_span)
+
+            item_billet_table_upper_tr.append(item_billet_table_upper_img_td)
+            item_billet_table_upper_tr.append(item_billet_table_upper_name_td)
+            item_billet_table_upper_tr.append(item_billet_table_upper_price_td)
+            item_billet_table_upper_tr.append(item_billet_table_upper_less_td)
+
+            ###
+
+            item_billet_table_lower_tr = soup.new_tag("tr")
+
+            item_billet_table_lower_char_td = soup.new_tag("td")
+            item_billet_table_lower_char_td.append(item_billet_length_p)
+
+            # item_billet_table_lower_price_td = soup.new_tag("td")
+
+            item_billet_table_lower_buy_td = soup.new_tag("td")
+            item_billet_table_lower_buy_td["class"] = "itemBuy"
+
+            item_buy_span_tag = soup.new_tag("span")
+            item_buy_span_tag["class"] = "buySpan"
+
+            item_buy_a_tag = soup.new_tag("a")
+            item_buy_span_tag.string = "Рассчитать"
+            item_buy_a_tag["class"] = u"bItem"
+            item_buy_a_tag["name"] = item.hash
+            item_buy_a_tag["href"] = u"Добавить в корзину"
+
+            item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
+                'onBuyLinkPressed', 'купить');
+                return false"""
+
+            item_buy_a_tag.append(item_buy_span_tag)
+            item_billet_table_lower_buy_td.append(item_buy_a_tag)
+
+
+            item_billet_table_lower_tr.append(item_billet_table_lower_char_td)
+            # item_billet_table_lower_tr.append(item_billet_table_lower_price_td)
+            item_billet_table_lower_tr.append(item_billet_table_lower_buy_td)
+
+            ###
+
+            item_billet_table.append(item_billet_table_upper_tr)
+            item_billet_table.append(item_billet_table_lower_tr)
+
+            item_billet_div.append(item_billet_table)
+
+            ###
 
             item_billet_main_td.append(item_billet_div)
             item_billet_tr.append(item_billet_main_td)
