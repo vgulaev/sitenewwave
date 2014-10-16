@@ -22,7 +22,7 @@ from secrets import *
 
 def get_main_groups():
     ret = []
-    connector = myDBC("ncatalog")
+    connector = myDBC("catalog")
     connector.dbConnect()
     r = connector.dbExecute("""
             SELECT DISTINCT `site_group`.`name`, `site_group`.`id`
@@ -45,7 +45,7 @@ def get_main_groups():
 
 def get_subgroups(group_hash):
     ret = {}
-    connector = myDBC("ncatalog")
+    connector = myDBC("catalog")
     connector.dbConnect()
 
     r = connector.dbExecute("""

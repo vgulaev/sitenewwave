@@ -11,7 +11,7 @@ from secrets import *
 
 def get_excluded_item_params_from_parent(group_name, parent_array, excluded_field):
     ret = []
-    connector = myDBC("ncatalog")
+    connector = myDBC("catalog")
     connector.dbConnect()
 
     parent_name = " OR ".join(parent_array)
@@ -45,7 +45,7 @@ def get_excluded_item_params_from_parent(group_name, parent_array, excluded_fiel
 
 def get_excluded_item_parents(group_name, param_array):
     ret = []
-    connector = myDBC("ncatalog")
+    connector = myDBC("catalog")
     connector.dbConnect()
 
     param_value = " OR ".join(param_array)
@@ -79,7 +79,7 @@ def get_excluded_item_parents(group_name, param_array):
 
 def get_excluded_item_params(group_name, param_array, excluded_param):
     ret = []
-    connector = myDBC("ncatalog")
+    connector = myDBC("catalog")
     connector.dbConnect()
 
     active_param_value = " OR ".join(param_array)

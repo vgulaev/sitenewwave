@@ -39,7 +39,7 @@ class Item:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`site_group` (`id`, `name`)
+                INSERT INTO `trimetru_catalog`.`site_group` (`id`, `name`)
                 VALUES ('{0}', '{1}')
             """.format("", self.item_group)
 
@@ -65,7 +65,7 @@ class Item:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`item_parent` (`id`, `name`)
+                INSERT INTO `trimetru_catalog`.`item_parent` (`id`, `name`)
                 VALUES ('{0}', '{1}')
             """.format("", self.item_parent)
 
@@ -89,7 +89,7 @@ class Item:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`price_type` (`id`, `name`)
+                INSERT INTO `trimetru_catalog`.`price_type` (`id`, `name`)
                 VALUES ('{0}', '{1}')
             """.format("", self.item_price_type)
 
@@ -112,7 +112,7 @@ class Item:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`item`
+                INSERT INTO `trimetru_catalog`.`item`
                 (`id`, `name`, `hash`, `thickness`, `diameter`, `ed_izm`,
                     `is_optional_length`, `min_length`, `max_length`,
                     `site_group_ref`, `item_parent_ref`)
@@ -144,7 +144,7 @@ class Item:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`char` (`id`, `name`, `hash`,
+                INSERT INTO `trimetru_catalog`.`char` (`id`, `name`, `hash`,
                     `weight`, `kf`, `item_ref`)
                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')
             """.format(
@@ -174,7 +174,7 @@ class Item:
                         return False
 
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`item_price` (`item_ref`,
+                INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
                 `price_type_ref`, `price`, `is_char`)
                 VALUES ('{0}', '{1}', '{2}', {3})
             """.format(
@@ -197,7 +197,7 @@ class Item:
                         return False
 
             insert_text = """
-                INSERT INTO `trimetru_ncatalog`.`item_price` (`item_ref`,
+                INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
                 `price_type_ref`, `price`, `is_char`)
                 VALUES ('{0}', '{1}', '{2}', {3})
             """.format(
@@ -256,7 +256,7 @@ class Item:
 conn = MySQLdb.connect(host="localhost",
                        user="root",
                        passwd="111",
-                       db="trimetru_ncatalog")
+                       db="trimetru_catalog")
 
 
 conn.set_character_set('utf8')

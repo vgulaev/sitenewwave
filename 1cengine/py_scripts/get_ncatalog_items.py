@@ -61,7 +61,7 @@ class ResultTable():
 
     def get_items(self, parms={}):
 
-        connector = myDBC("ncatalog")
+        connector = myDBC("catalog")
         connector.dbConnect()
 
         if parms.__len__() < 1:
