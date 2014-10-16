@@ -263,7 +263,7 @@ conn = MySQLdb.connect(host=databases["catalog"]["host"],
 conn.set_character_set('utf8')
 
 
-with open("../../import/price.csv", "r") as price_csv:
+with open("../../import/price.csv") as price_csv:
     for line in price_csv:
         item_array = line.split("','")
 
