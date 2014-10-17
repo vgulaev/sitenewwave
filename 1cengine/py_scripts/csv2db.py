@@ -35,15 +35,20 @@ class Item:
         """.format(self.item_group)
         self.cursor.execute(check_existance)
 
+        if self.optional_length:
+            char_price = 0
+        else:
+            char_price = 1
+
         r = self.cursor.fetchall()
 
         if r.__len__() > 0:
             return r[0][0]
         else:
             insert_text = """
-                INSERT INTO `trimetru_catalog`.`site_group` (`id`, `name`)
-                VALUES ('{0}', '{1}')
-            """.format("", self.item_group)
+                INSERT INTO `trimetru_catalog`.`site_group` (`id`, `name`, `char_price`)
+                VALUES ('{0}', '{1}', {2})
+            """.format("", self.item_group, char_price)
 
             self.cursor.execute(insert_text)
             r = self.cursor.fetchall()

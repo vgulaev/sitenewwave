@@ -100,27 +100,61 @@ class ResultTable():
         else:
             height = ""
 
-        query = """
-            SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
-                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
-                FROM `item`, `char`, `item_price`, `price_type`,
-                `item_parent`
-                WHERE `item`.`site_group_ref`='{0}'
-                AND `item`.`id` IN ( SELECT * FROM (
-                SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
-                WHERE `item`.`site_group_ref`='{0}'
-                {1}
-                {2}
-                {3}
-                limit 20) as `id`
-                )
-                AND `char`.`item_ref`=`item`.`id`
-                AND `item_price`.`item_ref`=`char`.`id`
-                AND `item_price`.`is_char`='1'
-                AND `item_price`.`price_type_ref`=`price_type`.`id`
-                AND `item_parent`.`id` = `item`.`item_parent_ref`
-        """.format(self.group_name, parent, thickness, diameter)
+        is_optional_length_query = """
+            SELECT `char_price`
+            FROM `site_group`
+            WHERE `id`='{0}'
+        """.format(self.group_name)
+
+        r = connector.dbExecute(is_optional_length_query)
+        opt_len = False
+        for line in r:
+            if line[0] == "0":
+                opt_len = True
+
+        if opt_len:
+            query = """
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
+                    FROM `item`, `char`, `item_price`, `price_type`,
+                    `item_parent`
+                    WHERE `item`.`site_group_ref`='{0}'
+                    AND `item`.`id` IN ( SELECT * FROM (
+                    SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
+                    WHERE `item`.`site_group_ref`='{0}'
+                    {1}
+                    {2}
+                    {3}
+                    limit 20) as `id`
+                    )
+                    AND `item_price`.`item_ref`=`item`.`id`
+                    AND `item_price`.`is_char`='0'
+                    AND `item_price`.`price_type_ref`=`price_type`.`id`
+                    AND `item_parent`.`id` = `item`.`item_parent_ref`
+            """.format(self.group_name, parent, thickness, diameter)
+        else:
+            query = """
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
+                    FROM `item`, `char`, `item_price`, `price_type`,
+                    `item_parent`
+                    WHERE `item`.`site_group_ref`='{0}'
+                    AND `item`.`id` IN ( SELECT * FROM (
+                    SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
+                    WHERE `item`.`site_group_ref`='{0}'
+                    {1}
+                    {2}
+                    {3}
+                    limit 20) as `id`
+                    )
+                    AND `char`.`item_ref`=`item`.`id`
+                    AND `item_price`.`item_ref`=`char`.`id`
+                    AND `item_price`.`is_char`='1'
+                    AND `item_price`.`price_type_ref`=`price_type`.`id`
+                    AND `item_parent`.`id` = `item`.`item_parent_ref`
+            """.format(self.group_name, parent, thickness, diameter)
 
         # print query
 
