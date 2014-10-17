@@ -114,10 +114,10 @@ class ResultTable():
 
         if opt_len:
             query = """
-                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
-                    FROM `item`, `char`, `item_price`, `price_type`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`
+                    FROM `item`, `item_price`, `price_type`,
                     `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
                     AND `item`.`id` IN ( SELECT * FROM (
@@ -135,10 +135,10 @@ class ResultTable():
             """.format(self.group_name, parent, thickness, diameter)
         else:
             query = """
-                SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`
-                    FROM `item`, `item_price`, `price_type`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
+                    FROM `item`, `char`, `item_price`, `price_type`,
                     `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
                     AND `item`.`id` IN ( SELECT * FROM (
