@@ -15,14 +15,14 @@ class Item:
         self.item_parent = item_array[5].strip()
         self.item_diameter = item_array[6].strip().replace(",",".")
         self.item_thickness = item_array[7].strip().replace(",",".")
-        self.item_height = item_array[8].strip().replace(",",".")
-        self.item_min_length = item_array[9].strip().replace(",",".")
-        self.item_max_length = item_array[10].strip().replace(",",".")
-        self.item_char_weight = item_array[11].strip().replace(",",".")
-        self.item_char_kf = item_array[12].strip().replace(",",".")
-        self.item_unit = item_array[13].strip()
-        self.item_price = item_array[14].replace("\xc2\xa0", "").replace(",", ".").strip()
-        self.item_price_type = item_array[15].replace("';", "").strip()
+        self.item_min_length = item_array[8].strip().replace(",",".")
+        self.item_max_length = item_array[9].strip().replace(",",".")
+        self.item_char_weight = item_array[10].strip().replace(",",".")
+        self.item_char_kf = item_array[11].strip().replace(",",".")
+        self.item_unit = item_array[12].strip()
+        self.item_price = item_array[13].replace("\xc2\xa0", "").replace(",", ".").strip()
+        self.item_price_type = item_array[14].replace(",",".").strip()
+        self.item_height = item_array[15].replace("';", "").strip()
         self.optional_length = False
 
         if self.item_min_length is not "" or self.item_max_length is not "":
