@@ -107,7 +107,7 @@ class ResultTable():
                 FROM `item`, `char`, `item_price`, `price_type`,
                 `item_parent`
                 WHERE `item`.`site_group_ref`='{0}'
-                AND `item`.`id` IN ( SELECT * FROM (
+                AND `item`.`id` IN ( SELECT DISTINCT * FROM (
                 SELECT `item`.`id` FROM `item`, `item_parent`
                 WHERE `item`.`site_group_ref`='{0}'
                 {1}
