@@ -115,13 +115,13 @@ class Item:
         else:
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item`
-                (`id`, `name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
+                (`name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
                     `is_optional_length`, `min_length`, `max_length`,
                     `site_group_ref`, `item_parent_ref`)
                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}',
                     '{8}', '{9}', {10})
             """.format(
-                "", self.item_name, self.item_hash, self.item_thickness,
+                self.item_name, self.item_hash, self.item_thickness,
                 self.item_diameter, "0", self.item_unit, self.optional_length,
                 self.item_min_length, self.item_max_length, self.group_id,
                 self.parent_id
