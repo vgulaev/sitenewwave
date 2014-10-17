@@ -59,89 +59,72 @@ class ResultTable():
         self.items_list = {}
 
 
-    def get_items(self, parms={}):
+    def get_items(self, params={}):
 
         connector = myDBC("catalog")
         connector.dbConnect()
 
-        if parms.__len__() < 1:
-
-            query = """
-                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
-                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
-                FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
-                `item_parent`
-                WHERE `site_group`.`name`='{0}'
-                AND `item`.`site_group_ref`=`site_group`.`id`
-                AND ((
-                    `char`.`item_ref`=`item`.`id`
-                    AND `item_price`.`item_ref`=`char`.`id`
-                    AND `item_price`.`is_char`='1'
-                ) OR (
-                    `item_price`.`item_ref`=`item`.`id`
-                    AND `item_price`.`is_char`='0'
-                ))
-                AND `item_price`.`price_type_ref`=`price_type`.`id`
-                AND `item_parent`.`id` = `item`.`item_parent_ref`
-                limit 20
-            """.format(self.group_name)
-
+        if "pa" in params:
+            if params["pa"].__len__() > 1:
+                parent = " OR ".join(params["pa"])
+            else:
+                parent = params["pa"][0]
+            parent = "AND ({0}) AND `item`.`item_parent_ref`=`item_parent`.`id`".format(parent)
         else:
-            if "pa" in params:
-                if params["pa"].__len__() > 1:
-                    parent = " OR ".join(params["pa"])
-                else:
-                    parent = params["pa"][0]
-                parent = "AND ({0})".format(parent)
-            else:
-                parent = ""
+            parent = ""
 
-            if "th" in params:
-                if params["th"].__len__() > 1:
-                    thickness = " OR ".join(params["th"])
-                else:
-                    thickness = params["th"][0]
-                thickness = "AND ({0})".format(thickness)
+        if "th" in params:
+            if params["th"].__len__() > 1:
+                thickness = " OR ".join(params["th"])
             else:
-                thickness = ""
+                thickness = params["th"][0]
+            thickness = "AND ({0})".format(thickness)
+        else:
+            thickness = ""
 
-            if "di" in params:
-                if params["di"].__len__() > 1:
-                    diameter = " OR ".join(params["di"])
-                else:
-                    diameter = params["di"][0]
-                diameter = "AND ({0})".format(diameter)
+        if "di" in params:
+            if params["di"].__len__() > 1:
+                diameter = " OR ".join(params["di"])
             else:
-                diameter = ""
+                diameter = params["di"][0]
+            diameter = "AND ({0})".format(diameter)
+        else:
+            diameter = ""
 
-            query = """
-                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+        if "he" in params:
+            if params["he"].__len__() > 1:
+                height = " OR ".join(params["he"])
+            else:
+                height = params["he"][0]
+            height = "AND ({0})".format(height)
+        else:
+            height = ""
+
+        query = """
+            SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                 `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
                 `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
-                FROM `item`, `char`, `site_group`, `item_price`, `price_type`,
+                FROM `item`, `char`, `item_price`, `price_type`,
                 `item_parent`
-                WHERE `site_group`.`name`='{0}'
-                AND `item`.`site_group_ref`=`site_group`.`id`
-                AND ((
-                    `char`.`item_ref`=`item`.`id`
-                    AND `item_price`.`item_ref`=`char`.`id`
-                    AND `item_price`.`is_char`='1'
-                ) OR (
-                    `item_price`.`item_ref`=`item`.`id`
-                    AND `item_price`.`is_char`='0'
-                ))
-                AND `item_price`.`price_type_ref`=`price_type`.`id`
-                AND `item_parent`.`id` = `item`.`item_parent_ref`
+                WHERE `item`.`site_group_ref`='{0}'
+                AND `item`.`id` IN ( SELECT * FROM (
+                SELECT `item`.`id` FROM `item`, `item_parent`
+                WHERE `item`.`site_group_ref`='{0}'
                 {1}
                 {2}
                 {3}
-                limit 20
-            """.format(self.group_name, parent, thickness, diameter)
-            # print query
-        r = connector.dbExecute(query)
+                limit 20) as `id`
+                )
+                AND `char`.`item_ref`=`item`.`id`
+                AND `item_price`.`item_ref`=`char`.`id`
+                AND `item_price`.`is_char`='1'
+                AND `item_price`.`price_type_ref`=`price_type`.`id`
+                AND `item_parent`.`id` = `item`.`item_parent_ref`
+        """.format(self.group_name, parent, thickness, diameter)
 
-        connector.dbClose()
+        # print query
+
+        r = connector.dbExecute(query)
 
         for line in r:
 

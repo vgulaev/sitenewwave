@@ -179,21 +179,7 @@
       data: "hash=" + encodeURIComponent(hash) + "",
       success: function(html) {
         App.C_HASH = hash;
-        get_item_table(html);
-        return $(".item_billet_select_char").change(function() {
-          var char;
-          char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name");
-          $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price");
-          return $(this).parent().parent().parent().parent().find(".item_billet_select_price").each((function(_this) {
-            return function(index, element) {
-              if ($(element).attr("for") === char) {
-                return $(element).addClass("selected_price");
-              } else {
-
-              }
-            };
-          })(this));
-        });
+        return get_item_table(html);
       }
     });
     return $.ajax({
@@ -215,7 +201,6 @@
       data: "term=" + encodeURIComponent(g_hash) + "",
       success: function(html) {
         $(element).append(html);
-        get_item_list(g_name);
         $(".menu_back_button").click(function() {
           return group_menu_back();
         });
@@ -236,7 +221,7 @@
       g_name = $(this).parent().attr("name");
       g_hash = $(this).parent().attr("inid");
       if ($(li_element).hasClass("active_group") === false) {
-        get_item_list(g_name);
+        get_item_list(g_hash);
         $("#groups_list").find("li.main_group").removeClass("active_group");
         $("li.main_group").hide();
         $(li_element).addClass("active_group");
@@ -269,7 +254,7 @@
     })(this));
     params = params + ";";
     $("#itemName").val("");
-    hash = $(".active_group").attr("name");
+    hash = $(".active_group").attr("inid");
     return $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_ncatalog_items.py",
@@ -366,7 +351,7 @@
       $("#" + name).show();
       $("." + name).hide();
     });
-    return $(".eye").each((function(_this) {
+    $(".eye").each((function(_this) {
       return function(index, element) {
         var img_class;
         img_class = $(element).attr('class').split(' ')[1];
@@ -380,6 +365,20 @@
         });
       };
     })(this));
+    return $(".item_billet_select_char").change(function() {
+      var char;
+      char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name");
+      $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price");
+      return $(this).parent().parent().parent().parent().find(".item_billet_select_price").each((function(_this) {
+        return function(index, element) {
+          if ($(element).attr("for") === char) {
+            return $(element).addClass("selected_price");
+          } else {
+
+          }
+        };
+      })(this));
+    });
   };
 
   $(document).ready(function() {

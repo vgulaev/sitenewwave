@@ -178,6 +178,7 @@ show_how_to_make_order = () ->
             $.unblockUI();
 
 get_item_list = (hash) ->
+    # alert(hash)
     $("#itemName").val ""
     $.ajax
         type: "GET"
@@ -187,17 +188,6 @@ get_item_list = (hash) ->
         success: (html) ->
             App.C_HASH = hash
             get_item_table(html)
-
-            $(".item_billet_select_char").change ->
-                char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
-
-                $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price")
-                $(this).parent().parent().parent().parent().find(".item_billet_select_price").each (index, element) =>
-                    if $(element).attr("for") is char
-                        # alert(char)
-                        $(element).addClass("selected_price")
-                    else
-                        # alert("XYN")
 
 
     $.ajax
@@ -220,7 +210,6 @@ get_subgroup = (element, g_name, g_hash) ->
         success: (html) ->
             # alert(html)
             $(element).append(html)
-            get_item_list(g_name)
             $(".menu_back_button").click ->
                 group_menu_back()
 
@@ -242,7 +231,7 @@ group_click = (element) ->
 
             # $("#itemName").val g_name
             # $("#itemName").change()
-            get_item_list(g_name)
+            get_item_list(g_hash)
 
             $("#groups_list").find("li.main_group").removeClass("active_group")
             $("li.main_group").hide()
@@ -272,7 +261,7 @@ get_parameters = () ->
         # alert($(element).attr("name"))
     params = params + ";"
     $("#itemName").val ""
-    hash = $(".active_group").attr("name")
+    hash = $(".active_group").attr("inid")
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_ncatalog_items.py"
@@ -375,6 +364,17 @@ get_item_table = (html) ->
             theme: "tooltipster-my",
             contentAsHTML: true
         })
+
+    $(".item_billet_select_char").change ->
+        char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
+
+        $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price")
+        $(this).parent().parent().parent().parent().find(".item_billet_select_price").each (index, element) =>
+            if $(element).attr("for") is char
+                # alert(char)
+                $(element).addClass("selected_price")
+            else
+                # alert("XYN")
 
 $(document).ready ->
 
