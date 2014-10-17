@@ -219,6 +219,20 @@ get_subgroup = (element, g_name, g_hash) ->
             $(".sidebar_checkbox").click ->
                 exclude_parameters(this)
 
+            my_content = $('<a href=# onClick="$(\'.sungroup_show_button\').click(); return false">Выбрать</a>')
+
+            $(".sidebar_checkbox").tooltipster({
+                content: my_content,
+                interactive: true,
+                animation: 'fade',
+                delay: 200,
+                position: 'right',
+                offsetX: 100,
+                timer: 3000,
+                trigger: "click",
+                theme: "tooltipster-my"
+            })
+
 
 group_click = (element) ->
     $(element).click ->
@@ -272,7 +286,7 @@ get_parameters = () ->
             App.C_HASH = hash
             get_item_table(html)
 
-exclude_parameters = () ->
+exclude_parameters = (chk_box) ->
     params = ""
     $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
         params = params + "'"+$(element).attr("name")+"',"
@@ -299,6 +313,7 @@ exclude_parameters = () ->
 
             # App.C_HASH = hash
             # get_item_table(html)
+
 
 get_item_table = (html) ->
     $("#qRes").html html

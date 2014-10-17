@@ -200,6 +200,7 @@
       async: false,
       data: "term=" + encodeURIComponent(g_hash) + "",
       success: function(html) {
+        var my_content;
         $(element).append(html);
         $(".menu_back_button").click(function() {
           return group_menu_back();
@@ -207,8 +208,20 @@
         $(".sungroup_show_button").click(function() {
           return get_parameters();
         });
-        return $(".sidebar_checkbox").click(function() {
+        $(".sidebar_checkbox").click(function() {
           return exclude_parameters(this);
+        });
+        my_content = $('<a href=# onClick="$(\'.sungroup_show_button\').click(); return false">Выбрать</a>');
+        return $(".sidebar_checkbox").tooltipster({
+          content: my_content,
+          interactive: true,
+          animation: 'fade',
+          delay: 200,
+          position: 'right',
+          offsetX: 100,
+          timer: 3000,
+          trigger: "click",
+          theme: "tooltipster-my"
         });
       }
     });
@@ -267,7 +280,7 @@
     });
   };
 
-  exclude_parameters = function() {
+  exclude_parameters = function(chk_box) {
     var hash, params;
     params = "";
     $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
