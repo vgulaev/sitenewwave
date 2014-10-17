@@ -109,7 +109,7 @@ class ResultTable():
         r = connector.dbExecute(is_optional_length_query)
         opt_len = False
         for line in r:
-            if line[0] == "0":
+            if line[0] == 0:
                 opt_len = True
 
         if opt_len:
