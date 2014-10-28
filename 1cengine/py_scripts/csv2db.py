@@ -121,7 +121,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_name.decode("utf-8")))
+            print(u"Inserting {0}".format(self.item_name.decode("utf-8-sig")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item`
                 (`name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
