@@ -46,7 +46,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_group))
+            print(u"Inserting {0}".format(self.item_group.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`site_group` (`id`, `name`, `char_price`)
                 VALUES ('{0}', '{1}', {2})
@@ -73,7 +73,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_parent))
+            print(u"Inserting {0}".format(self.item_parent.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_parent` (`id`, `name`)
                 VALUES ('{0}', '{1}')
@@ -97,7 +97,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_price_type))
+            print(u"Inserting {0}".format(self.item_price_type.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`price_type` (`id`, `name`)
                 VALUES ('{0}', '{1}')
@@ -121,7 +121,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_name))
+            print(u"Inserting {0}".format(self.item_name.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item`
                 (`name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
@@ -154,7 +154,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_char))
+            print(u"Inserting {0}".format(self.item_char.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`char` (`id`, `name`, `hash`,
                     `weight`, `kf`, `item_ref`)
@@ -209,7 +209,7 @@ class Item:
                     if row[0] == self.item_price:
                         return False
 
-            print(u"Inserting {0}".format(self.item_price))
+            print(u"Inserting {0}".format(self.item_price.encode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
                 `price_type_ref`, `price`, `is_char`)
