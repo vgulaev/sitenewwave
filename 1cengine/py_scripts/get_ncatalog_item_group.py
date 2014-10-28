@@ -106,7 +106,7 @@ def get_subgroups(group_hash):
     """)
 
     for row in r:
-        if not row[0] == 0.0:
+        if not row[0] == "":
             if "height" in ret:
                 ret["height"].append(str(row[0]))
             else:
