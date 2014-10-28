@@ -555,6 +555,13 @@ if "hash" in form:
                     params["di"] = []
                     params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
 
+            if "he_" in param:
+                if "he" in params:
+                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
+                else:
+                    params["he"] = []
+                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
+
         # print param_string
         print str(compose_table(form["hash"].value.decode("utf-8"), params))
 

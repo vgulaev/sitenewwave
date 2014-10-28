@@ -97,6 +97,22 @@ def get_subgroups(group_hash):
                 ret["diameter"] = []
                 ret["diameter"].append(str(row[0]))
 
+    r = connector.dbExecute("""
+        SELECT DISTINCT `item`.`height`
+        FROM `item`, `site_group`
+        WHERE `site_group`.`id`='"""+group_hash+"""'
+        AND `item`.`site_group_ref`=`site_group`.`id`
+        ORDER BY `item`.`height`
+    """)
+
+    for row in r:
+        if not row[0] == 0.0:
+            if "height" in ret:
+                ret["height"].append(str(row[0]))
+            else:
+                ret["height"] = []
+                ret["height"].append(str(row[0]))
+
 
     connector.dbClose()
 
@@ -203,6 +219,37 @@ def get_ajax_subgroups(g_hash):
                 tag_choice_container.append(tag_checkbox_label)
 
                 tag_div_diameter.append(tag_choice_container)
+
+            tag_div_sg.append(tag_div_diameter)
+
+        if "height" in subgroups:
+
+            tag_div_height = soup.new_tag("div")
+            tag_div_height["class"] = "height_choice"
+
+            tag_div_height_header = soup.new_tag("span")
+            tag_div_height_header["class"] = "choice_header"
+            tag_div_height_header.append(u"Высота")
+            tag_div_height.append(tag_div_height_header)
+
+            for height in subgroups["height"]:
+                tag_choice_container = soup.new_tag("span")
+                tag_choice_container["class"] = "choice_container"
+
+                tag_checkbox = soup.new_tag("input")
+                tag_checkbox["class"] = "sidebar_checkbox"
+                tag_checkbox["type"] = "checkbox"
+                tag_checkbox["name"] = "he_{0}".format(height.decode("utf-8"))
+                tag_checkbox["id"] = "he_{0}".format(height.decode("utf-8"))
+
+                tag_checkbox_label = soup.new_tag("label")
+                tag_checkbox_label["for"] = "he_{0}".format(height.decode("utf-8"))
+                tag_checkbox_label.append(height.decode("utf-8"))
+
+                tag_choice_container.append(tag_checkbox)
+                tag_choice_container.append(tag_checkbox_label)
+
+                tag_div_height.append(tag_choice_container)
 
             tag_div_sg.append(tag_div_diameter)
 
