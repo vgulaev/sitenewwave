@@ -126,13 +126,14 @@ class ResultTable():
                     {1}
                     {2}
                     {3}
+                    {4}
                     limit 20) as `id`
                     )
                     AND `item_price`.`item_ref`=`item`.`id`
                     AND `item_price`.`is_char`='0'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
-            """.format(self.group_name, parent, thickness, diameter)
+            """.format(self.group_name, parent, thickness, diameter, height)
         else:
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
@@ -147,6 +148,7 @@ class ResultTable():
                     {1}
                     {2}
                     {3}
+                    {4}
                     limit 20) as `id`
                     )
                     AND `char`.`item_ref`=`item`.`id`
@@ -154,7 +156,7 @@ class ResultTable():
                     AND `item_price`.`is_char`='1'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
-            """.format(self.group_name, parent, thickness, diameter)
+            """.format(self.group_name, parent, thickness, diameter, height)
 
         # print query
 
