@@ -239,11 +239,11 @@ def get_ajax_subgroups(g_hash):
                 tag_checkbox = soup.new_tag("input")
                 tag_checkbox["class"] = "sidebar_checkbox"
                 tag_checkbox["type"] = "checkbox"
-                tag_checkbox["name"] = "he_{0}".format(height.decode("utf-8"))
-                tag_checkbox["id"] = "he_{0}".format(height.decode("utf-8"))
+                tag_checkbox["name"] = u"he_{0}".format(height.decode("utf-8"))
+                tag_checkbox["id"] = u"he_{0}".format(height.decode("utf-8"))
 
                 tag_checkbox_label = soup.new_tag("label")
-                tag_checkbox_label["for"] = "he_{0}".format(height.decode("utf-8"))
+                tag_checkbox_label["for"] = u"he_{0}".format(height.decode("utf-8"))
                 tag_checkbox_label.append(height.decode("utf-8"))
 
                 tag_choice_container.append(tag_checkbox)
