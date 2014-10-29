@@ -251,7 +251,7 @@ def get_ajax_subgroups(g_hash):
 
                 tag_div_height.append(tag_choice_container)
 
-            tag_div_sg.append(tag_div_diameter)
+            tag_div_sg.append(tag_div_height)
 
         show_button = soup.new_tag("span")
         show_button["class"] = "sungroup_show_button"
