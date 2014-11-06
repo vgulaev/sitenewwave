@@ -3,6 +3,7 @@
 
 import MySQLdb
 from secrets import *
+from group_config import *
 
 
 class Item:
@@ -13,15 +14,16 @@ class Item:
         self.item_char_hash = item_array[3].strip()
         self.item_group = item_array[4].strip()
         self.item_parent = item_array[5].strip()
-        self.item_diameter = item_array[6].strip().replace(",",".")
-        self.item_thickness = item_array[7].strip().replace(",",".")
-        self.item_min_length = item_array[8].strip().replace(",",".")
-        self.item_max_length = item_array[9].strip().replace(",",".")
-        self.item_char_weight = item_array[10].strip().replace(",",".")
-        self.item_char_kf = item_array[11].strip().replace(",",".")
+        self.item_diameter = item_array[6].strip().replace(",", ".")
+        self.item_thickness = item_array[7].strip().replace(",", ".")
+        self.item_min_length = item_array[8].strip().replace(",", ".")
+        self.item_max_length = item_array[9].strip().replace(",", ".")
+        self.item_char_weight = item_array[10].strip().replace(",", ".")
+        self.item_char_kf = item_array[11].strip().replace(",", ".")
         self.item_unit = item_array[12].strip()
-        self.item_price = item_array[13].replace("\xc2\xa0", "").replace(",", ".").strip()
-        self.item_price_type = item_array[14].replace(",",".").strip()
+        self.item_price = item_array[13].replace(
+            "\xc2\xa0", "").replace(",", ".").strip()
+        self.item_price_type = item_array[14].replace(",", ".").strip()
         self.item_height = item_array[15].replace("';", "").strip()
         self.optional_length = False
 
@@ -47,10 +49,37 @@ class Item:
             return r[0][0]
         else:
             print(u"Inserting {0}".format(self.item_group.decode("utf-8")))
-            insert_text = """
-                INSERT INTO `trimetru_catalog`.`site_group` (`id`, `name`, `char_price`)
-                VALUES ('{0}', '{1}', {2})
-            """.format("", self.item_group, char_price)
+
+            if self.item_group in groups_params:
+                img_path = groups_params[self.item_group][0]
+                show_height = groups_params[self.item_group][1]
+                show_thickness = groups_params[self.item_group][2]
+                show_diameter = groups_params[self.item_group][3]
+                height_name = groups_params[self.item_group][4]
+                thickness_name = groups_params[self.item_group][5]
+                diameter_name = groups_params[self.item_group][6]
+
+                insert_text = """
+                    INSERT INTO `trimetru_catalog`.`site_group` (
+                        `id`, `name`, `char_price`,`img_url`, `show_height`,
+                        `show_thickness`, `show_diameter`, `height_name`,
+                        `thickness_name`,`diameter_name`
+                    ) VALUES (
+                        '{0}', '{1}', '{2}', '{3}', '{4}',
+                        '{5}', '{6}', '{7}', '{8}', '{9}'
+                    )
+                """.format(
+                    "", self.item_group, char_price, img_path, show_height,
+                    show_thickness, show_diameter, height_name, thickness_name,
+                    diameter_name
+                )
+
+            else:
+                insert_text = """
+                    INSERT INTO `trimetru_catalog`.`site_group` (
+                        `id`, `name`, `char_price`
+                    ) VALUES ('{0}', '{1}', {2})
+                """.format("", self.item_group, char_price)
 
             self.cursor.execute(insert_text)
             r = self.cursor.fetchall()
@@ -66,9 +95,7 @@ class Item:
         """.format(self.item_parent)
         self.cursor.execute(check_existance)
 
-
         r = self.cursor.fetchall()
-
 
         if r.__len__() > 0:
             return r[0][0]
@@ -131,9 +158,9 @@ class Item:
                     '{8}', '{9}', {10})
             """.format(
                 self.item_name, self.item_hash, self.item_thickness,
-                self.item_diameter, self.item_height, self.item_unit, self.optional_length,
-                self.item_min_length, self.item_max_length, self.group_id,
-                self.parent_id
+                self.item_diameter, self.item_height, self.item_unit,
+                self.optional_length, self.item_min_length,
+                self.item_max_length, self.group_id, self.parent_id
             )
 
             self.cursor.execute(insert_text)
@@ -174,7 +201,8 @@ class Item:
         if self.char_price:
             check_existance = """
                 SELECT `price` FROM `item_price`
-                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}' AND `is_char`=1
+                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}'
+                AND `is_char`=1
             """.format(self.char_id, self.price_type_id)
             self.cursor.execute(check_existance)
 
@@ -198,7 +226,8 @@ class Item:
         else:
             check_existance = """
                 SELECT `price` FROM `item_price`
-                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}' AND `is_char`=0
+                WHERE `item_ref`='{0}' AND `price_type_ref`='{1}'
+                AND `is_char`=0
             """.format(self.item_id, self.price_type_id)
             self.cursor.execute(check_existance)
 
@@ -224,7 +253,6 @@ class Item:
         conn.commit()
 
         return True
-
 
     def fill_the_database(self):
         self.cursor = conn.cursor()
@@ -283,7 +311,6 @@ with open("../../import/price.csv") as price_csv:
         item = Item(item_array)
 
         item.fill_the_database()
-
 
     conn.close()
 

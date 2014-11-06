@@ -124,6 +124,10 @@ def get_subgroups(group_hash):
 
     connector.dbClose()
 
+    ret["names"] = [
+        param_flags["th"][1], param_flags["di"][1], param_flags["he"][1]
+    ]
+
     return ret
 
 def get_param_flags(group_hash):
@@ -171,26 +175,27 @@ def get_ajax_subgroups(g_hash):
         tag_div_parents_header.append(u"Подгруппа")
         tag_div_parents.append(tag_div_parents_header)
 
-        for parent in subgroups["parents"]:
-            tag_choice_container = soup.new_tag("span")
-            tag_choice_container["class"] = "choice_container"
+        if subgroups["parents"].__len__() > 1:
+            for parent in subgroups["parents"]:
+                tag_choice_container = soup.new_tag("span")
+                tag_choice_container["class"] = "choice_container"
 
-            tag_checkbox = soup.new_tag("input")
-            tag_checkbox["type"] = "checkbox"
-            tag_checkbox["class"] = "sidebar_checkbox"
-            tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
-            tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                tag_checkbox = soup.new_tag("input")
+                tag_checkbox["type"] = "checkbox"
+                tag_checkbox["class"] = "sidebar_checkbox"
+                tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
 
-            tag_checkbox_label = soup.new_tag("label")
-            tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
-            tag_checkbox_label.append(parent[0].decode("utf-8"))
+                tag_checkbox_label = soup.new_tag("label")
+                tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                tag_checkbox_label.append(parent[0].decode("utf-8"))
 
-            tag_choice_container.append(tag_checkbox)
-            tag_choice_container.append(tag_checkbox_label)
+                tag_choice_container.append(tag_checkbox)
+                tag_choice_container.append(tag_checkbox_label)
 
-            tag_div_parents.append(tag_choice_container)
+                tag_div_parents.append(tag_choice_container)
 
-        tag_div_sg.append(tag_div_parents)
+            tag_div_sg.append(tag_div_parents)
 
         if "thickness" in subgroups:
 
@@ -198,7 +203,7 @@ def get_ajax_subgroups(g_hash):
             tag_div_thickness["class"] = "thickness_choice"
             tag_div_thickness_header = soup.new_tag("span")
             tag_div_thickness_header["class"] = "choice_header"
-            tag_div_thickness_header.append(u"Толщина")
+            tag_div_thickness_header.append(subgroups["names"][0])
             tag_div_thickness.append(tag_div_thickness_header)
 
             for thickness in subgroups["thickness"]:
@@ -229,7 +234,7 @@ def get_ajax_subgroups(g_hash):
 
             tag_div_diameter_header = soup.new_tag("span")
             tag_div_diameter_header["class"] = "choice_header"
-            tag_div_diameter_header.append(u"Диаметр/Ширина")
+            tag_div_diameter_header.append(subgroups["names"][1])
             tag_div_diameter.append(tag_div_diameter_header)
 
             for diameter in subgroups["diameter"]:
@@ -260,7 +265,7 @@ def get_ajax_subgroups(g_hash):
 
             tag_div_height_header = soup.new_tag("span")
             tag_div_height_header["class"] = "choice_header"
-            tag_div_height_header.append(u"Высота")
+            tag_div_height_header.append(subgroups["names"][2])
             tag_div_height.append(tag_div_height_header)
 
             for height in subgroups["height"]:
