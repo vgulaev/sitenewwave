@@ -45,6 +45,7 @@ def get_main_groups():
 
 
 def get_subgroups(group_hash):
+    param_flags = get_param_flags(group_hash)
     ret = {}
     connector = myDBC("catalog")
     connector.dbConnect()
@@ -65,54 +66,84 @@ def get_subgroups(group_hash):
             ret["parents"] = []
             ret["parents"].append([str(row[0]), str(row[1])])
 
+
+    if param_flags["th"][0]:
+        r = connector.dbExecute("""
+            SELECT DISTINCT `item`.`thickness`
+            FROM `item`, `site_group`
+            WHERE `site_group`.`id`='"""+group_hash+"""'
+            AND `item`.`site_group_ref`=`site_group`.`id`
+            ORDER BY `item`.`thickness`
+        """)
+
+        for row in r:
+            if not row[0] == 0.0:
+                if "thickness" in ret:
+                    ret["thickness"].append(str(row[0]))
+                else:
+                    ret["thickness"] = []
+                    ret["thickness"].append(str(row[0]))
+
+    if param_flags["di"][0]:
+        r = connector.dbExecute("""
+            SELECT DISTINCT `item`.`diameter`
+            FROM `item`, `site_group`
+            WHERE `site_group`.`id`='"""+group_hash+"""'
+            AND `item`.`site_group_ref`=`site_group`.`id`
+            ORDER BY `item`.`diameter`
+        """)
+
+        for row in r:
+            if not row[0] == 0.0:
+                if "diameter" in ret:
+                    ret["diameter"].append(str(row[0]))
+                else:
+                    ret["diameter"] = []
+                    ret["diameter"].append(str(row[0]))
+
+
+    if param_flags["he"][0]:
+
+        r = connector.dbExecute("""
+            SELECT DISTINCT `item`.`height`
+            FROM `item`, `site_group`
+            WHERE `site_group`.`id`='"""+group_hash+"""'
+            AND `item`.`site_group_ref`=`site_group`.`id`
+            ORDER BY `item`.`height`
+        """)
+
+        for row in r:
+            if not row[0] == "":
+                if "height" in ret:
+                    ret["height"].append(str(row[0]))
+                else:
+                    ret["height"] = []
+                    ret["height"].append(str(row[0]))
+
+
+
+    connector.dbClose()
+
+    return ret
+
+def get_param_flags(group_hash):
+
+    ret = {}
+    connector = myDBC("catalog")
+    connector.dbConnect()
+
     r = connector.dbExecute("""
-        SELECT DISTINCT `item`.`thickness`
-        FROM `item`, `site_group`
-        WHERE `site_group`.`id`='"""+group_hash+"""'
-        AND `item`.`site_group_ref`=`site_group`.`id`
-        ORDER BY `item`.`thickness`
-    """)
+            SELECT `site_group`.`show_height`, `site_group`.`height_name`,
+                `site_group`.`show_thickness`, `site_group`.`thickness_name`,
+                `site_group`.`show_diameter`, `site_group`.`diameter_name`
+            FROM `site_group`
+            WHERE `site_group`.`id`='"""+group_hash+"""'
+        """)
 
     for row in r:
-        if not row[0] == 0.0:
-            if "thickness" in ret:
-                ret["thickness"].append(str(row[0]))
-            else:
-                ret["thickness"] = []
-                ret["thickness"].append(str(row[0]))
-
-    r = connector.dbExecute("""
-        SELECT DISTINCT `item`.`diameter`
-        FROM `item`, `site_group`
-        WHERE `site_group`.`id`='"""+group_hash+"""'
-        AND `item`.`site_group_ref`=`site_group`.`id`
-        ORDER BY `item`.`diameter`
-    """)
-
-    for row in r:
-        if not row[0] == 0.0:
-            if "diameter" in ret:
-                ret["diameter"].append(str(row[0]))
-            else:
-                ret["diameter"] = []
-                ret["diameter"].append(str(row[0]))
-
-    r = connector.dbExecute("""
-        SELECT DISTINCT `item`.`height`
-        FROM `item`, `site_group`
-        WHERE `site_group`.`id`='"""+group_hash+"""'
-        AND `item`.`site_group_ref`=`site_group`.`id`
-        ORDER BY `item`.`height`
-    """)
-
-    for row in r:
-        if not row[0] == "":
-            if "height" in ret:
-                ret["height"].append(str(row[0]))
-            else:
-                ret["height"] = []
-                ret["height"].append(str(row[0]))
-
+        ret["he"] = [row[0], row[1]]
+        ret["th"] = [row[2], row[3]]
+        ret["di"] = [row[4], row[5]]
 
     connector.dbClose()
 
