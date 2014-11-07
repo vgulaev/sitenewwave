@@ -62,6 +62,7 @@ class ResultTable():
         self.items_list = {}
 
 
+
     def get_items(self, params={}):
 
         connector = myDBC("catalog")
@@ -168,6 +169,7 @@ class ResultTable():
 
         r = connector.dbExecute(query)
 
+
         for line in r:
 
             if line[6] in self.items_list:
@@ -198,6 +200,7 @@ class ResultTable():
 
 
 
+
 def compose_table(term, params={}):
 
     rt = ResultTable(term.encode("utf-8"))
@@ -220,6 +223,7 @@ def compose_table(term, params={}):
 
     for _item_group in groups:
         ITEM_LIST = groups[_item_group]
+        ITEM_LIST_KEYS = sorted(ITEM_LIST.keys())
 
         item_header_tr = soup.new_tag("tr")
         item_header_tr["class"] = "iHeader"
@@ -252,7 +256,7 @@ def compose_table(term, params={}):
         #     </tr>
         # """.format(_item_group)
 
-        for item_n in ITEM_LIST:
+        for item_n in ITEM_LIST_KEYS:
             item = ITEM_LIST[item_n]
 
             min_price = ""
