@@ -917,7 +917,7 @@ tr.iHeader{
     padding-top: 1px;
     box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
     padding-left: 10px;
-    width:62px;
+    width:74px;
 
 }
 
@@ -2438,6 +2438,36 @@ hr{
     background: -webkit-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
     background: -o-linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
     background: linear-gradient(top , #D3F75F 0%, #D3F75F 47%, #D3F75F 100%) repeat scroll 0% 0% transparent;
+}
+
+.item_billet .itemBuy a.oItem .buySpan{
+
+    display: block;
+    background: -moz-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #FFB300 0%, #FFB300 47%, #D7AB42 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 25px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 9pt;
+    padding-top: 1px;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    width:74px;
+
+}
+
+.item_billet .itemBuy a.oItem .buySpan:hover{
+    background: -moz-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #F7CF5F 0%, #F7CF5F 47%, #F7CF5F 100%) repeat scroll 0% 0% transparent;
 }
 
 .item_billet .billet_item_image{

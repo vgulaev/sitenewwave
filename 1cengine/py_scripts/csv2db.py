@@ -24,7 +24,12 @@ class Item:
         self.item_price = item_array[13].replace(
             "\xc2\xa0", "").replace(",", ".").strip()
         self.item_price_type = item_array[14].replace(",", ".").strip()
-        self.item_height = item_array[15].replace("';", "").strip()
+        self.item_height = item_array[15].replace(",", ".").strip()
+        stock = item_array[16].replace("';", "").strip()
+        if stock is "":
+            self.in_stock = 0
+        else:
+            self.in_stock = 1
         self.optional_length = False
 
         if self.item_min_length is not "" or self.item_max_length is not "":
@@ -216,11 +221,11 @@ class Item:
             print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
-                `price_type_ref`, `price`, `is_char`)
-                VALUES ('{0}', '{1}', '{2}', {3})
+                `price_type_ref`, `price`, `is_char`, `in_stock`)
+                VALUES ('{0}', '{1}', '{2}', {3}, '{4}')
             """.format(
                 self.char_id, self.price_type_id,
-                self.item_price, self.char_price
+                self.item_price, self.char_price, self.in_stock
             )
 
         else:
@@ -241,11 +246,11 @@ class Item:
             print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
-                `price_type_ref`, `price`, `is_char`)
-                VALUES ('{0}', '{1}', '{2}', {3})
+                `price_type_ref`, `price`, `is_char`, `in_stock`)
+                VALUES ('{0}', '{1}', '{2}', {3}, '{4}')
             """.format(
                 self.item_id, self.price_type_id,
-                self.item_price, self.char_price
+                self.item_price, self.char_price, self.in_stock
             )
 
         self.cursor.execute(insert_text)

@@ -382,14 +382,24 @@ get_item_table = (html) ->
 
     $(".item_billet_select_char").change ->
         char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
-
+        stock = $(this).parent().find($(".item_billet_select_char option:selected")).attr("stock")
+        # alert(stock)
         $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price")
         $(this).parent().parent().parent().parent().find(".item_billet_select_price").each (index, element) =>
             if $(element).attr("for") is char
                 # alert(char)
                 $(element).addClass("selected_price")
-            else
-                # alert("XYN")
+
+        if stock is "0"
+            # alert(stock)
+            c_button = $(this).parent().parent().parent().parent().find(".bItem")
+            c_button.removeClass("bItem").addClass("oItem")
+            c_button.find(".buySpan").html("Под заказ")
+        if stock is "1"
+            # alert(stock)
+            c_button = $(this).parent().parent().parent().parent().find(".oItem")
+            c_button.removeClass("oItem").addClass("bItem")
+            c_button.find(".buySpan").html("Рассчитать")
 
 $(document).ready ->
 
@@ -608,6 +618,3 @@ $(document).ready ->
 
     $(".sidebar_checkbox").click ->
         exclude_parameters()
-
-    $(".item_billet_select_char").change ->
-        alert($(".item_billet_select_char option:selected").val())

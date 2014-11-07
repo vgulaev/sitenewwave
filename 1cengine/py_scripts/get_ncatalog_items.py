@@ -25,7 +25,7 @@ class Char():
         self.name = name
 
         self.hash = ""
-
+        self.in_stock = 0
         self.price_array = []
 
 class Item():
@@ -35,6 +35,7 @@ class Item():
         self.hash = ""
         self.unit = ""
         self.char_array = {}
+        self.in_stock = 0
         self.price_array = []
         self.is_char_price = True
 
@@ -42,14 +43,16 @@ class Item():
         if char_name not in self.char_array:
             self.char_array[char_name] = char
 
-    def add_price(self, price_type, price, char_name=""):
+    def add_price(self, price_type, price, in_stock, char_name=""):
         if self.is_char_price:
             char = self.char_array[char_name]
             if (price_type, price) not in char.price_array:
                 char.price_array.append((price_type, price))
+                char.in_stock = in_stock
         else:
             if (price_type, price) not in self.price_array:
                 self.price_array.append((price_type, price))
+                self.in_stock = in_stock
 
 
 class ResultTable():
@@ -116,7 +119,8 @@ class ResultTable():
             query = """
                 SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`
+                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`,
+                    `item_price`.`in_stock`
                     FROM `item`, `item_price`, `price_type`,
                     `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
@@ -138,7 +142,8 @@ class ResultTable():
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`
+                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
+                    `item_price`.`in_stock`
                     FROM `item`, `char`, `item_price`, `price_type`,
                     `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
@@ -149,13 +154,14 @@ class ResultTable():
                     {2}
                     {3}
                     {4}
-                    limit 20) as `id`
+                    ORDER BY `item`.`name` LIMIT 20) as `id`
                     )
                     AND `char`.`item_ref`=`item`.`id`
                     AND `item_price`.`item_ref`=`char`.`id`
                     AND `item_price`.`is_char`='1'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
+                    ORDER BY `item`.`name`
             """.format(self.group_name, parent, thickness, diameter, height)
 
         # print query
@@ -183,10 +189,10 @@ class ResultTable():
                 char = Char(line[1])
                 char.hash = line[8]
                 item.add_char(line[1], char)
-                item.add_price(line[4], line[3], line[1])
+                item.add_price(line[4], line[3], line[9], line[1])
             elif line[7] == 0:
                 item.is_char_price = False
-                item.add_price(line[4], line[3])
+                item.add_price(line[4], line[3], line[9])
 
         return self.items_list
 
@@ -250,7 +256,8 @@ def compose_table(term, params={}):
             item = ITEM_LIST[item_n]
 
             min_price = ""
-
+            stock_class = ""
+            _IN_STOCK = True
             prices_container = soup.new_tag("div")
 
             if item.is_char_price:
@@ -259,18 +266,31 @@ def compose_table(term, params={}):
 
                 is_first = " selected_price"
                 # char_list = "<select>"
+
+                rebuilt_achar_array = []
+
                 for char in item.char_array:
                     char_hash = item.char_array[char].hash
+                    in_stock = item.char_array[char].in_stock
                     char_option = soup.new_tag("option")
                     char_option["name"] = char_hash.decode("utf-8")
+                    char_option["stock"] = in_stock
                     char_option.append(char)
-
-                    char_select.append(char_option)
+                    _IN_STOCK = False
+                    if in_stock == 1:
+                        char_select.insert(0,char_option)
+                        _IN_STOCK = True
+                    else:
+                        char_select.append(char_option)
                     # char_list = char_list + "<option>" + char + "</option>"
+                    if in_stock == 0:
+                        stock_class = " out_of_stock"
+                    else:
+                        stock_class = ""
 
                     price_ul = soup.new_tag("ul")
-                    price_ul["class"] = "item_billet_select_price{0}".format(
-                        is_first
+                    price_ul["class"] = "item_billet_select_price{0}{1}".format(
+                        is_first, stock_class
                     )
                     is_first = ""
                     price_ul["for"] =  char_hash.decode("utf-8")
@@ -316,7 +336,7 @@ def compose_table(term, params={}):
                 price_ul["class"] = "item_billet_select_price{0}".format(
                     " selected_price"
                 )
-                price_ul["for"] =  "0"
+                price_ul["for"] = "0"
 
                 for price in item.price_array:
 
@@ -450,8 +470,12 @@ def compose_table(term, params={}):
             item_buy_span_tag["class"] = "buySpan"
 
             item_buy_a_tag = soup.new_tag("a")
-            item_buy_span_tag.string = "Рассчитать"
-            item_buy_a_tag["class"] = u"bItem"
+            if _IN_STOCK:
+                item_buy_span_tag.string = "Рассчитать"
+                item_buy_a_tag["class"] = u"bItem"
+            else:
+                item_buy_span_tag.string = "Под заказ"
+                item_buy_a_tag["class"] = u"oItem"
             item_buy_a_tag["name"] = item.hash
             item_buy_a_tag["href"] = u"Добавить в корзину"
 

@@ -379,18 +379,27 @@
       };
     })(this));
     return $(".item_billet_select_char").change(function() {
-      var char;
+      var c_button, char, stock;
       char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name");
+      stock = $(this).parent().find($(".item_billet_select_char option:selected")).attr("stock");
       $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price");
-      return $(this).parent().parent().parent().parent().find(".item_billet_select_price").each((function(_this) {
+      $(this).parent().parent().parent().parent().find(".item_billet_select_price").each((function(_this) {
         return function(index, element) {
           if ($(element).attr("for") === char) {
             return $(element).addClass("selected_price");
-          } else {
-
           }
         };
       })(this));
+      if (stock === "0") {
+        c_button = $(this).parent().parent().parent().parent().find(".bItem");
+        c_button.removeClass("bItem").addClass("oItem");
+        c_button.find(".buySpan").html("Под заказ");
+      }
+      if (stock === "1") {
+        c_button = $(this).parent().parent().parent().parent().find(".oItem");
+        c_button.removeClass("oItem").addClass("bItem");
+        return c_button.find(".buySpan").html("Рассчитать");
+      }
     });
   };
 
@@ -600,11 +609,8 @@
     $(".sungroup_show_button").click(function() {
       return get_parameters();
     });
-    $(".sidebar_checkbox").click(function() {
+    return $(".sidebar_checkbox").click(function() {
       return exclude_parameters();
-    });
-    return $(".item_billet_select_char").change(function() {
-      return alert($(".item_billet_select_char option:selected").val());
     });
   });
 
