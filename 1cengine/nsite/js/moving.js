@@ -172,7 +172,7 @@
 
   get_item_list = function(hash) {
     $("#itemName").val("");
-    $.ajax({
+    return $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_ncatalog_items.py",
       async: true,
@@ -180,15 +180,6 @@
       success: function(html) {
         App.C_HASH = hash;
         return get_item_table(html);
-      }
-    });
-    return $.ajax({
-      type: "GET",
-      url: "/1cengine/py_scripts/get_count_items.py",
-      async: true,
-      data: "hash=" + encodeURIComponent(hash) + "",
-      success: function(html) {
-        return $(".count_all_result").html(html);
       }
     });
   };
@@ -315,6 +306,7 @@
   };
 
   get_item_table = function(html) {
+    var params;
     $("#qRes").html(html);
     $("#qRes").fadeIn(400);
     if ($(".item").length >= 1) {
@@ -325,7 +317,9 @@
     if ($(".item").length === 20) {
       $("#show_next_prev").show();
     } else {
-      $("#show_next_prev").hide();
+      if (App.PAGE === 1) {
+        $("#show_next_prev").hide();
+      }
     }
     $(".bItem").click(function() {
       var char_id, elem_id, item, nid;
@@ -378,7 +372,7 @@
         });
       };
     })(this));
-    return $(".item_billet_select_char").change(function() {
+    $(".item_billet_select_char").change(function() {
       var c_button, char, stock;
       char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name");
       stock = $(this).parent().find($(".item_billet_select_char option:selected")).attr("stock");
@@ -401,10 +395,40 @@
         return c_button.find(".buySpan").html("Рассчитать");
       }
     });
+    params = "";
+    $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
+      return function(index, element) {
+        return params = params + "'" + $(element).attr("name") + "',";
+      };
+    })(this));
+    params = params + ";";
+    return $.ajax({
+      type: "GET",
+      url: "/1cengine/py_scripts/get_ncatalog_count_items.py",
+      async: true,
+      data: "hash=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + "",
+      success: function(html) {
+        var i, page_list;
+        App.PAGE_COUNT = Math.ceil(html / 20);
+        i = 1;
+        page_list = "<ul>";
+        App.PAGE;
+        while (i !== App.PAGE_COUNT + 1) {
+          if (i === App.PAGE) {
+            page_list = page_list + ("<li class='active_page'>" + i + "</li>");
+          } else {
+            page_list = page_list + ("<li>" + i + "</li>");
+          }
+          i++;
+        }
+        page_list = page_list + "</ul>";
+        return $(".count_all_result").html(page_list);
+      }
+    });
   };
 
   $(document).ready(function() {
-    var PAGE, c_url, is_empty, item, name, things;
+    var c_url, is_empty, item, name, things;
     $.blockUI.defaults.css.borderRadius = '10px';
     $.blockUI.defaults.fadeIn = 100;
     $.blockUI.defaults.fadeOut = 100;
@@ -415,7 +439,7 @@
     $.blockUI.defaults.css.width = '700px';
     $.blockUI.defaults.css.paddingTop = '70px';
     $.blockUI.defaults.css.paddingLeft = '20px';
-    PAGE = 1;
+    App.PAGE = 1;
     if ($("#tags").css("display") === "none") {
       $("#showGroupsDiv").show();
     }
@@ -482,56 +506,12 @@
     $("#show_groups").click(function() {
       return show_groups();
     });
-    $("#showAll").click(function() {
-      var data_string, value, what;
-      value = $("#itemName").val();
-      value = value.replace("+", " ");
-      if (value === "") {
-        what = "hash";
-        data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true";
-      } else {
-        what = "term";
-        data_string = what + "=" + encodeURIComponent(value) + "&show_all=true";
-      }
-      return $.ajax({
-        type: "GET",
-        url: "/1cengine/py_scripts/get_ncatalog_items.py",
-        async: true,
-        data: data_string,
-        success: function(html) {
-          return get_item_table(html);
-        }
-      });
-    });
     $(".next_result").click(function() {
       var data_string, n_page, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
-      n_page = (PAGE * 1) + 1;
-      if (value === "") {
-        what = "hash";
-        data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
-      } else {
-        what = "term";
-        data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
-      }
-      return $.ajax({
-        type: "GET",
-        url: "/1cengine/py_scripts/get_ncatalog_items.py",
-        async: true,
-        data: data_string,
-        success: function(html) {
-          PAGE = n_page;
-          return get_item_table(html);
-        }
-      });
-    });
-    $(".prev_result").click(function() {
-      var data_string, n_page, value, what;
-      value = $("#itemName").val();
-      value = value.replace("+", " ");
-      if (PAGE !== 1) {
-        n_page = PAGE - 1;
+      if (App.PAGE !== App.PAGE_COUNT) {
+        n_page = (App.PAGE * 1) + 1;
         if (value === "") {
           what = "hash";
           data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
@@ -545,7 +525,32 @@
           async: true,
           data: data_string,
           success: function(html) {
-            PAGE = PAGE - 1;
+            App.PAGE++;
+            return get_item_table(html);
+          }
+        });
+      }
+    });
+    $(".prev_result").click(function() {
+      var data_string, n_page, value, what;
+      value = $("#itemName").val();
+      value = value.replace("+", " ");
+      if (App.PAGE !== 1) {
+        n_page = App.PAGE - 1;
+        if (value === "") {
+          what = "hash";
+          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
+        } else {
+          what = "term";
+          data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
+        }
+        return $.ajax({
+          type: "GET",
+          url: "/1cengine/py_scripts/get_ncatalog_items.py",
+          async: true,
+          data: data_string,
+          success: function(html) {
+            App.PAGE--;
             return get_item_table(html);
           }
         });

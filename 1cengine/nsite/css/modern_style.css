@@ -468,8 +468,8 @@ tr.iHeader{
 
 #showAll{
     height: 30px;
-    width: 200px;
-    cursor: pointer;
+    width: 480px;
+    /*cursor: pointer;*/
     /*padding-right: 10px;*/
     text-align: center;
     float: left;
@@ -540,7 +540,7 @@ tr.iHeader{
     background: linear-gradient(top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0% transparent;
 }
 
-.next_result:hover, .prev_result:hover, #showAll:hover{
+.next_result:hover, .prev_result:hover{
     /*box-shadow: inset 0 0 20px 3px rgba(0,0,0,0.3);*/
     background: -moz-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
     background: -webkit-linear-gradient(top , #6168a9 0%, #6168a9 76%, #6168a9 100%) repeat scroll 0% 0% transparent;
@@ -549,7 +549,7 @@ tr.iHeader{
 }
 
 #show_next_prev{
-    margin-left: 150px;
+    /*margin-left: 150px;*/
     display: none;
 }
 
@@ -2485,4 +2485,38 @@ hr{
 
 .item_billet .selected_price{
     display:block;
+}
+
+.count_all_result ul{
+    margin: 0;
+    padding:0;
+}
+.count_all_result li{
+    list-style: none;
+    background-image: none;
+    display: inline;
+    cursor: pointer;
+    width:25px;
+    height:25px;
+    padding:2px 8px;
+    border-radius: 5px;
+}
+
+.count_all_result li:hover{
+    list-style: none;
+    background-image: none;
+    display: inline;
+    cursor: pointer;
+    width:25px;
+    height:25px;
+    padding:2px 8px;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
+}
+
+.count_all_result li.active_page, .count_all_result li.active_page{
+    background-color: #fff;
+    color:#2D3694;
+    box-shadow: inset 0 0 1px 1px rgba(0,0,0,0.7);
+    cursor: default;
 }

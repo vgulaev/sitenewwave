@@ -63,7 +63,7 @@ class ResultTable():
 
 
 
-    def get_items(self, params={}):
+    def get_items(self, offset=0, limit=20, params={}):
 
         connector = myDBC("catalog")
         connector.dbConnect()
@@ -132,13 +132,13 @@ class ResultTable():
                     {2}
                     {3}
                     {4}
-                    limit 20) as `id`
+                    limit {5},{6}) as `id`
                     )
                     AND `item_price`.`item_ref`=`item`.`id`
                     AND `item_price`.`is_char`='0'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
-            """.format(self.group_name, parent, thickness, diameter, height)
+            """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
         else:
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
@@ -155,7 +155,7 @@ class ResultTable():
                     {2}
                     {3}
                     {4}
-                    ORDER BY `item`.`name` LIMIT 20) as `id`
+                    ORDER BY `item`.`name` LIMIT {5},{6}) as `id`
                     )
                     AND `char`.`item_ref`=`item`.`id`
                     AND `item_price`.`item_ref`=`char`.`id`
@@ -163,7 +163,7 @@ class ResultTable():
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
                     ORDER BY `item`.`name`
-            """.format(self.group_name, parent, thickness, diameter, height)
+            """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
 
         # print query
 
@@ -201,11 +201,11 @@ class ResultTable():
 
 
 
-def compose_table(term, params={}):
+def compose_table(term, offset=0, limit=20, params={}):
 
     rt = ResultTable(term.encode("utf-8"))
 
-    groups = rt.get_items(params)
+    groups = rt.get_items(offset, limit, params)
 
     result_table = soup.new_tag("table")
     result_table["id"] = "tableRes"
@@ -552,6 +552,12 @@ if "hash" in form:
 
     print "Content-Type: text/html; charset=utf-8\n"
 
+    offset = 0
+    limit = 20
+    if "page" in form:
+        xy = int(form["page"].value)
+        if xy != 1:
+            offset = ((xy + (xy-1)-1) * 10)
 
     if "params" in form and form["params"].value != ";":
         # print "|"+form["params"].value+"|"
@@ -593,7 +599,7 @@ if "hash" in form:
                     params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
 
         # print param_string
-        print str(compose_table(form["hash"].value.decode("utf-8"), params))
+        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit, params))
 
     else:
-        print str(compose_table(form["hash"].value.decode("utf-8")))
+        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit))

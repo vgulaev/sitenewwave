@@ -141,16 +141,16 @@ def set_show_nexr_prev():
 
     span_tag.append(prev_a_tag)
 
-    current_span_tag = soup.new_tag("span")
-    # current_span_tag["style"] = "display:none;"
-    current_span_tag["class"] = "current_page"
-    current_span_tag.string = "1"
+    # current_span_tag = soup.new_tag("span")
+    # # current_span_tag["style"] = "display:none;"
+    # current_span_tag["class"] = "current_page"
+    # current_span_tag.string = "1"
 
-    span_tag.append(current_span_tag)
+    # span_tag.append(current_span_tag)
 
     a_tag = soup.new_tag("span")
     a_tag["id"] = "showAll"
-    a_tag.string = u"Еще результаты: "
+    # a_tag.string = u"Еще результаты: "
     # if "catalog" not in form:
     #     a_tag["style"] = "display:none"
 

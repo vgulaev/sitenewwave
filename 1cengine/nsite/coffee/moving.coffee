@@ -190,15 +190,6 @@ get_item_list = (hash) ->
             get_item_table(html)
 
 
-    $.ajax
-        type: "GET"
-        url: "/1cengine/py_scripts/get_count_items.py"
-        async: true
-        data: "hash=" + encodeURIComponent(hash) + ""
-        success: (html) ->
-            $(".count_all_result").html html
-
-
 get_subgroup = (element, g_name, g_hash) ->
     # alert(g_name+" :: "+g_hash)
 
@@ -326,13 +317,8 @@ get_item_table = (html) ->
     if $(".item").length is 20
         $("#show_next_prev").show()
     else
-        $("#show_next_prev").hide()
-
-    # window.history.pushState(
-    #     {term: value},
-    #     '',
-    #     '/1cengine/site/'+$.trim(value)+'/'
-    # )
+        if App.PAGE == 1
+            $("#show_next_prev").hide()
 
     $(".bItem").click ->
         # alert("lol")
@@ -401,6 +387,35 @@ get_item_table = (html) ->
             c_button.removeClass("oItem").addClass("bItem")
             c_button.find(".buySpan").html("Рассчитать")
 
+    params = ""
+    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
+        params = params + "'"+$(element).attr("name")+"',"
+        # alert($(element).attr("name"))
+    params = params + ";"
+
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_ncatalog_count_items.py"
+        async: true
+        data: "hash=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + ""
+        success: (html) ->
+            # alert(html)
+            App.PAGE_COUNT = Math.ceil(html / 20)
+            i = 1
+            page_list = "<ul>"
+            # alert(App.PAGE)
+            App.PAGE
+            while i != App.PAGE_COUNT+1
+                if i == App.PAGE
+                    page_list = page_list + "<li class='active_page'>#{i}</li>"
+                else
+                    page_list = page_list + "<li>#{i}</li>"
+                i++
+            page_list = page_list + "</ul>"
+            $(".count_all_result").html (page_list)
+
+
+
 $(document).ready ->
 
     $.blockUI.defaults.css.borderRadius = '10px'
@@ -415,7 +430,7 @@ $(document).ready ->
     $.blockUI.defaults.css.paddingTop = '70px'
     $.blockUI.defaults.css.paddingLeft = '20px'
 
-    PAGE = 1
+    App.PAGE = 1
 
     if $("#tags").css("display") is "none"
         $("#showGroupsDiv").show()
@@ -486,57 +501,12 @@ $(document).ready ->
     $("#show_groups").click ->
         show_groups()
 
-    $("#showAll").click ->
-
-        value = $("#itemName").val()
-        value = value.replace("+", " ")
-
-        if value is ""
-            what = "hash"
-            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true"
-        else
-            what = "term"
-            data_string = what + "=" + encodeURIComponent(value) + "&show_all=true"
-
-
-        $.ajax
-            type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
-            async: true
-            data: data_string
-            success: (html) ->
-                get_item_table(html)
-
-
     $(".next_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
-        n_page = ( PAGE * 1 ) + 1
 
-        if value is ""
-            what = "hash"
-            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
-        else
-            what = "term"
-            data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
-
-        $.ajax
-            type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
-            async: true
-            data: data_string
-            success: (html) ->
-                PAGE = n_page
-                get_item_table(html)
-
-
-    $(".prev_result").click ->
-        value = $("#itemName").val()
-        value = value.replace("+", " ")
-
-
-        if PAGE != 1
-            n_page = PAGE - 1
+        if App.PAGE != App.PAGE_COUNT
+            n_page = ( App.PAGE * 1 ) + 1
 
             if value is ""
                 what = "hash"
@@ -551,8 +521,35 @@ $(document).ready ->
                 async: true
                 data: data_string
                 success: (html) ->
-                    PAGE = PAGE - 1
+                    App.PAGE++
                     get_item_table(html)
+
+
+
+    $(".prev_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+
+
+        if App.PAGE != 1
+            n_page = App.PAGE - 1
+
+            if value is ""
+                what = "hash"
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+            else
+                what = "term"
+                data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
+
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/get_ncatalog_items.py"
+                async: true
+                data: data_string
+                success: (html) ->
+                    App.PAGE--
+                    get_item_table(html)
+
 
     $("#orderDiv").find(".next_step").click ->
         switch_tabs("switchDeliveryDiv")
