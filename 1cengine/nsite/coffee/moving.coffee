@@ -512,12 +512,18 @@ $(document).ready ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
+        params = ""
+        $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
+            params = params + "'"+$(element).attr("name")+"',"
+            # alert($(element).attr("name"))
+        params = params + ";"
+
         if App.PAGE != App.PAGE_COUNT
             n_page = ( App.PAGE * 1 ) + 1
 
             if value is ""
                 what = "hash"
-                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + ""
             else
                 what = "term"
                 data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
@@ -537,13 +543,19 @@ $(document).ready ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
+        params = ""
+        $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
+            params = params + "'"+$(element).attr("name")+"',"
+            # alert($(element).attr("name"))
+        params = params + ";"
+
 
         if App.PAGE != 1
             n_page = App.PAGE - 1
 
             if value is ""
                 what = "hash"
-                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + ""
             else
                 what = "term"
                 data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""

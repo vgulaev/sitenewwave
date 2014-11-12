@@ -518,14 +518,21 @@
       return show_groups();
     });
     $(".next_result").click(function() {
-      var data_string, n_page, value, what;
+      var data_string, n_page, params, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
+      params = "";
+      $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
+        return function(index, element) {
+          return params = params + "'" + $(element).attr("name") + "',";
+        };
+      })(this));
+      params = params + ";";
       if (App.PAGE !== App.PAGE_COUNT) {
         n_page = (App.PAGE * 1) + 1;
         if (value === "") {
           what = "hash";
-          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
+          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + "";
         } else {
           what = "term";
           data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
@@ -543,14 +550,21 @@
       }
     });
     $(".prev_result").click(function() {
-      var data_string, n_page, value, what;
+      var data_string, n_page, params, value, what;
       value = $("#itemName").val();
       value = value.replace("+", " ");
+      params = "";
+      $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
+        return function(index, element) {
+          return params = params + "'" + $(element).attr("name") + "',";
+        };
+      })(this));
+      params = params + ";";
       if (App.PAGE !== 1) {
         n_page = App.PAGE - 1;
         if (value === "") {
           what = "hash";
-          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "";
+          data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + "";
         } else {
           what = "term";
           data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + "";
