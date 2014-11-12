@@ -415,14 +415,24 @@
         App.PAGE;
         while (i !== App.PAGE_COUNT + 1) {
           if (i === App.PAGE) {
-            page_list = page_list + ("<li class='active_page'>" + i + "</li>");
+            page_list = page_list + ("<li name='" + i + "' class='active_page'>" + i + "</li>");
           } else {
-            page_list = page_list + ("<li>" + i + "</li>");
+            page_list = page_list + ("<li name='" + i + "'>" + i + "</li>");
           }
           i++;
         }
         page_list = page_list + "</ul>";
-        return $(".count_all_result").html(page_list);
+        $(".count_all_result").html(page_list);
+        return $(".count_all_result").find("li").each((function(_this) {
+          return function(index, element) {
+            return $(element).click(function() {
+              var page_needed;
+              page_needed = $(this).attr("name");
+              App.PAGE = page_needed - 1;
+              return $(".next_result").click();
+            });
+          };
+        })(this));
       }
     });
   };
