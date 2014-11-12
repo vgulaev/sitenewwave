@@ -253,9 +253,9 @@ class App.Item
 
     get_modal: ->
         if App.MyBasket.is_in_basket(this)
-            modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>'
+            modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>'
         else
-            modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>'
+            modal_link = '<a class="add_to_basket" href="javascript:void(0)">В корзину</a>'
 
 
         if @is_measureable()

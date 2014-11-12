@@ -259,9 +259,9 @@
     Item.prototype.get_modal = function() {
       var c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
       if (App.MyBasket.is_in_basket(this)) {
-        modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>';
+        modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
       } else {
-        modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>';
+        modal_link = '<a class="add_to_basket" href="javascript:void(0)">В корзину</a>';
       }
       if (this.is_measureable()) {
         c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
