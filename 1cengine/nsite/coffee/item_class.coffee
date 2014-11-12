@@ -131,7 +131,7 @@ class App.Item
         if @is_measureable()
             $(".buy_count").val(@buy_count)
 
-            $(".buy_length").val(@buy_length)
+            $(".buy_length").html(@buy_length)
 
         if @is_kis
             $(".char_length").val(@weight)
@@ -216,7 +216,7 @@ class App.Item
 
             $(".buy_length").bind 'change keyup', (event) =>
                 window.clearTimeout(time_out_handle)
-                time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").val())), 1000
+                time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").html())), 1000
 
         $(".buy_weight").bind 'change', (event) =>
             @change_buy_weight($(".buy_weight").val())
@@ -259,11 +259,14 @@ class App.Item
 
 
         if @is_measureable()
-            l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
+            # l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
             c_input = '<input class="buy_count" pattern="[0-9]+" value="'+@buy_count+'" />'
+
+            l_input = """<div class="length_item_overall">Общий метраж: <span class="buy_length">#{@buy_length}</span></div>"""
         else
-            l_input = '<input class="buy_length" value="---" disabled />'
+            # l_input = '<input class="buy_length" value="---" disabled />'
             c_input = '<input class="buy_count" value="---" disabled />'
+            l_input = ""
         w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="'+@buy_weight+'" />'
 
         if @is_kis
@@ -305,9 +308,7 @@ class App.Item
         </tr>
         <tr class="buy_item_count">
         <td>Количество</td>
-        <td style="display:none">
-            #{l_input}
-        </td>
+
         <td>
             #{c_input}
         </td>
@@ -323,6 +324,7 @@ class App.Item
 
         </table>
         <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
+        #{l_input}
         <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{App.MyBasket._sum}</span></div>
         <span class="popUpContinue">#{modal_link}</span>
         </div>""";

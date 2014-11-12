@@ -335,12 +335,15 @@ get_item_table = (html) ->
             item.show_modal()
 
     $(".oItem").click ->
-
-        elem_id = $(this).closest( "tr" ).attr("id")
-
-        item = App.Item.elem_exist(elem_id)
+        # alert("lol")
+        elem_id = $(this).attr("name")
+        char_id = $(this).closest( "table" ).find($(".item_billet_select_char option:selected")).attr("name")
+        if char_id is undefined
+            char_id = "0"
+        nid = (char_id+":"+elem_id)
+        item = App.Item.elem_exist(nid)
         if item is false
-            item = new App.Item $(this).closest( "tr" ).attr("id")
+            item = new App.Item nid
         else
             item.show_modal()
 

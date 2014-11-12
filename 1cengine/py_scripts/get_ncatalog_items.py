@@ -481,11 +481,11 @@ def compose_table(term, offset=0, limit=20, params={}):
                 item_buy_span_tag.string = "Под заказ"
                 item_buy_a_tag["class"] = u"oItem"
             item_buy_a_tag["name"] = item.hash
-            item_buy_a_tag["href"] = u"Добавить в корзину"
+            item_buy_a_tag["href"] = "javascript:void(0)"
 
             item_buy_a_tag["onClick"] = u"""yaCounter15882208.reachGoal(
-                'onBuyLinkPressed', 'купить');
-                return false"""
+                'onBuyLinkPressed', 'купить'
+                );return false"""
 
             item_buy_a_tag.append(item_buy_span_tag)
             item_billet_table_lower_buy_td.append(item_buy_a_tag)

@@ -338,11 +338,16 @@
       }
     });
     $(".oItem").click(function() {
-      var elem_id, item;
-      elem_id = $(this).closest("tr").attr("id");
-      item = App.Item.elem_exist(elem_id);
+      var char_id, elem_id, item, nid;
+      elem_id = $(this).attr("name");
+      char_id = $(this).closest("table").find($(".item_billet_select_char option:selected")).attr("name");
+      if (char_id === void 0) {
+        char_id = "0";
+      }
+      nid = char_id + ":" + elem_id;
+      item = App.Item.elem_exist(nid);
       if (item === false) {
-        return item = new App.Item($(this).closest("tr").attr("id"));
+        return item = new App.Item(nid);
       } else {
         return item.show_modal();
       }

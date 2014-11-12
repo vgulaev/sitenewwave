@@ -1748,7 +1748,14 @@ tr.iHeader{
     text-align: right;
     font-size: 10pt;
     margin-right: 15px;
-    nargin-bottom:10px;
+    margin-bottom:10px;
+}
+
+.length_item_overall{
+    text-align: right;
+    font-size: 10pt;
+    margin-right: 15px;
+    margin:10px;
 }
 
 li.special_nav{

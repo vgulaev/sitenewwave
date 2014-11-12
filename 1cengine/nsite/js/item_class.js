@@ -121,7 +121,7 @@
     Item.prototype.change_modal = function() {
       if (this.is_measureable()) {
         $(".buy_count").val(this.buy_count);
-        $(".buy_length").val(this.buy_length);
+        $(".buy_length").html(this.buy_length);
       }
       if (this.is_kis) {
         $(".char_length").val(this.weight);
@@ -210,7 +210,7 @@
           return function(event) {
             window.clearTimeout(time_out_handle);
             return time_out_handle = window.setTimeout((function() {
-              return _this.change_buy_length($(".buy_length").val());
+              return _this.change_buy_length($(".buy_length").html());
             }), 1000);
           };
         })(this));
@@ -264,11 +264,11 @@
         modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>';
       }
       if (this.is_measureable()) {
-        l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="' + this.buy_length + '" />';
         c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
+        l_input = "<div class=\"length_item_overall\">Общий метраж: <span class=\"buy_length\">" + this.buy_length + "</span></div>";
       } else {
-        l_input = '<input class="buy_length" value="---" disabled />';
         c_input = '<input class="buy_count" value="---" disabled />';
+        l_input = "";
       }
       w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
       if (this.is_kis) {
@@ -287,7 +287,7 @@
         "пог. м": "Метры пог."
       };
       c_izm = edizm_dict["" + this.ed_izm];
-      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td style=\"display:none\">\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 
