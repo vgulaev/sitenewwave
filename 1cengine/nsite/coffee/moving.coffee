@@ -275,6 +275,7 @@ get_parameters = () ->
         success: (html) ->
             # alert(html)
             App.C_HASH = hash
+            App.PAGE = 1
             get_item_table(html)
 
 exclude_parameters = (chk_box) ->

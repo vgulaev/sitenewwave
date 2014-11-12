@@ -266,6 +266,7 @@
       data: "hash=" + encodeURIComponent(hash) + "&params=" + encodeURIComponent(params) + "",
       success: function(html) {
         App.C_HASH = hash;
+        App.PAGE = 1;
         return get_item_table(html);
       }
     });
