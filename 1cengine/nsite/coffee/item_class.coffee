@@ -44,6 +44,7 @@ class App.Item
 
     get_chars: ->
         response = null
+        # alert(@id)
         $.ajax
             type: "POST"
             url: "/1cengine/py_scripts/get_item_lwkes.py"
@@ -51,6 +52,7 @@ class App.Item
             data: "item_hash=" + @id
             success: (html) ->
                 response = html
+                # alert(response)
                 response
 
         response
@@ -63,6 +65,7 @@ class App.Item
         @kf     = char_array[2]
         @ed_izm = char_array[3]
         @stock  = char_array[4]
+        @width  = char_array[5]
 
         i_hash = @id.slice 0, @id.indexOf(":")
         i_class = @id.slice @id.indexOf(":") + 1
@@ -135,6 +138,7 @@ class App.Item
 
         if @is_kis
             $(".char_length").val(@weight)
+            $(".buy_square").html((@width * @weight * @buy_count).toFixed(2))
 
         $(".buy_weight").val(@buy_weight)
 
@@ -169,6 +173,7 @@ class App.Item
         $(".final_price").html(@final_price)
 
     change_char_length: (n_length) ->
+        n_length = n_length.replace /,+/g, "."
         if n_length < 0.2
             n_length = 0.2
         else if n_length > 6
@@ -275,6 +280,10 @@ class App.Item
             set_length = """
                 <p class="list_length">Укажите требуемую длину листа: #{cl_input}</p>
             """
+
+            buy_square = (@width * @weight * @buy_count).toFixed(2)
+            # alert(@width+" x "+@weight)
+            l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
         else
             set_length = ""
 

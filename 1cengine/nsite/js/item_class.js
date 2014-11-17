@@ -68,6 +68,7 @@
       this.kf = char_array[2];
       this.ed_izm = char_array[3];
       this.stock = char_array[4];
+      this.width = char_array[5];
       i_hash = this.id.slice(0, this.id.indexOf(":"));
       i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
@@ -125,6 +126,7 @@
       }
       if (this.is_kis) {
         $(".char_length").val(this.weight);
+        $(".buy_square").html((this.width * this.weight * this.buy_count).toFixed(2));
       }
       $(".buy_weight").val(this.buy_weight);
       return this.change_modal_price();
@@ -158,6 +160,7 @@
     };
 
     Item.prototype.change_char_length = function(n_length) {
+      n_length = n_length.replace(/,+/g, ".");
       if (n_length < 0.2) {
         n_length = 0.2;
       } else if (n_length > 6) {
@@ -257,7 +260,7 @@
     };
 
     Item.prototype.get_modal = function() {
-      var c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
+      var buy_square, c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
       if (App.MyBasket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
       } else {
@@ -274,6 +277,8 @@
       if (this.is_kis) {
         cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="' + this.weight + '" />';
         set_length = "<p class=\"list_length\">Укажите требуемую длину листа: " + cl_input + "</p>";
+        buy_square = (this.width * this.weight * this.buy_count).toFixed(2);
+        l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
       } else {
         set_length = "";
       }
