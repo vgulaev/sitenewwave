@@ -36,7 +36,7 @@ class App.Item
         App.Item._existing.push this
 
     is_measureable: ->
-        if @length is "0.0"
+        if @length is "0.0" or @length is "0" or @length is ""
             false
         else
             true

@@ -36,7 +36,7 @@
     }
 
     Item.prototype.is_measureable = function() {
-      if (this.length === "0.0") {
+      if (this.length === "0.0" || this.length === "0" || this.length === "") {
         return false;
       } else {
         return true;
