@@ -282,7 +282,7 @@
     })(this));
     params = params + ";";
     $("#itemName").val("");
-    hash = $(".active_group").attr("name");
+    hash = $(".active_group").attr("inid");
     return $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_excluded.py",

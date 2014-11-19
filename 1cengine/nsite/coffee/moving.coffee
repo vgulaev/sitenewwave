@@ -285,7 +285,7 @@ exclude_parameters = (chk_box) ->
         # alert($(element).attr("name"))
     params = params + ";"
     $("#itemName").val ""
-    hash = $(".active_group").attr("name")
+    hash = $(".active_group").attr("inid")
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_excluded.py"

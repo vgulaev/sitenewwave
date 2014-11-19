@@ -9,104 +9,172 @@ cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 from secrets import *
 
+def get_excluded_all(group_name, params):
 
-def get_excluded_item_params_from_parent(group_name, parent_array, excluded_field):
+    if "pa" in params:
+        if params["pa"].__len__() > 1:
+            parent = " OR ".join(params["pa"])
+        else:
+            parent = params["pa"][0]
+        parent = "AND ({0})".format(parent)
+    else:
+        parent = ""
+
+    if "th" in params:
+        if params["th"].__len__() > 1:
+            thickness = " OR ".join(params["th"])
+        else:
+            thickness = params["th"][0]
+        thickness = "AND ({0})".format(thickness)
+    else:
+        thickness = ""
+
+    if "di" in params:
+        if params["di"].__len__() > 1:
+            diameter = " OR ".join(params["di"])
+        else:
+            diameter = params["di"][0]
+        diameter = "AND ({0})".format(diameter)
+    else:
+        diameter = ""
+
+    if "he" in params:
+        if params["he"].__len__() > 1:
+            height = " OR ".join(params["he"])
+        else:
+            height = params["he"][0]
+        height = "AND ({0})".format(height)
+    else:
+        height = ""
+
     ret = []
     connector = myDBC("catalog")
     connector.dbConnect()
 
-    parent_name = " OR ".join(parent_array)
-    # print parent_name
+    pa_array = []
+    di_array = []
+    th_array = []
+    he_array = []
 
-    query = """
-        SELECT DISTINCT `item`.`{2}`
-        FROM `item`, `item_parent`, `site_group`
-        WHERE `site_group`.`name`='{0}'
-            AND `item`.`site_group_ref`=`site_group`.`id`
-            AND `item`.`{2}` NOT IN
-            (
-                SELECT DISTINCT `item`.`{2}`
-                FROM `item`, `item_parent`, `site_group`
-                WHERE `site_group`.`name`='{0}'
-                    AND `item`.`site_group_ref`=`site_group`.`id`
-                    AND ({1})
-                    AND `item`.`item_parent_ref`=`item_parent`.`id`
-            )
-    """.format(group_name, parent_name, excluded_field)
+    if height != "" or thickness != "" or diameter != "":
 
-    r = connector.dbExecute(query)
-
-    for row in r:
-        ret.append(excluded_field[:2]+"_"+str(row[0]))
-
-    connector.dbClose()
-
-    return ret
-
-
-def get_excluded_item_parents(group_name, param_array):
-    ret = []
-    connector = myDBC("catalog")
-    connector.dbConnect()
-
-    param_value = " OR ".join(param_array)
-
-    query = """
-        SELECT DISTINCT `item_parent`.`name`
-        FROM `item_parent`, `item`, `site_group`
-        WHERE `site_group`.`name`='{0}'
-            AND `item`.`site_group_ref`=`site_group`.`id`
-            AND `item_parent`.`id`=`item`.`item_parent_ref`
-            AND `item_parent`.`name` NOT IN
-            (
+        pa_query = """
                 SELECT DISTINCT `item_parent`.`name`
-                FROM `item_parent`, `item`, `site_group`
-                WHERE `site_group`.`name`='{0}'
-                    AND `item`.`site_group_ref`=`site_group`.`id`
-                    AND `item_parent`.`id`=`item`.`item_parent_ref`
-                    AND ({1})
-            )
-    """.format(group_name, param_value)
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    AND `item_parent`.`name` NOT IN (
+                SELECT `item_parent`.`name`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    {1}
+                    {2}
+                    {3}
+                    AND `item`.`site_group_ref` = '{0}'
+                ) AND `item`.`site_group_ref` = '{0}'
+        """.format(group_name, thickness, diameter, height)
 
-    r = connector.dbExecute(query)
+        r = connector.dbExecute(pa_query)
 
-    for row in r:
-        ret.append("pa_"+str(row[0]))
+        # print(pa_query)
+        for row in r:
+            pa = "pa_"+str(row[0])
+            if not pa in pa_array and row[0] != "":
+                pa_array.append(pa)
+
+    if height != "" or thickness != "" or parent != "":
+
+        di_query = """
+                SELECT DISTINCT `item`.`diameter`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    AND `item`.`diameter` NOT IN (
+                SELECT `item`.`diameter`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    {1}
+                    {2}
+                    {3}
+                    AND `item`.`site_group_ref` = '{0}'
+                ) AND `item`.`site_group_ref` = '{0}'
+        """.format(group_name, thickness, parent, height)
+
+        r = connector.dbExecute(di_query)
+
+        # print(di_query)
+        for row in r:
+            di = "di_"+str(row[0])
+            if not di in di_array and row[0] != "":
+                di_array.append(di)
+
+    if height != "" or parent != "" or diameter != "":
+
+        th_query = """
+                SELECT DISTINCT `item`.`thickness`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    AND `item`.`thickness` NOT IN (
+                SELECT `item`.`thickness`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    {1}
+                    {2}
+                    {3}
+                    AND `item`.`site_group_ref` = '{0}'
+                ) AND `item`.`site_group_ref` = '{0}'
+        """.format(group_name, diameter, parent, height)
+
+        r = connector.dbExecute(th_query)
+
+        # print(th_query)
+        for row in r:
+            th = "th_"+str(row[0])
+            if not th in th_array and row[0] != "":
+                th_array.append(th)
+
+    if parent != "" or thickness != "" or diameter != "":
+
+        he_query = """
+                SELECT DISTINCT `item`.`height`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    AND `item`.`height` NOT IN (
+                SELECT `item`.`height`
+                FROM `item`, `item_parent`, `site_group`
+                WHERE
+                    `item`.`item_parent_ref`=`item_parent`.`id`
+                    {1}
+                    {2}
+                    {3}
+                    AND `item`.`site_group_ref` = '{0}'
+                ) AND `item`.`site_group_ref` = '{0}'
+        """.format(group_name, diameter, parent, thickness)
+
+        r = connector.dbExecute(he_query)
+
+        # print(he_query)
+        for row in r:
+            he = "he_"+str(row[0])
+            if not he in he_array and row[0] != "":
+                he_array.append(he)
 
     connector.dbClose()
 
+    pa_string = ";".join(pa_array)
+    he_string = ";".join(he_array)
+    di_string = ";".join(di_array)
+    th_string = ";".join(th_array)
+
+    ret = pa_string +";"+ he_string +";"+ di_string +";"+ th_string
+
     return ret
 
-
-def get_excluded_item_params(group_name, param_array, excluded_param):
-    ret = []
-    connector = myDBC("catalog")
-    connector.dbConnect()
-
-    active_param_value = " OR ".join(param_array)
-
-    query = """
-        SELECT DISTINCT `item`.`{2}`
-        FROM `item_parent`, `item`, `site_group`
-        WHERE `site_group`.`name`='{0}'
-            AND `item`.`site_group_ref`=`site_group`.`id`
-            AND `item`.`{2}` NOT IN (
-                SELECT DISTINCT `item`.`{2}`
-                FROM `item_parent`, `item`, `site_group`
-                WHERE `site_group`.`name`='{0}'
-                    AND `item`.`site_group_ref`=`site_group`.`id`
-                    AND ({1})
-            )
-    """.format(group_name, active_param_value, excluded_param)
-
-    r = connector.dbExecute(query)
-
-    for row in r:
-        ret.append(excluded_param[:2]+"_"+str(row[0]))
-
-    connector.dbClose()
-    # print ret
-    return ret
 
 form = cgi.FieldStorage()
 if "hash" in form:
@@ -125,6 +193,16 @@ if "hash" in form:
         ).split("','")
 
         excluded_string = ""
+
+    if "params" in form and form["params"].value != ";":
+        # print "|"+form["params"].value+"|"
+        params = {}
+        param_string = form["params"].value
+        param_arr = param_string.replace(
+            "'", "", 1
+        ).replace(
+            "',;", ""
+        ).split("','")
 
         for param in param_arr:
             if "pa_" in param:
@@ -148,18 +226,15 @@ if "hash" in form:
                     params["di"] = []
                     params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
 
-        if "pa" in params:
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_params_from_parent(form["hash"].value, params["pa"], "diameter")) + " ; "
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_params_from_parent(form["hash"].value, params["pa"], "thickness")) + " ; "
-
-        if "th" in params:
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_parents(form["hash"].value, params["th"])) + " ; "
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_params(form["hash"].value, params["th"], "diameter")) + " ; "
-
-        if "di" in params:
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_parents(form["hash"].value, params["di"])) + " ; "
-            excluded_string = excluded_string + " ; ".join(get_excluded_item_params(form["hash"].value, params["di"], "thickness")) + " ; "
+            if "he_" in param:
+                if "he" in params:
+                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
+                else:
+                    params["he"] = []
+                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
 
 
+            excluded_string = get_excluded_all(form["hash"].value, params)
 
         print excluded_string
+
