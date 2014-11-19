@@ -38,6 +38,7 @@ class Item():
         self.in_stock = 0
         self.price_array = []
         self.is_char_price = True
+        self.img_url = "/1cengine/site/images/eye_pic/default.png"
 
     def add_char(self, char_name, char):
         if char_name not in self.char_array:
@@ -121,9 +122,9 @@ class ResultTable():
                 SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
                     `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`,
-                    `item_price`.`in_stock`
+                    `item_price`.`in_stock`, `site_group`.`img_url`
                     FROM `item`, `item_price`, `price_type`,
-                    `item_parent`
+                    `item_parent`, `site_group`
                     WHERE `item`.`site_group_ref`='{0}'
                     AND `item`.`id` IN ( SELECT * FROM (
                     SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
@@ -138,15 +139,17 @@ class ResultTable():
                     AND `item_price`.`is_char`='0'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
+                    AND `site_group`.`id`=`item`.`site_group_ref`
+                    ORDER BY `item`.`name`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
         else:
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
                     `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
-                    `item_price`.`in_stock`
+                    `item_price`.`in_stock`, `site_group`.`img_url`
                     FROM `item`, `char`, `item_price`, `price_type`,
-                    `item_parent`
+                    `item_parent`, `site_group`
                     WHERE `item`.`site_group_ref`='{0}'
                     AND `item`.`id` IN ( SELECT * FROM (
                     SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
@@ -162,6 +165,7 @@ class ResultTable():
                     AND `item_price`.`is_char`='1'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
+                    AND `site_group`.`id`=`item`.`site_group_ref`
                     ORDER BY `item`.`name`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
 
@@ -183,6 +187,7 @@ class ResultTable():
                 item = Item(line[0])
                 item.unit = line[2]
                 item.hash = line[5]
+                item.img_url = line[10]
 
                 _item_list[line[0]] = item
 
@@ -438,7 +443,8 @@ def compose_table(term, offset=0, limit=20, params={}):
             item_billet_table_upper_img_td["class"] = "billet_item_image"
 
             item_billet_table_upper_img = soup.new_tag("img")
-            item_billet_table_upper_img["src"] = "/1cengine/site/images/eye_pic/default.png"
+            item_billet_table_upper_img["src"] = item.img_url
+            # item_billet_table_upper_img["src"] = "/1cengine/site/images/eye_pic/default.png"
 
             item_billet_table_upper_img_td.append(item_billet_table_upper_img)
 

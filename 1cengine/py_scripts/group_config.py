@@ -3,7 +3,7 @@
 
 groups_params = {
     "Арматура": [
-        "/1cengine/site/images/eye_pic/armatura.png",
+        "/1cengine/nsite/images/eye_pic/armatura.png",
         0,
         0,
         1,
@@ -12,7 +12,7 @@ groups_params = {
         "Диаметр"
     ],
     "Балка": [
-        "/1cengine/site/images/eye_pic/balka_dvutavrovaya.png",
+        "/1cengine/nsite/images/eye_pic/balka_dvutavrovaya.png",
         1,
         1,
         1,
@@ -21,7 +21,7 @@ groups_params = {
         "Ширина"
     ],
     "Квадрат": [
-        "/1cengine/site/images/eye_pic/kvadrat.png",
+        "/1cengine/nsite/images/eye_pic/kvadratu.png",
         1,
         1,
         1,
@@ -30,7 +30,7 @@ groups_params = {
         "Ширина"
     ],
     "Круг": [
-        "/1cengine/site/images/eye_pic/krug.png",
+        "/1cengine/nsite/images/eye_pic/krugi.png",
         1,
         1,
         1,
@@ -39,7 +39,7 @@ groups_params = {
         "Диаметр"
     ],
     "Лист горячекатанный": [
-        "/1cengine/site/images/eye_pic/list.png",
+        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
@@ -48,7 +48,7 @@ groups_params = {
         "Ширина"
     ],
     "Лист неответственного назначения": [
-        "/1cengine/site/images/eye_pic/list.png",
+        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
@@ -57,7 +57,7 @@ groups_params = {
         "Ширина"
     ],
     "Лист оцинкованный": [
-        "/1cengine/site/images/eye_pic/list.png",
+        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
@@ -66,7 +66,7 @@ groups_params = {
         "Ширина"
     ],
     "Лист рифлённый": [
-        "/1cengine/site/images/eye_pic/list.png",
+        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
@@ -75,7 +75,7 @@ groups_params = {
         "Ширина"
     ],
     "Лист холоднокатанный": [
-        "/1cengine/site/images/eye_pic/list.png",
+        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
@@ -84,7 +84,7 @@ groups_params = {
         "Ширина"
     ],
     "Металлосайдинг": [
-        "/1cengine/site/images/eye_pic/metallosajding.png",
+        "/1cengine/nsite/images/eye_pic/metallosajding.png",
         1,
         1,
         1,
@@ -93,7 +93,7 @@ groups_params = {
         "Ширина"
     ],
     "Металлочерепица": [
-        "/1cengine/site/images/eye_pic/cherepica.png",
+        "/1cengine/nsite/images/eye_pic/cherepica.png",
         1,
         1,
         1,
@@ -102,7 +102,7 @@ groups_params = {
         "Ширина"
     ],
     "Полоса": [
-        "/1cengine/site/images/eye_pic/.png",
+        "/1cengine/nsite/images/eye_pic/polosovoy_prokat.png",
         1,
         1,
         1,
@@ -111,7 +111,7 @@ groups_params = {
         "Ширина"
     ],
     "Проволока": [
-        "/1cengine/site/images/eye_pic/provoloka.png",
+        "/1cengine/nsite/images/eye_pic/provoloka.png",
         1,
         1,
         1,
@@ -120,7 +120,7 @@ groups_params = {
         "Диаметр"
     ],
     "Профнастил": [
-        "/1cengine/site/images/eye_pic/profnastil.png",
+        "/1cengine/nsite/images/eye_pic/profnastil.png",
         1,
         1,
         1,
@@ -129,7 +129,7 @@ groups_params = {
         "Ширина"
     ],
     "Сетка кладочная": [
-        "/1cengine/site/images/eye_pic/.png",
+        "/1cengine/nsite/images/eye_pic/default.png",
         1,
         1,
         1,
@@ -138,7 +138,7 @@ groups_params = {
         "Ширина"
     ],
     "Сетка рабица": [
-        "/1cengine/site/images/eye_pic/.png",
+        "/1cengine/nsite/images/eye_pic/default.png",
         1,
         1,
         1,
@@ -147,7 +147,7 @@ groups_params = {
         "Ширина"
     ],
     "Труба": [
-        "/1cengine/site/images/eye_pic/truba.png",
+        "/1cengine/nsite/images/eye_pic/truba.png",
         1,
         1,
         1,
@@ -156,7 +156,7 @@ groups_params = {
         "Диаметр"
     ],
     "Труба б/у": [
-        "/1cengine/site/images/eye_pic/truba.png",
+        "/1cengine/nsite/images/eye_pic/truba.png",
         1,
         1,
         1,
@@ -165,7 +165,7 @@ groups_params = {
         "Диаметр"
     ],
     "Трубы оцинкованные": [
-        "/1cengine/site/images/eye_pic/truba.png",
+        "/1cengine/nsite/images/eye_pic/truba.png",
         1,
         1,
         1,
@@ -174,7 +174,7 @@ groups_params = {
         "Диаметр"
     ],
     "Трубы профильные": [
-        "/1cengine/site/images/eye_pic/truba.png",
+        "/1cengine/nsite/images/eye_pic/profilnaya_truba.png",
         1,
         1,
         1,
@@ -183,7 +183,7 @@ groups_params = {
         "Диаметр"
     ],
     "Угол гнутый": [
-        "/1cengine/site/images/eye_pic/ugol.png",
+        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
         1,
         1,
         1,
@@ -192,7 +192,7 @@ groups_params = {
         "Ширина"
     ],
     "Угол неравнополочный": [
-        "/1cengine/site/images/eye_pic/ugol.png",
+        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
         1,
         1,
         1,
@@ -201,7 +201,7 @@ groups_params = {
         "Ширина"
     ],
     "Угол равнополочный": [
-        "/1cengine/site/images/eye_pic/ugol.png",
+        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
         0,
         1,
         1,
@@ -210,7 +210,7 @@ groups_params = {
         "Ширина"
     ],
     "Швеллер": [
-        "/1cengine/site/images/eye_pic/shveller.png",
+        "/1cengine/nsite/images/eye_pic/shveller.png",
         0,
         1,
         0,
@@ -219,7 +219,7 @@ groups_params = {
         "Ширина"
     ],
     "Швеллер гнутый": [
-        "/1cengine/site/images/eye_pic/shveller.png",
+        "/1cengine/nsite/images/eye_pic/shveller.png",
         0,
         1,
         0,
@@ -228,7 +228,7 @@ groups_params = {
         "Ширина"
     ],
     "Шестигранник": [
-        "/1cengine/site/images/eye_pic/.png",
+        "/1cengine/nsite/images/eye_pic/shestigrannik.png",
         1,
         1,
         1,
