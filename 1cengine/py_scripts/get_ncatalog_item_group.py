@@ -213,11 +213,11 @@ def get_ajax_subgroups(g_hash):
                 tag_checkbox = soup.new_tag("input")
                 tag_checkbox["class"] = "sidebar_checkbox"
                 tag_checkbox["type"] = "checkbox"
-                tag_checkbox["name"] = "th_{0}".format(thickness.decode("utf-8"))
-                tag_checkbox["id"] = "th_{0}".format(thickness.decode("utf-8"))
+                tag_checkbox["name"] = u"th_{0}".format(thickness.decode("utf-8"))
+                tag_checkbox["id"] = u"th_{0}".format(thickness.decode("utf-8"))
 
                 tag_checkbox_label = soup.new_tag("label")
-                tag_checkbox_label["for"] = "th_{0}".format(thickness.decode("utf-8"))
+                tag_checkbox_label["for"] = u"th_{0}".format(thickness.decode("utf-8"))
                 tag_checkbox_label.append(thickness.decode("utf-8"))
 
                 tag_choice_container.append(tag_checkbox)
@@ -244,11 +244,11 @@ def get_ajax_subgroups(g_hash):
                 tag_checkbox = soup.new_tag("input")
                 tag_checkbox["class"] = "sidebar_checkbox"
                 tag_checkbox["type"] = "checkbox"
-                tag_checkbox["name"] = "di_{0}".format(diameter.decode("utf-8"))
-                tag_checkbox["id"] = "di_{0}".format(diameter.decode("utf-8"))
+                tag_checkbox["name"] = u"di_{0}".format(diameter.decode("utf-8"))
+                tag_checkbox["id"] = u"di_{0}".format(diameter.decode("utf-8"))
 
                 tag_checkbox_label = soup.new_tag("label")
-                tag_checkbox_label["for"] = "di_{0}".format(diameter.decode("utf-8"))
+                tag_checkbox_label["for"] = u"di_{0}".format(diameter.decode("utf-8"))
                 tag_checkbox_label.append(diameter.decode("utf-8"))
 
                 tag_choice_container.append(tag_checkbox)

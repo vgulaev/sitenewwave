@@ -171,6 +171,7 @@
   };
 
   get_item_list = function(hash) {
+    $("body").css("cursor", "wait");
     $("#itemName").val("");
     return $.ajax({
       type: "GET",
@@ -273,7 +274,13 @@
   };
 
   exclude_parameters = function(chk_box) {
-    var hash, params;
+    var hash, params, preload_header;
+    preload_header = {
+      backgroundImage: "url('/1cengine/nsite/images/input_preloader.png')",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "right center"
+    };
+    $(".choice_header").css(preload_header);
     params = "";
     $(".active_group").find("input[type=checkbox]:checked:enabled").each((function(_this) {
       return function(index, element) {
@@ -291,7 +298,7 @@
       success: function(html) {
         var param_string;
         param_string = html;
-        return $(".active_group").find("input[type=checkbox]").each((function(_this) {
+        $(".active_group").find("input[type=checkbox]").each((function(_this) {
           return function(index, element) {
             $(element).parent().removeClass("choice_disabled");
             $(element).prop('disabled', false);
@@ -302,6 +309,7 @@
             }
           };
         })(this));
+        return $(".choice_header").css("background-image", "none");
       }
     });
   };
@@ -322,6 +330,7 @@
         $("#show_next_prev").hide();
       }
     }
+    $("body").css("cursor", "default");
     $(".bItem").click(function() {
       var char_id, elem_id, item, nid;
       elem_id = $(this).attr("name");

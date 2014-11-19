@@ -179,6 +179,7 @@ show_how_to_make_order = () ->
 
 get_item_list = (hash) ->
     # alert(hash)
+    $("body").css("cursor", "wait")
     $("#itemName").val ""
     $.ajax
         type: "GET"
@@ -234,6 +235,7 @@ group_click = (element) ->
         # $(".subgroup_c").hide()
         if $(li_element).hasClass("active_group") is false
 
+
             # $("#itemName").val g_name
             # $("#itemName").change()
             get_item_list(g_hash)
@@ -279,6 +281,12 @@ get_parameters = () ->
             get_item_table(html)
 
 exclude_parameters = (chk_box) ->
+    preload_header = {
+        backgroundImage: "url('/1cengine/nsite/images/input_preloader.png')",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right center"
+    }
+    $(".choice_header").css( preload_header )
     params = ""
     $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
         params = params + "'"+$(element).attr("name")+"',"
@@ -305,7 +313,9 @@ exclude_parameters = (chk_box) ->
 
             # App.C_HASH = hash
             # get_item_table(html)
-
+            $(".choice_header").css(
+                "background-image", "none"
+                )
 
 get_item_table = (html) ->
     $("#qRes").html html
@@ -320,6 +330,8 @@ get_item_table = (html) ->
     else
         if App.PAGE == 1
             $("#show_next_prev").hide()
+
+    $("body").css("cursor", "default")
 
     $(".bItem").click ->
         # alert("lol")
