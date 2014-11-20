@@ -60,6 +60,12 @@
       }
     };
 
+    MyBasket.change_item_from_modal = function(item) {
+      this.change_item(item);
+      this.on_weight_change_handler(this._total_weight);
+      return this.on_active_price_measured_change_handler();
+    };
+
     MyBasket.change_item = function(item) {
       var elem, index, _i, _len, _ref, _results;
       index = this._item_list.indexOf(item);

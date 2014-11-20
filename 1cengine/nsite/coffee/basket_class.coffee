@@ -66,6 +66,11 @@ class App.MyBasket
 
             yaCounter23067595.reachGoal('AddItem');
 
+    @change_item_from_modal: (item) ->
+        @change_item(item)
+        @on_weight_change_handler(@_total_weight)
+        @on_active_price_measured_change_handler()
+        # @change_basket()
 
     @change_item: (item) ->
         # alert("lol")
@@ -77,9 +82,9 @@ class App.MyBasket
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
                 @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
 
-                # @change_basket()
             # @on_weight_change_handler(@_total_weight)
-            # @on_active_price_measured_change_handler()
+            # @change_basket()
+        # @on_active_price_measured_change_handler()
 
     @delete_item: (id) ->
 

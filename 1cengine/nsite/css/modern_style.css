@@ -2484,6 +2484,9 @@ hr{
 .item_billet .item_billet_select_price{
     display:none;
     font-size:10pt;
+    white-space: nowrap;
+    padding:0;
+    margin:0;
 }
 
 .item_billet .item_billet_select_price li{

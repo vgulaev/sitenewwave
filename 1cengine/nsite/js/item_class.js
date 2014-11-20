@@ -84,6 +84,11 @@
       this.name = $(obj).find("span.billet_item_name").text();
       if (this.is_kis === false) {
         this.char = $(obj).find($(".item_billet_select_char option:selected")).val();
+        if (this.length === "0.0" || this.length === "0" || this.length === "") {
+          if ($.isNumeric(this.char.replace(",", "."))) {
+            this.length = this.char.replace(",", ".");
+          }
+        }
       }
       price_ul = $(obj).find(".selected_price");
       return $(price_ul).find("li").each((function(_this) {
@@ -252,7 +257,7 @@
       })(this));
       $(".change_in_basket").bind('click', (function(_this) {
         return function(event) {
-          App.MyBasket.change_item(_this);
+          App.MyBasket.change_item_from_modal(_this);
           return $.unblockUI();
         };
       })(this));

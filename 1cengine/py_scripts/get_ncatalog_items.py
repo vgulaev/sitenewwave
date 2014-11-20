@@ -133,21 +133,22 @@ class ResultTable():
                     {2}
                     {3}
                     {4}
-                    limit {5},{6}) as `id`
+                    ORDER BY `item`.`name` limit {5},{6}) as `id`
                     )
                     AND `item_price`.`item_ref`=`item`.`id`
                     AND `item_price`.`is_char`='0'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
                     AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item`.`name`
+                    ORDER BY `item`.`name`, `price_type`.`id`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
         else:
             query = """
                 SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
                     `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
                     `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
-                    `item_price`.`in_stock`, `site_group`.`img_url`
+                    `item_price`.`in_stock`, `site_group`.`img_url`,
+                    `price_type`.`id`
                     FROM `item`, `char`, `item_price`, `price_type`,
                     `item_parent`, `site_group`
                     WHERE `item`.`site_group_ref`='{0}'
@@ -166,7 +167,7 @@ class ResultTable():
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
                     AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item`.`name`
+                    ORDER BY `item`.`name`, `price_type`.`id`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
 
         # print query

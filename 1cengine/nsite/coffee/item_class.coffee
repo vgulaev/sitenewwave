@@ -85,6 +85,9 @@ class App.Item
         @name = $(obj).find("span.billet_item_name").text()
         if @is_kis is false
             @char = $(obj).find($(".item_billet_select_char option:selected")).val()
+            if @length is "0.0" or @length is "0" or @length is ""
+                if $.isNumeric( @char.replace(",", ".") )
+                    @length = @char.replace(",", ".")
 
         price_ul = $(obj).find(".selected_price")
         $(price_ul).find("li").each (index, element) =>
@@ -166,6 +169,7 @@ class App.Item
             price_index = 0
 
         @price_weight = ( +@prices[price_index] ).toFixed(2)
+        # alert(@price_weight)
 
     set_final_price: ->
         @set_price_weight()
@@ -248,7 +252,7 @@ class App.Item
 
         $(".change_in_basket").bind 'click', (event) =>
 
-            App.MyBasket.change_item(this)
+            App.MyBasket.change_item_from_modal(this)
             $.unblockUI()
             # alert(Basket._total_weight)
 
