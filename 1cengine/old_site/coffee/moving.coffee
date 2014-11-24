@@ -178,17 +178,73 @@ show_how_to_make_order = () ->
             $.unblockUI();
 
 get_item_list = (hash) ->
-    # alert(hash)
-    $("body").css("cursor", "wait")
     $("#itemName").val ""
     $.ajax
         type: "GET"
-        url: "/1cengine/py_scripts/get_ncatalog_items.py"
+        url: "/1cengine/py_scripts/get_items_bs.py"
         async: true
         data: "hash=" + encodeURIComponent(hash) + ""
         success: (html) ->
             App.C_HASH = hash
-            get_item_table(html)
+            $("#qRes").html html
+            $("#qRes").fadeIn(400)
+            if $(".item").length >= 1
+                $("#hollowResult").empty()
+            else
+                $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
+
+            if $(".item").length is 20
+                $("#show_next_prev").show()
+            else
+                $("#show_next_prev").hide()
+
+            # window.history.pushState(
+            #     {term: value},
+            #     '',
+            #     '/1cengine/site/'+$.trim(value)+'/'
+            # )
+
+            $(".bItem").click ->
+                # alert("lol")
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+
+            $(".oItem").click ->
+
+                elem_id = $(this).closest( "tr" ).attr("id")
+
+                item = App.Item.elem_exist(elem_id)
+                if item is false
+                    item = new App.Item $(this).closest( "tr" ).attr("id")
+                else
+                    item.show_modal()
+            false
+
+            $(".eye").each (index, element) =>
+                img_class = $(element).attr('class').split(' ')[1]
+                $(element).tooltipster({
+                    content: "<img src='images/eye_pic/"+img_class+".png' />",
+                    animation: 'fade',
+                    position: 'top',
+                    trigger: "click",
+                    theme: "tooltipster-my",
+                    contentAsHTML: true
+                })
+
+
+
+    $.ajax
+        type: "GET"
+        url: "/1cengine/py_scripts/get_count_items.py"
+        async: true
+        data: "hash=" + encodeURIComponent(hash) + ""
+        success: (html) ->
+            $(".count_all_result").html html
 
 
 get_subgroup = (element, g_name, g_hash) ->
@@ -196,247 +252,69 @@ get_subgroup = (element, g_name, g_hash) ->
 
     $.ajax
         type: "GET"
-        url: "/1cengine/py_scripts/get_ncatalog_item_group.py"
+        url: "/1cengine/py_scripts/get_item_subgroup.py"
         async: false
         data: "term=" + encodeURIComponent(g_hash) + ""
         success: (html) ->
-            # alert(html)
-            $(element).append(html)
-            $(".menu_back_button").click ->
-                group_menu_back()
+            subgroups = JSON.parse html
+            for subgroup in subgroups then do (subgroup) =>
+                subgroup_name = subgroup[0].replace(g_name, "")
+                $(element).find("ul").append("<li class='subgroup2' name='#{subgroup_name}' idin='#{subgroup[1]}'><span class='subgroup2_name'>"+subgroup_name+"</span></li>")
+                # alert(subgroup)
 
-            $(".sungroup_show_button").click ->
-                get_parameters()
+            $(element).find("span.subgroup2_name").each (index, sgroup) =>
+                $(sgroup).click ->
+                    li_group = $(sgroup).parent()
+                    # alert($(sgroup).attr("name"))
+                    $(".subgroup2").removeClass("active_subgroup")
+                    $(li_group).addClass("active_subgroup")
+                    i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
+                    # alert(i_name)
+                    if $(li_group).children().is(".subgroup_c2") is false
+                        $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
+                        get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
 
-            $(".sidebar_checkbox").click ->
-                exclude_parameters(this)
-
-            my_content = $('<a href=# onClick="$(\'.sungroup_show_button\').click(); return false">Выбрать</a>')
-
-            $(".sidebar_checkbox").tooltipster({
-                content: my_content,
-                interactive: true,
-                animation: 'fade',
-                delay: 200,
-                position: 'right',
-                offsetX: 100,
-                timer: 3000,
-                trigger: "click",
-                theme: "tooltipster-my"
-            })
-
+                    get_item_list($(li_group).attr("idin"))
+                    # $("#itemName").val(i_name)
+                    # $("#itemName").change()
 
 group_click = (element) ->
     $(element).click ->
-        li_element = $(this).parent()
-
-        g_name = $(this).parent().attr("name")
-        g_hash = $(this).parent().attr("inid")
-        # $(".subgroup_c").hide()
-        if $(li_element).hasClass("active_group") is false
-
+        g_name = $(this).attr("name")
+        g_hash = $(this).attr("inid")
+        if $(element).hasClass("active_group") is false
 
             # $("#itemName").val g_name
             # $("#itemName").change()
             get_item_list(g_hash)
 
             $("#groups_list").find("li.main_group").removeClass("active_group")
-            $("li.main_group").hide()
-            $(li_element).addClass("active_group")
-            $(li_element).show()
+            $(".subgroup").removeClass("active_subgroup")
+            $(element).addClass("active_group")
 
         # alert($(this).attr("name"))
-        if $(li_element).children().is(".subgroup_c") is false
-            # alert($(li_element).children("ul"))
-            get_subgroup(li_element, g_name, g_hash)
-        else
-            $(li_element).children().show()
+        if $(element).children().is(".subgroup_c") is false
+            # alert($(element).children("ul"))
+            $(element).append("<ul class=\"subgroup_c\"></ul>")
+            get_subgroup(element, g_name, g_hash)
 
-group_menu_back = () ->
-    $("li.main_group").show()
-    $("#groups_list").find("li.main_group").removeClass("active_group")
-    $(".subgroup_c").hide()
-    $(".subgroup_c").find("input[type=checkbox]").prop('checked', false)
-    $(".subgroup_c").find("input[type=checkbox]").prop('disabled', false)
-    $(".choice_container").removeClass("choice_disabled")
+subgroup_click = (sgroup) ->
+    $(sgroup).click ->
+        li_group = $(sgroup).parent()
+        $(".subgroup").removeClass("active_subgroup")
+        $(li_group).addClass("active_subgroup")
+        group = $(li_group).closest(".active_group")
+        g_name = $(group).attr("name")
+        i_name = g_name.replace /^\s+|\s+$/g, "" + " " + $(li_group).attr("name").replace /^\s+|\s+$/g, ""
+        # alert(i_name)
+        if $(li_group).children().is(".subgroup_c2") is false
+            $(li_group).append("<ul class=\"subgroup_c2\"></ul>")
+            # alert($(sgroup).attr("name") + " :: " + $(sgroup).attr("hash"))
+            get_subgroup(li_group, $(li_group).attr("name"), $(li_group).attr("idin"))
 
-
-get_parameters = () ->
-    params = ""
-    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-        params = params + "'"+$(element).attr("name")+"',"
-        # alert($(element).attr("name"))
-    params = params + ";"
-    $("#itemName").val ""
-    hash = $(".active_group").attr("inid")
-    $.ajax
-        type: "GET"
-        url: "/1cengine/py_scripts/get_ncatalog_items.py"
-        async: true
-        data: "hash=" + encodeURIComponent(hash) + "&params=" + encodeURIComponent(params) + ""
-        success: (html) ->
-            # alert(html)
-            App.C_HASH = hash
-            App.PAGE = 1
-            get_item_table(html)
-
-exclude_parameters = (chk_box) ->
-    preload_header = {
-        backgroundImage: "url('/1cengine/nsite/images/input_preloader.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "right center"
-    }
-    $(".choice_header").css( preload_header )
-    params = ""
-    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-        params = params + "'"+$(element).attr("name")+"',"
-        # alert($(element).attr("name"))
-    params = params + ";"
-    $("#itemName").val ""
-    hash = $(".active_group").attr("inid")
-    $.ajax
-        type: "GET"
-        url: "/1cengine/py_scripts/get_excluded.py"
-        async: true
-        data: "params=" + encodeURIComponent(params) + "&hash=" + encodeURIComponent(hash) + ""
-        success: (html) ->
-            param_string = html
-            # alert(param_string)
-            $(".active_group").find("input[type=checkbox]").each (index, element) =>
-                $(element).parent().removeClass("choice_disabled")
-                $(element).prop('disabled', false)
-                if param_string.indexOf($(element).attr("name")) > -1
-                    $(element).prop('checked', false)
-                    $(element).prop('disabled', true)
-                    $(element).parent().addClass("choice_disabled")
-                    # alert($(element).attr("name"))
-
-            # App.C_HASH = hash
-            # get_item_table(html)
-            $(".choice_header").css(
-                "background-image", "none"
-                )
-
-get_item_table = (html) ->
-    $("#qRes").html html
-    $("#qRes").fadeIn(400)
-    if $(".item").length >= 1
-        $("#hollowResult").empty()
-    else
-        $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
-
-    if $(".item").length is 20
-        $("#show_next_prev").show()
-    else
-        if App.PAGE == 1
-            $("#show_next_prev").hide()
-
-    $("body").css("cursor", "default")
-
-    $(".bItem").click ->
-        # alert("lol")
-        elem_id = $(this).attr("name")
-        char_id = $(this).closest( "table" ).find($(".item_billet_select_char option:selected")).attr("name")
-        if char_id is undefined
-            char_id = "0"
-        nid = (char_id+":"+elem_id)
-        item = App.Item.elem_exist(nid)
-        if item is false
-            item = new App.Item nid
-        else
-            item.show_modal()
-
-    $(".oItem").click ->
-        # alert("lol")
-        elem_id = $(this).attr("name")
-        char_id = $(this).closest( "table" ).find($(".item_billet_select_char option:selected")).attr("name")
-        if char_id is undefined
-            char_id = "0"
-        nid = (char_id+":"+elem_id)
-        item = App.Item.elem_exist(nid)
-        if item is false
-            item = new App.Item nid
-        else
-            item.show_modal()
-
-    $(".more").click ->
-        name = $(this).attr("name")
-        $("##{name}").hide()
-        $(".#{name}").show()
-        return
-
-    $(".less").click ->
-        name = $(this).attr("name")
-        $("##{name}").show()
-        $(".#{name}").hide()
-        return
-
-    $(".eye").each (index, element) =>
-        img_class = $(element).attr('class').split(' ')[1]
-        $(element).tooltipster({
-            content: "<img src='images/eye_pic/"+img_class+".png' />",
-            animation: 'fade',
-            position: 'top',
-            trigger: "click",
-            theme: "tooltipster-my",
-            contentAsHTML: true
-        })
-
-    $(".item_billet_select_char").change ->
-        char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
-        stock = $(this).parent().find($(".item_billet_select_char option:selected")).attr("stock")
-        # alert(stock)
-        $(this).parent().parent().parent().parent().find($(".item_billet_select_price")).removeClass("selected_price")
-        $(this).parent().parent().parent().parent().find(".item_billet_select_price").each (index, element) =>
-            if $(element).attr("for") is char
-                # alert(char)
-                $(element).addClass("selected_price")
-
-        if stock is "0"
-            # alert(stock)
-            c_button = $(this).parent().parent().parent().parent().find(".bItem")
-            c_button.removeClass("bItem").addClass("oItem")
-            c_button.find(".buySpan").html("Под заказ")
-        if stock is "1"
-            # alert(stock)
-            c_button = $(this).parent().parent().parent().parent().find(".oItem")
-            c_button.removeClass("oItem").addClass("bItem")
-            c_button.find(".buySpan").html("Рассчитать")
-
-    params = ""
-    $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-        params = params + "'"+$(element).attr("name")+"',"
-        # alert($(element).attr("name"))
-    params = params + ";"
-
-    $.ajax
-        type: "GET"
-        url: "/1cengine/py_scripts/get_ncatalog_count_items.py"
-        async: true
-        data: "hash=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + ""
-        success: (html) ->
-            # alert(html)
-            App.PAGE_COUNT = Math.ceil(html / 20)
-            i = 1
-            page_list = "<ul>"
-            # alert(App.PAGE)
-            App.PAGE
-            while i != App.PAGE_COUNT+1
-                if i == App.PAGE
-                    page_list = page_list + "<li name='#{i}' class='active_page'>#{i}</li>"
-                else
-                    page_list = page_list + "<li name='#{i}'>#{i}</li>"
-                i++
-            page_list = page_list + "</ul>"
-            $(".count_all_result").html (page_list)
-
-            $(".count_all_result").find("li").each (index, element ) =>
-                $(element).click ->
-                    page_needed = $(this).attr("name")
-                    App.PAGE = (page_needed-1)
-                    $(".next_result").click()
-
-
+        # $("#itemName").val(i_name)
+        # $("#itemName").change()
+        get_item_list($(li_group).attr("idin"))
 
 $(document).ready ->
 
@@ -452,7 +330,7 @@ $(document).ready ->
     $.blockUI.defaults.css.paddingTop = '70px'
     $.blockUI.defaults.css.paddingLeft = '20px'
 
-    App.PAGE = 1
+    PAGE = 1
 
     if $("#tags").css("display") is "none"
         $("#showGroupsDiv").show()
@@ -494,11 +372,48 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_items_bs.py"
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
-                get_item_table(html)
+                $("#qRes").html html
+                $("#qRes").fadeIn(400)
+                if $(".item").length >= 1
+                    $("#hollowResult").empty()
+                else
+                    $("#hollowResult").html "<p class='hollow_result'>Извините, но по заданному запросу товар не найден</p>"
+
+                if $(".item").length is 20
+                    $("#show_next_prev").show()
+                else
+                    $("#show_next_prev").hide()
+
+                window.history.pushState(
+                    {term: value},
+                    '',
+                    '/1cengine/site/'+$.trim(value)+'/'
+                )
+
+                $(".bItem").click ->
+                    # alert("lol")
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+                false
 
 
         $.ajax
@@ -523,67 +438,140 @@ $(document).ready ->
     $("#show_groups").click ->
         show_groups()
 
-    $(".next_result").click ->
+    $("#showAll").click ->
+
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
-        params = ""
-        $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-            params = params + "'"+$(element).attr("name")+"',"
-            # alert($(element).attr("name"))
-        params = params + ";"
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&show_all=true"
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&show_all=true"
 
-        if App.PAGE != App.PAGE_COUNT
-            n_page = ( App.PAGE * 1 ) + 1
 
-            if value is ""
-                what = "hash"
-                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + ""
-            else
-                what = "term"
-                data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: data_string
+            success: (html) ->
+                $("#qRes").html html
 
-            $.ajax
-                type: "GET"
-                url: "/1cengine/py_scripts/get_ncatalog_items.py"
-                async: true
-                data: data_string
-                success: (html) ->
-                    App.PAGE++
-                    get_item_table(html)
+                if $(".item").length >= 1
+                    $("#hollowResult").empty()
+                else
+                    $("#hollowResult").html "Извините, но по заданному запросу товар не найден"
 
+                $("#show_next_prev").hide()
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+
+    $(".next_result").click ->
+        value = $("#itemName").val()
+        value = value.replace("+", " ")
+        n_page = ( PAGE * 1 ) + 1
+
+        if value is ""
+            what = "hash"
+            data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
+        else
+            what = "term"
+            data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
+
+        $.ajax
+            type: "GET"
+            url: "/1cengine/py_scripts/get_items_bs.py"
+            async: true
+            data: data_string
+            success: (html) ->
+                $("#qRes").html html
+                PAGE = n_page
+
+                $(".bItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
+
+                $(".oItem").click ->
+
+                    elem_id = $(this).closest( "tr" ).attr("id")
+
+                    item = App.Item.elem_exist(elem_id)
+                    if item is false
+                        item = new App.Item $(this).closest( "tr" ).attr("id")
+                    else
+                        item.show_modal()
 
 
     $(".prev_result").click ->
         value = $("#itemName").val()
         value = value.replace("+", " ")
 
-        params = ""
-        $(".active_group").find("input[type=checkbox]:checked:enabled").each (index, element) =>
-            params = params + "'"+$(element).attr("name")+"',"
-            # alert($(element).attr("name"))
-        params = params + ";"
 
-
-        if App.PAGE != 1
-            n_page = App.PAGE - 1
+        if PAGE != 1
+            n_page = PAGE - 1
 
             if value is ""
                 what = "hash"
-                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + "&params=" + encodeURIComponent(params) + ""
+                data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&page=" + n_page + ""
             else
                 what = "term"
                 data_string = what + "=" + encodeURIComponent(value) + "&page=" + n_page + ""
 
             $.ajax
                 type: "GET"
-                url: "/1cengine/py_scripts/get_ncatalog_items.py"
+                url: "/1cengine/py_scripts/get_items_bs.py"
                 async: true
                 data: data_string
                 success: (html) ->
-                    App.PAGE--
-                    get_item_table(html)
+                    $("#qRes").html html
+                    PAGE = PAGE - 1
 
+                    $(".bItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
+
+                    $(".oItem").click ->
+
+                        elem_id = $(this).closest( "tr" ).attr("id")
+
+                        item = App.Item.elem_exist(elem_id)
+                        if item is false
+                            item = new App.Item $(this).closest( "tr" ).attr("id")
+                        else
+                            item.show_modal()
 
     $("#orderDiv").find(".next_step").click ->
         switch_tabs("switchDeliveryDiv")
@@ -591,11 +579,11 @@ $(document).ready ->
     $("#deliveryDiv").find(".next_step").click ->
         switch_tabs("switchNotificationDiv")
 
-    $("#groups_list").find("span.click_name").each (index, element) =>
+    $("#groups_list").find("li.main_group").each (index, element) =>
         group_click(element)
 
-    # $("span.click_name").each (index, sgroup) =>
-    #     subgroup_click(sgroup)
+    $("li.subgroup").each (index, sgroup) =>
+        subgroup_click(sgroup)
 
     $("span.subgroup2_name").each (index, sgroup) =>
         subgroup_click(sgroup)
@@ -628,24 +616,3 @@ $(document).ready ->
 
     $(".return_to_catalog").click ->
         $("#tabPrice").click()
-
-    $(".more").click ->
-        name = $(this).attr("name")
-        $("##{name}").hide()
-        $(".#{name}").show()
-        return
-
-    $(".less").click ->
-        name = $(this).attr("name")
-        $("##{name}").show()
-        $(".#{name}").hide()
-        return
-
-    $(".menu_back_button").click ->
-        group_menu_back()
-
-    $(".sungroup_show_button").click ->
-        get_parameters()
-
-    $(".sidebar_checkbox").click ->
-        exclude_parameters()

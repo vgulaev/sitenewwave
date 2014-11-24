@@ -60,6 +60,12 @@
       }
     };
 
+    MyBasket.change_item_from_modal = function(item) {
+      this.change_item(item);
+      this.on_weight_change_handler(this._total_weight);
+      return this.on_active_price_measured_change_handler();
+    };
+
     MyBasket.change_item = function(item) {
       var elem, index, _i, _len, _ref, _results;
       index = this._item_list.indexOf(item);
@@ -129,8 +135,8 @@
         })(this));
       }
       nds = ((this._sum / 100) * 18).toFixed(2);
-      $("#SumGoods").html(this._sum);
-      $("#CountAll").html(this._total_weight);
+      $("#SumGoods").html(this._sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
+      $("#CountAll").html(this._total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
       $("#NDSAll").html(nds);
       return App.load_delivery_cost();
     };
@@ -138,9 +144,12 @@
     MyBasket.rebuild_basket = function() {};
 
     MyBasket.create_row = function(item) {
-      var nds, row;
-      nds = ((item.final_price / 100) * 18).toFixed(2);
-      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "</td>\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + item.buy_weight + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + item.price_weight + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + item.final_price + "</td>\n<td class='itemEdit'>\n    <span class=\"delEdSpan\">\n    <a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_edit.png\" /></a></span>\n    <a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_delete.png\" /></a>\n</td>\n</tr>";
+      var count_td, nds, price_td, row, sum_td;
+      nds = ((item.final_price / 100) * 18).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
+      price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
+      sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
+      count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
+      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "</td>\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + count_td + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + price_td + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + sum_td + "</td>\n<td class='itemEdit'>\n    <span class=\"delEdSpan\">\n    <a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_edit.png\" /></a></span>\n    <a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_delete.png\" /></a>\n</td>\n</tr>";
     };
 
     MyBasket.on_weight_change_handler = function(weight) {

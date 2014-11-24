@@ -13,6 +13,7 @@ class App.Item
             false
 
     constructor: (@id) ->
+        # alert(@id)
         @set_chars()
 
         # console.log @name
@@ -35,7 +36,7 @@ class App.Item
         App.Item._existing.push this
 
     is_measureable: ->
-        if @length is "0"
+        if @length is "0.0" or @length is "0" or @length is ""
             false
         else
             true
@@ -43,6 +44,7 @@ class App.Item
 
     get_chars: ->
         response = null
+        # alert(@id)
         $.ajax
             type: "POST"
             url: "/1cengine/py_scripts/get_item_lwkes.py"
@@ -50,6 +52,7 @@ class App.Item
             data: "item_hash=" + @id
             success: (html) ->
                 response = html
+                # alert(response)
                 response
 
         response
@@ -62,9 +65,11 @@ class App.Item
         @kf     = char_array[2]
         @ed_izm = char_array[3]
         @stock  = char_array[4]
+        @width  = char_array[5]
 
         i_hash = @id.slice 0, @id.indexOf(":")
-
+        i_class = @id.slice @id.indexOf(":") + 1
+        # alert(i_hash)
         if i_hash is "0"
             @is_kis = true
             @weight = 2
@@ -73,16 +78,30 @@ class App.Item
         else
             @is_kis = false
 
+        # alert(i_class)
         @prices = []
-        obj = $("tr[id='#{@id}']")
-        $(obj).children().each (index, element) =>
-            if $(element).attr("class") is "itemName"
-                @name = $(element).children("[itemprop='name']").text()
-            if $(element).attr("class") is "itemChar" and @is_kis is false
-                @char = $(element).text()
+        obj = $("tr[lolid='#{i_class}']")
+        # alert($(obj).attr("class"))
+        @name = $(obj).find("span.billet_item_name").text()
+        if @is_kis is false
+            @char = $(obj).find($(".item_billet_select_char option:selected")).val()
+            if @length is "0.0" or @length is "0" or @length is ""
+                if $.isNumeric( @char.replace(",", ".") )
+                    @length = @char.replace(",", ".")
 
-            if ( $(element).attr("class").indexOf "price", 0 ) is 0
-                @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
+        price_ul = $(obj).find(".selected_price")
+        $(price_ul).find("li").each (index, element) =>
+            # alert($(element).children( "strong" ).text())
+            @prices.push ($(element).children( "strong" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
+
+        # $(obj).find().each (index, element) =>
+            # if $(element).attr("class") is "billet_item_name"
+            #     @name = $(element).children("[itemprop='name']").text()
+            # if $(element).attr("class") is "item_billet_select_char" and @is_kis is false
+            #     @char = $(element).find($("option:selected")).val()
+
+            # if ( $(element).attr("class").indexOf "price", 0 ) is 0
+            #     @prices.push ($(element).children( "span" ).text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", ".")
 
 
     change_buy_count: (count) ->
@@ -90,7 +109,7 @@ class App.Item
         @buy_count = Math.ceil(count)
         @buy_length = (@buy_count * @length).toFixed(2)
 
-        @buy_weight = (( @buy_length * @weight * @kf ) / 1000 ).toFixed(3)
+        @buy_weight = (( @buy_length * @weight ) / 1000 ).toFixed(3)
         $(".buy_weight").removeClass("preloading")
         $(".buy_count").removeClass("preloading")
         @change_modal()
@@ -118,10 +137,11 @@ class App.Item
         if @is_measureable()
             $(".buy_count").val(@buy_count)
 
-            $(".buy_length").val(@buy_length)
+            $(".buy_length").html(@buy_length)
 
         if @is_kis
             $(".char_length").val(@weight)
+            $(".buy_square").html((@width * @weight * @buy_count).toFixed(2))
 
         $(".buy_weight").val(@buy_weight)
 
@@ -149,6 +169,7 @@ class App.Item
             price_index = 0
 
         @price_weight = ( +@prices[price_index] ).toFixed(2)
+        # alert(@price_weight)
 
     set_final_price: ->
         @set_price_weight()
@@ -156,6 +177,7 @@ class App.Item
         $(".final_price").html(@final_price)
 
     change_char_length: (n_length) ->
+        n_length = n_length.replace /,+/g, "."
         if n_length < 0.2
             n_length = 0.2
         else if n_length > 6
@@ -203,7 +225,7 @@ class App.Item
 
             $(".buy_length").bind 'change keyup', (event) =>
                 window.clearTimeout(time_out_handle)
-                time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").val())), 1000
+                time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").html())), 1000
 
         $(".buy_weight").bind 'change', (event) =>
             @change_buy_weight($(".buy_weight").val())
@@ -230,7 +252,7 @@ class App.Item
 
         $(".change_in_basket").bind 'click', (event) =>
 
-            App.MyBasket.change_item(this)
+            App.MyBasket.change_item_from_modal(this)
             $.unblockUI()
             # alert(Basket._total_weight)
 
@@ -240,17 +262,20 @@ class App.Item
 
     get_modal: ->
         if App.MyBasket.is_in_basket(this)
-            modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>'
+            modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>'
         else
-            modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>'
+            modal_link = '<a class="add_to_basket" href="javascript:void(0)">В корзину</a>'
 
 
         if @is_measureable()
-            l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
+            # l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
             c_input = '<input class="buy_count" pattern="[0-9]+" value="'+@buy_count+'" />'
+
+            l_input = """<div class="length_item_overall">Общий метраж: <span class="buy_length">#{@buy_length}</span></div>"""
         else
-            l_input = '<input class="buy_length" value="---" disabled />'
+            # l_input = '<input class="buy_length" value="---" disabled />'
             c_input = '<input class="buy_count" value="---" disabled />'
+            l_input = ""
         w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="'+@buy_weight+'" />'
 
         if @is_kis
@@ -259,6 +284,10 @@ class App.Item
             set_length = """
                 <p class="list_length">Укажите требуемую длину листа: #{cl_input}</p>
             """
+
+            buy_square = (@width * @weight * @buy_count).toFixed(2)
+            # alert(@width+" x "+@weight)
+            l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
         else
             set_length = ""
 
@@ -292,9 +321,7 @@ class App.Item
         </tr>
         <tr class="buy_item_count">
         <td>Количество</td>
-        <td style="display:none">
-            #{l_input}
-        </td>
+
         <td>
             #{c_input}
         </td>
@@ -310,6 +337,7 @@ class App.Item
 
         </table>
         <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
+        #{l_input}
         <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{App.MyBasket._sum}</span></div>
         <span class="popUpContinue">#{modal_link}</span>
         </div>""";

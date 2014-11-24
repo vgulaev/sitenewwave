@@ -36,7 +36,7 @@
     }
 
     Item.prototype.is_measureable = function() {
-      if (this.length === "0.0" || this.length === "0" || this.length === "") {
+      if (this.length === "0") {
         return false;
       } else {
         return true;
@@ -60,7 +60,7 @@
     };
 
     Item.prototype.set_chars = function(chars) {
-      var char_array, i_class, i_hash, obj, price_ul;
+      var char_array, i_hash, obj;
       chars = this.get_chars().replace(/\s+$/g, "");
       char_array = chars.split("|");
       this.length = char_array[0];
@@ -68,9 +68,7 @@
       this.kf = char_array[2];
       this.ed_izm = char_array[3];
       this.stock = char_array[4];
-      this.width = char_array[5];
       i_hash = this.id.slice(0, this.id.indexOf(":"));
-      i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
         this.is_kis = true;
         this.weight = 2;
@@ -80,20 +78,18 @@
         this.is_kis = false;
       }
       this.prices = [];
-      obj = $("tr[lolid='" + i_class + "']");
-      this.name = $(obj).find("span.billet_item_name").text();
-      if (this.is_kis === false) {
-        this.char = $(obj).find($(".item_billet_select_char option:selected")).val();
-        if (this.length === "0.0" || this.length === "0" || this.length === "") {
-          if ($.isNumeric(this.char.replace(",", "."))) {
-            this.length = this.char.replace(",", ".");
-          }
-        }
-      }
-      price_ul = $(obj).find(".selected_price");
-      return $(price_ul).find("li").each((function(_this) {
+      obj = $("tr[id='" + this.id + "']");
+      return $(obj).children().each((function(_this) {
         return function(index, element) {
-          return _this.prices.push(($(element).children("strong").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", "."));
+          if ($(element).attr("class") === "itemName") {
+            _this.name = $(element).children("[itemprop='name']").text();
+          }
+          if ($(element).attr("class") === "itemChar" && _this.is_kis === false) {
+            _this.char = $(element).text();
+          }
+          if (($(element).attr("class").indexOf("price", 0)) === 0) {
+            return _this.prices.push(($(element).children("span").text()).replace(/\u00a0/g, "").replace(" ", "").replace(",00", "").replace(",", "."));
+          }
         };
       })(this));
     };
@@ -101,7 +97,7 @@
     Item.prototype.change_buy_count = function(count) {
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
-      this.buy_weight = ((this.buy_length * this.weight) / 1000).toFixed(3);
+      this.buy_weight = ((this.buy_length * this.weight * this.kf) / 1000).toFixed(3);
       $(".buy_weight").removeClass("preloading");
       $(".buy_count").removeClass("preloading");
       return this.change_modal();
@@ -127,11 +123,10 @@
     Item.prototype.change_modal = function() {
       if (this.is_measureable()) {
         $(".buy_count").val(this.buy_count);
-        $(".buy_length").html(this.buy_length);
+        $(".buy_length").val(this.buy_length);
       }
       if (this.is_kis) {
         $(".char_length").val(this.weight);
-        $(".buy_square").html((this.width * this.weight * this.buy_count).toFixed(2));
       }
       $(".buy_weight").val(this.buy_weight);
       return this.change_modal_price();
@@ -165,7 +160,6 @@
     };
 
     Item.prototype.change_char_length = function(n_length) {
-      n_length = n_length.replace(/,+/g, ".");
       if (n_length < 0.2) {
         n_length = 0.2;
       } else if (n_length > 6) {
@@ -218,7 +212,7 @@
           return function(event) {
             window.clearTimeout(time_out_handle);
             return time_out_handle = window.setTimeout((function() {
-              return _this.change_buy_length($(".buy_length").html());
+              return _this.change_buy_length($(".buy_length").val());
             }), 1000);
           };
         })(this));
@@ -257,7 +251,7 @@
       })(this));
       $(".change_in_basket").bind('click', (function(_this) {
         return function(event) {
-          App.MyBasket.change_item_from_modal(_this);
+          App.MyBasket.change_item(_this);
           return $.unblockUI();
         };
       })(this));
@@ -265,25 +259,23 @@
     };
 
     Item.prototype.get_modal = function() {
-      var buy_square, c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
+      var c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
       if (App.MyBasket.is_in_basket(this)) {
-        modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
+        modal_link = '<a class="change_in_basket" href="Изменить" onClick="return false">Изменить</a>';
       } else {
-        modal_link = '<a class="add_to_basket" href="javascript:void(0)">В корзину</a>';
+        modal_link = '<a class="add_to_basket" href="Добавить в корзину" onClick="return false">В корзину</a>';
       }
       if (this.is_measureable()) {
+        l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="' + this.buy_length + '" />';
         c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
-        l_input = "<div class=\"length_item_overall\">Общий метраж: <span class=\"buy_length\">" + this.buy_length + "</span></div>";
       } else {
+        l_input = '<input class="buy_length" value="---" disabled />';
         c_input = '<input class="buy_count" value="---" disabled />';
-        l_input = "";
       }
       w_input = '<input class="buy_weight" pattern="[0-9,\\.]+" value="' + this.buy_weight + '" />';
       if (this.is_kis) {
         cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="' + this.weight + '" />';
         set_length = "<p class=\"list_length\">Укажите требуемую длину листа: " + cl_input + "</p>";
-        buy_square = (this.width * this.weight * this.buy_count).toFixed(2);
-        l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
       } else {
         set_length = "";
       }
@@ -297,7 +289,7 @@
         "пог. м": "Метры пог."
       };
       c_izm = edizm_dict["" + this.ed_izm];
-      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n<td style=\"display:none\">\n    " + l_input + "\n</td>\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 

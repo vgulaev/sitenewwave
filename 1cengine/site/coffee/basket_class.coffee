@@ -66,6 +66,11 @@ class App.MyBasket
 
             yaCounter23067595.reachGoal('AddItem');
 
+    @change_item_from_modal: (item) ->
+        @change_item(item)
+        @on_weight_change_handler(@_total_weight)
+        @on_active_price_measured_change_handler()
+        # @change_basket()
 
     @change_item: (item) ->
         # alert("lol")
@@ -77,9 +82,9 @@ class App.MyBasket
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
                 @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
 
-                # @change_basket()
             # @on_weight_change_handler(@_total_weight)
-            # @on_active_price_measured_change_handler()
+            # @change_basket()
+        # @on_active_price_measured_change_handler()
 
     @delete_item: (id) ->
 
@@ -132,8 +137,8 @@ class App.MyBasket
                 # @change_basket()
 
         nds = ( ( @_sum / 100 ) * 18 ).toFixed(2)
-        $("#SumGoods").html(@_sum)
-        $("#CountAll").html(@_total_weight)
+        $("#SumGoods").html(@_sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",","))
+        $("#CountAll").html(@_total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","))
         $("#NDSAll").html(nds)
 
         App.load_delivery_cost()
@@ -143,7 +148,10 @@ class App.MyBasket
 
 
     @create_row: (item) ->
-        nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2)
+        nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
+        price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
+        sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
+        count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         row = """
             <tr class="itemTr" name="#{item.id}">
             <td>#{@_item_list.indexOf(item)+1}</td>
@@ -151,12 +159,12 @@ class App.MyBasket
 
             <td class='itemCharTd'>#{item.char}</td>
 
-            <td class='itemCountTd'>#{item.buy_weight}</td>
+            <td class='itemCountTd'>#{count_td}</td>
             <td class='itemEdIzmTd'>#{item.ed_izm}</td>
-            <td class='itemPriceTd'>#{item.price_weight}</td>
+            <td class='itemPriceTd'>#{price_td}</td>
             <td class='itemNdsKfTd'>18%</td>
             <td class='itemNdsSumTd'>#{nds}</td>
-            <td class='itemSumTd'>#{item.final_price}</td>
+            <td class='itemSumTd'>#{sum_td}</td>
             <td class='itemEdit'>
                 <span class="delEdSpan">
                 <a class="edit_from_basket" href="Редактировать" onClick="return false"><img src="/1cengine/site/images/cart_edit.png" /></a></span>

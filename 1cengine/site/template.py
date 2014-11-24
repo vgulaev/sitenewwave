@@ -110,22 +110,21 @@ def set_search_results():
     # print lib_path
     import imp
     get_items_bs = imp.load_source(
-        "get_items_bs", lib_path + "/get_items_bs" + ".py")
+        "get_ncatalog_items", lib_path + "/get_ncatalog_items" + ".py")
 
     if "ref" in form:
         # form["term"] = form["ref"].value.decode("utf-8")
 
-        result_table = get_items_bs.ResultTable(form["ref"].value, "strict")
+        result_table = get_items_bs.compose_table(form["ref"].value)
 
-        return result_table.compose_table(False)
+        return result_table
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
         catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
-        result_table = get_items_bs.ResultTable(
-            catalog, "catalog")
+        result_table = get_items_bs.compose_table(catalog)
 
-        return result_table.compose_table(False)
+        return result_table
 
 
 def set_show_nexr_prev():
@@ -142,16 +141,16 @@ def set_show_nexr_prev():
 
     span_tag.append(prev_a_tag)
 
-    current_span_tag = soup.new_tag("span")
-    # current_span_tag["style"] = "display:none;"
-    current_span_tag["class"] = "current_page"
-    current_span_tag.string = "1"
+    # current_span_tag = soup.new_tag("span")
+    # # current_span_tag["style"] = "display:none;"
+    # current_span_tag["class"] = "current_page"
+    # current_span_tag.string = "1"
 
-    span_tag.append(current_span_tag)
+    # span_tag.append(current_span_tag)
 
     a_tag = soup.new_tag("span")
     a_tag["id"] = "showAll"
-    a_tag.string = u"Еще результаты: "
+    # a_tag.string = u"Еще результаты: "
     # if "catalog" not in form:
     #     a_tag["style"] = "display:none"
 
@@ -207,7 +206,7 @@ def set_groups():
     # print lib_path
     import imp
     get_item_group = imp.load_source(
-        "get_item_group", lib_path + "/get_item_group" + ".py")
+        "get_item_group", lib_path + "/get_ncatalog_item_group" + ".py")
 
     c_catalog = None
     if "catalog" in form:
@@ -219,7 +218,10 @@ def set_groups():
         tag_li = soup.new_tag("li")
         tag_li["name"] = group[0].decode("utf-8")
         tag_li["inid"] = group[1].decode("utf-8")
-        tag_li.append(group[0].decode("utf-8"))
+        tag_span_name = soup.new_tag("span")
+        tag_span_name["class"] = "click_name"
+        tag_span_name.append(group[0].decode("utf-8"))
+        tag_li.append(tag_span_name)
 
         if c_catalog is not None and c_catalog in group[0].decode("utf-8"):
             tag_li["class"] = "main_group active_group"
@@ -227,20 +229,108 @@ def set_groups():
             subgroups = get_item_group.get_subgroups(group[1].decode("utf-8"))
 
             if subgroups.__len__() > 0:
-                tag_ul_sg = soup.new_tag("ul")
-                tag_ul_sg["class"] = "subgroup_c"
+                tag_div_sg = soup.new_tag("div")
+                tag_div_sg["class"] = "subgroup_c"
 
-                for sgroup in subgroups:
-                    if sgroup[0].decode("utf-8") != group[0].decode("utf-8"):
-                        tag_li_sg = soup.new_tag("li")
-                        tag_li_sg["class"] = "subgroup"
-                        tag_li_sg["name"] = sgroup[0].decode("utf-8")
-                        tag_li_sg["inid"] = sgroup[1].decode("utf-8")
-                        tag_li_sg.append(sgroup[0].decode("utf-8"))
+                back_span = soup.new_tag("span")
+                back_span["class"] = "menu_back_button"
+                back_span.append(u" ⮪ назад")
+                tag_div_sg.append(back_span)
 
-                        tag_ul_sg.append(tag_li_sg)
+                tag_div_parents = soup.new_tag("div")
+                tag_div_parents["class"] = "parents_choice"
 
-                tag_li.append(tag_ul_sg)
+                tag_div_parents_header = soup.new_tag("span")
+                tag_div_parents_header["class"] = "choice_header"
+                tag_div_parents_header.append(u"Марка стали")
+                tag_div_parents.append(tag_div_parents_header)
+
+                for parent in subgroups["parents"]:
+                    tag_choice_container = soup.new_tag("span")
+                    tag_choice_container["class"] = "choice_container"
+
+                    tag_checkbox = soup.new_tag("input")
+                    tag_checkbox["type"] = "checkbox"
+                    tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                    tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+
+                    tag_checkbox_label = soup.new_tag("label")
+                    tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                    tag_checkbox_label.append(parent[0].decode("utf-8"))
+
+                    tag_choice_container.append(tag_checkbox)
+                    tag_choice_container.append(tag_checkbox_label)
+
+                    tag_div_parents.append(tag_choice_container)
+
+                tag_div_sg.append(tag_div_parents)
+
+                if "thickness" in subgroups:
+
+                    tag_div_thickness = soup.new_tag("div")
+                    tag_div_thickness["class"] = "thickness_choice"
+                    tag_div_thickness_header = soup.new_tag("span")
+                    tag_div_thickness_header["class"] = "choice_header"
+                    tag_div_thickness_header.append(u"Толщина стали")
+                    tag_div_thickness.append(tag_div_thickness_header)
+
+                    for thickness in subgroups["thickness"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
+
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["name"] = "th_{0}".format(thickness.decode("utf-8"))
+                        tag_checkbox["id"] = "th_{0}".format(thickness.decode("utf-8"))
+
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = "th_{0}".format(thickness.decode("utf-8"))
+                        tag_checkbox_label.append(thickness.decode("utf-8"))
+
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
+
+                        tag_div_thickness.append(tag_choice_container)
+
+                    tag_div_sg.append(tag_div_thickness)
+
+                if "diameter" in subgroups:
+
+                    tag_div_diameter = soup.new_tag("div")
+                    tag_div_diameter["class"] = "diameter_choice"
+
+                    tag_div_diameter_header = soup.new_tag("span")
+                    tag_div_diameter_header["class"] = "choice_header"
+                    tag_div_diameter_header.append(u"Внешний диаметр")
+                    tag_div_diameter.append(tag_div_diameter_header)
+
+                    for diameter in subgroups["diameter"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
+
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["name"] = "di_{0}".format(diameter.decode("utf-8"))
+                        tag_checkbox["id"] = "di_{0}".format(diameter.decode("utf-8"))
+
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = "di_{0}".format(diameter.decode("utf-8"))
+                        tag_checkbox_label.append(diameter.decode("utf-8"))
+
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
+
+                        tag_div_diameter.append(tag_choice_container)
+
+                    tag_div_sg.append(tag_div_diameter)
+
+                show_button = soup.new_tag("span")
+                show_button["class"] = "sungroup_show_button"
+                show_button.append(u"Выбрать")
+
+                tag_div_sg.append(show_button)
+
+                tag_li.append(tag_div_sg)
 
         else:
             tag_li["class"] = "main_group"
