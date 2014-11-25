@@ -309,6 +309,14 @@ conn = MySQLdb.connect(host=databases["catalog"]["host"],
 
 
 conn.set_character_set('utf8')
+cursor = conn.cursor()
+
+cursor.execute(""" TRUNCATE `item_price` """)
+cursor.execute(""" TRUNCATE `price_type` """)
+cursor.execute(""" TRUNCATE `char` """)
+cursor.execute(""" TRUNCATE `item` """)
+cursor.execute(""" TRUNCATE `item_parent` """)
+cursor.execute(""" TRUNCATE `site_group` """)
 
 
 with open("../../import/price.csv") as price_csv:
