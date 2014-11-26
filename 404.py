@@ -6,8 +6,7 @@ import sys,os
 import cgi
 import cgitb; cgitb.enable()
 
-print ("Status: 404 Not Found\n")
-print ("Content-Type: text/html; charset=utf-8\n")
+print ("Status: 404 Not Found\nContent-Type: text/html; charset=utf-8\n")
 
 _PATH = os.path.abspath(os.path.dirname(__file__))
 
