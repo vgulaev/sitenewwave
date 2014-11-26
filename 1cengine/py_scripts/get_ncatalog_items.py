@@ -129,18 +129,19 @@ class ResultTable():
                     AND `item`.`id` IN ( SELECT * FROM (
                     SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
+                    AND `item`.`item_parent_ref`=`item_parent`.`id`
                     {1}
                     {2}
                     {3}
                     {4}
-                    ORDER BY `item`.`name` limit {5},{6}) as `id`
+                    ORDER BY `item_parent`.`name`, `item`.`name` limit {5},{6}) as `id`
                     )
                     AND `item_price`.`item_ref`=`item`.`id`
                     AND `item_price`.`is_char`='0'
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
                     AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item`.`name`, `price_type`.`id`
+                    ORDER BY `item_parent`.`name`, `item`.`name`, `price_type`.`id`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
         else:
             query = """
@@ -155,11 +156,12 @@ class ResultTable():
                     AND `item`.`id` IN ( SELECT * FROM (
                     SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
                     WHERE `item`.`site_group_ref`='{0}'
+                    AND `item`.`item_parent_ref`=`item_parent`.`id`
                     {1}
                     {2}
                     {3}
                     {4}
-                    ORDER BY `item`.`name` LIMIT {5},{6}) as `id`
+                    ORDER BY `item_parent`.`name`, `item`.`name` LIMIT {5},{6}) as `id`
                     )
                     AND `char`.`item_ref`=`item`.`id`
                     AND `item_price`.`item_ref`=`char`.`id`
@@ -167,7 +169,7 @@ class ResultTable():
                     AND `item_price`.`price_type_ref`=`price_type`.`id`
                     AND `item_parent`.`id` = `item`.`item_parent_ref`
                     AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item`.`name`, `price_type`.`id`
+                    ORDER BY `item_parent`.`name`, `item`.`name`, `price_type`.`id`
             """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
 
         # print query
@@ -227,7 +229,9 @@ def compose_table(term, offset=0, limit=20, params={}):
 
     odd=False
 
-    for _item_group in groups:
+    item_groups_keys = sorted(groups.keys())
+
+    for _item_group in item_groups_keys:
         ITEM_LIST = groups[_item_group]
         ITEM_LIST_KEYS = sorted(ITEM_LIST.keys())
 
