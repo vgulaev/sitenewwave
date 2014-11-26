@@ -1,7 +1,9 @@
 User-agent: *
 Allow: /
 Crawl-delay: 2
-Sitemap: http://trimet.ru/sitemap.xml
-Host: trimet.ru
 
+User-agent: *
 Disallow: /1cengine/site/?ref=
+
+Sitemap: https://trimet.ru/sitemap.xml
+Host: https://trimet.ru
