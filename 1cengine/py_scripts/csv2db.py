@@ -27,7 +27,12 @@ class Item:
         self.item_height = item_array[15].replace(",", ".").strip()
         stock = item_array[16].strip()
         self.char_length = item_array[17].replace(",", ".").strip()
-        self.item_work_width = item_array[18].replace("';", "").replace(",", ".").strip()
+        self.item_work_width = item_array[18].replace(",", ".").strip()
+        self.item_parent_short = item_array[19].replace(
+            "';", "").replace(",", ".").strip()
+        if self.item_parent_short != "":
+            self.item_parent = self.item_parent_short
+
         if stock is "":
             self.in_stock = 0
         else:
