@@ -67,6 +67,7 @@ class App.Item
         @stock  = char_array[4]
         @width  = char_array[5]
         @work_width = parseInt(char_array[6], 10) / 1000
+        @ai_flag = char_array[7]
         # alert(@work_width)
 
         i_hash = @id.slice 0, @id.indexOf(":")
@@ -142,6 +143,15 @@ class App.Item
             $(".buy_count").val(@buy_count)
 
             $(".buy_length").html(@buy_length)
+            if @ai_flag is "s"
+                if @char.indexOf("*") != -1
+                    ch_arr = @char.split("*")
+                    if $(ch_arr).length = 2
+                        unit_square = (ch_arr[0].replace /,+/g, ".") * (ch_arr[1].replace /,+/g, ".")
+                        # alert(unit_square)
+                        buy_square = (unit_square * @buy_count).toFixed(3)
+                        $(".buy_square").html(buy_square)
+
 
         if @is_kis
             $(".char_length").val(@weight)
@@ -280,8 +290,19 @@ class App.Item
         if @is_measureable()
             # l_input = '<input class="buy_length" pattern="[0-9,\\.]+" value="'+@buy_length+'" />'
             c_input = '<input class="buy_count" pattern="[0-9]+" value="'+@buy_count+'" />'
+            if @ai_flag is "l"
+                l_input = """<div class="length_item_overall">Общий метраж: <span class="buy_length">#{@buy_length}</span></div>"""
+            else if @ai_flag is "s"
+                if @char.indexOf("*") != -1
+                    ch_arr = @char.split("*")
+                    if $(ch_arr).length = 2
+                        unit_square = (ch_arr[0].replace /,+/g, ".") * (ch_arr[1].replace /,+/g, ".")
+                        # alert(unit_square)
+                        buy_square = (unit_square * @buy_count).toFixed(3)
 
-            l_input = """<div class="length_item_overall">Общий метраж: <span class="buy_length">#{@buy_length}</span></div>"""
+                        l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
+            else
+                l_input = ""
         else
             # l_input = '<input class="buy_length" value="---" disabled />'
             c_input = '<input class="buy_count" value="---" disabled />'

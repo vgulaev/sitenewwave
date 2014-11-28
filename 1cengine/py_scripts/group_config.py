@@ -1,239 +1,279 @@
 #!/web/trimetru/python/bin/python2.6
 # -*- coding: utf-8 -*-
 
+### What are those values
+# 1. path to group image
+# 2. show height in params
+# 3. show thickness in params
+# 4. show width|diameter in params
+# 5. height name
+# 6. thickness name
+# 7. width name
+# 8. additional info flag:
+#   l - overall length
+#   w - overall width
+#   s - overall square
+###
+
 groups_params = {
     "Арматура": [
-        "/1cengine/nsite/images/eye_pic/armatura.png",
+        "/1cengine/site/images/eye_pic/armatura.png",
         0,
         0,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Балка": [
-        "/1cengine/nsite/images/eye_pic/balka_dvutavrovaya.png",
+        "/1cengine/site/images/eye_pic/balka_dvutavrovaya.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Квадрат": [
-        "/1cengine/nsite/images/eye_pic/kvadratu.png",
+        "/1cengine/site/images/eye_pic/kvadratu.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Круг": [
-        "/1cengine/nsite/images/eye_pic/krugi.png",
+        "/1cengine/site/images/eye_pic/krugi.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Лист горячекатанный": [
-        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Лист неответственного назначения": [
-        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Лист оцинкованный": [
-        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Лист рифлённый": [
-        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Лист холоднокатанный": [
-        "/1cengine/nsite/images/eye_pic/list_stalnoy.png",
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Металлосайдинг": [
-        "/1cengine/nsite/images/eye_pic/metallosajding.png",
+        "/1cengine/site/images/eye_pic/metallosajding.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Металлочерепица": [
-        "/1cengine/nsite/images/eye_pic/cherepica.png",
+        "/1cengine/site/images/eye_pic/cherepica.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Полоса": [
-        "/1cengine/nsite/images/eye_pic/polosovoy_prokat.png",
+        "/1cengine/site/images/eye_pic/polosovoy_prokat.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Проволока": [
-        "/1cengine/nsite/images/eye_pic/provoloka.png",
+        "/1cengine/site/images/eye_pic/provoloka.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Профнастил": [
-        "/1cengine/nsite/images/eye_pic/profnastil.png",
+        "/1cengine/site/images/eye_pic/profnastil.png",
         1,
         1,
         1,
         "Высота гофры",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "s"
     ],
     "Сетка кладочная": [
-        "/1cengine/nsite/images/eye_pic/default.png",
+        "/1cengine/site/images/eye_pic/default.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Сетка рабица": [
-        "/1cengine/nsite/images/eye_pic/default.png",
+        "/1cengine/site/images/eye_pic/default.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Труба": [
-        "/1cengine/nsite/images/eye_pic/truba.png",
+        "/1cengine/site/images/eye_pic/truba.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Труба б/у": [
-        "/1cengine/nsite/images/eye_pic/truba.png",
+        "/1cengine/site/images/eye_pic/truba.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Трубы оцинкованные": [
-        "/1cengine/nsite/images/eye_pic/truba.png",
+        "/1cengine/site/images/eye_pic/truba.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Трубы профильные": [
-        "/1cengine/nsite/images/eye_pic/profilnaya_truba.png",
+        "/1cengine/site/images/eye_pic/profilnaya_truba.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Диаметр"
+        "Диаметр",
+        "l"
     ],
     "Угол гнутый": [
-        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
+        "/1cengine/site/images/eye_pic/ugolok_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Угол неравнополочный": [
-        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
+        "/1cengine/site/images/eye_pic/ugolok_stalnoy.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Угол равнополочный": [
-        "/1cengine/nsite/images/eye_pic/ugolok_stalnoy.png",
+        "/1cengine/site/images/eye_pic/ugolok_stalnoy.png",
         0,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Швеллер": [
-        "/1cengine/nsite/images/eye_pic/shveller.png",
+        "/1cengine/site/images/eye_pic/shveller.png",
         0,
         1,
         0,
         "Высота",
         "Размер",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Швеллер гнутый": [
-        "/1cengine/nsite/images/eye_pic/shveller.png",
+        "/1cengine/site/images/eye_pic/shveller.png",
         0,
         1,
         0,
         "Высота",
         "Размер",
-        "Ширина"
+        "Ширина",
+        "l"
     ],
     "Шестигранник": [
-        "/1cengine/nsite/images/eye_pic/shestigrannik.png",
+        "/1cengine/site/images/eye_pic/shestigrannik.png",
         1,
         1,
         1,
         "Высота",
         "Толщина",
-        "Ширина"
+        "Ширина",
+        "l"
     ]
 }

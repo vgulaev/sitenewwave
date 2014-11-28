@@ -70,6 +70,7 @@
       this.stock = char_array[4];
       this.width = char_array[5];
       this.work_width = parseInt(char_array[6], 10) / 1000;
+      this.ai_flag = char_array[7];
       i_hash = this.id.slice(0, this.id.indexOf(":"));
       i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
@@ -127,10 +128,20 @@
     };
 
     Item.prototype.change_modal = function() {
-      var buy_square;
+      var buy_square, ch_arr, unit_square;
       if (this.is_measureable()) {
         $(".buy_count").val(this.buy_count);
         $(".buy_length").html(this.buy_length);
+        if (this.ai_flag === "s") {
+          if (this.char.indexOf("*") !== -1) {
+            ch_arr = this.char.split("*");
+            if ($(ch_arr).length = 2) {
+              unit_square = (ch_arr[0].replace(/,+/g, ".")) * (ch_arr[1].replace(/,+/g, "."));
+              buy_square = (unit_square * this.buy_count).toFixed(3);
+              $(".buy_square").html(buy_square);
+            }
+          }
+        }
       }
       if (this.is_kis) {
         $(".char_length").val(this.weight);
@@ -273,7 +284,7 @@
     };
 
     Item.prototype.get_modal = function() {
-      var buy_square, c_input, c_izm, cl_input, edizm_dict, l_input, message, modal_link, set_length, w_input;
+      var buy_square, c_input, c_izm, ch_arr, cl_input, edizm_dict, l_input, message, modal_link, set_length, unit_square, w_input;
       if (App.MyBasket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
       } else {
@@ -281,7 +292,20 @@
       }
       if (this.is_measureable()) {
         c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
-        l_input = "<div class=\"length_item_overall\">Общий метраж: <span class=\"buy_length\">" + this.buy_length + "</span></div>";
+        if (this.ai_flag === "l") {
+          l_input = "<div class=\"length_item_overall\">Общий метраж: <span class=\"buy_length\">" + this.buy_length + "</span></div>";
+        } else if (this.ai_flag === "s") {
+          if (this.char.indexOf("*") !== -1) {
+            ch_arr = this.char.split("*");
+            if ($(ch_arr).length = 2) {
+              unit_square = (ch_arr[0].replace(/,+/g, ".")) * (ch_arr[1].replace(/,+/g, "."));
+              buy_square = (unit_square * this.buy_count).toFixed(3);
+              l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
+            }
+          }
+        } else {
+          l_input = "";
+        }
       } else {
         c_input = '<input class="buy_count" value="---" disabled />';
         l_input = "";

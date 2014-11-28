@@ -65,20 +65,21 @@ class Item:
                 height_name = groups_params[self.item_group][4]
                 thickness_name = groups_params[self.item_group][5]
                 diameter_name = groups_params[self.item_group][6]
+                ai_flag = groups_params[self.item_group][7]
 
                 insert_text = """
                     INSERT INTO `trimetru_catalog`.`site_group` (
                         `id`, `name`, `char_price`,`img_url`, `show_height`,
                         `show_thickness`, `show_diameter`, `height_name`,
-                        `thickness_name`,`diameter_name`
+                        `thickness_name`, `diameter_name`, `ai_flag`
                     ) VALUES (
                         '{0}', '{1}', '{2}', '{3}', '{4}',
-                        '{5}', '{6}', '{7}', '{8}', '{9}'
+                        '{5}', '{6}', '{7}', '{8}', '{9}', '{10}'
                     )
                 """.format(
                     "", self.item_group, char_price, img_path, show_height,
                     show_thickness, show_diameter, height_name, thickness_name,
-                    diameter_name
+                    diameter_name, ai_flag
                 )
 
             else:
