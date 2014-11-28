@@ -397,6 +397,11 @@ def compose_table(term, offset=0, limit=20, params={}):
             items_list_name_td["class"] = "itemName"
             items_list_name_td.append(item.name)
 
+            # item_list_availability_span = soup.new_tag("span")
+            # item_list_availability_span.append(u"есть на складе")
+            # item_list_availability_span["class"] = "item_in_stock"
+            # items_list_name_td.append(item_list_availability_span)
+
             item_list_price_td = soup.new_tag("td")
             item_list_price_td.append(
                 "от {0} за {1}.".format(min_price, item.unit)
@@ -488,6 +493,11 @@ def compose_table(term, offset=0, limit=20, params={}):
             if _IN_STOCK:
                 item_buy_span_tag.string = "Рассчитать"
                 item_buy_a_tag["class"] = u"bItem"
+
+                item_list_availability_span = soup.new_tag("span")
+                item_list_availability_span.append(u"есть на складе")
+                item_list_availability_span["class"] = "item_in_stock"
+                items_list_name_td.append(item_list_availability_span)
             else:
                 item_buy_span_tag.string = "Под заказ"
                 item_buy_a_tag["class"] = u"oItem"

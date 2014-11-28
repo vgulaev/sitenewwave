@@ -2530,3 +2530,13 @@ hr{
     box-shadow: inset 0 0 1px 1px rgba(0,0,0,0.7);
     cursor: default;
 }
+
+.item_in_stock{
+    color:#75bf4e;
+    font-weight: 700;
+    font-size: 8pt;
+    border:2px solid #75bf4e;
+    padding:0 10px;
+    float: right;
+    border-radius: 5px;
+}
