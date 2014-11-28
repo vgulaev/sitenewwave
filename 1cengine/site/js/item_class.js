@@ -132,7 +132,7 @@
       if (this.is_measureable()) {
         $(".buy_count").val(this.buy_count);
         $(".buy_length").html(this.buy_length);
-        if (this.ai_flag === "s") {
+        if (this.ai_flag === "s" && !this.is_kis) {
           if (this.char.indexOf("*") !== -1) {
             ch_arr = this.char.split("*");
             if ($(ch_arr).length = 2) {
@@ -294,7 +294,7 @@
         c_input = '<input class="buy_count" pattern="[0-9]+" value="' + this.buy_count + '" />';
         if (this.ai_flag === "l") {
           l_input = "<div class=\"length_item_overall\">Общий метраж: <span class=\"buy_length\">" + this.buy_length + "</span></div>";
-        } else if (this.ai_flag === "s") {
+        } else if (this.ai_flag === "s" && !this.is_kis) {
           if (this.char.indexOf("*") !== -1) {
             ch_arr = this.char.split("*");
             if ($(ch_arr).length = 2) {

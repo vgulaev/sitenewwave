@@ -143,7 +143,7 @@ class App.Item
             $(".buy_count").val(@buy_count)
 
             $(".buy_length").html(@buy_length)
-            if @ai_flag is "s"
+            if @ai_flag is "s" and not @is_kis
                 if @char.indexOf("*") != -1
                     ch_arr = @char.split("*")
                     if $(ch_arr).length = 2
@@ -292,7 +292,7 @@ class App.Item
             c_input = '<input class="buy_count" pattern="[0-9]+" value="'+@buy_count+'" />'
             if @ai_flag is "l"
                 l_input = """<div class="length_item_overall">Общий метраж: <span class="buy_length">#{@buy_length}</span></div>"""
-            else if @ai_flag is "s"
+            else if @ai_flag is "s" and not @is_kis
                 if @char.indexOf("*") != -1
                     ch_arr = @char.split("*")
                     if $(ch_arr).length = 2
