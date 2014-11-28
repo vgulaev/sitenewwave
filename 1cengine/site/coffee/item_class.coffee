@@ -66,6 +66,8 @@ class App.Item
         @ed_izm = char_array[3]
         @stock  = char_array[4]
         @width  = char_array[5]
+        @work_width = parseInt(char_array[6], 10) / 1000
+        # alert(@work_width)
 
         i_hash = @id.slice 0, @id.indexOf(":")
         i_class = @id.slice @id.indexOf(":") + 1
@@ -75,10 +77,12 @@ class App.Item
             @weight = 2
             @length = 1000
             @char = @weight
+            @kf = 1
         else
             @is_kis = false
 
         # alert(i_class)
+        # alert(@is_kis)
         @prices = []
         obj = $("tr[lolid='#{i_class}']")
         # alert($(obj).attr("class"))
@@ -141,7 +145,13 @@ class App.Item
 
         if @is_kis
             $(".char_length").val(@weight)
-            $(".buy_square").html((@width * @weight * @buy_count).toFixed(2))
+
+            if @work_width != ""
+                buy_square = (@weight * @work_width * @buy_count).toFixed(3)
+            else
+                buy_square = (@weight * @buy_weight * @buy_count).toFixed(3)
+
+            $(".buy_square").html(buy_square)
 
         $(".buy_weight").val(@buy_weight)
 
@@ -285,9 +295,12 @@ class App.Item
                 <p class="list_length">Укажите требуемую длину листа: #{cl_input}</p>
             """
 
-            buy_square = (@width * @weight * @buy_count).toFixed(2)
+            if @work_width != ""
+                buy_square = (@weight * @work_width * @buy_count).toFixed(3)
+            else
+                buy_square = (@weight * @buy_weight * @buy_count).toFixed(3)
             # alert(@width+" x "+@weight)
-            l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
+            l_input = """<div class="length_item_overall">Общая рабочая площадь: <span class="buy_square">#{buy_square}</span></div>"""
         else
             set_length = ""
 

@@ -69,6 +69,7 @@
       this.ed_izm = char_array[3];
       this.stock = char_array[4];
       this.width = char_array[5];
+      this.work_width = parseInt(char_array[6], 10) / 1000;
       i_hash = this.id.slice(0, this.id.indexOf(":"));
       i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
@@ -76,6 +77,7 @@
         this.weight = 2;
         this.length = 1000;
         this.char = this.weight;
+        this.kf = 1;
       } else {
         this.is_kis = false;
       }
@@ -125,13 +127,19 @@
     };
 
     Item.prototype.change_modal = function() {
+      var buy_square;
       if (this.is_measureable()) {
         $(".buy_count").val(this.buy_count);
         $(".buy_length").html(this.buy_length);
       }
       if (this.is_kis) {
         $(".char_length").val(this.weight);
-        $(".buy_square").html((this.width * this.weight * this.buy_count).toFixed(2));
+        if (this.work_width !== "") {
+          buy_square = (this.weight * this.work_width * this.buy_count).toFixed(3);
+        } else {
+          buy_square = (this.weight * this.buy_weight * this.buy_count).toFixed(3);
+        }
+        $(".buy_square").html(buy_square);
       }
       $(".buy_weight").val(this.buy_weight);
       return this.change_modal_price();
@@ -282,8 +290,12 @@
       if (this.is_kis) {
         cl_input = '<input class="char_length" pattern="[0-9,\\.]+" value="' + this.weight + '" />';
         set_length = "<p class=\"list_length\">Укажите требуемую длину листа: " + cl_input + "</p>";
-        buy_square = (this.width * this.weight * this.buy_count).toFixed(2);
-        l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
+        if (this.work_width !== "") {
+          buy_square = (this.weight * this.work_width * this.buy_count).toFixed(3);
+        } else {
+          buy_square = (this.weight * this.buy_weight * this.buy_count).toFixed(3);
+        }
+        l_input = "<div class=\"length_item_overall\">Общая рабочая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
       } else {
         set_length = "";
       }

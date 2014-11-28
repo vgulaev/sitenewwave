@@ -26,7 +26,8 @@ class Item:
         self.item_price_type = item_array[14].replace(",", ".").strip()
         self.item_height = item_array[15].replace(",", ".").strip()
         stock = item_array[16].strip()
-        self.char_length = item_array[17].replace("';", "").replace(",", ".").strip()
+        self.char_length = item_array[17].replace(",", ".").strip()
+        self.item_work_width = item_array[18].replace("';", "").replace(",", ".").strip()
         if stock is "":
             self.in_stock = 0
         else:
@@ -159,14 +160,15 @@ class Item:
                 INSERT INTO `trimetru_catalog`.`item`
                 (`name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
                     `is_optional_length`, `min_length`, `max_length`,
-                    `site_group_ref`, `item_parent_ref`)
+                    `site_group_ref`, `item_parent_ref`, `work_width`)
                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}',
-                    '{8}', '{9}', {10})
+                    '{8}', '{9}', {10}, '{11}')
             """.format(
                 self.item_name, self.item_hash, self.item_thickness,
                 self.item_diameter, self.item_height, self.item_unit,
                 self.optional_length, self.item_min_length,
-                self.item_max_length, self.group_id, self.parent_id
+                self.item_max_length, self.group_id, self.parent_id,
+                self.item_work_width
             )
 
             self.cursor.execute(insert_text)
