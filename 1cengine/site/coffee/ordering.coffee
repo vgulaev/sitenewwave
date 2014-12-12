@@ -211,18 +211,58 @@ create_rezka = () ->
     new_tbody_string = ""
     for item in App.MyBasket._item_list
         if item.id in App.MyBasket._rezka_list
+                # """<tr>
+                #                                                     <td class="rezka_item_name">#{item.name} #{item.char}</td>
+                #                                                     <td class="rezka_item_description">
+                #                                                         <textarea class="rezka_item_text"></textarea>
+                #                                                     </td>
+                #                                                     <td class="rezka_item_delete"><div idname="#{item.id}"></div>
+                #                                                 </tr>"""
             new_tr = """
-                <tr>
-                    <td class="rezka_item_name">#{item.name} #{item.char}</td>
-                    <td class="rezka_item_description">
-                        <textarea class="rezka_item_text"></textarea>
-                    </td>
-                    <td class="rezka_item_delete"><div idname="#{item.id}"></div>
-                </tr>
+                <div class="rezka_item">
+                <div class="rezka_item_header">#{item.name} #{item.char}
+                <span class="rezka_delete_item">⤬</span>
+                </div>
+                <span class="red_info">
+                    *Максимальная длина отрезка: #{item.char} м
+                </span>
+                <div class="rezka_table_container">
+                    <table class="rezka_table">
+                        <thead>
+                            <tr>
+                                <th>Длина м.</th>
+                                <th>Кол-во шт.</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="textarea" class="rezka_length_input" />
+                                </td>
+                                <td>
+                                    <input type="textarea" class="rezka_count_input" />
+                                </td>
+                                <td class="rezka_part_delete">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="rezka_part_add"><font>Добавить рез</font></div>
+                </div>
+                <div class="rezka_info_container">
+                    <div class="rezka_count_info">
+                        <div>Количестуво резов: <span class="rezka_count">X</span></div>
+                        <div>Остатки: <span>Y</span></div>
+                    </div>
+                    <div class="rezka_price_container">Цена: <span class="rezka_price">Z</span></div>
+                </div>
+            </div>
             """
             new_tbody_string = new_tbody_string + new_tr
 
-    $(".rezka_table").find("tbody").html new_tbody_string
+    $(".rezka_table").html new_tbody_string
 
     $(".rezka_item_delete").find("div").each (index, element) ->
         $(element).click ->

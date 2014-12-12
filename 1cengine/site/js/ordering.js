@@ -205,11 +205,11 @@
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
       if (_ref1 = item.id, __indexOf.call(App.MyBasket._rezka_list, _ref1) >= 0) {
-        new_tr = "<tr>\n    <td class=\"rezka_item_name\">" + item.name + " " + item.char + "</td>\n    <td class=\"rezka_item_description\">\n        <textarea class=\"rezka_item_text\"></textarea>\n    </td>\n    <td class=\"rezka_item_delete\"><div idname=\"" + item.id + "\"></div>\n</tr>";
+        new_tr = "    <div class=\"rezka_item\">\n    <div class=\"rezka_item_header\">" + item.name + " " + item.char + "\n    <span class=\"rezka_delete_item\">⤬</span>\n    </div>\n    <span class=\"red_info\">\n        *Максимальная длина отрезка: " + item.char + " м\n    </span>\n    <div class=\"rezka_table_container\">\n        <table class=\"rezka_table\">\n            <thead>\n                <tr>\n                    <th>Длина м.</th>\n                    <th>Кол-во шт.</th>\n                    <th></th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr>\n                    <td>\n                        <input type=\"textarea\" class=\"rezka_length_input\" />\n                    </td>\n                    <td>\n                        <input type=\"textarea\" class=\"rezka_count_input\" />\n                    </td>\n                    <td class=\"rezka_part_delete\">\n                        <div></div>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n        <div class=\"rezka_part_add\"><font>Добавить рез</font></div>\n    </div>\n    <div class=\"rezka_info_container\">\n        <div class=\"rezka_count_info\">\n            <div>Количестуво резов: <span class=\"rezka_count\">X</span></div>\n            <div>Остатки: <span>Y</span></div>\n        </div>\n        <div class=\"rezka_price_container\">Цена: <span class=\"rezka_price\">Z</span></div>\n    </div>\n</div>";
         new_tbody_string = new_tbody_string + new_tr;
       }
     }
-    $(".rezka_table").find("tbody").html(new_tbody_string);
+    $(".rezka_table").html(new_tbody_string);
     return $(".rezka_item_delete").find("div").each(function(index, element) {
       return $(element).click(function() {
         return delete_rezka_item($(element).attr("idname"));

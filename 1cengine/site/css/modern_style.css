@@ -2073,9 +2073,17 @@ hr{
     text-align: left;
     color: #900020;
 }
-.rezka_div table{
+/*.rezka_div table{
     width:100%;
     text-align: left;
+}*/
+.rezka_item{
+        width:736px;
+        /*margin:150px auto;*/
+        border:1px solid #afafbf;
+        padding:15px;
+        border-radius:15px;
+        margin-bottom:15px;
 }
 .rezka_item_name{
     vertical-align: top;
@@ -2092,14 +2100,14 @@ hr{
     width:50px;
     text-align: center;
 }
-.rezka_table td{
+/*.rezka_table td{
     padding:10px;
     font-size: 12pt;
 }
 .rezka_table th {
     padding-left: 11px;
     font-size: 10pt;
-}
+}*/
 .rezka_item_add{
     width:300px;
     height: 30px;
@@ -2126,7 +2134,9 @@ hr{
     cursor: pointer;
 }
 .rezka_wrapper{
-    display: none;
+/*    border:1px solid #afafbf;
+    padding:15px;
+    border-radius:15px;*/
 }
 
 .rezka_choose_table{
@@ -2539,4 +2549,101 @@ hr{
     padding:0 10px;
     float: right;
     border-radius: 5px;
+}
+
+.rezka_part_delete div {
+    width: 30px;
+    height: 30px;
+    background-image: url('../images/minus.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+}
+.rezka_item_header{
+    font-weight: 700;
+    font-size:12pt;
+}
+.rezka_length_input{
+    width:70px;
+}
+.rezka_count_input{
+    width:70px;
+}
+.rezka_table{
+    display:inline-block;
+    /*border-right:1px dotted #afafbf;*/
+    margin-bottom: 30px;
+}
+.rezka_table th{
+    font-size:8pt;
+}
+.rezka_table_container{
+    border-top:2px groove #afafbf;
+    border-bottom: 2px ridge #afafbf;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.rezka_part_add {
+    width: 155px;
+    height: 45px;
+    padding-left: 30px;
+    padding-top: 22px;
+    margin-left: 10px;
+    background-image: url('../images/plus.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    margin-top:4px;
+}
+.rezka_part_add font {
+    font-size: 10pt;
+    border-bottom: 1px dashed #2D3694;
+    color: #2D3694;
+    font-weight: 700;
+}
+.rezka_info_container{
+    padding-top:10px;
+    height:30px;
+}
+.rezka_info_container div span{
+    font-weight:700;
+}
+.rezka_info_container div{
+    max-width:200px;
+}
+.rezka_price_container{
+    float:right;
+    font-size:10pt;
+}
+.rezka_price_container span{
+    font-weight: 700;
+}
+.rezka_count_info{
+    float: left;
+    font-size:10pt;
+}
+
+.rezka_delete_item{
+    float:right;
+    /*color:#a23;*/
+    color:#fff;
+    cursor: pointer;
+    /*padding-right:30px;*/
+    margin-ri/*ght:-50px;
+    margin-top:-55px;*/
+    font-weight: 900;
+    font-size:10pt;
+    background-color:#f40;
+    border-radius:15px;
+    padding:5px;
+    width:15px;
+    height:15px;
+    line-height:14px;
+    text-align:center;
+    /*text-shadow: 1px 1px 2px white;*/
+    box-shadow: inset 1px 1px 3px 2px rgba(255,255,255,0.5), inset -1px -1px 3px -1px rgba(0,0,0,0.7);
 }
