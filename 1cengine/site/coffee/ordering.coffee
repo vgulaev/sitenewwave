@@ -26,9 +26,16 @@ sendOrder = (orderString, is_async) ->
 
 
     rezka_text = ""
-    $(".rezka_body").find("tr").each (index, element) =>
-        rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: "
-        rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; "
+    # $(".rezka_body").find("tr").each (index, element) =>
+    #     rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: "
+    #     rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; "
+
+    $(".rezka_item").each (index, element) =>
+        rezka_text = rezka_text + $(element).attr("name") + " :: "
+        $(element).find(".rezka_table_tt").each (rindex, relement) =>
+            rezka_slices = $(relement).find(".rezka_count_input").val() + " x " + $(relement).find(".rezka_length_input").val() + " , "
+            rezka_text = rezka_text + rezka_slices
+        rezka_text = rezka_text : " ;; "
 
     if rezka_text is ""
         rezka_text = "NOREZKA ;;"
@@ -149,128 +156,7 @@ getOrderFomat = (format) ->
 
 ### DEPRECATED END!!!! ###
 
-show_rezka_ch_modal = () ->
 
-    table_rows = ""
-    for item in App.MyBasket._item_list
-        if item.id in App.MyBasket._rezka_list
-            checked = "checked"
-        else
-            checked = ""
-        d_name = item.name + " " + item.char
-        table_rows = table_rows + "<tr><td>#{d_name}</td><td><input name='#{item.id}' type='checkbox' #{checked} /></td></tr>"
-
-    # alert(table_rows)
-
-    table = """<div>
-            <p>Отметьте позиции, которые вы хотите порезать</p>
-            <table class='rezka_choose_table'>
-            <thead><tr><th>Наименование</th><th>Резать?</th></tr></thead>
-            <tbody>#{table_rows}</tbody></table>
-            <div class="rezka_confirm_button">Применить</div>
-            </div>"""
-
-    $.blockUI.defaults.css.borderRadius = '10px';
-    $.blockUI.defaults.fadeIn = 100;
-    $.blockUI.defaults.fadeOut = 100;
-    $.blockUI.defaults.css.backgroundColor = 'white'
-    $.blockUI.defaults.css.cursor = 'defaults'
-    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)'
-    $.blockUI.defaults.css.fontSize = '14px'
-    $.blockUI.defaults.css.width = '450px'
-    $.blockUI.defaults.css.paddingTop = '10px'
-
-    $.blockUI
-        message: table
-
-    $(".blockMsg").draggable();
-
-    $(".rezka_confirm_button").click ->
-        # alert(1)
-        apply_rezka()
-
-    $(document).on "keyup", (e) ->
-        e.preventDefault()
-        if e.which is 27
-            $.unblockUI();
-
-apply_rezka = () ->
-    # alert("nya")
-    App.MyBasket._rezka_list.length = 0
-
-    $(".rezka_choose_table").find("input").each ->
-        if $(this).is(":checked")
-            # alert($(this).attr("name"))
-            App.MyBasket._rezka_list.push($(this).attr("name"))
-
-            create_rezka()
-
-            $.unblockUI();
-
-create_rezka = () ->
-    new_tbody_string = ""
-    for item in App.MyBasket._item_list
-        if item.id in App.MyBasket._rezka_list
-                # """<tr>
-                #                                                     <td class="rezka_item_name">#{item.name} #{item.char}</td>
-                #                                                     <td class="rezka_item_description">
-                #                                                         <textarea class="rezka_item_text"></textarea>
-                #                                                     </td>
-                #                                                     <td class="rezka_item_delete"><div idname="#{item.id}"></div>
-                #                                                 </tr>"""
-            new_tr = """
-                <div class="rezka_item">
-                <div class="rezka_item_header">#{item.name} #{item.char}
-                <span class="rezka_delete_item">⤬</span>
-                </div>
-                <span class="red_info">
-                    *Максимальная длина отрезка: #{item.char} м
-                </span>
-                <div class="rezka_table_container">
-                    <table class="rezka_table">
-                        <thead>
-                            <tr>
-                                <th>Длина м.</th>
-                                <th>Кол-во шт.</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="textarea" class="rezka_length_input" />
-                                </td>
-                                <td>
-                                    <input type="textarea" class="rezka_count_input" />
-                                </td>
-                                <td class="rezka_part_delete">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="rezka_part_add"><font>Добавить рез</font></div>
-                </div>
-                <div class="rezka_info_container">
-                    <div class="rezka_count_info">
-                        <div>Количестуво резов: <span class="rezka_count">X</span></div>
-                        <div>Остатки: <span>Y</span></div>
-                    </div>
-                    <div class="rezka_price_container">Цена: <span class="rezka_price">Z</span></div>
-                </div>
-            </div>
-            """
-            new_tbody_string = new_tbody_string + new_tr
-
-    $(".rezka_table").html new_tbody_string
-
-    $(".rezka_item_delete").find("div").each (index, element) ->
-        $(element).click ->
-            delete_rezka_item($(element).attr("idname"))
-
-delete_rezka_item = (id) ->
-    App.MyBasket._rezka_list.splice(App.MyBasket._rezka_list.indexOf(id), 1)
-    create_rezka()
 
 $(document).ready ->
 
@@ -323,7 +209,7 @@ $(document).ready ->
     ### /DEPRECATED ###
 
     $(".rezka_item_add").click ->
-        show_rezka_ch_modal()
+        App.show_rezka_ch_modal()
 
 
     $("#tabBasket").tooltipster({

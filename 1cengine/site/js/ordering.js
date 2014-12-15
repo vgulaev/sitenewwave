@@ -3,8 +3,7 @@
 /* DEPRECATED START!!!! */
 
 (function() {
-  var apply_rezka, createOrder, create_rezka, delete_rezka_item, getOrderFomat, isValidEmail, openLink, sendOrder, show_rezka_ch_modal,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  var createOrder, getOrderFomat, isValidEmail, openLink, sendOrder;
 
   isValidEmail = function(str) {
     return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -31,10 +30,17 @@
     other_phone = $("#otherPhoneInput").val();
     ret = "";
     rezka_text = "";
-    $(".rezka_body").find("tr").each((function(_this) {
+    $(".rezka_item").each((function(_this) {
       return function(index, element) {
-        rezka_text = rezka_text + $(element).find(".rezka_item_name").html() + " :: ";
-        return rezka_text = rezka_text + $(element).find(".rezka_item_text").val() + " ;; ";
+        rezka_text = rezka_text + $(element).attr("name") + " :: ";
+        $(element).find(".rezka_table_tt").each(function(rindex, relement) {
+          var rezka_slices;
+          rezka_slices = $(relement).find(".rezka_count_input").val() + " x " + $(relement).find(".rezka_length_input").val() + " , ";
+          return rezka_text = rezka_text + rezka_slices;
+        });
+        return rezka_text = {
+          rezka_text: " ;; "
+        };
       };
     })(this));
     if (rezka_text === "") {
@@ -148,80 +154,6 @@
 
   /* DEPRECATED END!!!! */
 
-  show_rezka_ch_modal = function() {
-    var checked, d_name, item, table, table_rows, _i, _len, _ref, _ref1;
-    table_rows = "";
-    _ref = App.MyBasket._item_list;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      item = _ref[_i];
-      if (_ref1 = item.id, __indexOf.call(App.MyBasket._rezka_list, _ref1) >= 0) {
-        checked = "checked";
-      } else {
-        checked = "";
-      }
-      d_name = item.name + " " + item.char;
-      table_rows = table_rows + ("<tr><td>" + d_name + "</td><td><input name='" + item.id + "' type='checkbox' " + checked + " /></td></tr>");
-    }
-    table = "<div>\n<p>Отметьте позиции, которые вы хотите порезать</p>\n<table class='rezka_choose_table'>\n<thead><tr><th>Наименование</th><th>Резать?</th></tr></thead>\n<tbody>" + table_rows + "</tbody></table>\n<div class=\"rezka_confirm_button\">Применить</div>\n</div>";
-    $.blockUI.defaults.css.borderRadius = '10px';
-    $.blockUI.defaults.fadeIn = 100;
-    $.blockUI.defaults.fadeOut = 100;
-    $.blockUI.defaults.css.backgroundColor = 'white';
-    $.blockUI.defaults.css.cursor = 'defaults';
-    $.blockUI.defaults.css.boxShadow = '0px 0px 5px 5px rgb(207, 207, 207)';
-    $.blockUI.defaults.css.fontSize = '14px';
-    $.blockUI.defaults.css.width = '450px';
-    $.blockUI.defaults.css.paddingTop = '10px';
-    $.blockUI({
-      message: table
-    });
-    $(".blockMsg").draggable();
-    $(".rezka_confirm_button").click(function() {
-      return apply_rezka();
-    });
-    return $(document).on("keyup", function(e) {
-      e.preventDefault();
-      if (e.which === 27) {
-        return $.unblockUI();
-      }
-    });
-  };
-
-  apply_rezka = function() {
-    App.MyBasket._rezka_list.length = 0;
-    return $(".rezka_choose_table").find("input").each(function() {
-      if ($(this).is(":checked")) {
-        App.MyBasket._rezka_list.push($(this).attr("name"));
-        create_rezka();
-        return $.unblockUI();
-      }
-    });
-  };
-
-  create_rezka = function() {
-    var item, new_tbody_string, new_tr, _i, _len, _ref, _ref1;
-    new_tbody_string = "";
-    _ref = App.MyBasket._item_list;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      item = _ref[_i];
-      if (_ref1 = item.id, __indexOf.call(App.MyBasket._rezka_list, _ref1) >= 0) {
-        new_tr = "    <div class=\"rezka_item\">\n    <div class=\"rezka_item_header\">" + item.name + " " + item.char + "\n    <span class=\"rezka_delete_item\">⤬</span>\n    </div>\n    <span class=\"red_info\">\n        *Максимальная длина отрезка: " + item.char + " м\n    </span>\n    <div class=\"rezka_table_container\">\n        <table class=\"rezka_table\">\n            <thead>\n                <tr>\n                    <th>Длина м.</th>\n                    <th>Кол-во шт.</th>\n                    <th></th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr>\n                    <td>\n                        <input type=\"textarea\" class=\"rezka_length_input\" />\n                    </td>\n                    <td>\n                        <input type=\"textarea\" class=\"rezka_count_input\" />\n                    </td>\n                    <td class=\"rezka_part_delete\">\n                        <div></div>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n        <div class=\"rezka_part_add\"><font>Добавить рез</font></div>\n    </div>\n    <div class=\"rezka_info_container\">\n        <div class=\"rezka_count_info\">\n            <div>Количестуво резов: <span class=\"rezka_count\">X</span></div>\n            <div>Остатки: <span>Y</span></div>\n        </div>\n        <div class=\"rezka_price_container\">Цена: <span class=\"rezka_price\">Z</span></div>\n    </div>\n</div>";
-        new_tbody_string = new_tbody_string + new_tr;
-      }
-    }
-    $(".rezka_table").html(new_tbody_string);
-    return $(".rezka_item_delete").find("div").each(function(index, element) {
-      return $(element).click(function() {
-        return delete_rezka_item($(element).attr("idname"));
-      });
-    });
-  };
-
-  delete_rezka_item = function(id) {
-    App.MyBasket._rezka_list.splice(App.MyBasket._rezka_list.indexOf(id), 1);
-    return create_rezka();
-  };
-
   $(document).ready(function() {
     var GET, curr, i, parts, squery;
     $(".bItem").click(function() {
@@ -268,7 +200,7 @@
 
     /* /DEPRECATED */
     $(".rezka_item_add").click(function() {
-      return show_rezka_ch_modal();
+      return App.show_rezka_ch_modal();
     });
     return $("#tabBasket").tooltipster({
       content: "Товар добавлен в корзину",

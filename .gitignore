@@ -265,4 +265,7 @@ github.py
 
 gpb/testpay.txt
 
-1cengine/json/*
+1cengine/json/*/1cengine/php_scripts/text.txt
+/1cengine/py_scripts/create_order.py
+/1cengine/py_scripts/suds_clear.py
+/1cengine/py_scripts/testhello.py
