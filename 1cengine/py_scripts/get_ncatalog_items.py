@@ -282,6 +282,7 @@ def compose_table(term, offset=0, limit=20, params={}):
                 # char_list = "<select>"
 
                 rebuilt_achar_array = []
+                _IN_STOCK = False
 
                 for char in item.char_array:
                     char_hash = item.char_array[char].hash
@@ -290,7 +291,6 @@ def compose_table(term, offset=0, limit=20, params={}):
                     char_option["name"] = char_hash.decode("utf-8")
                     char_option["stock"] = in_stock
                     char_option.append(char)
-                    _IN_STOCK = False
                     if in_stock == 1:
                         char_select.insert(0,char_option)
                         _IN_STOCK = True
