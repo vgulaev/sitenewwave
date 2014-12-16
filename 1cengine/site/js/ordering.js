@@ -38,9 +38,7 @@
           rezka_slices = $(relement).find(".rezka_count_input").val() + " x " + $(relement).find(".rezka_length_input").val() + " , ";
           return rezka_text = rezka_text + rezka_slices;
         });
-        return rezka_text = {
-          rezka_text: " ;; "
-        };
+        return rezka_text = rezka_text + " ;; ";
       };
     })(this));
     if (rezka_text === "") {

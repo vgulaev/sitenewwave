@@ -35,7 +35,7 @@ sendOrder = (orderString, is_async) ->
         $(element).find(".rezka_table_tt").each (rindex, relement) =>
             rezka_slices = $(relement).find(".rezka_count_input").val() + " x " + $(relement).find(".rezka_length_input").val() + " , "
             rezka_text = rezka_text + rezka_slices
-        rezka_text = rezka_text : " ;; "
+        rezka_text = rezka_text + " ;; "
 
     if rezka_text is ""
         rezka_text = "NOREZKA ;;"
