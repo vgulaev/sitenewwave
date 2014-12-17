@@ -29,10 +29,7 @@ _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/DemoTrimet/ws/"
 
 print "Hello, getting started<br />"
 
-if "dev" in os.environ["SERVER_NAME"]:
-    _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
-else:
-    _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
+_CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
 client = Client(_CURRENT_ADDRESS_ + "price1c.1cws?wsdl",
                 location=_CURRENT_ADDRESS_ + "price1c.1cws")

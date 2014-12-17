@@ -327,7 +327,7 @@ cursor.execute(""" TRUNCATE `item_parent` """)
 cursor.execute(""" TRUNCATE `site_group` """)
 
 
-with open("../../import/price.csv") as price_csv:
+with open("/web/trimetru/site/www/import/price.csv") as price_csv:
     for line in price_csv:
         item_array = line.split("','")
 
