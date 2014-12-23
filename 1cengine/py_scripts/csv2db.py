@@ -60,7 +60,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_group.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_group.decode("utf-8")))
 
             if self.item_group in groups_params:
                 img_path = groups_params[self.item_group][0]
@@ -113,7 +113,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_parent.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_parent.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_parent` (`id`, `name`)
                 VALUES ('{0}', '{1}')
@@ -137,7 +137,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_price_type.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_price_type.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`price_type` (`id`, `name`)
                 VALUES ('{0}', '{1}')
@@ -161,7 +161,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_name.decode("utf-8-sig")))
+            # print(u"Inserting {0}".format(self.item_name.decode("utf-8-sig")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item`
                 (`name`, `hash`, `thickness`, `diameter`, `height`, `ed_izm`,
@@ -195,7 +195,7 @@ class Item:
         if r.__len__() > 0:
             return r[0][0]
         else:
-            print(u"Inserting {0}".format(self.item_char.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_char.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`char` (`id`, `name`, `hash`,
                     `weight`, `kf`, `item_ref`, `length`)
@@ -228,7 +228,7 @@ class Item:
                     if row[0] == self.item_price:
                         return False
 
-            print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
                 `price_type_ref`, `price`, `is_char`, `in_stock`)
@@ -253,7 +253,7 @@ class Item:
                     if row[0] == self.item_price:
                         return False
 
-            print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
+            # print(u"Inserting {0}".format(self.item_price.decode("utf-8")))
             insert_text = """
                 INSERT INTO `trimetru_catalog`.`item_price` (`item_ref`,
                 `price_type_ref`, `price`, `is_char`, `in_stock`)
@@ -326,8 +326,10 @@ cursor.execute(""" TRUNCATE `item` """)
 cursor.execute(""" TRUNCATE `item_parent` """)
 cursor.execute(""" TRUNCATE `site_group` """)
 
+csv_file_name = "/web/trimetru/site/www/import/price.csv"
+dev_name = "/home/saur/web/sitenewwave/import/price.csv"
 
-with open("/web/trimetru/site/www/import/price.csv") as price_csv:
+with open(dev_name) as price_csv:
     for line in price_csv:
         item_array = line.split("','")
 
