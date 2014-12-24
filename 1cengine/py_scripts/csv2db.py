@@ -329,7 +329,7 @@ cursor.execute(""" TRUNCATE `site_group` """)
 csv_file_name = "/web/trimetru/site/www/import/price.csv"
 dev_name = "/home/saur/web/sitenewwave/import/price.csv"
 
-with open(dev_name) as price_csv:
+with open(csv_file_name) as price_csv:
     for line in price_csv:
         item_array = line.split("','")
 
