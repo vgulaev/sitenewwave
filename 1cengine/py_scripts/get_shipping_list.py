@@ -23,7 +23,7 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
 

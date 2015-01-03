@@ -23,13 +23,14 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/fedorov_trimet_ut/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
 
 print "Hello, getting started<br />"
 
 _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
+# _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 
 client = Client(_CURRENT_ADDRESS_ + "price1c.1cws?wsdl",
                 location=_CURRENT_ADDRESS_ + "price1c.1cws")
@@ -43,6 +44,7 @@ print "trying get csv file<br />"
 
 file_csv_server = "http://195.239.221.58:30080/download/price.csv"
 file_csv_site = "/web/trimetru/site/www/import/price.csv"
+# file_csv_site = "/home/saur/web/sitenewwave/import/price.csv"
 
 import requests
 
