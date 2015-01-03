@@ -3,8 +3,8 @@
 
 <?php
 
-$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/Register.1cws'));
-//$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/PrivetOffice.1cws');
+$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/trimet_trade/ws/Register.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/trimet_trade/ws/Register.1cws'));
+//$server->__doRequest('http://195.239.221.58:30080/trimet_trade/ws/PrivetOffice.1cws');
 
 $server->decode_utf8 = false;
 $server->soap_defencoding = 'UTF-8';

@@ -46,8 +46,8 @@ function _del_p(&$ary) {
 }
 
 
-$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/DemoTrimet/ws/OrderKlient.1cws'));
-//$server->__doRequest('http://195.239.221.58:30080/DemoTrimet/ws/price1c.1cws');
+$server = new SoapClient('http://WebService:teradel@195.239.221.58:30080/trimet_trade/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/trimet_trade/ws/OrderKlient.1cws'));
+//$server->__doRequest('http://195.239.221.58:30080/trimet_trade/ws/price1c.1cws');
 
 $server->decode_utf8 = false;
 $server->soap_defencoding = 'UTF-8';
