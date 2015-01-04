@@ -48,7 +48,8 @@ def translit(letter):
         "ы":  "y'", "ь": "`",  "э": "e`",  "ю": "yu",
         "я":  "ya", "0": "0",  "1": "1",   "2": "2",
         "3":  "3",  "4": "4",  "5": "5",   "6": "6",
-        "7":  "7",  "8": "8",  "9": "9",   " ": " "
+        "7":  "7",  "8": "8",  "9": "9",   " ": " ",
+        "-":  "-"
     }
 
     letter = letter.lower().encode('utf-8')
@@ -68,9 +69,11 @@ def get_order(UID):
         client = Client(_CURRENT_ADDRESS_ + 'OrderKlient.1cws?wsdl',
                         location=_CURRENT_ADDRESS_ + "OrderKlient.1cws")
 
+
         # client.set_options(cache=None)
         client.set_options(cache=DocumentCache())
 
+        # print client.service.GetOrders(UID)
         try:
             result = client.service.GetOrders(UID)
             # return result
