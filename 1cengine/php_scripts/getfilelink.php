@@ -37,7 +37,7 @@ if($params['Type']!=''){
         echo 'Нет возможности создать ';
     }
 } else {
-    $typeArray = array('xlsx', 'ods', 'html', 'pdf');
+    $typeArray = array('pdf');
     $answerArray = array();
     foreach($typeArray as $type){
         $params['Type'] = $type;
@@ -56,6 +56,7 @@ if($params['Type']!=''){
         $response = str_replace('<', '', $response);
 
         if($response=='Well'){
+            // echo "created";
             $answer = 'http://195.239.221.58:30080/download/'.$params['UID'].'.'.$params['Type'];
             array_push($answerArray, $answer);
         }
