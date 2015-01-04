@@ -54,7 +54,8 @@ function register_user($mail, $passwd, $name) {
 $pwd = generateRandomString();
 $nm = $_POST["name_surname"].' '.$_POST["last_name"];
 
-$reg_result = register_user($_POST['email'], $pwd, $nm);
+// $reg_result = register_user($_POST['email'], $pwd, $nm);
+$reg_result = "nONE";
 
 $orderString = $_POST['orderString'];
 // $orderString = "8f97e0cd-5fc1-11d9-a6d2-505054503030:8f97e0cd-5fc1-11d9-a6d2-505054503030:-:23:32150.00;8dc51296-c7dc-11e0-a1a9-00155dc20a18:8dc51296-c7dc-11e0-a1a9-00155dc20a18:-:31:55110.00;";
