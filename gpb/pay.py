@@ -42,8 +42,9 @@ if "dev" in os.environ["SERVER_NAME"]:
 else:
     _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
 
+# f_template = f_template.replace("{{MAIL}}", str(form["p.maskedPan"].value))
 
-def report_1c(uid, sum):
+def report_1c(uid, sum, maskedPan):
 
     client = Client(_CURRENT_ADDRESS_ + 'OrderKlient.1cws?wsdl',
                     location=_CURRENT_ADDRESS_ + "OrderKlient.1cws")
@@ -177,7 +178,7 @@ if "result_code" in form and "merchant_trx" in form and form["result_code"].valu
     if get_trx(form["merchant_trx"].value):
 
         if "o.uid" in form and "amount" in form:
-            result = report_1c(form["o.uid"].value, form["amount"].value)
+            result = report_1c(form["o.uid"].value, form["amount"].value, form["p.maskedPan"].value)
             if "SUCCESS" in result:
                 rs = """<?xml version='1.0' encoding='UTF-8'?>
                             <register-payment-response>
