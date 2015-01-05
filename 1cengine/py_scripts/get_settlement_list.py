@@ -143,7 +143,7 @@ def get_settlement_list_html(UID, date_from, date_to):
     # client.set_options(cache=None)
     # client.options.cache.clear()
 
-    result = client.service.SettlementList(UID, date_from, date_to)
+    result = client.service.GetReconciliationActList(UID, date_from, date_to)
 
     # return result
 
@@ -157,10 +157,10 @@ def get_settlement_list_html(UID, date_from, date_to):
             <thead>
                 <tr class="settlementHeader">
                     <th>Документ</th>
-                    <th>Начальный остаток</th>
-                    <th>Приход</th>
-                    <th>Расход</th>
-                    <th>Конечный остаток</th>
+                    <th>Номер</th>
+                    <th>Дата</th>
+                    <th>Начало периода</th>
+                    <th>Конец периода</th>
                 </tr>
             </thead>
             <tbody>
