@@ -208,50 +208,20 @@ def get_order_list_html(UID, date_from, date_to):
                         <img class="ar_img"
                         src="/1cengine/kabinet_orders/arrow.svg" />
                         """ + str(order[3]) + """
-<p class="orderDownload">
-Скачать заказ:
-</p>
+                        <p class="orderDownload">
+                        Скачать <a href='javascript:openLink(
+                        \"""" + str(order[0]) + """\","pdf")'
+                        title="Скачать заказ в формате pdf"> pdf </a>
+                        </p>
                     </td>
-                    <td>""" + str(order[2]) + """
-<p class="orderDownload">
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","xlsx")'
-title="Скачать заказ в формате xls"> xls </a>
-</p>
-
-                    </td>
-                    <td>""" + str(order[6]) + """
-<p class="orderDownload">
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","pdf")'
-title="Скачать заказ в формате pdf"> pdf </a>
-</p>
-                    </td>
-                    <td>""" + str(order[5]) + """
-<p class="orderDownload">
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","ods")'
-title="Скачать заказ в формате ods"> ods </a>
-</p>
-                    </td>
-                    <td>""" + str(order[4]) + """
-                    </td>
+                    <td>""" + str(order[2]) + """</td>
+                    <td>""" + str(order[6]) + """</td>
+                    <td>""" + str(order[5]) + """</td>
+                    <td>""" + str(order[4]) + """</td>
                     <td class="orderDate">
-                    """ + str(order[1].split(" ")[0]) + """</td>
+                        """ + str(order[1].split(" ")[0]) + """
+                    </td>
                     </tr>
-                    <tr><td colspan=5> <p class="orderDownload">
-Скачать заказ:
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","xlsx")'
-title="Скачать заказ в формате xls"> xls </a>
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","pdf")'
-title="Скачать заказ в формате pdf"> pdf </a>
-<a href='javascript:openLink(
-\"""" + str(order[0]) + """\","ods")'
-title="Скачать заказ в формате ods"> ods </a>
-</p></td>
-            </tr>
         """
 
         if odd == "odd":

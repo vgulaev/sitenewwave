@@ -44,13 +44,9 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 
 .orderItem td{
-	margin:5px auto;
-	padding:15px 0;
-	/*display:block;*/
-    font-size: 10pt;
-    padding-left:10px;
-    padding-right:10px;
-    border-left: 3px dotted rgb(238, 238, 238);
+    font-size:9pt;
+    padding:5px 15px;
+    border-left:2px dotted rgb(238, 238, 238);
 }
 .odd{
     background-color: rgb(238, 238, 238);
@@ -61,26 +57,27 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 
 .orderDownload{
-	margin:15px 30px;
+	text-align: right;
+    margin: 0px 5px;
 	display:none;
 }
-.orderDownload a{
+/*.orderDownload a{
 	margin:0 15px;
-}
+}*/
 .orderListHeader{
 	background-color: white;
 	height:30px;
 }
 .orderListHeader th{
-	font-size:16px;
-	margin:5px 30px;
-	/*width:100px;*/
-	/*display:block;*/
-	/*float:left;*/
-	padding-left: 3px;
-    border-left:3px solid rgb(238, 238, 238);
-    border-bottom:1px solid rgb(238, 238, 238);
+    font-size:10pt;
+    margin:5px 0;
+    /*width:100px;*/
+    /*display:block;*/
+    /*float:left;*/
     text-align: center;
+    border-left:2px solid rgb(238, 238, 238);
+    border-bottom:1px solid rgb(238, 238, 238);
+    vertical-align: middle;
 }
 .orderListHeader th:first-child{
     border-left:none;

@@ -23,6 +23,9 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
+# from pysimplesoap.client import SoapClient
+
+
 _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
 _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
@@ -104,12 +107,30 @@ def get_payment_list_ajax(UID, date_from, date_to):
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/payment/" id="dateForm">
-                Показать платежи в период: <input type="textarea"
-                name="dateFrom" class="dateInput dateFrom"
-                value=\"""" + date_from_value + """\" />
-                 - <input type="textarea" name="dateTo"
-                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
-                <div class="datePickButton">Обновить журнал</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Показать платежи в период:<br />
+                                <input type="textarea" name="dateFrom"
+                                class="dateInput dateFrom"
+                                value=\"""" + date_from_value + """\" />
+                                 - <input type="textarea" name="dateTo"
+                                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
+                            </td>
+                            <td>
+                                Отображать заказы контрагента:<br />
+                                <select>
+                                    <option>Все</option>
+                                    <option>Без контрагента</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="datePickButton">Обновить журнал</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div id="payment_ajax_div">
@@ -136,9 +157,18 @@ def get_payment_list_ajax(UID, date_from, date_to):
 
 def get_payment_list_html(UID, date_from, date_to):
 
+    # client = SoapClient(
+    #     wsdl=_CURRENT_ADDRESS_ + "privetoffice.1cws?wsdl",
+    #     location=_CURRENT_ADDRESS_ + "privetoffice.1cws"
+    # )
+    # response = client.PaymentList(UID, date_from, date_to)
+    # result = response['PaymentListResponse']
+
+
     client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
                     location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
 
+    client.options.cache.clear()
     client.set_options(cache=None)
     # client.set_options(cache=DocumentCache())
 
@@ -151,32 +181,57 @@ def get_payment_list_html(UID, date_from, date_to):
 
     listOrder = ""
 
+    # listOrder = listOrder + """
+    #     <div class="orderListHeader">
+    #         <span>Документ оплаты</span>
+    #         <span>Сумма</span>
+    #         <span>Документ основания</span>
+    #         <span><a href="javascript:pass()">Дата
+    #         <img class="date_arrow"
+    #         src="/1cengine/kabinet_payment/arrow_down.svg" /></a></span>
+    #     </div>
+    #     <div id="ordersContainer">
+    # """
+
     listOrder = listOrder + """
-        <div class="orderListHeader">
-            <span>Номер</span>
-            <span>Сумма</span>
-            <span><a href="javascript:pass()">Дата
-            <img class="date_arrow"
-            src="/1cengine/kabinet_payment/arrow_down.svg" /></a></span>
-        </div>
-        <div id="ordersContainer">
+        <table>
+            <thead class="orderListHeader">
+                <tr>
+                    <th>Документ оплаты</th>
+                    <th>Документ основания</th>
+                    <th>Дата</th>
+                    <th>Сумма</th>
+                    <th>Скачать</th>
+                </tr>
+            </thead>
+            <tbody>
     """
 
     odd = "odd"
 
     orders = ""
     for order in result[2][0]:
-        orders = orders + """
-            <div class="orderItem """ + odd + """ ">
-                <div>
-                    <span class="openOrderDownload">
-                    """ + str(order[3]) + """</span>
-                    <span>""" + str(order[2]) + """</span>
-                    <span class="orderDate">
-                    """ + str(order[1].split(" ")[0]) + """</span>
-                </div>
+        # orders = orders + """
+        #     <div class="orderItem """ + odd + """ ">
+        #         <div>
+        #             <span class="openOrderDownload">
+        #             """ + str(order[3]) + """</span>
+        #             <span>""" + str(order[2]) + """</span>
+        #             <span class="orderDate">
+        #             """ + str(order[1].split(" ")[0]) + """</span>
+        #         </div>
 
-            </div>
+        #     </div>
+        # """
+
+        orders = orders + """
+            <tr class="orderItem """ + odd + """ ">
+                <td>""" + str(order[0]) + """</td>
+                <td>""" + str(order[6]) + """</td>
+                <td>""" + str(order[1]) + """</td>
+                <td class="sum_td">""" + str(order[2]) + """</td>
+                <td>pdf</td>
+            </tr>
         """
 
         if odd == "odd":
@@ -184,7 +239,7 @@ def get_payment_list_html(UID, date_from, date_to):
         else:
             odd = "odd"
 
-    listOrder = listOrder + orders + "</div>"
+    listOrder = listOrder + orders + "</tbody></table>"
 
     return listOrder
 
@@ -224,3 +279,21 @@ if os.environ.get('REQUEST_METHOD', '') == "POST":
         payment_list = get_payment_list_html(UID, date_from, date_to)
 
         print payment_list
+
+# form = cgi.FieldStorage()
+# if "from_ajax" in form:
+#     print "Content-Type: text/html; charset=utf-8\n"
+
+#     UID = form["UID"].value
+#     if "date_from" in form:
+#         date_from = form["date_from"].value
+#     else:
+#         date_from = None
+#     if "date_to" in form:
+#         date_to = form["date_to"].value
+#     else:
+#         date_to = None
+
+#     payment_list = get_payment_list_html(UID, date_from, date_to)
+
+#     print payment_list
