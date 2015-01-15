@@ -60,7 +60,7 @@ def report_1c(uid, sum, maskedPan):
 
     # try:
     result = client.service.CreatePaymentOrder(
-        uid, major_sum)
+        uid, major_sum, maskedPan)
 
     return result
 
@@ -227,6 +227,3 @@ else:
             """
 
 print(rs)
-
-
-
