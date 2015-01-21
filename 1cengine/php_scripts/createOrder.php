@@ -80,6 +80,7 @@ $OrderFromSite["Редактируемый"] = "ДА";
 $OrderFromSite["Доставка"] = array();
 $OrderFromSite["Доставка"]["Адрес"] = $_POST['destination'];
 $OrderFromSite["Доставка"]["Стоимость"] = $_POST['delivery_cost'];
+$OrderFromSite["Доставка"]["Дополнительно"] = $_POST['delivery_info'];
 $OrderFromSite["Почта"] = $_POST['email'];
 
 $orderStringArray = split(';', $orderString);
@@ -96,6 +97,7 @@ foreach($orderStringArray as $orderItem){
         $GoodsRow["КоличествоВес"] = $orderItemArray[3];
         $GoodsRow["Цена"] = $orderItemArray[4];
         $GoodsRow["КомментарийРезки"] = "  ";
+        // $GoodsRow["КомментарийКТовару"] = "  ";
 
     $sumOverall = $sumOverall + $orderItemArray[4];
         array_push($GoodsList["СтрокиТаблицы"], $GoodsRow);

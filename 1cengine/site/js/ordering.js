@@ -10,12 +10,13 @@
   };
 
   sendOrder = function(orderString, is_async) {
-    var carry, comment_text, delivery_cost, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text;
+    var carry, comment_text, delivery_cost, delivery_info, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text;
     if (typeof is_async === "undefined") {
       is_async = true;
     }
     destination = $(".city_select option:selected").html() + " - " + $(".street_select").val();
     carry = $(".delivery_car").html();
+    delivery_info = $(".active_city").attr("name");
     delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "");
     email = $("input#emailInput").val();
     if (email !== "") {
@@ -49,7 +50,7 @@
       type: "POST",
       url: "/1cengine/php_scripts/createOrder.php",
       async: is_async,
-      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text,
+      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info,
       success: function(html) {
         var oA, order;
         ret = "номер " + html;

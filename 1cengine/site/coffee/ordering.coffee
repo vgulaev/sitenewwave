@@ -8,6 +8,7 @@ sendOrder = (orderString, is_async) ->
 
     destination = $(".city_select option:selected").html() + " - " + $(".street_select").val()
     carry = $(".delivery_car").html()
+    delivery_info = $(".active_city").attr("name")
 
     delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "")
 
@@ -47,7 +48,7 @@ sendOrder = (orderString, is_async) ->
         type: "POST"
         url: "/1cengine/php_scripts/createOrder.php"
         async: is_async
-        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text
+        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info
         success: (html) ->
             #var success = 'true';
             ret = "номер " + html
