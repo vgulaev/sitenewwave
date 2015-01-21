@@ -171,6 +171,9 @@
       var price_index;
       if (this.ed_izm === "т") {
         price_index = App.MyBasket._active_price_measured;
+      }
+      if (this.ed_izm === "пог. м") {
+        price_index = App.MyBasket._active_rm_price_measured;
       } else {
         price_index = 0;
       }

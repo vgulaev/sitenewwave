@@ -4,8 +4,9 @@ class App.MyBasket
     @_sum: 0
     @_count: 0
     @_total_weight: 0
+    @_total_running_meter: 0
     @_active_price_measured: 0
-
+    @_active_rm_price_measured: 0
 
     @is_in_basket: (item) ->
         index = @_item_list.indexOf(item)
@@ -31,12 +32,19 @@ class App.MyBasket
             @_item_list.push item
             @_sum = ( (+item.final_price) + (+@_sum) ).toFixed(2)
             if item.ed_izm is "т"
-                @_total_weight = ( (+item.buy_weight) + (+@_total_weight) ).toFixed(3)
+                @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
+            if item.ed_izm is "пог. м"
+                @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
+
+
             @_count++
 
             # @change_basket()
 
+            # alert(@_total_running_meter)
+
             @on_weight_change_handler(@_total_weight)
+            @on_running_meter_change_handler(@_total_running_meter)
             @on_active_price_measured_change_handler()
 
             i_id = "##{item.id}".replace(":", "\\:")
@@ -69,6 +77,7 @@ class App.MyBasket
     @change_item_from_modal: (item) ->
         @change_item(item)
         @on_weight_change_handler(@_total_weight)
+        @on_running_meter_change_handler(@_total_running_meter)
         @on_active_price_measured_change_handler()
         # @change_basket()
 
@@ -103,13 +112,19 @@ class App.MyBasket
 
             @_sum = 0
             @_total_weight = 0
+            @_total_running_meter = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
-                @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
+            if item.ed_izm is "т"
+                @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
+            if item.ed_izm is "пог. м"
+                @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
+
 
                 # @change_basket()
 
                 @on_weight_change_handler(@_total_weight)
+                @on_running_meter_change_handler(@_total_running_meter)
                 @on_active_price_measured_change_handler()
 
         @change_basket()
@@ -185,6 +200,17 @@ class App.MyBasket
             @_active_price_measured = 3
 
         weight
+
+    @on_running_meter_change_handler: (running_meter) ->
+
+        if running_meter < 100
+            @_active_rm_price_measured = 0
+        if running_meter >= 100 and running_meter < 200
+            @_active_rm_price_measured = 1
+        if running_meter >= 200
+            @_active_rm_price_measured = 2
+
+        running_meter
 
     # @observe @_total_weight,  ->
     #     @on_weight_change_handler(newval)

@@ -185,6 +185,8 @@ class App.Item
     set_price_weight: ->
         if @ed_izm is "т"
             price_index = App.MyBasket._active_price_measured
+        if @ed_izm is "пог. м"
+            price_index = App.MyBasket._active_rm_price_measured
         else
             price_index = 0
 

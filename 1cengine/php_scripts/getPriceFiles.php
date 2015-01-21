@@ -9,13 +9,13 @@ $srv->soap_defencoding = 'UTF-8';
 print_r($srv->__getFunctions());
 
 
-$typeArray = array('xlsx','pdf','ods');
+$typeArray = array('pdf');
 
 foreach($typeArray as $type){
 
 	$params['Type'] = $type;
 
-	$result=$srv->GetPriceFile($params);
+	$result=$srv->GetPriceFile();
 	$content = $srv->__getLastResponse();
 
 	$res = array();

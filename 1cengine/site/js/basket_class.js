@@ -11,7 +11,11 @@
 
     MyBasket._total_weight = 0;
 
+    MyBasket._total_running_meter = 0;
+
     MyBasket._active_price_measured = 0;
+
+    MyBasket._active_rm_price_measured = 0;
 
     MyBasket.is_in_basket = function(item) {
       var index;
@@ -48,10 +52,14 @@
         this._item_list.push(item);
         this._sum = ((+item.final_price) + (+this._sum)).toFixed(2);
         if (item.ed_izm === "т") {
-          this._total_weight = ((+item.buy_weight) + (+this._total_weight)).toFixed(3);
+          this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
+        }
+        if (item.ed_izm === "пог. м") {
+          this._total_running_meter = (parseFloat(item.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3);
         }
         this._count++;
         this.on_weight_change_handler(this._total_weight);
+        this.on_running_meter_change_handler(this._total_running_meter);
         this.on_active_price_measured_change_handler();
         i_id = ("#" + item.id).replace(":", "\\:");
         $("" + i_id).addClass("in_basket");
@@ -63,6 +71,7 @@
     MyBasket.change_item_from_modal = function(item) {
       this.change_item(item);
       this.on_weight_change_handler(this._total_weight);
+      this.on_running_meter_change_handler(this._total_running_meter);
       return this.on_active_price_measured_change_handler();
     };
 
@@ -94,12 +103,19 @@
         this._item_list.splice(index, 1);
         this._sum = 0;
         this._total_weight = 0;
+        this._total_running_meter = 0;
         _ref = this._item_list;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           elem = _ref[_i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
-          this._total_weight = ((+elem.buy_weight) + (+this._total_weight)).toFixed(3);
+        }
+        if (item.ed_izm === "т") {
+          this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
+        }
+        if (item.ed_izm === "пог. м") {
+          this._total_running_meter = (parseFloat(item.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3);
           this.on_weight_change_handler(this._total_weight);
+          this.on_running_meter_change_handler(this._total_running_meter);
           this.on_active_price_measured_change_handler();
         }
       }
@@ -166,6 +182,19 @@
         this._active_price_measured = 3;
       }
       return weight;
+    };
+
+    MyBasket.on_running_meter_change_handler = function(running_meter) {
+      if (running_meter < 100) {
+        this._active_rm_price_measured = 0;
+      }
+      if (running_meter >= 100 && running_meter < 200) {
+        this._active_rm_price_measured = 1;
+      }
+      if (running_meter >= 200) {
+        this._active_rm_price_measured = 2;
+      }
+      return running_meter;
     };
 
     MyBasket.on_active_price_measured_change_handler = function() {

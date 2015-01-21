@@ -105,9 +105,11 @@ createOrder = () ->
         sendRow = ""
         $("tr.itemTr").each ->
             if $(this).attr("name").split(":")[0] is "0"
-                sendRow += "" + $(this).find("itemCharTd").html() + ":" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
+                sendRow += "" + $(this).find(".itemCharTd").html() + ":" + $(this).attr("name").split(":")[1] + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
             else
                 sendRow += "" + $(this).attr("name") + ":-:" + $(this).find(".itemCountTd").html() + ":" + $(this).find(".itemPriceTd").html() + ";"
+
+        # alert(sendRow)
 
         order = sendOrder(sendRow)
 
