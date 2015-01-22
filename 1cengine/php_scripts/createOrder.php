@@ -143,22 +143,7 @@ echo $response[0].','.$response[1];
 
 $sccss = $response[2];
 $linkToPay = $response[1];
-// $title = 'On-line shop trimet.ru';
-// //$title = iconv("UTF-8", "CP1251", $title);
-// $mess =  'Добрый день, '. "\r\n";
-// $mess .= 'Номер вашего заказа: '.$response[0]."\r\n";
-// $mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/fullprice.php?uid='.$response[1]."\r\n";
-// $mess .= 'Контактный телефон: +7 (3452) 520-670'."\r\n";
-// $mess .= 'С уважением, компания Тримет';
-// // $to - кому отправляем
-// $to = $_POST['email'];
-// // $from - от кого
-// $from='admin@trimet.ru';
-// $headers  = 'MIME-Version: 1.0' . "\r\n";
-// $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-// $headers .= 'From:'.$from;
-// // функция, которая отправляет наше письмо.
-// mail($to, $title, $mess, $headers); 
+
 
 $_POST['linkUID'] = $response[1];
 
