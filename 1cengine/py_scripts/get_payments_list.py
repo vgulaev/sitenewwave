@@ -194,7 +194,7 @@ def get_payment_list_html(UID, date_from, date_to):
     # """
 
     listOrder = listOrder + """
-        <table>
+        <table cellspacing=0>
             <thead class="orderListHeader">
                 <tr>
                     <th>Документ оплаты</th>
@@ -211,18 +211,11 @@ def get_payment_list_html(UID, date_from, date_to):
 
     orders = ""
     for order in result[2][0]:
-        # orders = orders + """
-        #     <div class="orderItem """ + odd + """ ">
-        #         <div>
-        #             <span class="openOrderDownload">
-        #             """ + str(order[3]) + """</span>
-        #             <span>""" + str(order[2]) + """</span>
-        #             <span class="orderDate">
-        #             """ + str(order[1].split(" ")[0]) + """</span>
-        #         </div>
 
-        #     </div>
-        # """
+        if "None" in str(order[6]):
+            rplc = ""
+        else:
+            rplc = str(order[6])
 
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">

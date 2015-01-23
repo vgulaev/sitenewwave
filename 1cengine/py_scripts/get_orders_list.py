@@ -182,7 +182,7 @@ def get_order_list_html(UID, date_from, date_to):
     listOrder = ""
 
     listOrder = listOrder + """
-        <table>
+        <table cellspacing=0>
         <thead>
         <tr class="orderListHeader">
             <th>Номер</th>
@@ -202,6 +202,11 @@ def get_order_list_html(UID, date_from, date_to):
 
     orders = ""
     for order in result[2][0]:
+        if "None" in str(order[4]):
+            rplc = ""
+        else:
+            rplc = str(order[4])
+
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">
                     <td class="openOrderDownload">
@@ -217,7 +222,7 @@ def get_order_list_html(UID, date_from, date_to):
                     <td>""" + str(order[2]) + """</td>
                     <td>""" + str(order[6]) + """</td>
                     <td>""" + str(order[5]) + """</td>
-                    <td>""" + str(order[4]) + """</td>
+                    <td>""" + rplc + """</td>
                     <td class="orderDate">
                         """ + str(order[1].split(" ")[0]) + """
                     </td>

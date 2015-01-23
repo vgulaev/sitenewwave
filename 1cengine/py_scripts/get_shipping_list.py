@@ -104,12 +104,30 @@ def get_shipping_list_ajax(UID, date_from, date_to):
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/shipping/" id="dateForm">
-                Показать отгрузки в период: <input type="textarea"
-                name="dateFrom" class="dateInput dateFrom"
-                value=\"""" + date_from_value + """\" /> - <input
-                type="textarea" name="dateTo" class="dateInput dateTo"
-                value=\"""" + date_to_value + """\" />
-                <div class="datePickButton">Обновить журнал</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Показать заказы в период:<br />
+                                <input type="textarea" name="dateFrom"
+                                class="dateInput dateFrom"
+                                value=\"""" + date_from_value + """\" />
+                                 - <input type="textarea" name="dateTo"
+                                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
+                            </td>
+                            <td>
+                                Отображать заказы контрагента:<br />
+                                <select>
+                                    <option>Все</option>
+                                    <option>Без контрагента</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="datePickButton">Обновить журнал</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div id="shipping_ajax_div">
@@ -123,11 +141,16 @@ def get_shipping_list_ajax(UID, date_from, date_to):
                 data: "UID=""" + UID + date_from_par + date_to_par + \
                 """&from_ajax=true",
                 success: function(html) {
+
                     $("#shipping_ajax_div").html(html)
                     after_get_list()
+
                 }
+
             });
+
         })
+
         </script>
         </div>
     """
@@ -150,16 +173,33 @@ def get_shipping_list_html(UID, date_from, date_to):
 
     listShipping = ""
 
+    # listShipping = listShipping + """
+    #     <div class="shippingListHeader">
+    #         <span>Номер</span>
+    #         <span>Сумма</span>
+    #         <span>Тоннаж</span>
+    #         <span><a href="javascript:pass()">Дата
+    #         <img class="date_arrow"
+    #         src="/1cengine/kabinet_shipping/arrow_down.svg" /></a></span>
+    #     </div>
+    #     <div id="shippingsContainer">
+    # """
+
+    # odd = "odd"
+
     listShipping = listShipping + """
-        <div class="shippingListHeader">
-            <span>Номер</span>
-            <span>Сумма</span>
-            <span>Тоннаж</span>
-            <span><a href="javascript:pass()">Дата
-            <img class="date_arrow"
-            src="/1cengine/kabinet_shipping/arrow_down.svg" /></a></span>
-        </div>
-        <div id="shippingsContainer">
+        <table cellspacing=0>
+            <thead>
+                <tr class="shippingListHeader">
+                    <th>Номер</th>
+                    <th>Сумма</th>
+                    <th>Тоннаж</th>
+                    <th><a href="javascript:pass()">Дата
+                    <img class="date_arrow"
+                    src="/1cengine/kabinet_orders/arrow_down.svg" /></a></th>
+                </tr>
+            </thead>
+            <tbody id="shippingsContainer">
     """
 
     odd = "odd"
@@ -167,39 +207,60 @@ def get_shipping_list_html(UID, date_from, date_to):
     shippings = ""
     for shipping in result[2][0]:
         shippings = shippings + """
-            <div class="shippingItem """ + odd + """ ">
-                <div>
-                    <span class="openShippingDownload">
-                    <img class="ar_img"
-                    src="/1cengine/kabinet_shipping/arrow.svg" />
-                    """ + str(shipping[3]) + """</span>
-                    <span>""" + str(shipping[2]) + """</span>
-                    <span class="weight">""" + str(shipping[4]) + """</span>
-                    <span class="shippingDate">
-                    """ + str(shipping[1].split(" ")[0]) + """</span>
-                </div>
-
-                <p class="shippingDownload">
-                    Скачать документ отгрузки:
-                    <a href='javascript:openLink(
-                    \"""" + str(shipping[0]) + """\","xlsx")'
-                    title="Скачать документ отгрузки в формате xls"> xls </a>
-                    <a href='javascript:openLink(
-                    \"""" + str(shipping[0]) + """\","pdf")'
-                    title="Скачать документ отгрузки в формате pdf"> pdf </a>
-                    <a href='javascript:openLink(
-                    \"""" + str(shipping[0]) + """\","ods")'
-                    title="Скачать документ отгрузки в формате ods"> ods </a>
-                </p>
-            </div>
+            <tr class="shippingItem """ + odd + """ ">
+                    <td class="openShippingDownload">
+                        <img class="ar_img"
+                        src="/1cengine/kabinet_orders/arrow.svg" />
+                        """ + str(shipping[3]) + """
+                        <p class="shippingDownload">
+                        Скачать <a href='javascript:openLink(
+                        \"""" + str(shipping[0]) + """\","pdf")'
+                        title="Скачать документ отгрузки в формате pdf"> pdf </a>
+                        </p>
+                    </td>
+                    <td>""" + str(shipping[2]) + """</td>
+                    <td>""" + str(shipping[4]) + """</td>
+                    <td class="shippingDate">
+                        """ + str(shipping[1].split(" ")[0]) + """
+                    </td>
+                    </tr>
         """
+
+
+        # shippings = shippings + """
+        #     <div class="shippingItem """ + odd + """ ">
+        #         <div>
+        #             <span class="openShippingDownload">
+        #             <img class="ar_img"
+        #             src="/1cengine/kabinet_shipping/arrow.svg" />
+        #             """ + str(shipping[3]) + """</span>
+        #             <span>""" + str(shipping[2]) + """</span>
+        #             <span class="weight">""" + str(shipping[4]) + """</span>
+        #             <span class="shippingDate">
+        #             """ + str(shipping[1].split(" ")[0]) + """</span>
+        #         </div>
+
+        #         <p class="shippingDownload">
+        #             Скачать документ отгрузки:
+        #             <a href='javascript:openLink(
+        #             \"""" + str(shipping[0]) + """\","xlsx")'
+        #             title="Скачать документ отгрузки в формате xls"> xls </a>
+        #             <a href='javascript:openLink(
+        #             \"""" + str(shipping[0]) + """\","pdf")'
+        #             title="Скачать документ отгрузки в формате pdf"> pdf </a>
+        #             <a href='javascript:openLink(
+        #             \"""" + str(shipping[0]) + """\","ods")'
+        #             title="Скачать документ отгрузки в формате ods"> ods </a>
+        #         </p>
+        #     </div>
+        # """
 
         if odd == "odd":
             odd = ""
         else:
             odd = "odd"
 
-    listShipping = listShipping + shippings + "</div>"
+    listShipping = listShipping + shippings + "</tbody></table>"
 
     return listShipping
 

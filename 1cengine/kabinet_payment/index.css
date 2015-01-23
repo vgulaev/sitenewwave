@@ -16,6 +16,12 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
     position: relative;
 }
 
+#cont2 {
+    height: auto !important;
+    min-height: 350px;
+    padding: 15px 0px 20px 24px;
+}
+
 .dateChooser{
     margin-left:20px;
 }
@@ -139,7 +145,7 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 .orderListHeader{
 	background-color: white;
-	height:50px;
+	height:30px;
 }
 .orderListHeader th{
 	font-size:10pt;
