@@ -35,7 +35,7 @@ def get_price():
     # _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 
     client = Client(_CURRENT_ADDRESS_ + "price1c.1cws?wsdl",
-                    location=_CURRENT_ADDRESS_ + "price1c.1cws")
+                    location=_CURRENT_ADDRESS_ + "price1c.1cws", timeout=180)
     client.set_options(cache=DocumentCache())
 
     print "forming new price<br />"

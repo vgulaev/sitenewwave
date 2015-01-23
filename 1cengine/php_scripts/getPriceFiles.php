@@ -6,7 +6,7 @@ $srv = new SoapClient('http://WebService:teradel@195.239.221.58:30080/trimet_tra
 $srv->decode_utf8 = false;
 $srv->soap_defencoding = 'UTF-8';
 
-print_r($srv->__getFunctions());
+// print_r($srv->__getFunctions());
 
 
 $typeArray = array('pdf');
