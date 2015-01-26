@@ -129,13 +129,15 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 .shippingItem{
 	height:30px;
     cursor:pointer;
+    border-bottom: 1px solid #c0c0bf;
 }
 
 .shippingItem td{
     font-size:9pt;
     padding:5px 15px;
-    border-left:2px dotted rgb(238, 238, 238);
+    border-left:1px solid #c0c0bf;
     /*border-bottom:1px solid rgb(238, 238, 238);*/
+    border-bottom: 1px solid #c0c0bf;
 }
 
 .shippingItem td:first-child{
@@ -148,10 +150,6 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 
 .odd{
     background-color: rgb(238, 238, 238);
-}
-
-.odd td{
-    border-left: 2px dotted white;
 }
 
 .shippingDownload{
@@ -172,9 +170,10 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
     /*display:block;*/
     /*float:left;*/
     text-align: center;
-    border-left:2px solid rgb(238, 238, 238);
-    border-bottom:1px solid rgb(238, 238, 238);
+    border-left: 1px solid #A0A0AF;
+    /*border-bottom:1px solid rgb(238, 238, 238);*/
     vertical-align: middle;
+    border-bottom: 1px solid #A0A0AF;
 }
 .shippingListHeader th:first-child{
     border-left:none;

@@ -211,10 +211,10 @@ def get_shipping_list_html(UID, date_from, date_to):
                     <td class="openShippingDownload">
                         <img class="ar_img"
                         src="/1cengine/kabinet_orders/arrow.svg" />
-                        """ + str(shipping[3]) + """
+                        """ + str(shipping[0]) + """
                         <p class="shippingDownload">
                         Скачать <a href='javascript:openLink(
-                        \"""" + str(shipping[0]) + """\","pdf")'
+                        \"""" + str(shipping[3]) + """\","pdf")'
                         title="Скачать документ отгрузки в формате pdf"> pdf </a>
                         </p>
                     </td>
