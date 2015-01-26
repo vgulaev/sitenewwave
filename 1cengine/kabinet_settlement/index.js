@@ -113,12 +113,12 @@ function openLink(linkUID, type) {
     $.blockUI({
         message: "\
         <div id='wait_please'>Ваш запрос обрабатывается, пожалуйста, подождите<br />\
-            <img src='/1cengine/kabinet_shipping/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
+            <img src='/1cengine/kabinet_settlement/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
         </div>"
     });
     $.ajax({
         type: "POST",
-        url: "/1cengine/php_scripts/getShippingFileLink.php",
+        url: "/1cengine/php_scripts/getSettlementFileLink.php",
         async: true,
         data: "linkUID=" + linkUID + "&type=" + type + "",
         success: function(html) {

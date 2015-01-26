@@ -192,7 +192,7 @@ def get_shipping_list_html(UID, date_from, date_to):
         <table cellspacing=0>
             <thead>
                 <tr class="shippingListHeader">
-                    <th>Номер</th>
+                    <th>Документ</th>
                     <th>Сумма</th>
                     <th>Тоннаж</th>
                     <th><a href="javascript:pass()">Дата
@@ -211,15 +211,8 @@ def get_shipping_list_html(UID, date_from, date_to):
     for shipping in result[2][0]:
         shippings = shippings + """
             <tr class="shippingItem """ + odd + """ ">
-                    <td class="openShippingDownload">
-                        <img class="ar_img"
-                        src="/1cengine/kabinet_orders/arrow.svg" />
+                    <td>
                         """ + regex.sub("", str(shipping[0])) + """
-                        <p class="shippingDownload">
-                        Скачать <a href='javascript:openLink(
-                        \"""" + str(shipping[3]) + """\","pdf")'
-                        title="Скачать документ отгрузки в формате pdf"> pdf </a>
-                        </p>
                     </td>
                     <td>""" + str(shipping[2]) + """</td>
                     <td>""" + str(shipping[4]) + """</td>

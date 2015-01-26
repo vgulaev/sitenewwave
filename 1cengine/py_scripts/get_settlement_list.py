@@ -176,10 +176,10 @@ def get_settlement_list_html(UID, date_from, date_to):
             <thead>
                 <tr class="settlementHeader">
                     <th>Документ</th>
-                    <th>Номер</th>
                     <th>Дата</th>
                     <th>Начало периода</th>
                     <th>Конец периода</th>
+                    <th>Скачать</th>
                 </tr>
             </thead>
             <tbody>
@@ -194,10 +194,14 @@ def get_settlement_list_html(UID, date_from, date_to):
         shippings = shippings + """
             <tr class="settlementItem """ + odd + """ ">
                 <td>""" + regex.sub("", str(shipping[0])) + """</td>
-                <td>""" + str(shipping[1]) + """</td>
                 <td>""" + regex.sub("", str(shipping[2])) + """</td>
                 <td>""" + regex.sub("", str(shipping[3])) + """</td>
                 <td>""" + regex.sub("", str(shipping[4])) + """</td>
+                <td>
+                    <a href='javascript:openLink(
+                        \"""" + str(shipping[1]) + """\","pdf")'
+                        title="Скачать документ отгрузки в формате pdf"> pdf </a>
+                </td>
             </tr>
         """
 
