@@ -3,6 +3,7 @@
 
 import sys
 import os
+import re
 import cgi
 import cgitb
 cgitb.enable()
@@ -204,6 +205,8 @@ def get_shipping_list_html(UID, date_from, date_to):
 
     odd = "odd"
 
+    regex = re.compile(r"\s\d+:\d+:\d+")
+
     shippings = ""
     for shipping in result[2][0]:
         shippings = shippings + """
@@ -211,7 +214,7 @@ def get_shipping_list_html(UID, date_from, date_to):
                     <td class="openShippingDownload">
                         <img class="ar_img"
                         src="/1cengine/kabinet_orders/arrow.svg" />
-                        """ + str(shipping[0]) + """
+                        """ + regex.sub("", str(shipping[0])) + """
                         <p class="shippingDownload">
                         Скачать <a href='javascript:openLink(
                         \"""" + str(shipping[3]) + """\","pdf")'

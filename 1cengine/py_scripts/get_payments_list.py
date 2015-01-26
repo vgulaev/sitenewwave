@@ -3,6 +3,7 @@
 
 import sys
 import os
+import re
 import cgi
 import cgitb
 cgitb.enable()
@@ -209,6 +210,8 @@ def get_payment_list_html(UID, date_from, date_to):
 
     odd = "odd"
 
+    regex = re.compile(r"\s\d+:\d+:\d+")
+
     orders = ""
     for order in result[2][0]:
 
@@ -219,9 +222,9 @@ def get_payment_list_html(UID, date_from, date_to):
 
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">
-                <td>""" + str(order[0]) + """</td>
-                <td>""" + str(order[6]) + """</td>
-                <td>""" + str(order[1]) + """</td>
+                <td>""" + regex.sub("", str(order[0])) + """</td>
+                <td>""" + regex.sub("", str(order[6])) + """</td>
+                <td>""" + regex.sub("", str(order[1])) + """</td>
                 <td class="sum_td">""" + str(order[2]) + """</td>
                 <td>pdf</td>
             </tr>

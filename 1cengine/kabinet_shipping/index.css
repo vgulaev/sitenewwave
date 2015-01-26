@@ -22,11 +22,14 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 
 .dateChooser{
-    margin-left:20px;
+
 }
 .dateInput{
     width:100px;
     margin-right:10px;
+    /*margin-left:10px;*/
+}
+.dateInput:last-child{
     margin-left:10px;
 }
 .ui-datepicker{
@@ -45,26 +48,15 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 }
 
 .datePickButton{
-    /*border:1px solid black;
-    width:150px;
-    height:25px;
-    padding-top:7px;
-    margin:15px;
 
-    text-align:center;
-    border:1px outset rgb(48, 57, 154);
-    border-radius:40px 10px;
-    background-color: #5da130;
-    color:white;
-    cursor:pointer;*/
     background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
     color: #2D3694;
     height: 30px;
-    width: 250px;
+
     cursor: pointer;
-    padding-right: 10px;
+
     text-align: center;
-    /*float: right;*/
+
     border-radius: 12px;
     font-weight: bold;
     font-size: 10pt;
@@ -104,6 +96,7 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
     margin-top:20px;
     margin-bottom: 20px;
 }
+
 .shippingListHeader img{
     margin-right:12px;
     margin-left: 4px;

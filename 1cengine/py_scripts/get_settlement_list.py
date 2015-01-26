@@ -3,6 +3,7 @@
 
 import sys
 import os
+import re
 import cgi
 import cgitb
 cgitb.enable()
@@ -104,12 +105,30 @@ def get_settlement_list_ajax(UID, date_from, date_to):
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/settlement/" id="dateForm">
-                Показать взаиморасчеты в период: <input type="textarea"
-                name="dateFrom" class="dateInput dateFrom"
-                value=\"""" + date_from_value + """\" /> - <input
-                type="textarea" name="dateTo" class="dateInput dateTo"
-                value=\"""" + date_to_value + """\" />
-                <div class="datePickButton">Обновить журнал</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Показать заказы в период:<br />
+                                <input type="textarea" name="dateFrom"
+                                class="dateInput dateFrom"
+                                value=\"""" + date_from_value + """\" />
+                                 - <input type="textarea" name="dateTo"
+                                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
+                            </td>
+                            <td>
+                                Отображать заказы контрагента:<br />
+                                <select>
+                                    <option>Все</option>
+                                    <option>Без контрагента</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="datePickButton">Обновить журнал</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div id="settlement_ajax_div">
@@ -168,15 +187,17 @@ def get_settlement_list_html(UID, date_from, date_to):
 
     odd = "odd"
 
+    regex = re.compile(r"\s\d+:\d+:\d+")
+
     shippings = ""
     for shipping in result[0][0]:
         shippings = shippings + """
             <tr class="settlementItem """ + odd + """ ">
-                <td>""" + str(shipping[0]) + """</td>
+                <td>""" + regex.sub("", str(shipping[0])) + """</td>
                 <td>""" + str(shipping[1]) + """</td>
-                <td>""" + str(shipping[2]) + """</td>
-                <td>""" + str(shipping[3]) + """</td>
-                <td>""" + str(shipping[4]) + """</td>
+                <td>""" + regex.sub("", str(shipping[2])) + """</td>
+                <td>""" + regex.sub("", str(shipping[3])) + """</td>
+                <td>""" + regex.sub("", str(shipping[4])) + """</td>
             </tr>
         """
 
