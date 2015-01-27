@@ -357,7 +357,7 @@ def compose_table(term, offset=0, limit=20, params={}):
                 for price in item.price_array:
 
                     price_li = soup.new_tag("li")
-                    price_li.append(price[0])
+                    price_li.append(price[0].replace("КИС:", ""))
                     price_li.append(": ")
                     price_li_strong = soup.new_tag("strong")
                     price_li_strong.append(

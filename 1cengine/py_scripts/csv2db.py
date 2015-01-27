@@ -2,8 +2,30 @@
 #-*- coding:utf8 -*-
 
 import MySQLdb
-from secrets import *
-from group_config import *
+import imp
+# from secrets import *
+# from group_config import *
+
+# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    py_scripts_path + secrets_lib_path
+)
+
+database = secrets.databases["catalog"]
+
+group_config_lib_name = "group_config"
+group_config_lib_path = "structures/group_config.py"
+group_config = imp.load_source(
+    group_config_lib_name,
+    py_scripts_path + group_config_lib_path
+)
+
+groups_params = group_config.groups_params
 
 
 class Item:
@@ -310,10 +332,10 @@ class Item:
         self.insert_price()
         self.cursor.close()
 
-conn = MySQLdb.connect(host=databases["catalog"]["host"],
-                       user=databases["catalog"]["user"],
-                       passwd=databases["catalog"]["passwd"],
-                       db=databases["catalog"]["db"])
+conn = MySQLdb.connect(host=database["host"],
+                       user=database["user"],
+                       passwd=database["passwd"],
+                       db=database["db"])
 
 
 conn.set_character_set('utf8')
