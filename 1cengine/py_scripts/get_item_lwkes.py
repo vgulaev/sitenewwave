@@ -23,7 +23,6 @@ secrets = imp.load_source(
 
 myDBC = secrets.myDBC
 
-
 def get_item_char(char_hash, item_hash, is_kis):
     connector = myDBC("catalog")
     connector.dbConnect()

@@ -12,11 +12,13 @@ import imp
 # py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
 py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
 
+_PATH_ = os.path.abspath(os.path.dirname(__file__))
+
 secrets_lib_name = "secrets"
 secrets_lib_path = "structures/secrets.py"
 secrets = imp.load_source(
     secrets_lib_name,
-    py_scripts_path + secrets_lib_path
+    _PATH_ + "/" + secrets_lib_path
 )
 
 myDBC = secrets.myDBC
