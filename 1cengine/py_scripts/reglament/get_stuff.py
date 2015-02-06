@@ -23,8 +23,8 @@ logging.basicConfig(level=logging.INFO)
 
 
 # c_path = os.path.dirname(os.path.abspath(__file__))
-py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
-# py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
 
 secrets_lib_name = "secrets"
 secrets_lib_path = "structures/secrets.py"
