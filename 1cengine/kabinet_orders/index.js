@@ -28,25 +28,44 @@ $(document).ready( function(){
     $(".datePickButton").click( function(){
         $("#dateForm").submit()
     })
+
+
+
 })
 
 function after_get_list(){
     /// Открытие ссылок для загрузки ///
-    $(".orderItem").click( function(){
-        $(".orderDownload").hide()
-        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
-        // alert(0)
-        $(this).find(".ar_img").each( function(){
-            // alert("nya")
-            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
-        })
-        $(this).find(".orderDownload").each( function(){
-            // alert(1)
-            
-            $(this).show()
-        })
 
-    })  
+    $(".show_order_download").each(function(){
+
+        info_content = ($(this).parent().find(".orderDownload").html())
+        $(this).tooltipster({
+            content: info_content,
+            contentAsHTML: true,
+            animation: 'fade',
+            delay: 200,
+            position: 'right',
+            trigger: "hover",
+            theme: "my-info-theme",
+            interactive: true
+        })
+    })
+
+    $(".manager_show").each(function(){
+
+        info_content = ($(this).parent().find(".m_info_wrapper").html())
+        $(this).tooltipster({
+            content: info_content,
+            contentAsHTML: true,
+            animation: 'fade',
+            delay: 200,
+            position: 'top',
+            trigger: "hover",
+            theme: "my-info-theme",
+            interactive: true
+        })
+    })
+
 }
 
 function logout(){
@@ -74,20 +93,8 @@ function pass(){
         $(".date_arrow").attr("src","/1cengine/kabinet_orders/arrow_down.svg")
     }
 
-    $(".orderItem").click( function(){
-        $(".orderDownload").hide()
-        $(".ar_img").attr("src","/1cengine/kabinet_orders/arrow.svg")
-        
-        $(this).find(".ar_img").each( function(){
-            // alert("nya")
-            $(this).attr("src","/1cengine/kabinet_orders/arrow_down.svg")
-        })
-        $(this).find(".orderDownload").each( function(){
-            
-            $(this).show()
-        })
+    after_get_list()
 
-    })
 }
 
 // Returns a random integer between min and max
@@ -132,5 +139,7 @@ function openLink(linkUID, type) {
             // alert(html)
         }
     });
+
+
 }
 

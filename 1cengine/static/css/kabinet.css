@@ -1,4 +1,4 @@
-﻿body{text-align:center}
+body{text-align:center}
 
 body,blockquote,input,select,textarea,form,fieldset,table,td,ul,ol,p{margin:0;padding:0}
 
@@ -1107,6 +1107,20 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 }
 /*]]>*/
 
+#wrap{
+    clear: both;
+    margin: 0px 0px 0px 178px;
+    height: 1%;
+    position: relative;
+}
+
+#cont2{
+    height: auto !important;
+    min-height: 350px;
+    padding: 15px 0px 20px 24px;
+}
+
+### DatePicker >
 
 .dateChooser{
 
@@ -1184,6 +1198,207 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     margin-bottom: 20px;
 }
 
+### < DatePicker
+
+### Orders >
+
+#order_ajax_div{
+    margin-top:40px;
+}
+
+
+.openOrderDownload{
+    border-left:none !important;
+    width:110px;
+}
+.openOrderDownload img{
+    margin-right:12px;
+    margin-left: 4px;
+    /*margin-top:5px;*/
+    width:12px;
+    height:12px;
+}
+.orderItem{
+    height:30px;
+    cursor:pointer;
+    border-bottom: 1px solid #c0c0bf;
+}
+.orderItem tr:hover td{
+    font-weight: bold;
+}
+
+.orderItem td{
+    font-size:9pt;
+    padding:5px 15px;
+    border-left:1px solid #c0c0bf;
+}
+
+.orderItem .sum_td{
+    text-align: right;
+    font-weight: 700;
+.odd{
+    background-color: rgb(238, 238, 238);
+}
+
+
+.orderDownload{
+    text-align: right;
+    margin: 0px 5px;
+    display:none;
+}
+/*.orderDownload a{
+    margin:0 15px;
+}*/
+.orderListHeader{
+    background-color: white;
+    height:30px;
+}
+.orderListHeader th{
+    font-size:10pt;
+    margin:5px 0;
+    /*width:100px;*/
+    /*display:block;*/
+    /*float:left;*/
+    text-align: center;
+    border-left:1px solid #A0A0AF;
+    vertical-align: middle;
+    border-bottom: 1px solid #A0A0AF;
+}
+.orderListHeader th:first-child{
+    border-left:none;
+}
+
+
+.orderListHeader img{
+    margin-right:12px;
+    margin-left: 4px;
+    /*margin-top:5px;*/
+    width:12px;
+    height:12px;
+}
+
+### < Orders
+
+### Personal >
+
+#passwd_button{
+    width:100px;
+    height:23px;
+    cursor:pointer;
+    border:1px outset rgb(154, 57, 48);
+    margin-right:25px;
+    margin-top:25px;
+    text-align:center;
+    float:right;
+    border-radius:40px 10px;
+    background-color: rgb(154, 57, 48);
+    color:white;
+    font-weight:bold;
+    font-size:14px;
+    padding-top:7px;
+}
+fieldset{
+    border:1px inset gray;
+    padding:15px;
+}
+fieldset legend{
+    font-weight: bold;
+    color:gray;
+}
+#passwd_tab{
+    font-size:16px;
+}
+#passwd_tab input{
+    margin: 5px;
+    width: 250px;
+    height: 30px;
+    border: 1px solid rgb(161, 161, 161);
+    box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+    font-size: 16px;
+}
+
+#passwd_tab td:first-child{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 16px;
+    width: 290px;
+}
+
+#fullname_label{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 16px;
+    width: 200px;
+}
+#fullname_input{
+    margin: 5px;
+    width: 250px;
+    height: 30px;
+    border: 1px solid rgb(161, 161, 161);
+    box-shadow: 0px 1px 1px rgb(207, 207, 207) inset;
+    font-size: 16px;
+}
+
+#fullname_button{
+    width:100px;
+    height:23px;
+    cursor:pointer;
+    border:1px outset rgb(154, 57, 48);
+    margin-right:25px;
+    margin-top:25px;
+    text-align:center;
+    float:right;
+    border-radius:40px 10px;
+    background-color: rgb(154, 57, 48);
+    color:white;
+    font-weight:bold;
+    font-size:14px;
+    padding-top:7px;
+    display:none;
+}
+
+#login_label{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 16px;
+    width: 200px;
+}
+
+#login_text{
+    text-align: left;
+    padding-left: 25px;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: bold;
+    /*width: 290px;*/
+}
+
+#counterparty_label{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 16px;
+    width: 200px;
+}
+#counterparty_text{
+    text-align: left;
+    padding-left: 25px;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: bold;
+}
+#counterparty_text ul{
+    padding:0;
+    margin-left:10px;
+}
+#counterparty_text li{
+    padding:0;
+    background: none;
+}
+
+### < Personal
+
+### Settlement >
+
 .settlementItem{
     border-bottom: 1px solid #c0c0bf;
 }
@@ -1233,3 +1448,211 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 #settlement_ajax_div {
     margin-top: 40px;
 }
+
+### < Settlement
+
+### Shipping >
+
+#shipping_ajax_div {
+    margin-top: 40px;
+}
+.openShippingDownload img{
+    margin-right:12px;
+    margin-left: 4px;
+    /*margin-top:5px;*/
+    width:12px;
+    height:12px;
+}
+
+.shippingItem{
+    height:30px;
+    cursor:pointer;
+    border-bottom: 1px solid #c0c0bf;
+}
+
+.shippingItem td{
+    font-size:9pt;
+    padding:5px 15px;
+    border-left:1px solid #c0c0bf;
+    /*border-bottom:1px solid rgb(238, 238, 238);*/
+    border-bottom: 1px solid #c0c0bf;
+}
+
+.shippingItem td:first-child{
+    border-left:none;
+}
+
+.shippingItem tr:hover td{
+    font-weight: bold;
+}
+
+.odd{
+    background-color: rgb(238, 238, 238);
+}
+
+.shippingDownload{
+    margin:15px 30px;
+    display:none;
+}
+.shippingDownload a{
+    margin:0 15px;
+}
+.shippingListHeader{
+    background-color: white;
+    height:30px;
+}
+.shippingListHeader th{
+    font-size:10pt;
+    margin:5px 0;
+    /*width:100px;*/
+    /*display:block;*/
+    /*float:left;*/
+    text-align: center;
+    border-left: 1px solid #A0A0AF;
+    /*border-bottom:1px solid rgb(238, 238, 238);*/
+    vertical-align: middle;
+    border-bottom: 1px solid #A0A0AF;
+}
+.shippingListHeader th:first-child{
+    border-left:none;
+}
+
+### < Shipping
+
+### Authorization >
+.enterButton{
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 10px;
+    display: inline-block;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+}
+.regButton{
+    border:1px solid black;
+    width:150px;
+    height:25px;
+    padding-top:7px;
+    margin:15px;
+    float:left;
+    text-align:center;
+    background-color: #daa520;
+    border:1px outset rgb(48, 57, 154);
+    border-radius:40px 10px;
+    color:white;
+    cursor:pointer;
+}
+.exitButton{
+    border:1px solid black;
+    width:150px;
+    height:25px;
+    padding-top:7px;
+    margin:15px;
+    float:left;
+    text-align:center;
+    background-color: #daa520;
+    border:1px outset rgb(48, 57, 154);
+    border-radius:40px 10px;
+    color:white;
+    cursor:pointer;
+}
+.loginTable{
+    margin-bottom:15px;
+}
+.loginTable input{
+    margin: 10px 0px;
+    width: 450px;
+    height: 30px;
+    border: 1px solid #A1A1A1;
+    box-shadow: 0px 1px 1px #CFCFCF inset;
+    font-size: 14pt;
+    float: right;
+    padding: 0px 5px;
+}
+.loginTable tr td:first-child{
+    text-align: left;
+    vertical-align: middle;
+    font-size: 14pt;
+    width: 300px;
+}
+
+.hidden_passwd{
+    display:none;
+}
+
+.iForgotPasswd{
+    background: -moz-linear-gradient(center top , #BC5D58 0%, #BC5D58 47%, #CD4A4A 100%) repeat scroll 0% 0% transparent;
+    color: #0f0f0f;
+    height: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: left;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 10px;
+    display: inline-block;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+zzz
+.reset_email{
+    margin: 10px 25px 10px 0;
+    width: 450px;
+    height: 30px;
+    border: 1px solid #A1A1A1;
+    box-shadow: 0px 1px 1px #CFCFCF inset;
+    font-size: 14pt;
+    /*float: right;*/
+    padding: 0px 5px;
+}
+.reset_button{
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    /*float: right;*/
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 10px;
+    /*display: inline-block;*/
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    margin: 25px 125px 10px 100px;
+}
+
+.reset_close{
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    /*float: right;*/
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 10px;
+    /*display: inline-block;*/
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+    margin: 25px 125px 10px 100px;
+}
+
+.input_empty{
+    box-shadow: 0px 0px 5px 2px #d13d50, 0px 1px 1px #CFCFCF inset !important;
+}
+### < Authorization

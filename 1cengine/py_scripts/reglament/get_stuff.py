@@ -23,8 +23,8 @@ logging.basicConfig(level=logging.INFO)
 
 
 # c_path = os.path.dirname(os.path.abspath(__file__))
-# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
-py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+# py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
 
 secrets_lib_name = "secrets"
 secrets_lib_path = "structures/secrets.py"
@@ -33,9 +33,9 @@ secrets = imp.load_source(secrets_lib_name, py_scripts_path+secrets_lib_path)
 database = secrets.databases["addinfo"]
 
 def get_stuff():
-    _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
+    _DEVELOPING_ADDRESS_ = "http://192.168.194.27/trimet_trade_fedorov/ws/"
     # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
-    _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
+    _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30082/trimet_trade/ws/"
 
     # _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_

@@ -10,18 +10,29 @@ import Cookie
 import datetime
 import random
 import HTMLParser
+import imp
 
 lib_path = os.path.abspath('../py_scripts/')
 sys.path.append(lib_path)
 
 _PATH_ = os.path.abspath(os.path.dirname(__file__))
 
-import imp
 python_lib_name = "1c_user_interaction"
 user_1c_lib = imp.load_source(
     python_lib_name, _PATH_ + "/" + python_lib_name + ".py")
 
-from secrets import *
+py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+# py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+
+# print lib_path
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    _PATH_ + "/" + secrets_lib_path
+)
+
+myDBC = secrets.myDBC
 
 
 class User():

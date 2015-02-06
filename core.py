@@ -76,7 +76,8 @@ def makecontent(path):
 
     nodes = soupForImport.find_all("link")
     for currentelement in nodes:
-        currentelement["href"] = "/" + path + currentelement["href"]
+        if not currentelement["href"][0] == "/":
+            currentelement["href"] = "/" + path + currentelement["href"]
         soup.html.head.append(currentelement)
     # for Eclipse debugging
     if ((sys.platform) == "win32"):

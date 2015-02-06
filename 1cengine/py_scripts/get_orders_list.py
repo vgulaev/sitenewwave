@@ -5,12 +5,28 @@ import sys
 import os
 import cgi
 import cgitb
+import MySQLdb
 cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # print ("Content-Type: text/html; charset=utf-8\n")
+
+_PATH_ = os.path.abspath(os.path.dirname(__file__))
+
+import imp
+py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+# py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    _PATH_ + "/" + secrets_lib_path
+)
+
+database = secrets.databases["addinfo"]
 
 import json
 from suds.client import Client
@@ -23,9 +39,9 @@ if __debug__:
 else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.27/trimet_trade_fedorov/ws/"
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
-_PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
+_PRODUCTION_ADDRESS_ = "http://195.239.221.58:30082/trimet_trade/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
@@ -52,6 +68,43 @@ if raw_post != "":
         key_var = str(variables).split("=")
         # print key_var
         post[key_var[0]] = key_var[1]
+
+
+def get_managers():
+    conn = MySQLdb.connect(host=database["host"],
+                       user=database["user"],
+                       passwd=database["passwd"],
+                       db=database["db"])
+
+
+    conn.set_character_set('utf8')
+    cursor = conn.cursor()
+
+    exec_text = """
+        SELECT *
+        FROM `stuff`
+        WHERE `department`='Отдел продаж'
+    """
+
+    cursor.execute(exec_text)
+    r = cursor.fetchall()
+
+    managers = {}
+    # print r
+    for row in r:
+        if row[1] not in managers:
+            phn = row[3].replace(" ", "&nbsp;")
+            managers[row[1]] = [row[2], phn, row[4]]
+        # print row[1]
+        # print " : "
+        # print row[2]
+        # print " : "
+        # print row[3]
+        # print " : "
+        # print row[4]
+        # print "<br />"
+
+    return managers
 
 
 def get_orders_list(UID):
@@ -168,6 +221,8 @@ def get_order_list_ajax(UID, date_from, date_to):
 
 def get_order_list_html(UID, date_from, date_to):
 
+    managers = get_managers()
+
     client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
                     location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
     client.set_options(cache=DocumentCache())
@@ -205,14 +260,48 @@ def get_order_list_html(UID, date_from, date_to):
         if "None" in str(order[4]):
             rplc = ""
         else:
-            rplc = str(order[4])
+            if str(order[4]) in managers:
+                rplc = """
+                    <span class="manager_show" title="">
+                    """ + str(order[4]) + """
+                    </span>
+                    <div class="m_info_wrapper">
+                        <p>
+                            Городской:
+                        </p>
+                        <p>
+                            <strong>
+                                <nobr>+7&nbsp;(3452)&nbsp;520-670</nobr>
+                            </strong>
+                            <br />
+                            доб.&nbsp;<strong>{0}</strong>
+                        </p>
+                        <hr />
+                        <p>
+                            Сотовый:
+                        </p>
+                        <p>
+                            <strong><nobr>{1}</nobr></strong>
+                        </p>
+                        <hr />
+                        <p>Почта:</p>
+                        <p><strong>{2}</strong></p>
+                    </div>
+                """.format(
+                    str(managers[str(order[4])][0]),
+                    str(managers[str(order[4])][1]),
+                    str(managers[str(order[4])][2])
+                )
+
+            else:
+                rplc = str(order[4])
 
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">
-                    <td class="openOrderDownload">
-                        <img class="ar_img"
-                        src="/1cengine/kabinet_orders/arrow.svg" />
+                    <td>
+                        <span class="show_order_download">
                         """ + str(order[3]) + """
+                        </span>
                         <p class="orderDownload">
                         Скачать <a href='javascript:openLink(
                         \"""" + str(order[0]) + """\","pdf")'

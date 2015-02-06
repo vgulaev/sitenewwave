@@ -9,9 +9,18 @@ import cgitb
 cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 
+import imp
+# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
 
-from secrets import *
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    py_scripts_path + secrets_lib_path
+)
 
+myDBC = secrets.myDBC
 
 def count_items(term):
     connector = myDBC("goods")

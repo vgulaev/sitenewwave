@@ -4,8 +4,6 @@
 import MySQLdb
 import imp
 import os
-# from secrets import *
-# from group_config import *
 
 # py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
 py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production

@@ -17,10 +17,13 @@ from secrets import *
 
 
 def getItems():
-    connector = myDBC("goods")
+    connector = myDBC("catalog")
     connector.dbConnect()
     row = connector.dbExecute("""
-            SELECT `offers`.`display_name`, `offers`.`char_name` FROM `offers`
+           SELECT `item`.`name` , `char`.`name`
+            FROM `item` , `char`
+            WHERE `char`.`item_ref` = `item`.`id`
+            ORDER BY `item`.`name` , `char`.`name`
         """)
 
     connector.dbClose()
@@ -33,13 +36,17 @@ def writeItemsToFile(row):
     addRow = ""
     for x in row:
 
-        addRow = addRow + "<url>\n\
-                  <loc>http://trimet.ru/1cengine/site/?ref=\
-                    " + urllib.quote(x[0] + " " + x[1]) + "</loc>\n\
-                  <priority>0.7</priority>\n\
-                  <changefreq>daily</changefreq>\n\
-               </url>\n\
-               "
+        addRow = addRow + """
+            <url>\n
+                <loc>
+                    http://trimet.ru/1cengine/site/?ref="""\
+                    + urllib.quote(x[0] + " " + x[1]) + \
+            """
+                </loc>\n
+                <priority>0.7</priority>\n
+                <changefreq>daily</changefreq>\n
+           </url>\n
+           """
         # print addRow
 
     addRow = addRow + '</urlset>'

@@ -8,8 +8,18 @@ cgitb.enable()
 
 print("Content-Type: text/html; charset=utf-8\n")
 
-from secrets import *
+import imp
+# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
 
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    py_scripts_path + secrets_lib_path
+)
+
+myDBC = secrets.myDBC
 
 def get_item_char(item_hash, hash_pointer):
     connector = myDBC("goods")

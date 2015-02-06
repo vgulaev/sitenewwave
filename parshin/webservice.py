@@ -32,7 +32,7 @@ else:
     
 likeex = "%" + likecondition + "%"
  
-client = Client('http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', location = "http://195.239.221.58:30080/Parshin_YMK_UT_Copy/ws/map.1cws")
+client = Client('http://195.239.221.58:30082/Parshin_YMK_UT_Copy/ws/map.1cws?wsdl', location = "http://195.239.221.58:30082/Parshin_YMK_UT_Copy/ws/map.1cws")
 client.set_options(cache=DocumentCache())
 result = client.service.GetAddress(likeex)
 

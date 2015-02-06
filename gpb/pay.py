@@ -13,7 +13,18 @@ import random
 import MySQLdb
 import datetime
 
-from secrets import *
+import imp
+# py_scripts_path = os.path.expanduser('~/web/sitenewwave/1cengine/py_scripts/') #development
+py_scripts_path = os.path.expanduser('~/site/www/1cengine/py_scripts/') #production
+
+secrets_lib_name = "secrets"
+secrets_lib_path = "structures/secrets.py"
+secrets = imp.load_source(
+    secrets_lib_name,
+    py_scripts_path + secrets_lib_path
+)
+
+databases = secrets.databases
 
 cgitb.enable()
 
@@ -33,9 +44,9 @@ else:
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
 
-_DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade_fedorov/ws/"
+_DEVELOPING_ADDRESS_ = "http://192.168.194.27/trimet_trade_fedorov/ws/"
 # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
-_PRODUCTION_ADDRESS_ = "http://195.239.221.58:30080/trimet_trade/ws/"
+_PRODUCTION_ADDRESS_ = "http://195.239.221.58:30082/trimet_trade/ws/"
 
 if "dev" in os.environ["SERVER_NAME"]:
     _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_

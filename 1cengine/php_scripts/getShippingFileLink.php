@@ -1,9 +1,9 @@
 <?php
-$srv = new SoapClient('http://WebService:teradel@195.239.221.58:30080/trimet_trade/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30080/trimet_trade/ws/privetoffice.1cws'));
-// $srv = new SoapClient('http://WebService:teradel@192.168.194.14/trimet_trade_fedorov/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.14/trimet_trade_fedorov/ws/privetoffice.1cws'));
+$srv = new SoapClient('http://195.239.221.58:30082/trimet_trade/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30082/trimet_trade/ws/privetoffice.1cws'));
+// $srv = new SoapClient('http://WebService:teradel@192.168.194.14/trimet_trade_fedorov/ws/privetoffice.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.27/trimet_trade_fedorov/ws/privetoffice.1cws'));
 
 
-//$server->__doRequest('http://195.239.221.58:30080/trimet_trade/ws/price1c.1cws');
+//$server->__doRequest('http://195.239.221.58:30082/trimet_trade/ws/price1c.1cws');
 
 $srv->decode_utf8 = false;
 $srv->soap_defencoding = 'UTF-8';
