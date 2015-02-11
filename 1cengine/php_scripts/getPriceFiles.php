@@ -34,14 +34,14 @@ foreach($typeArray as $type){
 		fclose($file); 
 
 		// $filenameOut = '/home/saur/web/sitenewwave/download/files/price.'.$params['Type'];
-		$filenameOut = '/web/trimetru/site/www/download/files/price.'.$params['Type'];
+		$filenameOut = '/web/trimetru/site/www/download/files/price.'.$type;
 		$file = fopen($filenameOut, "w");
 		fwrite($file, $contents);
 		fclose($file);
 
-		echo $params['Type']." прайс создан";
+		echo $type." прайс создан ; ";
 	//}
 
-}
+	}
 
 ?>
