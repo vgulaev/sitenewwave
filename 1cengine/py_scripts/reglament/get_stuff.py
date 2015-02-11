@@ -37,8 +37,8 @@ def get_stuff():
     # _DEVELOPING_ADDRESS_ = "http://192.168.194.14/trimet_trade/ws/"
     _PRODUCTION_ADDRESS_ = "http://195.239.221.58:30082/trimet_trade/ws/"
 
-    # _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
-    _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
+    _CURRENT_ADDRESS_ = _PRODUCTION_ADDRESS_
+    # _CURRENT_ADDRESS_ = _DEVELOPING_ADDRESS_
 
     client = Client(
         _CURRENT_ADDRESS_ + "InfoService.1cws?wsdl",
