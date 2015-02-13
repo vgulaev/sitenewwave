@@ -6,12 +6,16 @@ import os
 import re
 import cgi
 import cgitb
+import urllib
+import imp
 cgitb.enable()
 sys.path.insert(0, os.path.expanduser('~/site/python'))
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # print ("Content-Type: text/html; charset=utf-8\n")
+
+_PATH_ = os.path.abspath(os.path.dirname(__file__))
 
 import json
 from suds.client import Client
@@ -55,11 +59,22 @@ if raw_post != "":
         # print key_var
         post[key_var[0]] = key_var[1]
 
+def get_counterparty_list(UID):
+
+    python_lib_name = "1c_user_interaction"
+    user_1c_lib = imp.load_source(
+        python_lib_name, _PATH_ + "/" + python_lib_name + ".py")
+
+    user_1c = user_1c_lib.User1C()
+    user_data = user_1c.get_user_information(UID)
+
+    return user_data[8][0]
 
 def get_orders_list(UID):
 
     date_from = ""
     date_to = ""
+    counterparty = ""
 
     if "dateFrom" in post:
         if post["dateFrom"] != "":
@@ -74,11 +89,14 @@ def get_orders_list(UID):
             date_to = date_to_array[
                 2] + "-" + date_to_array[1] + "-" + date_to_array[0]
 
-    return get_payment_list_ajax(UID, date_from, date_to)
+    if "counterparty" in post:
+        if post["counterparty"] != "":
+            counterparty = post["counterparty"]
+
+    return get_payment_list_ajax(UID, date_from, date_to, counterparty)
 
 
-def get_payment_list_ajax(UID, date_from, date_to):
-
+def get_payment_list_ajax(UID, date_from, date_to, counterparty):
     if date_from != "":
         date_from_par = "&date_from=" + date_from
     else:
@@ -89,11 +107,20 @@ def get_payment_list_ajax(UID, date_from, date_to):
     else:
         date_to_par = ""
 
+    if counterparty != "":
+        counterparty_par = "&counterparty=" + counterparty
+    else:
+        counterparty_par = ""
+
+    ctext = urllib.unquote(counterparty).decode('utf8').replace("+", " ")
+
     import random
     loader_list = ["379", "285", "377", "382", "385"]
 
-    loader_str = "<div><img src='/1cengine/payment/" + \
-        random.choice(loader_list) + ".png' /></div>"
+    loader = random.choice(loader_list)
+    loader_str = """
+        <div><img src='/1cengine/payment/{0}.png' /></div>
+    """.format(loader)
 
     if "dateFrom" in post:
         date_from_value = post["dateFrom"]
@@ -105,6 +132,20 @@ def get_payment_list_ajax(UID, date_from, date_to):
     else:
         date_to_value = ""
 
+    cp_option = "<option value='Все'>Все</option>"
+
+    for cp in get_counterparty_list(UID):
+        is_selected = ""
+        if cp in ctext:
+            is_selected = "selected"
+        formatted_option = "<option value='{0}' {1}>{0}</option>".format(cp, is_selected)
+        cp_option = cp_option + formatted_option
+
+    if ctext is "Розничный покупатель":
+        cp_option = cp_option + "<option value='Розничный покупатель' selected >Без контрагента</option>"
+    else:
+        cp_option = cp_option + "<option value='Розничный покупатель'>Без контрагента</option>"
+
     ajax = """
         <div class="dateChooser">
             <form method="POST" action="/kabinet/payment/" id="dateForm">
@@ -112,18 +153,17 @@ def get_payment_list_ajax(UID, date_from, date_to):
                     <tbody>
                         <tr>
                             <td>
-                                Показать платежи в период:<br />
+                                Показать заказы в период:<br />
                                 <input type="textarea" name="dateFrom"
                                 class="dateInput dateFrom"
-                                value=\"""" + date_from_value + """\" />
+                                value="{0}" />
                                  - <input type="textarea" name="dateTo"
-                                class="dateInput dateTo" value=\"""" + date_to_value + """\" />
+                                class="dateInput dateTo" value="{1}" />
                             </td>
                             <td>
                                 Отображать заказы контрагента:<br />
-                                <select>
-                                    <option>Все</option>
-                                    <option>Без контрагента</option>
+                                <select class="counterparty_select" name="counterparty">
+                                    {2}
                                 </select>
                             </td>
                             <td>
@@ -135,28 +175,40 @@ def get_payment_list_ajax(UID, date_from, date_to):
             </form>
         </div>
         <div id="payment_ajax_div">
-        """ + loader_str + """
+        {3}
         <script type="text/javascript">
-        $(document).ready( function(){
-            $.ajax({
+        $(document).ready( function(){{
+            $.ajax({{
                 type: "POST",
                 url: "/1cengine/py_scripts/get_payments_list.py",
                 async: true,
-                data: "UID=""" + UID + date_from_par + date_to_par + \
-                """&from_ajax=true",
-                success: function(html) {
+                data: "UID={4}{5}{6}{7}&from_ajax=true",
+                success: function(html) {{
                     $("#payment_ajax_div").html(html)
-                }
-            });
-        })
+
+                }}
+
+            }});
+
+        }})
+
         </script>
         </div>
-    """
+    """.format(
+        date_from_value,
+        date_to_value,
+        cp_option,
+        loader_str,
+        UID,
+        date_from_par,
+        date_to_par,
+        counterparty_par
+    )
 
     return ajax
 
 
-def get_payment_list_html(UID, date_from, date_to):
+def get_payment_list_html(UID, date_from, date_to, counterparty):
 
     # client = SoapClient(
     #     wsdl=_CURRENT_ADDRESS_ + "privetoffice.1cws?wsdl",
@@ -173,7 +225,15 @@ def get_payment_list_html(UID, date_from, date_to):
     client.set_options(cache=None)
     # client.set_options(cache=DocumentCache())
 
-    result = client.service.PaymentList(UID, date_from, date_to)
+    if counterparty is None:
+        counterparty = u"Все"
+
+    result = client.service.PaymentList(
+        UID,
+        date_from,
+        date_to,
+        urllib.unquote(counterparty).decode('utf8').replace("+"," ")
+    )
 
     # return result
 
@@ -271,8 +331,12 @@ if os.environ.get('REQUEST_METHOD', '') == "POST":
             date_to = post["date_to"]
         else:
             date_to = None
+        if "counterparty" in post:
+            counterparty = post["counterparty"]
+        else:
+            counterparty = None
 
-        payment_list = get_payment_list_html(UID, date_from, date_to)
+        payment_list = get_payment_list_html(UID, date_from, date_to, counterparty)
 
         print payment_list
 
