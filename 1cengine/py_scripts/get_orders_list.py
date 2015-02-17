@@ -197,7 +197,7 @@ def get_order_list_ajax(UID, date_from, date_to, counterparty):
         formatted_option = "<option value='{0}' {1}>{0}</option>".format(cp, is_selected)
         cp_option = cp_option + formatted_option
 
-    if ctext is "Розничный покупатель":
+    if "Розничный покупатель" in ctext:
         cp_option = cp_option + "<option value='Розничный покупатель' selected >Без контрагента</option>"
     else:
         cp_option = cp_option + "<option value='Розничный покупатель'>Без контрагента</option>"

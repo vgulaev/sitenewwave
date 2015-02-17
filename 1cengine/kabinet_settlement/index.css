@@ -1233,3 +1233,16 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 #settlement_ajax_div {
     margin-top: 40px;
 }
+.counterparty_select{
+    min-width: 200px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.counterparty_select option{
+    line-height: 25px;
+    /*height:25px;*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}

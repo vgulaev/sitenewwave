@@ -49,11 +49,11 @@ def show_payments():
         sid = cookie["sid"].value
         uid_1c = user_lib.__main__("get_1c_sid('" + sid + "')")
 
-        return "<div>"+get_payments_list(uid_1c)+"</div>"
-        # try:
-        #     return "<div>" + get_payments_list(uid_1c) + "</div>"
-        # except:
-        #     return "<div>Контрагент не назначен или что-то пошло не так</div>"
+        # return "<div>"+get_payments_list(uid_1c)+"</div>"
+        try:
+            return "<div>" + get_payments_list(uid_1c) + "</div>"
+        except:
+            return "<div>Контрагент не назначен или что-то пошло не так</div>"
 
 
 def show_menu():
