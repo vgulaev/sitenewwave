@@ -2,10 +2,12 @@ AddDefaultCharset UTF-8
 
 AddType application/x-httpd-php .php .php3 .php4 .phtml .html
 <IfModule mod_cgi.c>
-	AddHandler cgi-script .py
+    AddHandler cgi-script .py
 </IfModule>
 
 RewriteEngine on
+
+Redirect 301 /products/catalog/ https://trimet.ru/1cengine/site/
 
 RewriteRule ^1cengine/site/$ 1cengine/site/index.py$1 [L]
 RewriteRule ^1cengine/site/(?!index.py|js|css|images)(.*)/$ 1cengine/site/index.py?catalog=$1 [L]
@@ -27,8 +29,6 @@ RewriteRule ^gpb/ -
 RewriteRule ^gpb/check$ gpb/check.py$1 [L]
 RewriteRule ^gpb/pay$ gpb/pay.py$1 [L]
 RewriteRule ^gpb/check.cgi$ gpb/check.py$1 [L]
-
-RewriteRule ^products/catalog/ 1cengine/site/ [L,R=301]
 
 RewriteRule ^catalog/armatura/$ 1cengine/site/?catalog=Арматура$1 [L]
 RewriteRule ^catalog/armatura-12/$ 1cengine/site/?catalog=Арматура\%2012$1 [L]
