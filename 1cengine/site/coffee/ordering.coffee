@@ -25,6 +25,9 @@ sendOrder = (orderString, is_async) ->
     other_phone = $("#otherPhoneInput").val()
     ret = ""
 
+    counterparty = $("#counterpartySelect").val()
+
+    # alert(counterparty)
 
     rezka_text = ""
     # $(".rezka_body").find("tr").each (index, element) =>
@@ -48,7 +51,7 @@ sendOrder = (orderString, is_async) ->
         type: "POST"
         url: "/1cengine/php_scripts/createOrder.php"
         async: is_async
-        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info
+        data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info + "&counterparty=" + counterparty
         success: (html) ->
             #var success = 'true';
             ret = "номер " + html
@@ -162,6 +165,32 @@ getOrderFomat = (format) ->
 
 
 $(document).ready ->
+
+    # alert($.cookie("sid"))
+
+    $.ajax
+        type: "POST"
+        dataType: "json"
+        url: "/1cengine/py_scripts/check_user.py"
+        async: true
+        data: ""
+        success: (html) ->
+
+            #var success = 'true';
+            user = (html)
+            $("#emailInput").val(user["Email"])
+            # alert( user["Counterparty"][0] )
+            c_select = """
+                <select id="counterpartySelect">
+                    <option value="Без контрагента">Без контрагента</option>
+            """
+            $(user["Counterparty"]).each (index, element) =>
+                c_select += "<option value='" + element + "'>" + element + "</option>"
+            c_select += "</select>"
+
+            $(".counterpartySelectContainer").append(c_select)
+            $(".counterpartyRow").show()
+            return
 
     #MyBasket = new App.Basket("MyBasket")
 

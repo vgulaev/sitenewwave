@@ -82,6 +82,7 @@ $OrderFromSite["Доставка"]["Адрес"] = $_POST['destination'];
 $OrderFromSite["Доставка"]["Стоимость"] = $_POST['delivery_cost'];
 $OrderFromSite["Доставка"]["Дополнительно"] = $_POST['delivery_info'];
 $OrderFromSite["Почта"] = $_POST['email'];
+$OrderFromSite["Контрагент"] = $_POST['counterparty']
 
 $orderStringArray = split(';', $orderString);
 $GoodsList["СтрокиТаблицы"] = array();

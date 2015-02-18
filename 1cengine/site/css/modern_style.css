@@ -2696,3 +2696,18 @@ hr{
 /*.rezka_unit div:first-child{
 
 }*/
+.counterpartyRow {
+    display:none;
+
+}
+
+.counterpartyRow select{
+    margin: 10px 0px;
+    width: 462px;
+    height: 30px;
+    /*border: 1px solid #A1A1A1;*/
+    box-shadow: 0px 1px 1px #CFCFCF inset;
+    font-size: 14pt;
+    float: right;
+    padding: 0px 5px;
+}
