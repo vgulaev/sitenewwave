@@ -48,6 +48,8 @@ RewriteRule ^catalog/setka-rabitsa/$ 1cengine/site/?catalog=Сетка\%20раб
 RewriteRule ^catalog/balka-dvutavrovaya/$ 1cengine/site/?catalog=Балка$1 [L]
 RewriteRule ^catalog/shveller/$ 1cengine/site/?catalog=Швеллер$1 [L]
 
+RewriteRule ^products/catalog/$ 1cengine/site/ [L,R=301]
+
 RewriteRule ^index.html core.py [L]
 RewriteRule ^([-a-zA-Z0-9_/]+)/index.html /$1/ [L,R=301]
 
