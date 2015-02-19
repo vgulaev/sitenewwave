@@ -182,7 +182,7 @@ $(document).ready ->
             # alert( user["Counterparty"][0] )
             c_select = """
                 <select id="counterpartySelect">
-                    <option value="Без контрагента">Без контрагента</option>
+                    <option value="Розничный покупатель">Без контрагента</option>
             """
             $(user["Counterparty"]).each (index, element) =>
                 c_select += "<option value='" + element + "'>" + element + "</option>"

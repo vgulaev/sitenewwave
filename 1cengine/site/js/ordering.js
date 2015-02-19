@@ -166,7 +166,7 @@
         var c_select, user;
         user = html;
         $("#emailInput").val(user["Email"]);
-        c_select = "<select id=\"counterpartySelect\">\n    <option value=\"Без контрагента\">Без контрагента</option>";
+        c_select = "<select id=\"counterpartySelect\">\n    <option value=\"Розничный покупатель\">Без контрагента</option>";
         $(user["Counterparty"]).each((function(_this) {
           return function(index, element) {
             return c_select += "<option value='" + element + "'>" + element + "</option>";
