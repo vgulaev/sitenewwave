@@ -10,7 +10,7 @@
   };
 
   sendOrder = function(orderString, is_async) {
-    var carry, comment_text, delivery_cost, delivery_info, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text;
+    var carry, comment_text, counterparty, delivery_cost, delivery_info, destination, email, last_name, main_phone, name_surname, other_phone, ret, rezka_text;
     if (typeof is_async === "undefined") {
       is_async = true;
     }
@@ -30,6 +30,7 @@
     name_surname = $("#nameSurnameInput").val();
     other_phone = $("#otherPhoneInput").val();
     ret = "";
+    counterparty = $("#counterpartySelect").val();
     rezka_text = "";
     $(".rezka_item").each((function(_this) {
       return function(index, element) {
@@ -50,7 +51,7 @@
       type: "POST",
       url: "/1cengine/php_scripts/createOrder.php",
       async: is_async,
-      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info,
+      data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info + "&counterparty=" + counterparty,
       success: function(html) {
         var oA, order;
         ret = "номер " + html;
@@ -155,6 +156,27 @@
 
   $(document).ready(function() {
     var GET, curr, i, parts, squery;
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "/1cengine/py_scripts/check_user.py",
+      async: true,
+      data: "",
+      success: function(html) {
+        var c_select, user;
+        user = html;
+        $("#emailInput").val(user["Email"]);
+        c_select = "<select id=\"counterpartySelect\">\n    <option value=\"Розничный покупатель\">Без контрагента</option>";
+        $(user["Counterparty"]).each((function(_this) {
+          return function(index, element) {
+            return c_select += "<option value='" + element + "'>" + element + "</option>";
+          };
+        })(this));
+        c_select += "</select>";
+        $(".counterpartySelectContainer").append(c_select);
+        $(".counterpartyRow").show();
+      }
+    });
     $(".bItem").click(function() {
       var elem_id, item;
       elem_id = $(this).closest("tr").attr("id");
