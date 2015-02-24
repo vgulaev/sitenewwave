@@ -86,7 +86,7 @@ def get_subgroups(group_hash):
             FROM `item`, `site_group`
             WHERE `site_group`.`id`='"""+group_hash+"""'
             AND `item`.`site_group_ref`=`site_group`.`id`
-            ORDER BY `item`.`thickness`
+            ORDER BY (`item`.`thickness`+0)
         """)
 
         for row in r:
@@ -103,7 +103,7 @@ def get_subgroups(group_hash):
             FROM `item`, `site_group`
             WHERE `site_group`.`id`='"""+group_hash+"""'
             AND `item`.`site_group_ref`=`site_group`.`id`
-            ORDER BY `item`.`diameter`
+            ORDER BY (`item`.`diameter`+0)
         """)
 
         for row in r:
@@ -122,7 +122,7 @@ def get_subgroups(group_hash):
             FROM `item`, `site_group`
             WHERE `site_group`.`id`='"""+group_hash+"""'
             AND `item`.`site_group_ref`=`site_group`.`id`
-            ORDER BY `item`.`height`
+            ORDER BY (`item`.`height`+0)
         """)
 
         for row in r:
