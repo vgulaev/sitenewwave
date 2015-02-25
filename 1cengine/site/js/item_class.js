@@ -322,7 +322,7 @@
         } else {
           buy_square = (this.weight * this.buy_weight * this.buy_count).toFixed(3);
         }
-        l_input = "<div class=\"length_item_overall\">Общая рабочая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
+        l_input = "<div class=\"length_item_overall\">Рабочая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
       } else {
         set_length = "";
       }

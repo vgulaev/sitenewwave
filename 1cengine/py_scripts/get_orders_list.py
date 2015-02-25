@@ -361,7 +361,7 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
                         title="Скачать заказ в формате pdf"> pdf </a>
                         </p>
                     </td>
-                    <td>""" + str(order[2]) + """</td>
+                    <td class="num_cell">""" + str(order[2]) + """</td>
                     <td>""" + str(order[6]) + """</td>
                     <td>""" + str(order[5]) + """</td>
                     <td>""" + rplc + """</td>

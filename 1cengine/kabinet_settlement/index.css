@@ -1246,3 +1246,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     padding-bottom: 5px;
     cursor: pointer;
 }
+
+.num_cell{
+    text-align:right;
+}

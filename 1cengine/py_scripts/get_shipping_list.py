@@ -270,8 +270,8 @@ def get_shipping_list_html(UID, date_from, date_to, counterparty):
                     <td>
                         """ + regex.sub("", str(shipping[0])) + """
                     </td>
-                    <td>""" + str(shipping[2]) + """</td>
-                    <td>""" + str(shipping[4]) + """</td>
+                    <td class="num_cell">""" + str(shipping[2]) + """</td>
+                    <td class="num_cell">""" + str(shipping[4]) + """</td>
                     <td class="shippingDate">
                         """ + str(shipping[1].split(" ")[0]) + """
                     </td>
