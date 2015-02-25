@@ -176,7 +176,7 @@ groups_params = {
         "Ширина",
         "l"
     ],
-    "Труба": [
+    "Трубы": [
         "/1cengine/site/images/eye_pic/truba.png",
         1,
         1,
@@ -186,7 +186,7 @@ groups_params = {
         "Диаметр",
         "l"
     ],
-    "Труба б/у": [
+    "Трубы б/у": [
         "/1cengine/site/images/eye_pic/truba.png",
         1,
         1,
