@@ -16,32 +16,34 @@ $typeArray = array('xlsx', 'pdf', 'ods');
 
 foreach($typeArray as $type){
 
-	$res = array();
-	preg_match("/>[\w-]+</", $content, $res);
-	$response = $res[0];
-	$response = str_replace('>', '', $response);
-	$response = str_replace('<', '', $response);
+    $res = array();
+    preg_match("/>[\w-]+</", $content, $res);
+    $response = $res[0];
+    $response = str_replace('>', '', $response);
+    $response = str_replace('<', '', $response);
 
-	//if($response=='Well'){
-		$filename = 'http://195.239.221.58:30080/download/price.'.$type;
-	
-		$file = fopen($filename, "r"); //Открываем файл
-		$contents = '';
-		while (!feof($file)) {
-		  $contents .= fread($file, 8192);
-		}
+    //if($response=='Well'){
+        cdate = date("Y-m-d")
 
-		fclose($file); 
+        $filename = 'http://195.239.221.58:30080/download/price.'.$type;
 
-		// $filenameOut = '/home/saur/web/sitenewwave/download/files/price.'.$params['Type'];
-		$filenameOut = '/web/trimetru/site/www/download/files/price.'.$type;
-		$file = fopen($filenameOut, "w");
-		fwrite($file, $contents);
-		fclose($file);
+        $file = fopen($filename, "r"); //Открываем файл
+        $contents = '';
+        while (!feof($file)) {
+          $contents .= fread($file, 8192);
+        }
 
-		echo $type." прайс создан ; ";
-	//}
+        fclose($file); 
 
-	}
+        // $filenameOut = '/home/saur/web/sitenewwave/download/files/price.'.$params['Type'];
+        $filenameOut = '/web/trimetru/site/www/download/files/Trimet price '.$cdate.'.'.$type;
+        $file = fopen($filenameOut, "w");
+        fwrite($file, $contents);
+        fclose($file);
+
+        echo $type." прайс создан ; ";
+    //}
+
+    }
 
 ?>
