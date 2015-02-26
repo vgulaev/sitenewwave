@@ -160,12 +160,17 @@
     MyBasket.rebuild_basket = function() {};
 
     MyBasket.create_row = function(item) {
-      var count_td, nds, price_td, row, sum_td;
+      var count_td, count_unit_td, nds, price_td, row, sum_td;
       nds = ((item.final_price / 100) * 18).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
-      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "</td>\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n<td class='itemCountTd'>" + count_td + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemPriceTd'>" + price_td + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + sum_td + "</td>\n<td class='itemEdit'>\n    <span class=\"delEdSpan\">\n    <a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_edit.png\" /></a></span>\n    <a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_delete.png\" /></a>\n</td>\n</tr>";
+      if (item.buy_count === void 0) {
+        count_unit_td = "&#151;";
+      } else {
+        count_unit_td = item.buy_count;
+      }
+      return row = "<tr class=\"itemTr\" name=\"" + item.id + "\">\n<td>" + (this._item_list.indexOf(item) + 1) + "</td>\n<td class='itemNameTd'>" + item.name + "</td>\n\n<td class='itemCharTd'>" + item.char + "</td>\n\n\n<td class='itemCountTd'>" + count_td + "</td>\n<td class='itemEdIzmTd'>" + item.ed_izm + "</td>\n<td class='itemCountUnitTd'>" + count_unit_td + "</td>\n<td class='itemPriceTd'>" + price_td + "</td>\n<td class='itemNdsKfTd'>18%</td>\n<td class='itemNdsSumTd'>" + nds + "</td>\n<td class='itemSumTd'>" + sum_td + "</td>\n<td class='itemEdit'>\n    <span class=\"delEdSpan\">\n    <a class=\"edit_from_basket\" href=\"Редактировать\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_edit.png\" /></a></span>\n    <a class=\"delete_from_basket\" href=\"Убрать из корзины\" onClick=\"return false\"><img src=\"/1cengine/site/images/cart_delete.png\" /></a>\n</td>\n</tr>";
     };
 
     MyBasket.on_weight_change_handler = function(weight) {

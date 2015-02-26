@@ -167,6 +167,10 @@ class App.MyBasket
         price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
+        if item.buy_count is undefined
+            count_unit_td = "&#151;"
+        else
+            count_unit_td = item.buy_count
         row = """
             <tr class="itemTr" name="#{item.id}">
             <td>#{@_item_list.indexOf(item)+1}</td>
@@ -174,8 +178,10 @@ class App.MyBasket
 
             <td class='itemCharTd'>#{item.char}</td>
 
+
             <td class='itemCountTd'>#{count_td}</td>
             <td class='itemEdIzmTd'>#{item.ed_izm}</td>
+            <td class='itemCountUnitTd'>#{count_unit_td}</td>
             <td class='itemPriceTd'>#{price_td}</td>
             <td class='itemNdsKfTd'>18%</td>
             <td class='itemNdsSumTd'>#{nds}</td>

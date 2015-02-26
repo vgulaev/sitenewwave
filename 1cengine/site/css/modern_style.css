@@ -1373,6 +1373,11 @@ tr.iHeader{
     /*float:right;*/
 }
 
+#showNDSlabel label{
+    vertical-align: top;
+    font-size: 9pt;
+}
+
 .NDSHeader, .itemNdsSumTd, .itemNdsKfTd{
     display:none;
 }
