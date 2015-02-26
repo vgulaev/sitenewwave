@@ -75,17 +75,31 @@ $("#sendOrderButton").click ->
 
 
 createOrder = () ->
+    accept_flag = true
+
+    if $("#mainPhoneInput").val() is ""
+
+        # $.unblockUI()
+        $("#switchNotificationDiv").click()
+        $("#mainPhoneInput").focus()
+        $("#mainPhoneInput").addClass("invalid_input")
+
+        $("#mainPhoneInput").parent().parent().children().addClass("require_field")
+
+        accept_flag = false
+
     if $("#emailInput").val() is ""
 
         # $.unblockUI()
         $("#switchNotificationDiv").click()
         $("#emailInput").focus()
-    else if $("#mainPhoneInput").val() is ""
+        $("#emailInput").addClass("invalid_input")
 
-        # $.unblockUI()
-        $("#switchNotificationDiv").click()
-        $("#phoneMainInput").focus()
-    else
+        $("#emailInput").parent().parent().children().addClass("require_field")
+
+        accept_flag = false
+
+    if accept_flag
         $.blockUI.defaults.css.borderRadius = "10px" #убираем серую границу
         $.blockUI.defaults.fadeIn = 100 #ускоряем появление
         $.blockUI.defaults.fadeOut = 100 #и исчезновение
@@ -256,3 +270,14 @@ $(document).ready ->
     # $( "#tabBasket" ).tooltip( "disable" )
     # $( "#tabBasket" ).tooltip( "open" );
 
+    # $('#mainPhoneInput').keypress (key) ->
+    #     if (key.charCode < 48 or key.charCode > 57) and key.charCode != 219 and key.charCode != 221 and key.charCode != 43 and key.charCode != 32 and key.charCode != 45 and key.charCode != 8
+    #         return false
+
+    $('#mainPhoneInput').bind 'keypress', (event) ->
+        regex = new RegExp('^[A-Za-zА-Яа-я=\\\\\\[\\]{}`@#%&*|/,\\.\\!\\$\\~_<>\\?]+$')
+        key = String.fromCharCode(if !event.charCode then event.which else event.charCode)
+        if regex.test(key)
+            event.preventDefault()
+            return false
+        return

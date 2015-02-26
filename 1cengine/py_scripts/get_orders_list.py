@@ -188,6 +188,15 @@ def get_order_list_ajax(UID, date_from, date_to, counterparty):
     else:
         date_to_value = ""
 
+    if date_from_value == "" and date_to_value == "":
+        info_message = """
+            <p class="info_message_c">
+                * Показаны последние 10 документов *
+            </p>
+        """
+    else:
+        info_message = ""
+
     cp_option = "<option value='Все'>Все</option>"
 
     for cp in get_counterparty_list(UID):
@@ -230,6 +239,7 @@ def get_order_list_ajax(UID, date_from, date_to, counterparty):
                 </table>
             </form>
         </div>
+        {8}
         <div id="order_ajax_div">
         {3}
         <script type="text/javascript">
@@ -258,7 +268,8 @@ def get_order_list_ajax(UID, date_from, date_to, counterparty):
         UID,
         date_from_par,
         date_to_par,
-        counterparty_par
+        counterparty_par,
+        info_message
     )
 
     return ajax

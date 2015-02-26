@@ -75,14 +75,23 @@
   });
 
   createOrder = function() {
-    var order, sendRow;
+    var accept_flag, order, sendRow;
+    accept_flag = true;
+    if ($("#mainPhoneInput").val() === "") {
+      $("#switchNotificationDiv").click();
+      $("#mainPhoneInput").focus();
+      $("#mainPhoneInput").addClass("invalid_input");
+      $("#mainPhoneInput").parent().parent().children().addClass("require_field");
+      accept_flag = false;
+    }
     if ($("#emailInput").val() === "") {
       $("#switchNotificationDiv").click();
-      return $("#emailInput").focus();
-    } else if ($("#mainPhoneInput").val() === "") {
-      $("#switchNotificationDiv").click();
-      return $("#phoneMainInput").focus();
-    } else {
+      $("#emailInput").focus();
+      $("#emailInput").addClass("invalid_input");
+      $("#emailInput").parent().parent().children().addClass("require_field");
+      accept_flag = false;
+    }
+    if (accept_flag) {
       $.blockUI.defaults.css.borderRadius = "10px";
       $.blockUI.defaults.fadeIn = 100;
       $.blockUI.defaults.fadeOut = 100;
@@ -223,7 +232,7 @@
     $(".rezka_item_add").click(function() {
       return App.show_rezka_ch_modal();
     });
-    return $("#tabBasket").tooltipster({
+    $("#tabBasket").tooltipster({
       content: "Товар добавлен в корзину",
       animation: 'fade',
       delay: 200,
@@ -231,6 +240,15 @@
       timer: 3000,
       trigger: "custom",
       theme: "tooltipster-my"
+    });
+    return $('#mainPhoneInput').bind('keypress', function(event) {
+      var key, regex;
+      regex = new RegExp('^[A-Za-zА-Яа-я=\\\\\\[\\]{}`@#%&*|/,\\.\\!\\$\\~_<>\\?]+$');
+      key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
     });
   });
 

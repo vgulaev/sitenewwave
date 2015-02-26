@@ -1335,3 +1335,11 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 .num_cell{
     text-align:right;
 }
+
+.info_message_c{
+    margin-top: 30px;
+    font-weight: 700;
+    color: #5D86d4;
+    font-style: italic;
+    letter-spacing: 1px;
+}
