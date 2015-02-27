@@ -8,6 +8,9 @@ import random
 import hashlib
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 import cgitb
 cgitb.enable()
@@ -106,7 +109,7 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     with open(r, "rb") as fil:
         msg.attach(MIMEApplication(
             fil.read(),
-            Content_Disposition='attachment; filename="%s"' % basename(f)
+            Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
         ))
 
     msg.set_charset("utf-8")
@@ -119,7 +122,7 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
 
 def mail_dealer_offer(email, offer):
     me = "admin@trimet.ru"
-    you = email
+    you = mail
 
     msg = MIMEText("""
         Добрый день, <br />
@@ -162,7 +165,7 @@ if raw_post != "":
 
 if "mail" in post:
     mail = post["mail"]
-    mail = email.replace("%40", "@")
+    mail = mail.replace("%40", "@")
 else:
     mail = False
 
