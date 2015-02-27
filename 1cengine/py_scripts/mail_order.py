@@ -157,7 +157,7 @@ def mail_us(onumber, fname, mail, phones):
 
     msg = MIMEMultipart(
         From=me,
-        To=you,
+        To=COMMASPACE.join(you),
         Date=formatdate(localtime=True)
     )
 
@@ -170,7 +170,7 @@ def mail_us(onumber, fname, mail, phones):
 
 
     s = smtplib.SMTP('localhost')
-    s.sendmail(me, [you], msg.as_string())
+    s.sendmail(me, you, msg.as_string())
     s.quit()
 
 
