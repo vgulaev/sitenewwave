@@ -101,6 +101,8 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
         Subject="On-line shop trimet.ru"
     )
 
+    # msg.set_charset("utf-8")
+
     msg.attach(MIMEText(msg_text, "html"))
 
     import requests
@@ -114,13 +116,20 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     #     ))
 
 
-    msg.attach(MIMEApplication(
-        r.content,
-        Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
-    ))
+    # msg.attach(MIMEApplication(
+    #     r.content,
+    #     Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
+    # ))
 
+    attachment = MIMEBase('application', "octet-stream")
 
-    msg.set_charset("utf-8")
+    header = "Content_Disposition='attachment; filename=" + onumber + ".pdf"
+
+    attachment.set_payload( r.content )
+    Encoders.encode_base64(attachment)
+    attachment.add_header(*header)
+    msg.attach(attachment)
+
 
 
     s = smtplib.SMTP('localhost')
