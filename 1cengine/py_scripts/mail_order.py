@@ -159,7 +159,6 @@ if raw_post != "":
         # print key_var
         post[key_var[0]] = key_var[1]
 
-"uid=" + uid + "&accepted=" + accepted + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&regresult=" + regresult + "&pwd=" + pwd + "&onumber=" + onumber
 
 if "mail" in post:
     mail = post["mail"]
