@@ -63,7 +63,7 @@ def get_file_link(uid):
         return False
 
 
-def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult, pwd):
+def mail_order_to_client(mail, onumber, uid, accepted, regresult, pwd):
 
     filelink = get_file_link(uid)
 
@@ -73,7 +73,7 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     if regresult:
         pwd_link = "<p>Для входа используйте указанный вами email и следующий пароль: <strong>{0}</strong></p>".format(pwd)
     else:
-        pwd_link = 0
+        pwd_link = ""
 
     if accepted:
         payment_link = "<p>Вы можете оплатить свой заказ онлайн по <a href='https://trimet.ru/payment/{0}'>ссылке</a></p>".format(uid)
@@ -85,7 +85,7 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
         <p>Вы заказали металл на сайте компании Тримет.</p>
         <p>Ваш заказ получен отделом продаж и будет обработан менеджером.</p>
         <p>После обработки изменится статус заказа, информация об этом придёт на электронную почту</p>
-        <p>Номер вашего заказа: <strong>{0}</strong></p>;
+        <p>Номер вашего заказа: <strong>{0}</strong></p>
         <p>Вы можете просмотреть свои заказы в
         <a href="https://trimet.ru/kabinet/">личном кабинете</a></p>
         {1}
@@ -114,27 +114,58 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
 
     r = requests.get(filelink)
 
-    # with open(r, "rb") as fil:
-    #     msg.attach(MIMEApplication(
-    #         fil.read(),
-    #         Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
-    #     ))
-
-
-    # msg.attach(MIMEApplication(
-    #     r.content,
-    #     Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
-    # ))
 
     attachment = MIMEBase('application', "octet-stream")
 
-    file_to_send_name = onumber + ".pdf"
+    file_to_send_name = "Тримет заказ №" + onumber + ".pdf"
 
     attachment.set_payload( r.content )
     Encoders.encode_base64(attachment)
     attachment.add_header('Content-Disposition', 'attachment; filename="%s"'
                % file_to_send_name)
     msg.attach(attachment)
+
+
+
+    s = smtplib.SMTP('localhost')
+    s.sendmail(me, [you], msg.as_string())
+    s.quit()
+
+
+def mail_us(onumber, fname, mail, phones):
+
+    me = "admin@trimet.ru"
+    you = ["otwo@trimet.ru", "webmaster@trimet.ru", "parshin@trimet.ru", "aleksey@trimet.ru"]
+
+
+    msg_text = """
+        Доброго времени суток, <br />
+        <p>На сайте Тримет был оформлен новый заказ.<br />
+        Его номер: <strong>{0}</strong></p>
+        <p>Клиент оставил следующие контактные данные:
+        <ul><li>{1}</li>";
+        <li>{2}</li>
+        <li>{3}</li></ul></p>";
+        <hr color=lightgrey />";
+        <font color=grey><small><i><tt>Автоматическая рассылка сайта trimet.ru</tt></i></small></font>";
+    """.format(
+        onumber,
+        fname,
+        mail,
+        phones
+    )
+
+    msg = MIMEMultipart(
+        From=me,
+        To=you,
+        Date=formatdate(localtime=True)
+    )
+
+    msg['Subject'] = Header("Attention On-line shop trimet.ru", "utf-8")
+
+    # msg.set_charset("utf-8")
+
+    msg.attach(MIMEText(msg_text.encode('utf-8'), "html", "utf-8"))
 
 
 
@@ -203,5 +234,6 @@ else:
 
 if mail:
     mail_order_to_client(
-        mail, onumber, uid, accepted, fname, phones, regresult, pwd
+        mail, onumber, uid, accepted, regresult, pwd
     )
+    mail_us(onumber, fname, mail, phones)
