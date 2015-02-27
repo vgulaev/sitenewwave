@@ -143,11 +143,11 @@ def mail_us(onumber, fname, mail, phones):
         <p>На сайте Тримет был оформлен новый заказ.<br />
         Его номер: <strong>{0}</strong></p>
         <p>Клиент оставил следующие контактные данные:
-        <ul><li>{1}</li>";
+        <ul><li>{1}</li>
         <li>{2}</li>
-        <li>{3}</li></ul></p>";
-        <hr color=lightgrey />";
-        <font color=grey><small><i><tt>Автоматическая рассылка сайта trimet.ru</tt></i></small></font>";
+        <li>{3}</li></ul></p>
+        <hr color=lightgrey />
+        <font color=grey><small><i><tt>Автоматическая рассылка сайта trimet.ru</tt></i></small></font>
     """.format(
         onumber,
         fname,
