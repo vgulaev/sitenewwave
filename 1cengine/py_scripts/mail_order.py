@@ -63,7 +63,7 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     filelink = get_file_link(uid)
 
     me = "admin@trimet.ru"
-    you = email
+    you = mail
 
     if regresult:
         pwd_link = "<p>Для входа используйте указанный вами email и следующий пароль: <strong>{0}</strong></p>".format(pwd)
@@ -118,32 +118,6 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     s = smtplib.SMTP('localhost')
     s.sendmail(me, [you], msg.as_string())
     s.quit()
-
-
-def mail_dealer_offer(email, offer):
-    me = "admin@trimet.ru"
-    you = mail
-
-    msg = MIMEText("""
-        Добрый день, <br />
-        <p>Это интернет-каталог компании Тримет.</p>
-        <p>Вы, или кто-то действующий от Вашего имени запросили сброс пароля входа в Личный Кабинет.<br />
-        Ваш новый пароль: <strong>"""+passwd+"""</strong><br />
-        Вы можете сменить пароль в Настройках в Личном Кабинете.</p>
-        <hr color=lightgrey />
-        <font color=grey><small><i><tt>С уважением, роботы сайта trimet.ru</tt></i></small></font>
-        """, "html")
-
-    msg["From"] = me
-    msg["To"] = you
-    msg["Subject"] = "Сброс пароля личного кабинета сайта trimet.ru"
-    msg.set_charset("utf-8")
-
-
-    s = smtplib.SMTP('localhost')
-    s.sendmail(me, [you], msg.as_string())
-    s.quit()
-
 
 
 post = {}
