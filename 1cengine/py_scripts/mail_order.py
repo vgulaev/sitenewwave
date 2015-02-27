@@ -126,11 +126,12 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
 
     attachment = MIMEBase('application', "octet-stream")
 
-    header = "Content_Disposition='attachment; filename=" + onumber + ".pdf"
+    file_to_send_name = onumber + ".pdf"
 
     attachment.set_payload( r.content )
     Encoders.encode_base64(attachment)
-    attachment.add_header(*header)
+    attachment.add_header('Content-Disposition', 'attachment; filename="%s"'
+               % file_to_send_name)
     msg.attach(attachment)
 
 
