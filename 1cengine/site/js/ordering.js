@@ -3,7 +3,7 @@
 /* DEPRECATED START!!!! */
 
 (function() {
-  var createOrder, getOrderFomat, isValidEmail, openLink, sendOrder;
+  var createOrder, getOrderFomat, isValidEmail, mail_to_client, openLink, sendOrder;
 
   isValidEmail = function(str) {
     return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -54,19 +54,32 @@
       data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info + "&counterparty=" + counterparty,
       success: function(html) {
         var oA, order;
-        ret = "номер " + html;
+        ret = html;
         $("#popUpOrderClose").show();
         $(".oInProcess").hide();
         $(".oProcessed").show();
         $("#basketCaption").empty();
         order = ret;
         oA = order.split(",");
-        $("#basketCaption").append("Заказ " + oA[0]);
+        $("#basketCaption").append("Заказ номер" + oA[0]);
         $("#switchOrderDiv").click();
+        mail_to_client(oA[1], oA[2], email, main_phone + ", " + other_phone, name_surname + " " + last_name, oA[3], oA[4], oA[0]);
         return ret;
       }
     });
     return ret;
+  };
+
+  mail_to_client = function(uid, accepted, mail, phones, fname, regresult, pwd, onumber) {
+    return $.ajax({
+      type: "POST",
+      url: "/1cengine/py_scripts/mail_order.py",
+      async: true,
+      data: "uid=" + uid + "&accepted=" + accepted + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&regresult=" + regresult + "&pwd=" + pwd + "&onumber=" + onumber,
+      success: function(html) {
+        return true;
+      }
+    });
   };
 
   $("#sendOrderButton").click(function() {
