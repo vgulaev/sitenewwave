@@ -13,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email import Encoders
 from email.MIMEBase import MIMEBase
+from email.header import Header
 
 from email.utils import COMMASPACE, formatdate
 
@@ -100,13 +101,14 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
     msg = MIMEMultipart(
         From=me,
         To=you,
-        Date=formatdate(localtime=True),
-        Subject="On-line shop trimet.ru"
+        Date=formatdate(localtime=True)
     )
+
+    msg['Subject'] = Header("On-line shop trimet.ru", "utf-8")
 
     # msg.set_charset("utf-8")
 
-    msg.attach(MIMEText(msg_text, "html"))
+    msg.attach(MIMEText(msg_text.encode('utf-8'), "html", "utf-8"))
 
     import requests
 
