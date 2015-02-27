@@ -107,11 +107,18 @@ def mail_order_to_client(mail, onumber, uid, accepted, fname, phones, regresult,
 
     r = requests.get(filelink)
 
-    with open(r, "rb") as fil:
-        msg.attach(MIMEApplication(
-            fil.read(),
-            Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
-        ))
+    # with open(r, "rb") as fil:
+    #     msg.attach(MIMEApplication(
+    #         fil.read(),
+    #         Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
+    #     ))
+
+
+    msg.attach(MIMEApplication(
+        r.content,
+        Content_Disposition='attachment; filename="%s"' % onumber+".pdf"
+    ))
+
 
     msg.set_charset("utf-8")
 
