@@ -61,7 +61,7 @@
         $("#basketCaption").empty();
         order = ret;
         oA = order.split(",");
-        $("#basketCaption").append("Заказ номер" + oA[0]);
+        $("#basketCaption").append("Заказ номер " + oA[0]);
         $("#switchOrderDiv").click();
         mail_to_client(oA[1], oA[2], email, main_phone + ", " + other_phone, name_surname + " " + last_name, oA[3], oA[4], oA[0]);
         return ret;

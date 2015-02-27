@@ -159,11 +159,50 @@ if raw_post != "":
         # print key_var
         post[key_var[0]] = key_var[1]
 
+"uid=" + uid + "&accepted=" + accepted + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&regresult=" + regresult + "&pwd=" + pwd + "&onumber=" + onumber
+
 if "mail" in post:
     mail = post["mail"]
     mail = email.replace("%40", "@")
 else:
     mail = False
 
+if "uid" in post:
+    uid = post["uid"]
+else:
+    uid = False
+
+if "accepted" in post:
+    accepted = post["accepted"]
+else:
+    accepted = False
+
+if "phones" in post:
+    phones = post["phones"]
+else:
+    phones = False
+
+if "fname" in post:
+    fname = post["fname"]
+else:
+    fname = False
+
+if "regresult" in post:
+    regresult = post["regresult"]
+else:
+    regresult = False
+
+if "pwd" in post:
+    pwd = post["pwd"]
+else:
+    pwd = False
+
+if "onumber" in post:
+    onumber = post["onumber"]
+else:
+    onumber = False
+
 if mail:
-    mail_order_to_client(mail,)
+    mail_order_to_client(
+        mail, onumber, uid, accepted, fname, phones, regresult, pwd
+    )
