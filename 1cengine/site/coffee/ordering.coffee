@@ -54,19 +54,30 @@ sendOrder = (orderString, is_async) ->
         data: "orderString=" + orderString + "&carry=" + carry + "&destination=" + destination + "&email=" + email + "&delivery_cost=" + delivery_cost + "&main_phone=" + main_phone + "&other_phone=" + other_phone + "&name_surname=" + name_surname + "&last_name=" + last_name + "&rezka=" + rezka_text + " комментарий :: " + comment_text + "&delivery_info=" + delivery_info + "&counterparty=" + counterparty
         success: (html) ->
             #var success = 'true';
-            ret = "номер " + html
+            ret = html
             $("#popUpOrderClose").show()
             $(".oInProcess").hide()
             $(".oProcessed").show()
             $("#basketCaption").empty()
             order = ret
             oA = order.split(",")
-            $("#basketCaption").append "Заказ " + oA[0]
+            $("#basketCaption").append "Заказ номер" + oA[0]
             $("#switchOrderDiv").click()
+            mail_to_client(oA[1], oA[2], email, main_phone+", "+other_phone, name_surname+" "+last_name, oA[3], oA[4], oA[0])
             ret
 
     #alert(ret)
     ret
+
+mail_to_client = (uid, accepted, mail, phones, fname, regresult, pwd, onumber) ->
+
+    $.ajax
+        type: "POST"
+        url: "/1cengine/py_scripts/mail_order.py"
+        async: true
+        data: "uid=" + uid + "&accepted=" + accepted + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&regresult=" + regresult + "&pwd=" + pwd + "&onumber=" + onumber
+        success: (html) ->
+            true
 
 $("#sendOrderButton").click ->
     createOrder()

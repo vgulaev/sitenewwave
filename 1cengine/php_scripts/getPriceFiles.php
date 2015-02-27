@@ -23,7 +23,7 @@ foreach($typeArray as $type){
     $response = str_replace('<', '', $response);
 
     //if($response=='Well'){
-        cdate = date("Y-m-d")
+        // cdate = date("Y-m-d");
 
         $filename = 'http://195.239.221.58:30080/download/price.'.$type;
 
@@ -36,7 +36,7 @@ foreach($typeArray as $type){
         fclose($file); 
 
         // $filenameOut = '/home/saur/web/sitenewwave/download/files/price.'.$params['Type'];
-        $filenameOut = '/web/trimetru/site/www/download/files/Trimet price '.$cdate.'.'.$type;
+        $filenameOut = '/web/trimetru/site/www/download/files/Trimet price.'.$type;
         $file = fopen($filenameOut, "w");
         fwrite($file, $contents);
         fclose($file);

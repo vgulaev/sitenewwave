@@ -140,91 +140,9 @@ $response = str_replace('>', '', $response);
 $response = str_replace('</m:return', '', $response);
 $response = split(':', $response);
 
-echo $response[0].','.$response[1];
+echo $response[0].','.$response[1].','.$response[2].','.$reg_result.','.$pwd;
 
-$sccss = $response[2];
-$linkToPay = $response[1];
-
-
-$_POST['linkUID'] = $response[1];
-
-$r1 = $response;
-
-require_once('getfilelink.php');
-
-// $filename = 'test.txt';
-// $handle = fopen($filename, 'a+');
-// fwrite($handle, $answerArray[3]." PLEASE WORK!\n");
-// fclose($handle);
-
-/// Send Mail to Client
-
-$filename = $answerArray[3]; //Имя файла для прикрепления
-$to = $_POST['email']; //Кому
-$from = "admin@trimet.ru"; //От кого
-$subject = '=?utf-8?B?'.base64_encode('On-line shop trimet.ru').'?=';
-$mess =  'Добрый день, '. "<br />";
-$mess .= '<p>Вы заказали металл на сайте компании Тримет.</p>';
-$mess .= '<p>Ваш заказ получен отделом продаж и будет обработан менеджером.</p>';
-$mess .= '<p>После обработки изменится статус заказа, информация об этом придёт на электронную почту</p>';
-$mess .= '<p>Номер вашего заказа: <strong>'.$r1[0]."</strong></p>";
-$mess .= '<p>Вы можете просмотреть свои заказы в ';
-$mess .= '<a href="https://trimet.ru/kabinet/">личном кабинете</a></p>';
-if( $reg_result ){
-    $mess .= '<p>Для входа используйте указанный вами email и следующий пароль: <strong>'.$pwd.'</strong></p>';
-}
-if( $sccss == "1" ){
-    $mess .= '<p>Вы можете оплатить свой заказ онлайн по <a href="https://trimet.ru/payment/'. $linkToPay.'">ссылке</a></p>';
-}
-//$mess .= 'Вы можете просмотреть ваш заказ по ссылке: http://trimet.ru/1cengine/site/index.php?uid='.$r1[1]."\r\n";
-$mess .= '<p>Контактный телефон: +7 (3452) 520-670'."</p>";
-$mess .= '<p>С уважением, компания Тримет</p>';
-$boundary = "---"; //Разделитель
-/* Заголовки */
-$headers = "From: $from\nReply-To: $from\n";
-$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
-$body = "--$boundary\n";
-/* Присоединяем текстовое сообщение */
-$body .= "Content-type: text/html; charset=utf-8\n";
-$body .= "Content-Transfer-Encoding: quoted-printablenn";
-$body .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode("Заказ №".$r1[0].".pdf")."?=\n\n";
-$body .= $mess."\n";
-$body .= "--$boundary\n";
-$file = fopen($filename, "r"); //Открываем файл
-$contents = '';
-while (!feof($file)) {
-  $contents .= fread($file, 8192);
-}
-// $text = fread($file, filesize($filename)); //Считываем весь файл
-fclose($file); //Закрываем файл
-/* Добавляем тип содержимого, кодируем текст файла и добавляем в тело письма */
-$body .= "Content-Type: application/octet-stream; name==?utf-8?B?".base64_encode("Заказ №".$r1[0].".pdf")."?=\n";
-$body .= "Content-Transfer-Encoding: base64\n";
-$body .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode("Заказ №".$r1[0].".pdf")."?=\n\n";
-$body .= chunk_split(base64_encode($contents))."\n";
-$body .= "--".$boundary ."--\n";
-
-mail($to, $subject, $body, $headers);
-
-/// Send Mail to Us
-
-$to = "otwo@trimet.ru, webmaster@trimet.ru, parshin@trimet.ru, aleksey@trimet.ru";
-$from = "admin@trimet.ru";
-$subject = '=?utf-8?B?'.base64_encode('Attention On-line shop trimet.ru').'?=';
-$mess = "Доброго времени суток, "."<br />";
-$mess .= "<p>На сайте Тримет был оформлен новый заказ."."<br />";
-$mess .= "Его номер: <strong>".$r1[0]."</strong></p>";
-$mess .= "<p>Клиент оставил следующие контактные данные:";
-$mess .= "<ul><li>".$nm."</li>";
-$mess .= "<li>".$_POST['email']."</li></ul></p>";
-$mess .= "<hr color=lightgrey />";
-$mess .= "<font color=grey><small><i><tt>Автоматическая рассылка сайта trimet.ru</tt></i></small></font>";
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-$headers .= 'To: '.$to."\r\n";
-$headers .= 'From: '. $from . "\r\n";
-
-
-mail($to, $subject, $mess, $headers);
-
+////////////////////////////////////////////////////////////////////////////////
+///////////////////         END OF THE LINE         ////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 ?>
