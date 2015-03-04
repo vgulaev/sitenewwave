@@ -35,7 +35,7 @@ def yxml(request, url):
     doc_tpl = tpl.replace("{KEY}", request)
     for i in xrange(10):
         doc = doc_tpl.replace("{NUM}", str(i))
-        conn = urllib2.Request("http://xmlsearch.yandex.ru/xmlsearch?user=Elf607&key=03.13977823:e95167db7719613bbe9c579e723e3c66&lr=55", doc)
+        conn = urllib2.Request("https://xmlsearch.yandex.ru/xmlsearch?user=Elf607&key=03.13977823:e95167db7719613bbe9c579e723e3c66&lr=55", doc)
         data = urllib2.urlopen(conn)
          
         groups = []
@@ -77,15 +77,20 @@ current_date = current_date_array[2]+"."+current_date_array[1]+"."+current_date_
 current_time = current_date+" "+current_time_array[1]
 
 result_total = 0
-for query in query_array:
-    result = yxml(query, "trimet.ru")
-    if result[0] == 0:
-        result[0] = 100
-    
-    file_object = open("/var/www/trimetru/www/yandex/"+query+".csv","a")
-    file_object.write(current_time+","+str(result[0])+"\n")
-    file_object.close()
-    # print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
 
-# print "<tr><td>TOTAL</td><td> : </td><td>"+str(result_total)+"</td><td></td></tr>"
-# print "</table>"
+result = yxml("металлочерепица", "trimet.ru")
+
+print result[0], " : ", result[1]
+
+# for query in query_array:
+#     result = yxml(query, "trimet.ru")
+#     if result[0] == 0:
+#         result[0] = 100
+    
+#     file_object = open("/var/www/trimetru/www/yandex/"+query+".csv","a")
+#     file_object.write(current_time+","+str(result[0])+"\n")
+#     file_object.close()
+#     # print "<tr><td>",query, "</td><td> : </td><td>", result[0], "</td><td><a href='",result[1],"' >", result[1], "</a></td></tr>"
+
+# # print "<tr><td>TOTAL</td><td> : </td><td>"+str(result_total)+"</td><td></td></tr>"
+# # print "</table>"

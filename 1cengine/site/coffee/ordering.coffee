@@ -79,6 +79,16 @@ mail_to_client = (uid, accepted, mail, phones, fname, regresult, pwd, onumber) -
         success: (html) ->
             true
 
+save_to_db = (onumber, mail, phones, fname, sum) ->
+
+    $.ajax
+        type: "POST"
+        url: "/1cengine/py_scripts/save_order_db.py"
+        async: true
+        data: "sum=" + sum + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&onumber=" + onumber
+        success: (html) ->
+            true
+
 $("#sendOrderButton").click ->
     createOrder()
     yaCounter23067595.reachGoal('FinishOrder');
