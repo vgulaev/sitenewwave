@@ -36,10 +36,10 @@ def save_to_db(mail, phones, fname, onumber, sum):
     insert_text = """
 
         INSERT INTO `order_stat` (
-            `datetime`, `mail`, `phones`,
+            `id`, `datetime`, `mail`, `phones`,
             `fname`, `onumber`, `sum`, `ip`
         ) VALUES (
-            '{0}', '{1}', '{2}', '{3}', '{4}', {5}, '{6}'
+            '', '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}'
         )
     """.format(
         cdatetime, mail, phones,
