@@ -64,6 +64,7 @@ sendOrder = (orderString, is_async) ->
             $("#basketCaption").append "Заказ номер " + oA[0]
             $("#switchOrderDiv").click()
             mail_to_client(oA[1], oA[2], email, main_phone+", "+other_phone, name_surname+" "+last_name, oA[3], oA[4], oA[0])
+            save_to_db(oA[0], email, main_phone+", "+other_phone, name_surname+" "+last_name)
             ret
 
     #alert(ret)
@@ -79,8 +80,8 @@ mail_to_client = (uid, accepted, mail, phones, fname, regresult, pwd, onumber) -
         success: (html) ->
             true
 
-save_to_db = (onumber, mail, phones, fname, sum) ->
-
+save_to_db = (onumber, mail, phones, fname) ->
+    sum = $("#SumGoods").html()
     $.ajax
         type: "POST"
         url: "/1cengine/py_scripts/save_order_db.py"

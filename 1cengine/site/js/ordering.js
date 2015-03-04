@@ -3,7 +3,7 @@
 /* DEPRECATED START!!!! */
 
 (function() {
-  var createOrder, getOrderFomat, isValidEmail, mail_to_client, openLink, sendOrder;
+  var createOrder, getOrderFomat, isValidEmail, mail_to_client, openLink, save_to_db, sendOrder;
 
   isValidEmail = function(str) {
     return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -64,6 +64,7 @@
         $("#basketCaption").append("Заказ номер " + oA[0]);
         $("#switchOrderDiv").click();
         mail_to_client(oA[1], oA[2], email, main_phone + ", " + other_phone, name_surname + " " + last_name, oA[3], oA[4], oA[0]);
+        save_to_db(oA[0], email, main_phone + ", " + other_phone, name_surname + " " + last_name);
         return ret;
       }
     });
@@ -76,6 +77,20 @@
       url: "/1cengine/py_scripts/mail_order.py",
       async: true,
       data: "uid=" + uid + "&accepted=" + accepted + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&regresult=" + regresult + "&pwd=" + pwd + "&onumber=" + onumber,
+      success: function(html) {
+        return true;
+      }
+    });
+  };
+
+  save_to_db = function(onumber, mail, phones, fname) {
+    var sum;
+    sum = $("#SumGoods").html();
+    return $.ajax({
+      type: "POST",
+      url: "/1cengine/py_scripts/save_order_db.py",
+      async: true,
+      data: "sum=" + sum + "&mail=" + mail + "&phones=" + phones + "&fname=" + fname + "&onumber=" + onumber,
       success: function(html) {
         return true;
       }
