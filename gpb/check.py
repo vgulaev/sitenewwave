@@ -80,10 +80,10 @@ def get_order(UID):
 
 def set_trx():
 
-    conn = MySQLdb.connect(host=databases["trx"]["host"],
-                           user=databases["trx"]["user"],
-                           passwd=databases["trx"]["passwd"],
-                           db=databases["trx"]["db"])
+    conn = MySQLdb.connect(host=databases["extra"]["host"],
+                           user=databases["extra"]["user"],
+                           passwd=databases["extra"]["passwd"],
+                           db=databases["extra"]["db"])
 
     conn.set_character_set('utf8')
     cursor = conn.cursor()
@@ -97,7 +97,7 @@ def set_trx():
     time = datetime.datetime.now()
     time = time.strftime('%Y-%m-%d')
 
-    cursor.execute(""" INSERT INTO `trimetru_trx`.`trx_codes`
+    cursor.execute(""" INSERT INTO `trimetru_extra`.`trx_codes`
         (`id`, `trx`, `date`, `is_active`)
         VALUES ( %s,%s,%s,%s ) """, (
         '', trx_string, time, True ))

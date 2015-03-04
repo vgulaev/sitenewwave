@@ -38,7 +38,7 @@ myDBC = secrets.myDBC
 class User():
 
     def __init__(self):
-        self.connector = myDBC("users")
+        self.connector = myDBC("extra")
         self.cursor = self.connector.dbConnect()
         self.uid = ""
         self.sid = ""
@@ -82,7 +82,7 @@ class User():
 
         if not "Произошла ошибка" in uid1c:
             row = self.connector.dbExecute("""
-                INSERT INTO `trimetru_users`.`users`
+                INSERT INTO `trimetru_extra`.`users`
                 (`id`,`email`,`passwdhash`,`1cuid`)
                 VALUE (Null,'""" + email + """','""" + passwd + """',"")
             """)
@@ -96,7 +96,7 @@ class User():
         # print 50
         if self.is_valid_email(email) is True:
             row = self.connector.dbExecute("""
-                INSERT INTO `trimetru_users`.`users`
+                INSERT INTO `trimetru_extra`.`users`
                 (`id`,`email`,`passwdhash`,`1cuid`)
                 VALUE (Null,'""" + email + """','""" + passwd + """',"")
             """)
@@ -188,7 +188,7 @@ class User():
         user_ip = cgi.escape(os.environ["REMOTE_ADDR"])
         if self.is_uid_SID_linked(uid, user_ip) is False:
             row = self.connector.dbExecute("""
-                    INSERT INTO `trimetru_users`.`uids`
+                    INSERT INTO `trimetru_extra`.`uids`
                     (`id_user`,`sid`,`date`,`ip_reg`)
                     VALUES ('""" + str(uid) + """',
                         '""" + str(self.sid) + """',''
@@ -196,7 +196,7 @@ class User():
                 """)
         else:
             row = self.connector.dbExecute("""
-                    UPDATE `trimetru_users`.`uids`
+                    UPDATE `trimetru_extra`.`uids`
                     SET `sid` = '""" + str(self.sid) + """'
                     WHERE `id_user`='""" + str(uid) + """'
                     AND `ip_reg`='""" + str(user_ip) + """'
@@ -218,7 +218,7 @@ class User():
 
     def insert_1c_uid(self, uid, uid1c):
         row = self.connector.dbExecute("""
-            UPDATE `trimetru_users`.`users`
+            UPDATE `trimetru_extra`.`users`
             SET `1cuid` = '""" + str(uid1c) + """'
             WHERE `id` = '""" + str(uid) + """'
             """)
@@ -325,7 +325,7 @@ class User():
 
         row = self.connector.dbExecute("""
                 SELECT `email`
-                FROM `trimetru_users`.`users`, `trimetru_users`.`uids`
+                FROM `trimetru_extra`.`users`, `trimetru_extra`.`uids`
                 WHERE `users`.`id` = `uids`.`id_user`
                 AND `uids`.`sid` = '""" + sid + """'
             """)
@@ -344,7 +344,7 @@ class User():
 
         row = self.connector.dbExecute("""
                 SELECT `passwdhash`
-                FROM `trimetru_users`.`users`
+                FROM `trimetru_extra`.`users`
                 WHERE `passwdhash`='""" + passwd + """'
             """)
 
@@ -363,11 +363,11 @@ class User():
 
         if self.check_passwd(old_passwd):
             row = self.connector.dbExecute("""
-                        UPDATE `trimetru_users`.`users`
+                        UPDATE `trimetru_extra`.`users`
                         SET `passwdhash` = '""" + passwd + """'
                         WHERE (
                             SELECT `id_user`
-                            FROM `trimetru_users`.`uids`
+                            FROM `trimetru_extra`.`uids`
                             WHERE `sid`='""" + sid + """'
                         ) = `id` AND `passwdhash`='""" + old_passwd + """'
                     """)

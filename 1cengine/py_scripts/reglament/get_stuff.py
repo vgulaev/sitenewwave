@@ -30,7 +30,7 @@ secrets_lib_name = "secrets"
 secrets_lib_path = "structures/secrets.py"
 secrets = imp.load_source(secrets_lib_name, py_scripts_path+secrets_lib_path)
 
-database = secrets.databases["addinfo"]
+database = secrets.databases["extra"]
 
 def get_stuff():
     _DEVELOPING_ADDRESS_ = "http://192.168.194.27/trimet_trade_fedorov/ws/"

@@ -77,10 +77,10 @@ def report_1c(uid, sum, maskedPan):
 
 def get_trx(trx_string):
 
-    conn = MySQLdb.connect(host=databases["trx"]["host"],
-                           user=databases["trx"]["user"],
-                           passwd=databases["trx"]["passwd"],
-                           db=databases["trx"]["db"])
+    conn = MySQLdb.connect(host=databases["extra"]["host"],
+                           user=databases["extra"]["user"],
+                           passwd=databases["extra"]["passwd"],
+                           db=databases["extra"]["db"])
 
 
     conn.set_character_set('utf8')
@@ -92,7 +92,7 @@ def get_trx(trx_string):
     time = time.strftime('%Y-%m-%d')
 
     cursor.execute("""
-        SELECT * FROM `trimetru_trx`.`trx_codes`
+        SELECT * FROM `trimetru_extra`.`trx_codes`
         WHERE `trx`='"""+trx_string+"""'
         AND `date`='"""+time+"""'
         AND `is_active`='1'""")
@@ -105,7 +105,7 @@ def get_trx(trx_string):
             # print x[0]
 
             cursor.execute("""
-               UPDATE `trimetru_trx`.`trx_codes`
+               UPDATE `trimetru_extra`.`trx_codes`
                SET `is_active`='0'
                WHERE `id`='%s'
             """, (x[0]))

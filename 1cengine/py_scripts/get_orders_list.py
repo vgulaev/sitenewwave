@@ -27,7 +27,7 @@ secrets = imp.load_source(
     _PATH_ + "/" + secrets_lib_path
 )
 
-database = secrets.databases["addinfo"]
+database = secrets.databases["extra"]
 
 import json
 from suds.client import Client
