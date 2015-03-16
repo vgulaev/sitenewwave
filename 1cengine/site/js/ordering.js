@@ -14,10 +14,16 @@
     if (typeof is_async === "undefined") {
       is_async = true;
     }
-    destination = $(".city_select option:selected").html() + " - " + $(".street_select").val();
-    carry = $(".delivery_car").html();
-    delivery_info = $(".active_city").attr("name");
-    delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "");
+    if ($("#i_want_delivery").prop("checked")) {
+      destination = $(".city_select option:selected").html() + " - " + $(".street_select").val();
+      carry = $(".delivery_car").html();
+      delivery_info = $(".active_city").attr("name");
+      delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "");
+    } else {
+      carry = $(".delivery_car").html();
+      destination = "None";
+      delivery_cost = "0";
+    }
     email = $("input#emailInput").val();
     if (email !== "") {
       if (isValidEmail(email) === false) {
