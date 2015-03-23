@@ -46,7 +46,7 @@ class Item:
             "\xc2\xa0", "").replace(",", ".").strip()
         self.item_price_type = item_array[14].replace(",", ".").strip()
         self.item_height = item_array[15].replace(",", ".").strip()
-        stock = item_array[16].strip()
+        self.in_stock = item_array[16].replace(",", ".").strip()
         self.char_length = item_array[17].replace(",", ".").strip()
         self.item_work_width = item_array[18].replace(",", ".").strip()
         self.item_parent_short = item_array[19].replace(
@@ -54,10 +54,7 @@ class Item:
         if self.item_parent_short != "":
             self.item_parent = self.item_parent_short
 
-        if stock is "":
-            self.in_stock = 0
-        else:
-            self.in_stock = 1
+
         self.optional_length = False
 
         if self.item_min_length is not "" or self.item_max_length is not "":
@@ -348,7 +345,7 @@ cursor.execute(""" TRUNCATE `item_parent` """)
 cursor.execute(""" TRUNCATE `site_group` """)
 
 csv_file_name = "/web/trimetru/site/www/import/price.csv"
-dev_name = "/home/saur/web/sitenewwave/import/price.csv"
+# csv_file_name = "/home/saur/web/sitenewwave/import/price.csv"
 
 with open(csv_file_name) as price_csv:
     for line in price_csv:

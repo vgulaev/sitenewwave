@@ -67,11 +67,6 @@ switch_tabs = (id) ->
 
 
 
-showGroup2 = (term) ->
-    $("#itemName").val(term)
-    $("#itemName").change()
-    $.unblockUI()
-
 App.load_delivery_cost = () ->
     # alert("nya")
     $.ajax
@@ -494,7 +489,7 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_ncatalog_search_items.py"
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->

@@ -8,6 +8,7 @@ App.show_rezka_ch_modal = () ->
             else
                 checked = ""
             d_name = item.name + " " + item.char
+            # alert(d_name + " :: " + item.id)
             table_rows = table_rows + "<tr><td>#{d_name}</td><td><input name='#{item.id}' type='checkbox' #{checked} /></td></tr>"
 
     # alert(table_rows)
@@ -53,12 +54,39 @@ apply_rezka = () ->
             # alert($(this).attr("name"))
             App.MyBasket._rezka_list.push($(this).attr("name"))
 
-            create_rezka()
+    create_rezka()
 
-            $.unblockUI();
+    $.unblockUI();
 
 create_rezka = () ->
-    new_tbody_string = ""
+    # alert(App.MyBasket._rezka_list)
+    for item in App.MyBasket._item_list
+        if item.id in App.MyBasket._rezka_list
+            if not $("div.rezka_item").is("[rid='#{item.id}']")
+                add_rezka_item(item)
+        else
+            if $("div.rezka_item").is("[rid='#{item.id}']")
+                # alert(1)
+                delete_rezka_item(item.id)
+
+
+length_input_change = () ->
+    $(".rezka_length_input").change ->
+        max_len = $(this).closest(".rezka_table_container").attr("max")
+
+        r_length = $(this).val().replace /,+/g, "."
+        if r_length < 0.2
+            r_length = 0.2
+        else if parseFloat(r_length) > parseFloat(max_len)
+            r_length = max_len
+
+        $(this).val(r_length)
+
+delete_rezka_part = () ->
+    $(".rezka_part_delete").click ->
+        $(this).closest(".rezka_table_tt").remove()
+
+add_rezka_item = (item) ->
     slice_table = """
         <table class="rezka_table_tt">
             <thead>
@@ -83,40 +111,31 @@ create_rezka = () ->
             </tbody>
         </table>
     """
-    for item in App.MyBasket._item_list
-        if item.id in App.MyBasket._rezka_list
-                # """<tr>
-                #                                                     <td class="rezka_item_name">#{item.name} #{item.char}</td>
-                #                                                     <td class="rezka_item_description">
-                #                                                         <textarea class="rezka_item_text"></textarea>
-                #                                                     </td>
-                #                                                     <td class="rezka_item_delete"><div idname="#{item.id}"></div>
-                #                                                 </tr>"""
-            new_tr = """
-                <div class="rezka_item" rid="#{item.id}" name="#{item.name} #{item.char}">
-                    <div class="rezka_item_header">#{item.name} #{item.char}
-                        <span class="rezka_delete_item" idname="#{item.id}">⤬</span>
-                    </div>
-                    <span class="red_info">
-                        *Максимальная длина отрезка: #{item.char} м
-                    </span>
-                    <div class="rezka_table_container" max="#{item.length}">
-                        #{slice_table}
-                        <div class="rezka_part_add"><font>Добавить рез</font></div>
-                    </div>
-                    <div class="rezka_info_container">
-                        <div class="rezka_count_info">
-                            <div>Количестуво резов: <span class="rezka_count">X</span></div>
-                            <div>Остатки: <span class="rezka_leftovers">Y</span></div>
-                        </div>
-                        <div class="rezka_count_button">Рассчитать</div>
-                        <div class="rezka_price_container" style="display:none">Цена: <span class="rezka_price">Z</span></div>
-                    </div>
+    new_tr = """
+            <div class="rezka_item" rid="#{item.id}" name="#{item.name} #{item.char}">
+                <div class="rezka_item_header">#{item.name} #{item.char}
+                    <span class="rezka_delete_item" idname="#{item.id}">⤬</span>
                 </div>
-            """
-            new_tbody_string = new_tbody_string + new_tr
+                <span class="red_info">
+                    *Максимальная длина отрезка: #{item.char} м
+                </span>
+                <div class="rezka_table_container" max="#{item.length}">
+                    #{slice_table}
+                    <div class="rezka_part_add"><font>Добавить рез</font></div>
+                </div>
+                <div class="rezka_info_container">
+                    <div class="rezka_count_info">
+                        <div>Количестуво резов: <span class="rezka_count">X</span></div>
+                        <div>Остатки: <span class="rezka_leftovers">Y</span></div>
+                    </div>
+                    <div class="rezka_count_button">Рассчитать</div>
+                    <div class="rezka_price_container" style="display:none">Цена: <span class="rezka_price">Z</span></div>
+                </div>
+            </div>
+        """
 
-    $(".rezka_table").html new_tbody_string
+
+    $(".rezka_table").append new_tr
 
     $(".rezka_delete_item").each (index, element) =>
         $(element).click ->
@@ -135,61 +154,47 @@ create_rezka = () ->
     delete_rezka_part()
     length_input_change()
 
-length_input_change = () ->
-    $(".rezka_length_input").change ->
-        max_len = $(this).closest(".rezka_table_container").attr("max")
-
-        r_length = $(this).val().replace /,+/g, "."
-        if r_length < 0.2
-            r_length = 0.2
-        else if parseFloat(r_length) > parseFloat(max_len)
-            r_length = max_len
-
-        $(this).val(r_length)
-
-delete_rezka_part = () ->
-    $(".rezka_part_delete").click ->
-        $(this).closest(".rezka_table_tt").remove()
-
 delete_rezka_item = (id) ->
     App.MyBasket._rezka_list.splice(App.MyBasket._rezka_list.indexOf(id), 1)
-    create_rezka()
+    $("div.rezka_item[rid='#{id}']").remove()
+    # create_rezka()
 
 fill_rezka = (itid) ->
     for _item in App.MyBasket._item_list
-        if _item.id = itid
+        # alert(_item.id + " :: " + itid)
+        if _item.id is itid
             item = _item
-            # alert(itid)
+            # alert(item.id)
 
-    M_len = item.length.replace /,+/g, "."
-    M_count = item.buy_count
-    rezka_array = []
-
-
-    # alert($("div[rid='#{item.id}']").attr("class"))
+            M_len = item.length.replace /,+/g, "."
+            M_count = item.buy_count
+            rezka_array = []
 
 
-    $("div[rid='#{item.id}']").find(".rezka_table_tt").each (index, element) =>
-        r_len = $(element).find(".rezka_length_input").val()
-        r_count = $(element).find(".rezka_count_input").val()
-        rezka_array.push ([r_len, r_count])
+            # alert($("div[rid='#{item.id}']").attr("class"))
 
-        # alert(r_len + " : " + r_count)
 
-    # alert(JSON.stringify(rezka_array))
-    $.ajax
-        type: "GET"
-        url: "/1cengine/py_scripts/rezka_count.py"
-        async: false
-        data: "rezka_array=" + JSON.stringify(rezka_array) + "&M=" + M_len + ""
-        success: (html) ->
-            $("div[rid='#{item.id}']").find(".rezka_show_wrapper").remove()
-            $("div[rid='#{item.id}']").append(html)
+            $("div[rid='#{item.id}']").find(".rezka_table_tt").each (index, element) =>
+                r_len = $(element).find(".rezka_length_input").val()
+                r_count = $(element).find(".rezka_count_input").val()
+                rezka_array.push ([r_len, r_count])
 
-            rez_count = $("div[rid='#{item.id}']").find(".rezka_show_wrapper").attr("rez_count")
-            $("div[rid='#{item.id}']").find(".rezka_count").html rez_count
-            rez_price_min = rez_count * 15
-            rez_price_max = rez_count * 800
-            $("div[rid='#{item.id}']").find(".rezka_price").html rez_price_min + " - " + rez_price_max
-            leftovers = $("div[rid='#{item.id}']").find(".rezka_show_wrapper").attr("leftovers")
-            $("div[rid='#{item.id}']").find(".rezka_leftovers").html leftovers
+                # alert(r_len + " : " + r_count)
+
+            # alert(JSON.stringify(rezka_array))
+            $.ajax
+                type: "GET"
+                url: "/1cengine/py_scripts/rezka_count.py"
+                async: false
+                data: "rezka_array=" + JSON.stringify(rezka_array) + "&M=" + M_len + ""
+                success: (html) ->
+                    $("div[rid='#{item.id}']").find(".rezka_show_wrapper").remove()
+                    $("div[rid='#{item.id}']").append(html)
+
+                    rez_count = $("div[rid='#{item.id}']").find(".rezka_show_wrapper").attr("rez_count")
+                    $("div[rid='#{item.id}']").find(".rezka_count").empty().append rez_count
+                    rez_price_min = rez_count * 15
+                    rez_price_max = rez_count * 800
+                    $("div[rid='#{item.id}']").find(".rezka_price").empty().append rez_price_min + " - " + rez_price_max
+                    leftovers = $("div[rid='#{item.id}']").find(".rezka_show_wrapper").attr("leftovers")
+                    $("div[rid='#{item.id}']").find(".rezka_leftovers").empty().append leftovers

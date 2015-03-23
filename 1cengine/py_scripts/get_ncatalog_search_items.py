@@ -82,42 +82,6 @@ class ResultTable():
         connector = myDBC("catalog")
         connector.dbConnect()
 
-        if "pa" in params:
-            if params["pa"].__len__() > 1:
-                parent = " OR ".join(params["pa"])
-            else:
-                parent = params["pa"][0]
-            parent = "AND ({0}) AND `item`.`item_parent_ref`=`item_parent`.`id`".format(parent)
-        else:
-            parent = ""
-
-        if "th" in params:
-            if params["th"].__len__() > 1:
-                thickness = " OR ".join(params["th"])
-            else:
-                thickness = params["th"][0]
-            thickness = "AND ({0})".format(thickness)
-        else:
-            thickness = ""
-
-        if "di" in params:
-            if params["di"].__len__() > 1:
-                diameter = " OR ".join(params["di"])
-            else:
-                diameter = params["di"][0]
-            diameter = "AND ({0})".format(diameter)
-        else:
-            diameter = ""
-
-        if "he" in params:
-            if params["he"].__len__() > 1:
-                height = " OR ".join(params["he"])
-            else:
-                height = params["he"][0]
-            height = "AND ({0})".format(height)
-        else:
-            height = ""
-
         is_optional_length_query = """
             SELECT `char_price`
             FROM `site_group`
@@ -130,60 +94,36 @@ class ResultTable():
             if line[0] == 0:
                 opt_len = True
 
-        if opt_len:
-            query = """
-                SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
-                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`,
-                    `item_price`.`in_stock`, `site_group`.`img_url`
-                    FROM `item`, `item_price`, `price_type`,
-                    `item_parent`, `site_group`
-                    WHERE `item`.`site_group_ref`='{0}'
-                    AND `item`.`id` IN ( SELECT * FROM (
-                    SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
-                    WHERE `item`.`site_group_ref`='{0}'
-                    AND `item`.`item_parent_ref`=`item_parent`.`id`
-                    {1}
-                    {2}
-                    {3}
-                    {4}
-                    ORDER BY `item_parent`.`name`, `item`.`name` limit {5},{6}) as `id`
-                    )
-                    AND `item_price`.`item_ref`=`item`.`id`
-                    AND `item_price`.`is_char`='0'
-                    AND `item_price`.`price_type_ref`=`price_type`.`id`
-                    AND `item_parent`.`id` = `item`.`item_parent_ref`
-                    AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
-            """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
-        else:
-            query = """
-                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
-                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
-                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
-                    `item_price`.`in_stock`, `site_group`.`img_url`,
-                    `price_type`.`id`
-                    FROM `item`, `char`, `item_price`, `price_type`,
-                    `item_parent`, `site_group`
-                    WHERE `item`.`site_group_ref`='{0}'
-                    AND `item`.`id` IN ( SELECT * FROM (
-                    SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
-                    WHERE `item`.`site_group_ref`='{0}'
-                    AND `item`.`item_parent_ref`=`item_parent`.`id`
-                    {1}
-                    {2}
-                    {3}
-                    {4}
-                    ORDER BY `item_parent`.`name`, `item`.`name` LIMIT {5},{6}) as `id`
-                    )
-                    AND `char`.`item_ref`=`item`.`id`
-                    AND `item_price`.`item_ref`=`char`.`id`
-                    AND `item_price`.`is_char`='1'
-                    AND `item_price`.`price_type_ref`=`price_type`.`id`
-                    AND `item_parent`.`id` = `item`.`item_parent_ref`
-                    AND `site_group`.`id`=`item`.`site_group_ref`
-                    ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
-            """.format(self.group_name, parent, thickness, diameter, height, offset, limit)
+
+
+        query = """
+            SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
+                `item_price`.`in_stock`, `site_group`.`img_url`,
+                `price_type`.`id`
+            FROM `item` LEFT JOIN `char` ON (`char`.`item_ref`=`item`.`id`), `item_price`, `price_type`,
+                `item_parent`, `site_group`
+            WHERE `item`.`name` LIKE '%{0}%'
+                AND `item`.`id` IN (
+                    SELECT * FROM (
+                        SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
+                        WHERE `item`.`name` LIKE '%{0}%'
+                        AND `item`.`item_parent_ref`=`item_parent`.`id`
+                        ORDER BY `item_parent`.`name`, `item`.`name` LIMIT {1},{2}
+                    ) as `id`
+                )
+                AND IF (
+                    `item_price`.`is_char`='1',
+                    `item_price`.`item_ref`=`char`.`id`,
+                    `item_price`.`item_ref`=`item`.`id`
+                )
+
+                AND `item_price`.`price_type_ref`=`price_type`.`id`
+                AND `item_parent`.`id` = `item`.`item_parent_ref`
+                AND `site_group`.`id`=`item`.`site_group_ref`
+            ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
+        """.format(self.group_name, offset, limit)
 
         # print query
 
@@ -584,59 +524,3 @@ if "term" in form:
     # result_table = compose_table(form["term"].value.decode("utf-8"))
 
     # print result_table
-
-if "hash" in form:
-
-    print "Content-Type: text/html; charset=utf-8\n"
-
-    offset = 0
-    limit = 20
-    if "page" in form:
-        xy = int(form["page"].value)
-        if xy != 1:
-            offset = ((xy + (xy-1)-1) * 10)
-
-    if "params" in form and form["params"].value != ";":
-        # print "|"+form["params"].value+"|"
-        params = {}
-        param_string = form["params"].value
-        param_arr = param_string.replace(
-            "'", "", 1
-        ).replace(
-            "',;", ""
-        ).split("','")
-
-        for param in param_arr:
-            if "pa_" in param:
-                if "pa" in params:
-                    params["pa"].append("`item_parent`.`name`='"+param.replace("pa_", "", 1)+"'")
-                else:
-                    params["pa"] = []
-                    params["pa"].append("`item_parent`.`name`='"+param.replace("pa_", "", 1)+"'")
-
-            if "th_" in param:
-                if "th" in params:
-                    params["th"].append("`item`.`thickness`='"+param.replace("th_", "", 1)+"'")
-                else:
-                    params["th"] = []
-                    params["th"].append("`item`.`thickness`='"+param.replace("th_", "", 1)+"'")
-
-            if "di_" in param:
-                if "di" in params:
-                    params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
-                else:
-                    params["di"] = []
-                    params["di"].append("`item`.`diameter`='"+param.replace("di_", "", 1)+"'")
-
-            if "he_" in param:
-                if "he" in params:
-                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
-                else:
-                    params["he"] = []
-                    params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
-
-        # print param_string
-        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit, params))
-
-    else:
-        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit))

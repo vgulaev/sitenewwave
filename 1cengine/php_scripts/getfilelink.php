@@ -1,7 +1,7 @@
 <?php
 $srv = new SoapClient('http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws'));
 
-// $srv = new SoapClient('http://WebService:teradel@192.168.194.14/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws'));
+// $srv = new SoapClient('http://WebService:teradel@192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws'));
 
 //$server->__doRequest('http://195.239.221.58:30082/trimet_trade/ws/price1c.1cws');
 
@@ -23,7 +23,7 @@ if($params['Type']!=''){
     $result=$srv->GetFileLink($params);
     $content = $srv->__getLastResponse();
 
-    //echo $content;
+    // echo $content;
 
     $res = array();
     preg_match("/>[\w-]+</", $content, $res);

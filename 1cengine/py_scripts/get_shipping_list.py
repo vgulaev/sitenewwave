@@ -280,6 +280,9 @@ def get_shipping_list_html(UID, date_from, date_to, counterparty):
             <tr class="shippingItem """ + odd + """ ">
                     <td>
                         """ + regex.sub("", str(shipping[0])) + """
+                        <a href='javascript:openLink(
+                    \"""" + str(shipping[3]) + """\","pdf")'
+                     title="Скачать документ отгрузки в формате pdf"> pdf </a>
                     </td>
                     <td class="num_cell">""" + str(shipping[2]) + """</td>
                     <td class="num_cell">""" + str(shipping[4]) + """</td>
