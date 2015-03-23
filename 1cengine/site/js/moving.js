@@ -474,7 +474,7 @@
       });
     }
     $("#itemName").autocomplete({
-      source: "/1cengine/py_scripts/item_autocomplete.py",
+      source: "/1cengine/py_scripts/ncatalog_item_autocomplete.py",
       autoFocus: false,
       minLength: 0,
       select: function(event, ui) {
