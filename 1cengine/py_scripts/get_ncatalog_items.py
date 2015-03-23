@@ -76,6 +76,89 @@ class ResultTable():
         self.items_list = {}
 
 
+    def get_search_items(self, offset=0, limit=20):
+
+        connector = myDBC("catalog")
+        connector.dbConnect()
+
+        is_optional_length_query = """
+            SELECT `char_price`
+            FROM `site_group`
+            WHERE `id`='{0}'
+        """.format(self.group_name)
+
+        r = connector.dbExecute(is_optional_length_query)
+        opt_len = False
+        for line in r:
+            if line[0] == 0:
+                opt_len = True
+
+
+
+        query = """
+            SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
+                `item_price`.`in_stock`, `site_group`.`img_url`,
+                `price_type`.`id`
+            FROM `item` LEFT JOIN `char` ON (`char`.`item_ref`=`item`.`id`), `item_price`, `price_type`,
+                `item_parent`, `site_group`
+            WHERE `item`.`name` LIKE '%{0}%'
+                AND `item`.`id` IN (
+                    SELECT * FROM (
+                        SELECT DISTINCT `item`.`id` FROM `item`, `item_parent`
+                        WHERE `item`.`name` LIKE '%{0}%'
+                        AND `item`.`item_parent_ref`=`item_parent`.`id`
+                        ORDER BY `item_parent`.`name`, `item`.`name` LIMIT {1},{2}
+                    ) as `id`
+                )
+                AND IF (
+                    `item_price`.`is_char`='1',
+                    `item_price`.`item_ref`=`char`.`id`,
+                    `item_price`.`item_ref`=`item`.`id`
+                )
+
+                AND `item_price`.`price_type_ref`=`price_type`.`id`
+                AND `item_parent`.`id` = `item`.`item_parent_ref`
+                AND `site_group`.`id`=`item`.`site_group_ref`
+            ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
+        """.format(self.group_name, offset, limit)
+
+        # print query
+
+        r = connector.dbExecute(query)
+
+
+        for line in r:
+
+            if line[6] in self.items_list:
+                _item_list = self.items_list[line[6]]
+            else:
+                _item_list = self.items_list[line[6]] = {}
+
+            if line[0] in _item_list:
+                item = _item_list[line[0]]
+            else:
+                item = Item(line[0])
+                item.unit = line[2]
+                item.hash = line[5]
+                item.img_url = line[10]
+
+                _item_list[line[0]] = item
+
+            if line[7] == 1:
+                item.is_char_price = True
+                char = Char(line[1])
+                char.hash = line[8]
+                item.add_char(line[1], char)
+                item.add_price(line[4], line[3], line[9], line[1])
+            elif line[7] == 0:
+                item.is_char_price = False
+                item.add_price(line[4], line[3], line[9])
+
+        return self.items_list
+
+
 
     def get_items(self, offset=0, limit=20, params={}):
 
@@ -222,11 +305,14 @@ class ResultTable():
 
 
 
-def compose_table(term, offset=0, limit=20, params={}):
+def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
 
     rt = ResultTable(term.encode("utf-8"))
 
-    groups = rt.get_items(offset, limit, params)
+    if search_flag:
+        groups = rt.get_search_items(offset, limit)
+    else:
+        groups = rt.get_items(offset, limit, params)
 
     result_table = soup.new_tag("table")
     result_table["id"] = "tableRes"
@@ -577,9 +663,16 @@ def compose_table(term, offset=0, limit=20, params={}):
     return result_table
 
 form = cgi.FieldStorage()
+offset = 0
+limit = 20
+if "page" in form:
+    xy = int(form["page"].value)
+    if xy != 1:
+        offset = ((xy + (xy-1)-1) * 10)
+
 if "term" in form:
     print "Content-Type: text/html; charset=utf-8\n"
-    print str(compose_table(form["term"].value.decode("utf-8")))
+    print str(compose_table(form["term"].value.decode("utf-8"), offset, limit, {}, True))
     # print form["term"].value
     # result_table = compose_table(form["term"].value.decode("utf-8"))
 
@@ -589,12 +682,6 @@ if "hash" in form:
 
     print "Content-Type: text/html; charset=utf-8\n"
 
-    offset = 0
-    limit = 20
-    if "page" in form:
-        xy = int(form["page"].value)
-        if xy != 1:
-            offset = ((xy + (xy-1)-1) * 10)
 
     if "params" in form and form["params"].value != ";":
         # print "|"+form["params"].value+"|"

@@ -85,6 +85,23 @@ def count_items_hash(ghash, params={}):
     return r[0][0]
 
 
+def count_items(term):
+
+    connector = myDBC("catalog")
+    connector.dbConnect()
+
+    query = """
+        SELECT count(`item`.`name`)
+            FROM `item`
+            WHERE `item`.`name` LIKE '%{0}%'
+    """.format(term)
+
+    r = connector.dbExecute(query)
+
+    connector.dbClose()
+
+    return r[0][0]
+
 form = cgi.FieldStorage()
 
 if "term" in form:

@@ -306,7 +306,7 @@
   };
 
   get_item_table = function(html) {
-    var params,
+    var data_string, params, value, what,
       _this = this;
     $("#qRes").html(html);
     $("#qRes").fadeIn(400);
@@ -404,11 +404,20 @@
       return params = params + "'" + $(element).attr("name") + "',";
     });
     params = params + ";";
+    value = $("#itemName").val();
+    value = value.replace("+", " ");
+    if (value === "") {
+      what = "hash";
+      data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + "";
+    } else {
+      what = "term";
+      data_string = what + "=" + encodeURIComponent(value);
+    }
     return $.ajax({
       type: "GET",
       url: "/1cengine/py_scripts/get_ncatalog_count_items.py",
       async: true,
-      data: "hash=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + "",
+      data: data_string,
       success: function(html) {
         var i, page_list,
           _this = this;
@@ -485,22 +494,13 @@
       value = $("#itemName").val();
       value = value.replace("+", " ");
       $("#qRes").fadeOut(400);
-      $.ajax({
+      return $.ajax({
         type: "GET",
-        url: "/1cengine/py_scripts/get_ncatalog_search_items.py",
+        url: "/1cengine/py_scripts/get_ncatalog_items.py",
         async: true,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
           return get_item_table(html);
-        }
-      });
-      return $.ajax({
-        type: "GET",
-        url: "/1cengine/py_scripts/get_count_items.py",
-        async: true,
-        data: "term=" + encodeURIComponent(value) + "",
-        success: function(html) {
-          return $(".count_all_result").html(html);
         }
       });
     });

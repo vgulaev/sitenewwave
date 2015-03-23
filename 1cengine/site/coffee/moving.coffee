@@ -404,11 +404,21 @@ get_item_table = (html) ->
         # alert($(element).attr("name"))
     params = params + ";"
 
+    value = $("#itemName").val()
+    value = value.replace("+", " ")
+
+    if value is ""
+        what = "hash"
+        data_string = what + "=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + ""
+    else
+        what = "term"
+        data_string = what + "=" + encodeURIComponent(value)
+
     $.ajax
         type: "GET"
         url: "/1cengine/py_scripts/get_ncatalog_count_items.py"
         async: true
-        data: "hash=" + encodeURIComponent(App.C_HASH) + "&params=" + encodeURIComponent(params) + ""
+        data: data_string
         success: (html) ->
             # alert(html)
             App.PAGE_COUNT = Math.ceil(html / 20)
@@ -489,21 +499,39 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_search_items.py"
+            url: "/1cengine/py_scripts/get_ncatalog_items.py"
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 get_item_table(html)
 
 
-        $.ajax
-            type: "GET"
-            url: "/1cengine/py_scripts/get_count_items.py"
-            async: true
-            data: "term=" + encodeURIComponent(value) + ""
-            success: (html) ->
-                $(".count_all_result").html html
+        # $.ajax
+        #     type: "GET"
+        #     url: "/1cengine/py_scripts/get_ncatalog_count_items.py"
+        #     async: true
+        #     data: "term=" + encodeURIComponent(value) + ""
+        #     success: (html) ->
+        #         # alert(html)
+        #         App.PAGE_COUNT = Math.ceil(html / 20)
+        #         i = 1
+        #         page_list = "<ul>"
+        #         # alert(App.PAGE)
+        #         App.PAGE
+        #         while i != App.PAGE_COUNT+1
+        #             if i == App.PAGE
+        #                 page_list = page_list + "<li name='#{i}' class='active_page'>#{i}</li>"
+        #             else
+        #                 page_list = page_list + "<li name='#{i}'>#{i}</li>"
+        #             i++
+        #         page_list = page_list + "</ul>"
+        #         $(".count_all_result").html (page_list)
 
+        #         $(".count_all_result").find("li").each (index, element ) =>
+        #             $(element).click ->
+        #                 page_needed = $(this).attr("name")
+        #                 App.PAGE = (page_needed-1)
+        #                 $(".next_result").click()
 
     $(window).on "popstate", (e) ->
         $("#itemName").val(history.state['term'])
@@ -546,6 +574,7 @@ $(document).ready ->
                 success: (html) ->
                     App.PAGE++
                     get_item_table(html)
+
 
 
 
