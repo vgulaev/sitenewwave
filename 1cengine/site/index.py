@@ -198,7 +198,7 @@ class Index_Page():
             "/1cengine/site/js/item_class.js",
             "/1cengine/site/js/rezka_class.js",
             "/1cengine/site/js/ordering.js",
-            "/lib/frameworks/raf_sha256.js"
+            "/lib/frameworks/sha256.js"
         ]
 
         self.style_list = [

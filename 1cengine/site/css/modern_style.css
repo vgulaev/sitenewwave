@@ -2738,3 +2738,73 @@ hr{
     color: #900020;
     font-weight: 600;
 }
+
+#counterpartyLoginButton{
+    background: -moz-linear-gradient(top , #ececec 0%, #FDF6E3 47%, #FDF6E3 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #ececec 0%, #FDF6E3 47%, #FDF6E3 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #ececec 0%, #FDF6E3 47%, #FDF6E3 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #ececec 0%, #FDF6E3 47%, #FDF6E3 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 450px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 12px;
+    /*padding-top: 7px;*/
+    display: inline-block;
+    box-shadow: 0px 1px 1px #CFCFCF inset;
+    line-height:30px;
+    border: 1px solid #A1A1A1;
+    font-weight: 600;
+    font-size: 12pt;
+    margin: 10px 0;
+}
+
+#counterpartyLoginButton span{
+    border-bottom: 1px dashed #2D3694;
+}
+
+#counterpartyLoginButton:hover{
+    background: -moz-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -webkit-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: -o-linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+    background: linear-gradient(top , #d3f75f 0%, #d3f75f 47%, #d3f75f 100%) repeat scroll 0% 0% transparent;
+}
+
+.enterButton{
+    background: -moz-linear-gradient(center top , #CF0 0%, #CF0 47%, #A8CD13 100%) repeat scroll 0% 0% transparent;
+    color: #2D3694;
+    height: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding-right: 10px;
+    text-align: center;
+    float: right;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-top: 10px;
+    display: inline-block;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
+}
+.loginTable{
+    margin-bottom:15px;
+}
+.loginTable input{
+    margin: 10px 0px;
+    width: 450px;
+    height: 30px;
+    border: 1px solid #A1A1A1;
+    box-shadow: 0px 1px 1px #CFCFCF inset;
+    font-size: 14pt;
+    float: right;
+    padding: 0px 5px;
+}
+.loginTable tr td:first-child{
+    text-align: left;
+    vertical-align: middle;
+    font-size: 14pt;
+    width: 300px;
+}

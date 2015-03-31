@@ -204,12 +204,93 @@ getOrderFomat = (format) ->
 
 ### DEPRECATED END!!!! ###
 
+### LOGIN USER START ###
 
+submit_form = (passwd) ->
+  $.ajax
+    type: 'POST'
+    url: '/1cengine/py_scripts/user.py'
+    async: true
+    data: 'passwd=' + passwd + '&email=' + $('.emailInput').val() + '&funkt=authorize_me'
+    success: (html) ->
+      authorization = html
+      # eval authorization
 
-$(document).ready ->
+      authorization = authorization.replace('window.location = "/kabinet/orders/"', "")
+      eval authorization
+      check_user()
+  return
 
-    # alert($.cookie("sid"))
+loginUser = ->
+  passwd = $('.passwdInput').val()
+  email = $('.emailInput').val()
+  if passwd != '' and email != ''
+    passwd = hex_sha256(passwd)
+    # $('.hidden_passwd').val passwd
+    submit_form(passwd)
+    # $("#regForm").submit()
+  return
 
+show_login_user = () ->
+    my_css = {
+        borderRadius: '10px',
+        fadeIn: 100,
+        fadeOut: 100,
+        backgroundColor: 'white',
+        cursor: 'defaults',
+        boxShadow: '0px 0px 5px 5px rgb(207, 207, 207)',
+        fontSize: '14px',
+        width: '500px',
+        height: 'auto',
+        paddingTop: '10px',
+        textAlign: 'left',
+        paddingBottom: '30px'
+    }
+
+    msg = """
+        <div class='wrapper'>
+            <span class="close_button">x</span>
+            <h3>Войти как контрагент</h3>
+            <table class="loginTable">
+                <tr>
+                    <td>Email:</td>
+                </tr>
+                <tr>
+                    <td><input class="emailInput" name="email" /></td>
+                </tr>
+                <tr>
+                    <td>Пароль:</td>
+                </tr>
+                <tr>
+                    <td><input type="password" class="passwdInput" /></td>
+                </tr>
+            </table>
+            <div class='enterButton'>Войти</div>
+        </div>"""
+
+    $.blockUI({
+        message: msg,
+        css: my_css
+    });
+
+    # $(".blockMsg").draggable();
+
+    $(document).on 'keyup', (e) ->
+        e.preventDefault()
+        if e.which == 27
+            return $.unblockUI()
+        return
+
+    $(".close_button").click ->
+        $.unblockUI()
+
+    $(".enterButton").click ->
+        $("body").css("cursor", "wait")
+        $(".emailInput").addClass("preloading")
+        $(".passwdInput").addClass("preloading")
+        loginUser()
+
+check_user = () ->
     $.ajax
         type: "POST"
         dataType: "json"
@@ -229,10 +310,27 @@ $(document).ready ->
             $(user["Counterparty"]).each (index, element) =>
                 c_select += "<option value='" + element + "'>" + element + "</option>"
             c_select += "</select>"
-
+            $(".counterpartySelectContainer").empty()
             $(".counterpartySelectContainer").append(c_select)
             $(".counterpartyRow").show()
             return
+        error: (html) ->
+            c_select = '<noindex><div id="counterpartyLoginButton"><span>Я зарегистрированный контрагент</span></div></noindex>'
+            $(".counterpartySelectContainer").empty()
+            $(".counterpartySelectContainer").append(c_select)
+            $(".counterpartyRow").show()
+
+            $("#counterpartyLoginButton").click ->
+                show_login_user()
+            return
+
+### LOGIN USER END ###
+
+$(document).ready ->
+
+    # alert($.cookie("sid"))
+
+    check_user()
 
     #MyBasket = new App.Basket("MyBasket")
 
@@ -309,3 +407,4 @@ $(document).ready ->
             event.preventDefault()
             return false
         return
+

@@ -3,7 +3,7 @@
 
 
 (function() {
-  var createOrder, getOrderFomat, isValidEmail, mail_to_client, openLink, save_to_db, sendOrder;
+  var check_user, createOrder, getOrderFomat, isValidEmail, loginUser, mail_to_client, openLink, save_to_db, sendOrder, show_login_user, submit_form;
 
   isValidEmail = function(str) {
     return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -196,9 +196,75 @@
   /* DEPRECATED END!!!!*/
 
 
-  $(document).ready(function() {
-    var GET, curr, i, parts, squery;
+  /* LOGIN USER START*/
+
+
+  submit_form = function(passwd) {
     $.ajax({
+      type: 'POST',
+      url: '/1cengine/py_scripts/user.py',
+      async: true,
+      data: 'passwd=' + passwd + '&email=' + $('.emailInput').val() + '&funkt=authorize_me',
+      success: function(html) {
+        var authorization;
+        authorization = html;
+        authorization = authorization.replace('window.location = "/kabinet/orders/"', "");
+        eval(authorization);
+        return check_user();
+      }
+    });
+  };
+
+  loginUser = function() {
+    var email, passwd;
+    passwd = $('.passwdInput').val();
+    email = $('.emailInput').val();
+    if (passwd !== '' && email !== '') {
+      passwd = hex_sha256(passwd);
+      submit_form(passwd);
+    }
+  };
+
+  show_login_user = function() {
+    var msg, my_css;
+    my_css = {
+      borderRadius: '10px',
+      fadeIn: 100,
+      fadeOut: 100,
+      backgroundColor: 'white',
+      cursor: 'defaults',
+      boxShadow: '0px 0px 5px 5px rgb(207, 207, 207)',
+      fontSize: '14px',
+      width: '500px',
+      height: 'auto',
+      paddingTop: '10px',
+      textAlign: 'left',
+      paddingBottom: '30px'
+    };
+    msg = "<div class='wrapper'>\n    <span class=\"close_button\">x</span>\n    <h3>Войти как контрагент</h3>\n    <table class=\"loginTable\">\n        <tr>\n            <td>Email:</td>\n        </tr>\n        <tr>\n            <td><input class=\"emailInput\" name=\"email\" /></td>\n        </tr>\n        <tr>\n            <td>Пароль:</td>\n        </tr>\n        <tr>\n            <td><input type=\"password\" class=\"passwdInput\" /></td>\n        </tr>\n    </table>\n    <div class='enterButton'>Войти</div>\n</div>";
+    $.blockUI({
+      message: msg,
+      css: my_css
+    });
+    $(document).on('keyup', function(e) {
+      e.preventDefault();
+      if (e.which === 27) {
+        return $.unblockUI();
+      }
+    });
+    $(".close_button").click(function() {
+      return $.unblockUI();
+    });
+    return $(".enterButton").click(function() {
+      $("body").css("cursor", "wait");
+      $(".emailInput").addClass("preloading");
+      $(".passwdInput").addClass("preloading");
+      return loginUser();
+    });
+  };
+
+  check_user = function() {
+    return $.ajax({
       type: "POST",
       dataType: "json",
       url: "/1cengine/py_scripts/check_user.py",
@@ -214,10 +280,29 @@
           return c_select += "<option value='" + element + "'>" + element + "</option>";
         });
         c_select += "</select>";
+        $(".counterpartySelectContainer").empty();
         $(".counterpartySelectContainer").append(c_select);
         $(".counterpartyRow").show();
+      },
+      error: function(html) {
+        var c_select;
+        c_select = '<noindex><div id="counterpartyLoginButton"><span>Я зарегистрированный контрагент</span></div></noindex>';
+        $(".counterpartySelectContainer").empty();
+        $(".counterpartySelectContainer").append(c_select);
+        $(".counterpartyRow").show();
+        $("#counterpartyLoginButton").click(function() {
+          return show_login_user();
+        });
       }
     });
+  };
+
+  /* LOGIN USER END*/
+
+
+  $(document).ready(function() {
+    var GET, curr, i, parts, squery;
+    check_user();
     $(".bItem").click(function() {
       var elem_id, item;
       elem_id = $(this).closest("tr").attr("id");
