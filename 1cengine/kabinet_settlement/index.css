@@ -1250,3 +1250,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 .num_cell{
     text-align:right;
 }
+
+.upper_settlement_table{
+    margin-bottom:30px;
+}

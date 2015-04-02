@@ -203,8 +203,78 @@ def get_settlement_list_ajax(UID, date_from, date_to, counterparty):
 
     return ajax
 
+def get_latest_settlements_html(UID, date_from, date_to, counterparty):
+    client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
+                    location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
+
+    client.set_options(cache=DocumentCache())
+
+    # client.set_options(cache=None)
+    # client.options.cache.clear()
+
+    if counterparty is None:
+        return []
+
+    else:
+        result = client.service.SettlementList(
+            UID,
+            date_from,
+            date_to,
+            urllib.unquote(counterparty).decode('utf8').replace("+"," ")
+        )
+
+        return result
 
 def get_settlement_list_html(UID, date_from, date_to, counterparty):
+
+    latest = get_latest_settlements_html(UID, date_from, date_to, counterparty)
+    # print latest[u"Журнал"]
+    if latest[u"Журнал"].__len__() > 0:
+        list_payments_debts = """
+            <table class="upper_settlement_table">
+                <thead>
+                    <tr class="settlementHeader">
+                        <th>Дата</th>
+
+                        <th>Начальный остаток</th>
+                        <th>Приход</th>
+                        <th>Расход</th>
+                        <th>Конечный остаток</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+        """
+        shippings = ""
+        regex = re.compile(r"\s\d+:\d+:\d+")
+        odd = "odd"
+        for pay in latest[0][0]:
+
+            shippings = shippings + """
+                <tr class="settlementItem """ + odd + """ ">
+                    <td>""" + regex.sub("", str(pay[0])) + """</td>
+
+                    <td>""" + str(pay[3]) + """</td>
+                    <td>""" + str(pay[4]) + """</td>
+                    <td>""" + str(pay[5]) + """</td>
+                    <td>""" + str(pay[6]) + """</td>
+
+
+                </tr>
+            """
+
+            if odd == "odd":
+                odd = ""
+            else:
+                odd = "odd"
+
+            # print pay, "<br />"
+
+        list_payments_debts = list_payments_debts + shippings + "</tbody></table>"
+    else:
+        list_payments_debts = ""
+
     client = Client(_CURRENT_ADDRESS_ + 'privetoffice.1cws?wsdl',
                     location=_CURRENT_ADDRESS_ + "privetoffice.1cws")
 
@@ -228,48 +298,56 @@ def get_settlement_list_html(UID, date_from, date_to, counterparty):
     # print "nya"
     # print result
 
-    listShipping = ""
 
-    listShipping = listShipping + """
-        <table>
-            <thead>
-                <tr class="settlementHeader">
-                    <th>Документ</th>
-                    <th>Дата</th>
-                    <th>Начало периода</th>
-                    <th>Конец периода</th>
-                    <th>Скачать</th>
-                </tr>
-            </thead>
-            <tbody>
-    """
+    listShipping = "" + list_payments_debts
+    # listShipping = ""
 
-    odd = "odd"
+    if result[u"Журнал"].__len__() > 0:
 
-    regex = re.compile(r"\s\d+:\d+:\d+")
-
-    shippings = ""
-    for shipping in result[0][0]:
-        shippings = shippings + """
-            <tr class="settlementItem """ + odd + """ ">
-                <td>""" + regex.sub("", str(shipping[0])) + """</td>
-                <td>""" + regex.sub("", str(shipping[2])) + """</td>
-                <td>""" + regex.sub("", str(shipping[3])) + """</td>
-                <td>""" + regex.sub("", str(shipping[4])) + """</td>
-                <td>
-                    <a href='javascript:openLink(
-                        \"""" + str(shipping[1]) + """\","pdf")'
-                        title="Скачать документ отгрузки в формате pdf"> pdf </a>
-                </td>
-            </tr>
+        listShipping = listShipping + """
+            <table>
+                <thead>
+                    <tr class="settlementHeader">
+                        <th>Документ</th>
+                        <th>Дата</th>
+                        <th>Начало периода</th>
+                        <th>Конец периода</th>
+                        <th>Скачать</th>
+                    </tr>
+                </thead>
+                <tbody>
         """
 
-        if odd == "odd":
-            odd = ""
-        else:
-            odd = "odd"
 
-    listShipping = listShipping + shippings + "</tbody></table>"
+        odd = "odd"
+
+        regex = re.compile(r"\s\d+:\d+:\d+")
+
+        shippings = ""
+
+
+        for shipping in result[0][0]:
+            shippings = shippings + """
+                <tr class="settlementItem """ + odd + """ ">
+                    <td>""" + regex.sub("", str(shipping[0])) + """</td>
+                    <td>""" + regex.sub("", str(shipping[2])) + """</td>
+                    <td>""" + regex.sub("", str(shipping[3])) + """</td>
+                    <td>""" + regex.sub("", str(shipping[4])) + """</td>
+                    <td>
+                        <a href='javascript:openLink(
+                            \"""" + str(shipping[1]) + """\","pdf")'
+                            title="Скачать документ отгрузки в формате pdf"> pdf </a>
+                    </td>
+                </tr>
+            """
+
+            if odd == "odd":
+                odd = ""
+            else:
+                odd = "odd"
+
+
+        listShipping = listShipping + shippings + "</tbody></table>"
 
     return listShipping
 
