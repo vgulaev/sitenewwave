@@ -360,6 +360,24 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
             else:
                 rplc = str(order[4])
 
+        if order[7] is not None:
+            download_links = """
+                Скачать:
+                    <a href='javascript:openLink(
+                        \"""" + str(order[0]) + """\","pdf", "order")'
+                        title="Скачать заказ в формате pdf"> заказ </a> 
+                    <a href='javascript:openLink(
+                        \"""" + str(order[7]) + """\","pdf", "rezka")'
+                        title="Скачать бланк резки в формате pdf"> бланк резки </a>
+            """
+        else:
+            download_links = """
+                Скачать:
+                    <a href='javascript:openLink(
+                        \"""" + str(order[0]) + """\","pdf", "order")'
+                        title="Скачать заказ в формате pdf"> заказ </a>
+            """
+
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">
                     <td>
@@ -367,10 +385,9 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
                         """ + str(order[3]) + """
                         </span>
                         <p class="orderDownload">
-                        Скачать <a href='javascript:openLink(
-                        \"""" + str(order[0]) + """\","pdf")'
-                        title="Скачать заказ в формате pdf"> pdf </a>
+                        """ + download_links + """
                         </p>
+
                     </td>
                     <td class="num_cell">""" + str(order[2]) + """</td>
                     <td>""" + str(order[6]) + """</td>

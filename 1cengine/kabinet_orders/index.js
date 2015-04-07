@@ -105,10 +105,10 @@ function getRandomInt(min, max) {
 
 /// функция получения ссылки для скачивания. Скоммунизжена из modern_uiJS ж))) ///
 
-function openLink(linkUID, type) {
+function openLink(linkUID, type, what) {
 
     downloader_array = new Array("285","365","377","379","382","385")
-    
+
     $.blockUI.defaults.css.borderRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100; //ускоряем появление
     $.blockUI.defaults.fadeOut = 100; //и исчезновение
@@ -127,19 +127,33 @@ function openLink(linkUID, type) {
             <img src='/1cengine/kabinet_orders/" + downloader_array[getRandomInt(0, 5)] + ".png' />\
         </div>"
     });
-    $.ajax({
-        type: "POST",
-        url: "/1cengine/php_scripts/getfilelink.php",
-        async: true,
-        data: "linkUID=" + linkUID + "&type=" + type + "",
-        success: function(html) {
-            //var success = 'true';
-            $.unblockUI();
-            window.location.href = html
-            // alert(html)
-        }
-    });
 
-
+    if(what=="order"){
+        $.ajax({
+            type: "POST",
+            url: "/1cengine/php_scripts/getfilelink.php",
+            async: true,
+            data: "linkUID=" + linkUID + "&type=" + type + "",
+            success: function(html) {
+                //var success = 'true';
+                $.unblockUI();
+                window.open(html, "_blank")
+                // alert(html)
+            }
+        });
+    } else if(what=="rezka"){
+        $.ajax({
+            type: "POST",
+            url: "/1cengine/php_scripts/getRezkaFileLink.php",
+            async: true,
+            data: "linkUID=" + linkUID + "&type=" + type + "",
+            success: function(html) {
+                //var success = 'true';
+                $.unblockUI();
+                window.open(html, "_blank")
+                // alert(html)
+            }
+        });
+    }
 }
 
