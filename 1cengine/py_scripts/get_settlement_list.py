@@ -213,7 +213,7 @@ def get_latest_settlements_html(UID, date_from, date_to, counterparty):
     # client.options.cache.clear()
 
     if counterparty is None:
-        return []
+        return None
 
     else:
         result = client.service.SettlementList(
@@ -228,8 +228,9 @@ def get_latest_settlements_html(UID, date_from, date_to, counterparty):
 def get_settlement_list_html(UID, date_from, date_to, counterparty):
 
     latest = get_latest_settlements_html(UID, date_from, date_to, counterparty)
-    # print latest[u"Журнал"]
-    if latest[u"Журнал"].__len__() > 0:
+    # print latest
+    if latest is not None and latest[u"Журнал"].__len__() > 0:
+    # if latest[0].__len__() > 0:
         list_payments_debts = """
             <table class="upper_settlement_table">
                 <thead>
@@ -303,6 +304,7 @@ def get_settlement_list_html(UID, date_from, date_to, counterparty):
     # listShipping = ""
 
     if result[u"Журнал"].__len__() > 0:
+    # if result[0].__len__() > 0:
 
         listShipping = listShipping + """
             <table>
