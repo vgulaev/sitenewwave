@@ -85,6 +85,7 @@ $(document).ready( function (){
     $("#fileuploader").uploadFile({
         url: "/1cengine/py_scripts/send_lk_request.py",
         allowedTypes:"pdf,tif,png,gif,jpg,jpeg",
+        maxFileCount: 1,
         fileName: "myfile"
     });
 
