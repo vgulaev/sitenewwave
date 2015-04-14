@@ -26,7 +26,7 @@ print ("Content-Type: text/html; charset=utf-8\n")
 # filelink = get_file_link(uid)
 
 me = "admin@trimet.ru"
-you = "webmaster@trimet.ru"
+you = ["otwo@trimet.ru", "webmaster@trimet.ru", "parshin@trimet.ru", "aleksey@trimet.ru"]
 
 
 
@@ -40,7 +40,7 @@ msg_text = """
 
 msg = MIMEMultipart(
     From=me,
-    To=you,
+    To=СOMMASPACE.join(you),
     Date=formatdate(localtime=True)
 )
 
@@ -82,5 +82,5 @@ else:
 
 
     s = smtplib.SMTP('localhost')
-    s.sendmail(me, [you], msg.as_string())
+    s.sendmail(me, you, msg.as_string())
     s.quit()
