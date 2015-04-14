@@ -77,6 +77,17 @@ $(document).ready( function (){
     // })
     // 
     
+    $(".htr_closed").click( function(){
+        $(this).find(".infoHide").show()
+        $(this).removeClass("htr_closed")
+    })
+
+    $("#fileuploader").uploadFile({
+        url: "/1cengine/py_scripts/send_lk_request.py",
+        allowedTypes:"pdf,tif,png,gif,jpg,jpeg",
+        fileName: "myfile"
+    });
+
     function logout(){
         $.removeCookie("sid",{ expires: 30, path: '/'})
         window.location = "/kabinet/authorization/"
