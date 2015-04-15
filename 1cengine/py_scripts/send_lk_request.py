@@ -40,7 +40,7 @@ msg_text = """
 
 msg = MIMEMultipart(
     From=me,
-    To=СOMMASPACE.join(you),
+    To=COMMASPACE.join(you),
     Date=formatdate(localtime=True)
 )
 
