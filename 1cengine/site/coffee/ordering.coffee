@@ -69,8 +69,8 @@ sendOrder = (orderString, is_async) ->
             oA = order.split(",")
             $("#basketCaption").append "Заказ номер " + oA[0]
             $("#switchOrderDiv").click()
-            # mail_to_client(oA[1], oA[2], email, main_phone+", "+other_phone, name_surname+" "+last_name, oA[3], oA[4], oA[0])
-            # save_to_db(oA[0], email, main_phone+", "+other_phone, name_surname+" "+last_name)
+            mail_to_client(oA[1], oA[2], email, main_phone+", "+other_phone, name_surname+" "+last_name, oA[3], oA[4], oA[0])
+            save_to_db(oA[0], email, main_phone+", "+other_phone, name_surname+" "+last_name)
             ret
 
     #alert(ret)
