@@ -276,10 +276,15 @@ def get_shipping_list_html(UID, date_from, date_to, counterparty):
 
     shippings = ""
     for shipping in result[2][0]:
+
+        shipping_name = regex.sub("", str(shipping[0])).replace(
+            u"Реализация товаров и услуг", u"Товарная накладная"
+        )
+
         shippings = shippings + """
             <tr class="shippingItem """ + odd + """ ">
                     <td>
-                        """ + regex.sub("", str(shipping[0])) + """
+                        """ + shipping_name + """
                         <a href='javascript:openLink(
                     \"""" + str(shipping[3]) + """\","pdf")'
                      title="Скачать документ отгрузки в формате pdf"> pdf </a>

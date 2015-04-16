@@ -280,10 +280,24 @@ def get_payment_list_html(UID, date_from, date_to, counterparty):
         else:
             rplc = str(order[6])
 
+        order_name = regex.sub("", str(order[0]))
+        order_name = order_name.replace(
+            u"Приходный кассовый ордер", u"Оплата наличными"
+        ).replace(
+            u"Поступление безналичных ДС", u"Оплата безналичными"
+        ).replace(
+            u"Эквайринговая операция", u"Оплата банковской картой"
+        )
+
+        reason_name = regex.sub("", str(order[6])).replace(
+            u"Заказ клиента", u"Счет на оплату"
+        )
+
+
         orders = orders + """
             <tr class="orderItem """ + odd + """ ">
-                <td>""" + regex.sub("", str(order[0])) + """</td>
-                <td>""" + regex.sub("", str(order[6])) + """</td>
+                <td>""" + order_name + """</td>
+                <td>""" + reason_name + """</td>
                 <td>""" + regex.sub("", str(order[1])) + """</td>
                 <td class="sum_td">""" + str(order[2]) + """</td>
                 <td>pdf</td>
