@@ -232,10 +232,15 @@ def get_settlement_list_html(UID, date_from, date_to, counterparty):
     if latest is not None and latest[u"Журнал"].__len__() > 0:
     # if latest[0].__len__() > 0:
         list_payments_debts = """
+            <p>
+                Если не выбран период, таблица формируется за последний месяц. <br />
+                Отрицательный конечный остаток означает долг компании клиенту, а положительный наоборот.
+            </p>
             <table class="upper_settlement_table">
+                <caption>Таблица взаиморасчетов компании с клиентом</caption>
                 <thead>
                     <tr class="settlementHeader">
-                        <th>Дата</th>
+                        <th>Дата ▴ </th>
 
                         <th>Начальный остаток</th>
                         <th>Приход</th>
@@ -272,7 +277,9 @@ def get_settlement_list_html(UID, date_from, date_to, counterparty):
 
             # print pay, "<br />"
 
-        list_payments_debts = list_payments_debts + shippings + "</tbody></table>"
+        list_payments_debts = list_payments_debts + shippings + """
+            </tbody></table>
+        """
     else:
         list_payments_debts = ""
 
@@ -308,10 +315,11 @@ def get_settlement_list_html(UID, date_from, date_to, counterparty):
 
         listShipping = listShipping + """
             <table>
+                <caption>Список сформированых актов сверок</caption>
                 <thead>
                     <tr class="settlementHeader">
                         <th>Документ</th>
-                        <th>Дата</th>
+                        <th>Дата ▾ </th>
                         <th>Начало периода</th>
                         <th>Конец периода</th>
                         <th>Скачать</th>

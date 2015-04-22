@@ -87,10 +87,12 @@ function pass(){
     $("#ordersContainer").empty()
     $("#ordersContainer").append(elements)
 
-    if( $(".date_arrow").attr("src") == "/1cengine/kabinet_orders/arrow_down.svg" ){
-        $(".date_arrow").attr("src","/1cengine/kabinet_orders/arrow_up.svg")
-    } else if( $(".date_arrow").attr("src") == "/1cengine/kabinet_orders/arrow_up.svg" ){
-        $(".date_arrow").attr("src","/1cengine/kabinet_orders/arrow_down.svg")
+    if( $(".date_arrow").attr("way") == "down" ){
+        $(".date_arrow").attr("way", "up")
+        $(".date_arrow").html("▴")
+    } else if( $(".date_arrow").attr("way") == "up" ){
+        $(".date_arrow").attr("way", "down")
+        $(".date_arrow").html("▾")
     }
 
     after_get_list()

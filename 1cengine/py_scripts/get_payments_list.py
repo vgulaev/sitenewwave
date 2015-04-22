@@ -260,7 +260,7 @@ def get_payment_list_html(UID, date_from, date_to, counterparty):
                 <tr>
                     <th>Документ оплаты</th>
                     <th>Документ основания</th>
-                    <th>Дата</th>
+                    <th>Дата ▾ </th>
                     <th>Сумма</th>
                     <th>Скачать</th>
                 </tr>

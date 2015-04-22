@@ -118,7 +118,7 @@ $params["XDTOStructure"] = $OrderFromSite;
 // fwrite($handle, serialize($params));
 // fclose($handle);
 
-//print_r($params["XDTOStructure"]);
+//print_r($params["XDTOStructure"]);    `
 
 $develop_server = "http://WebService:teradel@192.168.194.14/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl";
 $product_server = "http://WebService:teradel@195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws?wsdl";

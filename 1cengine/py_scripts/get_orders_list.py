@@ -310,8 +310,7 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
             <th>Контрагент</th>
             <th>Ответственный</th>
             <th><a href="javascript:pass()">Дата
-            <img class="date_arrow"
-            src="/1cengine/kabinet_orders/arrow_down.svg" /></a></th>
+            <span class="date_arrow" way="down"> ▾ </span></a></th>
         </tr>
         </thead>
         <tbody id="ordersContainer">

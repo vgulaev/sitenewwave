@@ -48,11 +48,6 @@ function after_get_list(){
     })  
 }
 
-function shippingDate(way){
-    if(way="up"){
-        date_string_array = $(".dateFrom").val().split("/")
-    }
-}
 
 function logout(){
     $.removeCookie("sid",{ expires: 30, path: '/'})
@@ -67,26 +62,15 @@ function pass(){
     $("#shippingsContainer").empty()
     $("#shippingsContainer").append(elements)
 
-    if( $(".date_arrow").attr("src") == "/1cengine/kabinet_shipping/arrow_down.svg" ){
-        $(".date_arrow").attr("src","/1cengine/kabinet_shipping/arrow_up.svg")
-    } else if( $(".date_arrow").attr("src") == "/1cengine/kabinet_shipping/arrow_up.svg" ){
-        $(".date_arrow").attr("src","/1cengine/kabinet_shipping/arrow_down.svg")
+    if( $(".date_arrow").attr("way") == "down" ){
+        $(".date_arrow").attr("way", "up")
+        $(".date_arrow").html("▴")
+    } else if( $(".date_arrow").attr("way") == "up" ){
+        $(".date_arrow").attr("way", "down")
+        $(".date_arrow").html("▾")
     }
 
-    $(".shippingItem").click( function(){
-        $(".shippingDownload").hide()
-        $(".ar_img").attr("src","/1cengine/kabinet_shippings/arrow.svg")
-        
-        $(this).find(".ar_img").each( function(){
-            // alert("nya")
-            $(this).attr("src","/1cengine/kabinet_shippings/arrow_down.svg")
-        })
-        $(this).find(".shippingDownload").each( function(){
-            
-            $(this).show()
-        })
 
-    })
 }
 
 // Returns a random integer between min and max
