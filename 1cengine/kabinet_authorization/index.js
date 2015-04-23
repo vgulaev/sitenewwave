@@ -86,8 +86,12 @@ $(document).ready( function (){
         url: "/1cengine/py_scripts/send_lk_request.py",
         allowedTypes:"pdf,tif,png,gif,jpg,jpeg",
         maxFileCount: 1,
-        fileName: "myfile"
+        fileName: "myfile",
+        afterUploadAll: function(){
+            alert("Ваше заявление поступило в нашу компанию и будет обработано. Уведомление об этом придёт на указанный в заявлениие адрес электронной почты вместе с реквизитами для входа.")
+        }
     });
+
 
     function logout(){
         $.removeCookie("sid",{ expires: 30, path: '/'})
@@ -265,4 +269,3 @@ $(document).ready( function (){
     })
 
 })
-
