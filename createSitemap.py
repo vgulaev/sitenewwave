@@ -33,23 +33,25 @@ def getItems():
 
 def writeItemsToFile(row):
 
+    # addRow = ""
+    # for x in row:
+
+    #     addRow = addRow + """
+    #         <url>\n
+    #             <loc>
+    #                 http://trimet.ru/1cengine/site/?ref="""\
+    #                 + urllib.quote(x[0] + " " + x[1]) + \
+    #         """
+    #             </loc>\n
+    #             <priority>0.7</priority>\n
+    #             <changefreq>daily</changefreq>\n
+    #        </url>\n
+    #        """
+    #     # print addRow
+
+    # addRow = addRow + '</urlset>'
+
     addRow = ""
-    for x in row:
-
-        addRow = addRow + """
-            <url>\n
-                <loc>
-                    http://trimet.ru/1cengine/site/?ref="""\
-                    + urllib.quote(x[0] + " " + x[1]) + \
-            """
-                </loc>\n
-                <priority>0.7</priority>\n
-                <changefreq>daily</changefreq>\n
-           </url>\n
-           """
-        # print addRow
-
-    addRow = addRow + '</urlset>'
 
     _PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -67,5 +69,6 @@ def writeItemsToFile(row):
 
     print "sitemap generated"
 
-row = getItems()
+# row = getItems()
+row = ""
 writeItemsToFile(row)
