@@ -49,8 +49,8 @@ url_dictionary = {
     # "products/faq/935": "htmlstaticcontent/044_products_faq_935_/",
     "products/metalloprokat":
                 "htmlstaticcontent/024_products_metalloprokat_/",
-    "products/faq/931": "htmlstaticcontent/042_products_faq_931_/",
-    "products/faq/926": "htmlstaticcontent/040_products_faq_926_/",
+    # "products/faq/931": "htmlstaticcontent/042_products_faq_931_/",
+    # "products/faq/926": "htmlstaticcontent/040_products_faq_926_/",
     "products/request": "htmlstaticcontent/037_products_request_/",
     "products/krovl/dobornye-jelementy":
                 "htmlstaticcontent/046_products_krovl_dobornye-jelementy_/",
