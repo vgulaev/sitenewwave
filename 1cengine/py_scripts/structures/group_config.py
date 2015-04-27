@@ -126,7 +126,7 @@ groups_params = {
         "Ширина",
         "s"
     ],
-    "Металлоштакетик": [
+    "Металлоштакетник": [
         "/1cengine/site/images/eye_pic/cherepica.png",
         1,
         1,
