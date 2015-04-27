@@ -126,6 +126,16 @@ groups_params = {
         "Ширина",
         "s"
     ],
+    "Металлоштакетик": [
+        "/1cengine/site/images/eye_pic/cherepica.png",
+        1,
+        1,
+        1,
+        "Высота",
+        "Толщина",
+        "Ширина",
+        "s"
+    ],
     "Полоса": [
         "/1cengine/site/images/eye_pic/polosovoy_prokat.png",
         1,
