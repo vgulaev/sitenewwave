@@ -134,12 +134,15 @@ def get_payment_list_ajax(UID, date_from, date_to, counterparty):
 
     cp_option = "<option value='Все'>Все</option>"
 
-    for cp in get_counterparty_list(UID):
+    for cp_list in get_counterparty_list(UID):
+        cp = cp_list[0]
+        cpb = cp_list[1]
         is_selected = ""
         if cp in ctext:
             is_selected = "selected"
-        formatted_option = "<option value='{0}' {1}>{0}</option>".format(cp, is_selected)
+        formatted_option = "<option value='{0}' balance='{2}' {1}>{0}</option>".format(cp, is_selected, cpb)
         cp_option = cp_option + formatted_option
+
 
     if "Розничный покупатель" in ctext:
         cp_option = cp_option + "<option value='Розничный покупатель' selected >Без контрагента</option>"

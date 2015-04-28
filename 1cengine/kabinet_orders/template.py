@@ -40,6 +40,10 @@ def show_orders():
         except:
             data = "<div>Контрагент не назначен или что-то пошло не так</div>"
 
+        # data = "<div>" + get_orders_list_lib.__main__(
+        #     "get_orders_list('" + uid_1c + "')") + "</div>"
+
+
         return data
     else:
         return """

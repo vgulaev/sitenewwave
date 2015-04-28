@@ -1109,7 +1109,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 
 
 .dateChooser{
-
+    margin-bottom:40px;
 }
 .dateInput{
     width:100px;
@@ -1231,7 +1231,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 }
 
 #settlement_ajax_div {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
 }
 .counterparty_select{
     min-width: 200px;
@@ -1253,4 +1253,13 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 
 .upper_settlement_table{
     margin-bottom:30px;
+}
+
+.current_balance{
+    /*margin-top: 40px;*/
+    font-size: 12pt;
+}
+
+.current_balance span{
+    font-weight: 600;
 }

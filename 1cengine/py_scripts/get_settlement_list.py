@@ -130,18 +130,38 @@ def get_settlement_list_ajax(UID, date_from, date_to, counterparty):
 
     cp_option = "<option value='Все'>Все</option>"
 
-    for cp in get_counterparty_list(UID):
+    c_balance = None
+
+    for cp_list in get_counterparty_list(UID):
+        cp = cp_list[0]
+        cpb = cp_list[1]
         is_selected = ""
         if cp in ctext:
             is_selected = "selected"
-        formatted_option = "<option value='{0}' {1}>{0}</option>".format(cp, is_selected)
+            c_balance = cpb
+            c_cp = cp
+        formatted_option = "<option value='{0}' balance='{2}' {1}>{0}</option>".format(cp, is_selected, cpb)
         cp_option = cp_option + formatted_option
+
 
     if "Розничный покупатель" in ctext:
         cp_option = cp_option + "<option value='Розничный покупатель' selected >Без контрагента</option>"
     else:
         cp_option = cp_option + "<option value='Розничный покупатель'>Без контрагента</option>"
 
+    if c_balance is not None:
+        if "-" in c_balance[0]:
+            which_balance = "«Тримет» должен «{0}»".format(c_cp)
+        else:
+            which_balance = "«{0}» должен «Тримет»".format(c_cp)
+
+        c_balance_text = """
+            <p class="current_balance">
+                Текущее сальдо: <span>{0}</span> ({1})
+            </p>
+        """.format(c_balance, which_balance)
+    else:
+        c_balance_text = ""
 
     ajax = """
         <div class="dateChooser">
@@ -171,6 +191,7 @@ def get_settlement_list_ajax(UID, date_from, date_to, counterparty):
                 </table>
             </form>
         </div>
+        {8}
         <div id="settlement_ajax_div">
         {3}
         <script type="text/javascript">
@@ -198,7 +219,8 @@ def get_settlement_list_ajax(UID, date_from, date_to, counterparty):
         UID,
         date_from_par,
         date_to_par,
-        counterparty_par
+        counterparty_par,
+        c_balance_text
     )
 
     return ajax
