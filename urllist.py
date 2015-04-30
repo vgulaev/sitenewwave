@@ -36,6 +36,8 @@ url_dictionary = {
     # "products/faq/937": "htmlstaticcontent/045_products_faq_937_/",
     "products/krovl/metallocherepica":
                 "htmlstaticcontent/029_products_krovl_metallocherepica_/",
+    "products/krovl/metalloshtaketnik":
+                "htmlstaticcontent/057_products_krovl_metalloshtaketnik_/",
     "products/faq": "htmlstaticcontent/034_products_faq_/",
     # "products/faq/933": "htmlstaticcontent/043_products_faq_933_/",
     "products/gost": "htmlstaticcontent/033_products_gost_/",
