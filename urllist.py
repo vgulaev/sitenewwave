@@ -58,6 +58,8 @@ url_dictionary = {
                 "htmlstaticcontent/046_products_krovl_dobornye-jelementy_/",
     "products/shtrips":
                 "htmlstaticcontent/055_products_shtrips/",
+    "products/fence":
+                "htmlstaticcontent/058_products_fence_/",
     #"products/dealers/anketa":
     #            "htmlstaticcontent/056_products_dealers_anketa_/",
 
