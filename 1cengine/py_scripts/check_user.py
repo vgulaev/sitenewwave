@@ -35,7 +35,7 @@ def check_user():
         user_fj["Fullname"] = user_data["Fullname"]
         user_fj["Counterparty"] = []
         for cp in user_data["CounterpartyList"][0]:
-            user_fj["Counterparty"].append(cp)
+            user_fj["Counterparty"].append(cp[0])
 
         return json.dumps(user_fj)
 
