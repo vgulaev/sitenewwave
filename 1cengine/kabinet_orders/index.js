@@ -30,7 +30,6 @@ $(document).ready( function(){
     })
 
 
-
 })
 
 function after_get_list(){
@@ -104,6 +103,40 @@ function pass(){
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/// Функция получения табличной части
+
+function showTabPart(UID){
+
+    if( $(".close_button[goal='"+UID+"']").length ){
+
+        $(".close_button[goal='"+UID+"']").parent().show()
+        $("tr[name='"+UID+"']").addClass("tab_part_show")
+
+    } else {
+
+        $.ajax({
+            type: "GET",
+            url: "/1cengine/py_scripts/get_tab_part_order.py",
+            async: true,
+            data: "UID=" + UID + "",
+            success: function(html) {
+                // alert(html)
+                $(html).insertAfter($("tr[name='"+UID+"']"))
+                $("tr[name='"+UID+"']").addClass("tab_part_show")
+
+                $("div.close_button").click( function(){
+                    // alert(1)
+                    $(this).parent().hide()
+                    uid = $(this).attr("goal")
+                    $("tr[name='"+UID+"']").removeClass("tab_part_show")
+                })
+            }
+        })
+    }
+}
+
+
 
 /// функция получения ссылки для скачивания. Скоммунизжена из modern_uiJS ж))) ///
 

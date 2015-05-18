@@ -1283,6 +1283,64 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     cursor: pointer;
 }
 
+.m_info_wrapper{
+    border:1px solid #000;
+    border-radius: 3px;
+    width:130px;
+    padding:10px;
+    text-align: center;
+    font-size:9pt;
+    box-shadow:0 0 1px 1px rgba(0,0,0,0.3);
+    display:none;
+}
+
+.my-info-theme {
+    border:1px solid #000;
+    border-radius: 3px;
+    width:130px;
+    /*height:400px;*/
+    box-shadow:0 0 1px 1px rgba(0,0,0,0.3);
+    background-color: #fff;
+    color: #4f4f4f;
+
+}
+
+.my-info-theme .tooltipster-content{
+    padding:10px;
+    text-align: center;
+    font-size:9pt;
+    line-height:12px;
+}
+.my-info-theme .tooltipster-content p{
+    margin-top:5px;
+}
+
+.manager_show{
+    border-bottom:1px dashed #2D3694;
+    color: #2D3694;
+    cursor:pointer;
+}
+
+.manager_show:hover{
+    border-bottom: none;
+}
+
+.show_order_download{
+    border-bottom:1px dashed #2D3694;
+    color: #2D3694;
+    cursor:pointer;
+}
+
+.show_order_download:hover{
+    border-bottom: none;
+}
+
+.orderDownload{
+    text-align: right;
+    margin: 0px 5px;
+    display:none;
+}
+
 .num_cell{
     text-align:right;
 }
@@ -1293,4 +1351,68 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     color: #5D86d4;
     font-style: italic;
     letter-spacing: 1px;
+}
+
+.order_tab_part{
+    padding: 15px;
+    font-size: 10pt;
+    border: 1px solid grey;
+    box-shadow: inset 0 0 1px 1px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.order_tab_part tr th{
+    text-align: center;
+}
+
+.order_tab_part tr th, .order_tab_part tr td{
+    border-bottom: 1px solid #a0a0a0;
+}
+
+.order_tab_part tr:last-child td{
+    border-bottom: none;
+}
+
+.order_tab_part tr td, .order_tab_part tr th{
+    border-left:1px solid #a0a0a0;
+    padding:5px;
+}
+.order_tab_part tr td:first-child, .order_tab_part tr th:first-child{
+    border-left: none;
+}
+
+.tab_part_show td{
+    border-top:1px solid grey;
+    font-weight: 600;
+}
+
+.tab_part_show td:first-child{
+    border-left:1px solid grey;
+}
+
+.tab_part_show td:last-child{
+    border-right:1px solid grey;
+}
+
+.close_button{
+    display:block;
+    padding:5px;
+    border-radius:15px;
+    border:1px solid grey;
+    width:10px;
+    height: 10px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 10px;
+    font-size: 8pt;
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
+    position: absolute;
+    right:5px;
+    top:5px;
+    z-index: 10;
+}
+
+.close_button:hover{
+    color:#d00c0c;
 }

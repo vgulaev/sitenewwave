@@ -284,13 +284,20 @@ def get_shipping_list_html(UID, date_from, date_to, counterparty):
         )
 
         shippings = shippings + """
-            <tr class="shippingItem """ + odd + """ ">
+            <tr class="shippingItem """ + odd + """ " name='"""+str(shipping[3])+"""'>
                     <td>
+                        <span class="show_order_download">
                         """ + shipping_name + """
-                        <a href='javascript:openLink(
-                    \"""" + str(shipping[3]) + """\","pdf")'
-                     title="Скачать документ отгрузки в формате pdf"> pdf </a>
-                    </td>
+                        </span>
+                        <p class="orderDownload">
+                            Скачать:
+                                <a href='javascript:openLink(
+                                    \"""" + str(shipping[3]) + """\","pdf")'
+                                    title="Скачать документ отгрузки в формате pdf"> pdf </a> 
+                                <a href='javascript:showTabPart(
+                                    \"""" + str(shipping[3]) + """\")'> Показать список товаров </a>
+                            </td>
+                        </p>
                     <td class="num_cell">""" + str(shipping[2]) + """</td>
                     <td class="num_cell">""" + str(shipping[4]) + """</td>
                     <td class="shippingDate">

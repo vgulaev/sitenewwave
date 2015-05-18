@@ -153,6 +153,15 @@ def get_orders_list(UID):
 
 def get_order_list_ajax(UID, date_from, date_to, counterparty):
 
+    olol = """
+        А эта у а рустекст
+        воть
+        oO0 ~!@#$%^&*()[]{}""''
+        1IilLTtJ
+        kKcCsS
+        чшщяЯёЁ
+    """
+
     if date_from != "":
         date_from_par = "&date_from=" + date_from
     else:
@@ -371,18 +380,22 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
                         title="Скачать заказ в формате pdf"> заказ </a> 
                     <a href='javascript:openLink(
                         \"""" + str(order[7]) + """\","pdf", "rezka")'
-                        title="Скачать бланк резки в формате pdf"> бланк резки </a>
+                        title="Скачать бланк резки в формате pdf"> бланк резки </a> 
+                    <a href='javascript:showTabPart(
+                        \"""" + str(order[0]) + """\")'> Показать список товаров </a>
             """
         else:
             download_links = """
                 Скачать:
                     <a href='javascript:openLink(
                         \"""" + str(order[0]) + """\","pdf", "order")'
-                        title="Скачать заказ в формате pdf"> заказ </a>
+                        title="Скачать заказ в формате pdf"> заказ </a> 
+                    <a href='javascript:showTabPart(
+                        \"""" + str(order[0]) + """\")'> Показать список товаров </a>
             """
 
         orders = orders + """
-            <tr class="orderItem """ + odd + """ ">
+            <tr class="orderItem """ + odd + """ " name='""" + str(order[0]) + """' >
                     <td>
                         <span class="show_order_download">
                         """ + str(order[3]) + """
