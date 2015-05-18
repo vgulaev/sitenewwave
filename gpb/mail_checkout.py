@@ -17,7 +17,7 @@ sys.setdefaultencoding('utf-8')
 
 def mail_checkout(checkout_string, mail=""):
     me = "admin@trimet.ru"
-    you = "webmaster@trimet.ru"
+    you = ["webmaster@trimet.ru", "parshin@trimet.ru"]
 
     msg = MIMEText(checkout_string, "html")
 
@@ -27,7 +27,7 @@ def mail_checkout(checkout_string, mail=""):
     msg.set_charset("utf-8")
 
     s = smtplib.SMTP('localhost')
-    s.sendmail(me, [you], msg.as_string())
+    s.sendmail(me, you, msg.as_string())
     s.quit()
 
     if mail is not "":
