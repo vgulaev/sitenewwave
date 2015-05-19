@@ -130,7 +130,7 @@ class App.Item
         @buy_weight = weight.replace /,+/g, "."
 
         if @is_measureable()
-            @buy_length = ( @buy_weight * 1000 ) / @weight
+            @buy_length = ( ( @buy_weight * 1000 ) / @weight ) / @kf
 
             @change_modal()
             $(".buy_length").change()

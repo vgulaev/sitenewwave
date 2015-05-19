@@ -384,7 +384,10 @@ ul li, ul ul li, ul ul ul li {
 
 #tableRes td{
     /*border-bottom:1px dotted gray;*/
-    border-left:1px dashed #E6E6FA;
+    /*border-left:1px dashed #E6E6FA;*/
+    border-left:1px solid #C0C0BF;
+    border-bottom:1px solid #C0C0BF;
+
     padding:2px;
     padding-right:10px;
     padding-left:10px;
@@ -392,14 +395,18 @@ ul li, ul ul li, ul ul ul li {
     text-align:right;
 
 }
-
+/*
 #tableRes .ti_odd td{
     border-left:1px dashed white;
 }
-
+*/
 #tableRes td:first-child{
-    border-left:none;
+    /*border-left:none;*/
     text-align:left;
+}
+
+#tableRes td:last-child{
+    border-right:1px solid #C0C0BF;
 }
 
 #tableRes{
@@ -411,13 +418,14 @@ ul li, ul ul li, ul ul ul li {
 }
 
 .ti_odd{
-    background-color:#E6E6FA;
+    /*background-color:#E6E6FA;*/
+    background-color:#EEE;
 }
 
 tr.iHeader{
     font-size:13px;
     font-weight:bold;
-    border-top:1px solid black !important;
+    /*border-top:1px solid black !important;*/
     height:auto;
     width:750px;
     background-color: #a0a4d0;
@@ -426,9 +434,12 @@ tr.iHeader{
 .iHeader td{
     font-size:13px;
     line-height: 20px;
-    border-left:none !important;
+    /*border-left:none !important;*/
+    border-left: 1px solid #A0A0AF;
     border-right:none;
     vertical-align:top;
+    border-bottom: 1px solid #A0A0AF;
+    border-top: 1px solid #A0A0AF;
 
 }
 .iHeader td:first-child{
@@ -437,6 +448,9 @@ tr.iHeader{
     vertical-align:middle;
     padding-left:15px !important;
 
+}
+.iHeader td:last-child{
+    border-right: 1px solid #A0A0AF;
 }
 .price{
     text-align: right;
@@ -2425,6 +2439,7 @@ hr{
 
 .item_billet table td{
     text-align: left;
+    border:none !important;
 }
 
 .item_billet .billet_item_name{
