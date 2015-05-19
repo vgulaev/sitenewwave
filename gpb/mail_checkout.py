@@ -22,7 +22,7 @@ def mail_checkout(checkout_string, mail=""):
     msg = MIMEText(checkout_string, "html")
 
     msg["From"] = me
-    msg["To"] = you
+    msg["To"] = ", ".join(you)
     msg["Subject"] = "Чек покупателя"
     msg.set_charset("utf-8")
 
