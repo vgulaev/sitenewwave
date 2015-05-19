@@ -407,6 +407,7 @@ ul li, ul ul li, ul ul ul li {
 
 #tableRes td:last-child{
     border-right:1px solid #C0C0BF;
+    width: 98px;
 }
 
 #tableRes{
@@ -873,6 +874,7 @@ tr.iHeader{
 }
 .priceHeader{
     text-align: center;
+    width: 110px;
 }
 .item .itemBuy a.bItem .buySpan{
 
