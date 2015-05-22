@@ -124,54 +124,6 @@ show_rezka = (chkbox) ->
         $(".rezka_wrapper").hide()
 
 
-show_how_to_make_order = () ->
-    offset = $("#pTableContentTab").offset()
-    w_height = $(window).height() - 260
-
-    m_css = {
-        width: '770px',
-        maxHeight: w_height+"px",
-        height: 'auto',
-        overflow: 'auto',
-        paddingTop: '10px',
-        paddingRight: '20px',
-        paddingBottom: '30px',
-        textAlign: 'justify',
-        top: '130px',
-        left: offset.left+"px"
-    }
-
-
-    $.blockUI
-        message: """
-        <h2>Как выписать счёт</h2>
-<p>
-Уважаемый клиент,<br />
-Раздел "купить онлайн" представляет собой каталог, где Вы можете найти интересующий Вас металлопрокат.
-Вы можете как выбрать группу номенклатуры в левом меню, так и ввести нужное наименование в строку поиска.
-Затем нужно добавить товар в корзину - для этого достаточно нажать на значок корзины в строке номенклатуры, ввести требуемое количество и нажать кнопку "в корзину".
-</p><p>
-Для последующего оформления Вашего заказа нажмите на кнопку "Корзина", расположенную в строке со ссылками на прайс. Там Вы можете просмотреть выбранный товар с его стоимостью, выбрать доставку и резку номенклатуры, и завершить оформление заказа.
-</p><p>
-Нажав на кнопку "Оформить", Вы отправите заказ на регистрацию в нашей системе, это займёт не больше минуты. На указанный Вами адрес электронной почты будет выслано сообщение с номером заказа и приглашением в личный кабинет, где Вы сможете увидеть текущий статус заказа. Вскоре с Вами свяжется наш менеджер, который уточнит детали заказа.
-</p><p>
-После чего Вам нужно оплатить и забрать покупки, или же дождаться, когда их привезут.
-</p><p>
-Удачных покупок в нашем интернет магазине.</p>
-<div class="closeHowToMakeOrder">Я понял, спасибо</div>
-        """,
-        css: m_css
-
-    $(".blockMsg").draggable();
-
-    $(".closeHowToMakeOrder").click ->
-        $.unblockUI()
-
-    $(document).on "keyup", (e) ->
-        e.preventDefault()
-        if e.which is 27
-            $.unblockUI();
-
 get_item_list = (hash) ->
     # alert(hash)
     $("body").css("cursor", "wait")
@@ -387,7 +339,7 @@ get_item_table = (html) ->
                 # alert(char)
                 $(element).addClass("selected_price")
 
-        if stock is "0"
+        if stock is "0.0" or stock is "0" or stock is ""
             # alert(stock)
             c_button = $(this).parent().parent().parent().parent().find(".bItem")
             c_button.removeClass("bItem").addClass("oItem")

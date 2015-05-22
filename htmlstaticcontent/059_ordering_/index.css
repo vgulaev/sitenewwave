@@ -12,3 +12,48 @@ body{text-align:center}body,blockquote,input,select,textarea,form,fieldset,table
 	width:90%;
 	padding: 25px 5px 25px;
 }
+
+.foreword{
+    font-size:11pt;
+    /*text-indent: 10px;*/
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.p_caption{
+    font-size:14pt;
+    /*font-weight: 600;*/
+    list-style: circle inside;
+    display: list-item;
+    color:#2D3694;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.inword{
+    font-size: 11pt;
+    padding-left: 22px;
+}
+
+.scrn_b{
+    margin-top:10px;
+    margin-bottom:10px;
+    box-shadow: 0 0 1px 2px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
+
+.scrn_d{
+    margin-top:10px;
+    margin-bottom:10px;
+    box-shadow: 0 0 1px 2px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    margin-right:30px;
+}
+
+.warning{
+    background-color: #bcbcbc;
+    display: block;
+    padding:10px;
+    border-radius: 5px;
+    color:#2f0f0f;
+}
