@@ -364,9 +364,8 @@
       if (stock === "0.0" || stock === "0" || stock === "") {
         c_button = $(this).parent().parent().parent().parent().find(".bItem");
         c_button.removeClass("bItem").addClass("oItem");
-        c_button.find(".buySpan").html("Под заказ");
-      }
-      if (stock === "1") {
+        return c_button.find(".buySpan").html("Под заказ");
+      } else {
         c_button = $(this).parent().parent().parent().parent().find(".oItem");
         c_button.removeClass("oItem").addClass("bItem");
         return c_button.find(".buySpan").html("Рассчитать");

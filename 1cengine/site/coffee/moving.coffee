@@ -344,7 +344,7 @@ get_item_table = (html) ->
             c_button = $(this).parent().parent().parent().parent().find(".bItem")
             c_button.removeClass("bItem").addClass("oItem")
             c_button.find(".buySpan").html("Под заказ")
-        if stock is "1"
+        else
             # alert(stock)
             c_button = $(this).parent().parent().parent().parent().find(".oItem")
             c_button.removeClass("oItem").addClass("bItem")
