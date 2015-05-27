@@ -6,77 +6,50 @@
     padding: 7px 0px 20px 11px;
     height: 1%;
     position: relative;
-    font-size:0.86em;
+    font-size:10pt;
     font: Arial,Helvetica,sans-serif;
     width:972px;
     margin: 0px auto;
 }
 
-#footer form{
+#footer table{
+    width:100%;
     padding:0;
+    margin:0;
+    height:160px;
 }
 
-#footer fieldset{
-    border:0;
+#footer #fleft {
+    width: 275px;
+    vertical-align: top;
+    /*line-height: 1.65;*/
+    padding-right:10px;
 }
 
-#footer input{
-    color: rgb(124, 124, 124);
-    display: block;
-    height: 1.5em !important;
-    margin: 1.2em 0px 15px;
-    padding: 3px 0px 2px;
-    text-indent: 5px;
-    width: 146px;
-    font-size:1.25em;
-    line-height: 1.2em;
-    font: Arial,Helvetica,sans-serif;
+#footer #copyr span {
+    color: #7F7F7F;
+    font-size: 10pt;
 }
 
-
-#fleft{
-    width:275px;
-    line-height: 1.65;
-    float:left;
+#footer #box {
+    /*margin: 0px 240px 0px 287px;*/
+    vertical-align: top;
+    /*padding:30px;*/
 }
 
-#fleft p{
-    margin-bottom:1.6em;
+#footer #fright {
+    width: 226px;
+    vertical-align: top;
+    text-align: right;
+    padding-top:11px;
 }
 
-#fleft span{
-    display:block;
+#footer #fright div{
+    margin-bottom:10px;
 }
 
-#copyr{
-    margin: 1.4em 0px 1.6em;
-    text-align: left;
-}
-
-#copyr span{
-    color: rgb(127, 127, 127);
-    font-size:1.3em;
-}
-
-#fright{
-    width:226px;
-    float:right;
-}
-
-.input-field{
-    font-size:0.8em;
-}
-
-#author{
-    line-height:1.65em;
-}
-
-#box{
-    margin: 0px 240px 0px 287px;
-}
-
-#obj-mmenu2, #seo_menu {
-    color: rgb(174, 179, 212);
+#footer ul{
+    color: #AEB3D4;
     float: left;
     margin: 4px 0px 0px;
     padding: 0.5em 0px 20px;
@@ -85,22 +58,15 @@
     width: 100% !important;
 }
 
-#footer #obj-mmenu2 li {
-    line-height: 1;
-}
-
-#obj-mmenu2 li, #seo_menu li {
-    background: none repeat scroll 0% 0% transparent;
-    border-left: 1px solid rgb(118, 118, 118);
+#footer ul li{
+    background: transparent none repeat scroll 0% 0%;
+    border-left: 1px solid #767676;
     float: left;
-    margin: 1em 0px 0px;
+    /*margin: 1em 0px 0px;*/
     padding: 0px 11px;
     position: relative;
     left: -10px;
     white-space: nowrap;
-}
-
-#cards a{
-    width:120px;
-    margin:3px;
+    list-style-type: none;
+    margin-bottom:10px;
 }

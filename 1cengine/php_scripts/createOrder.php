@@ -54,8 +54,8 @@ function register_user($mail, $passwd, $name) {
 $pwd = generateRandomString();
 $nm = $_POST["name_surname"].' '.$_POST["last_name"];
 
-// $reg_result = register_user($_POST['email'], $pwd, $nm);
-$reg_result = "nONE";
+$reg_result = register_user($_POST['email'], $pwd, $nm);
+// $reg_result = "nONE";
 
 $orderString = $_POST['orderString'];
 // $orderString = "8f97e0cd-5fc1-11d9-a6d2-505054503030:8f97e0cd-5fc1-11d9-a6d2-505054503030:-:23:32150.00;8dc51296-c7dc-11e0-a1a9-00155dc20a18:8dc51296-c7dc-11e0-a1a9-00155dc20a18:-:31:55110.00;";
@@ -122,8 +122,8 @@ $params["XDTOStructure"] = $OrderFromSite;
 
 $develop_server = "http://WebService:teradel@192.168.194.14/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl";
 $product_server = "http://WebService:teradel@195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws?wsdl";
-// $server = new SoapClient('http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
-$server = new SoapClient('http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+$server = new SoapClient('http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://195.239.221.58:30082/trimet_trade/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
+// $server = new SoapClient('http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws?wsdl', array('trace' => 1, 'location'=>'http://192.168.194.27/trimet_trade_fedorov/ws/OrderKlient.1cws', 'features' => SOAP_USE_XSI_ARRAY_TYPE));
 //$server->__doRequest('http://195.239.221.58:30082/trimet_trade/ws/PrivetOffice.1cws');
 
 $server->decode_utf8 = false;
