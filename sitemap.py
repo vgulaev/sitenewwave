@@ -24,7 +24,9 @@ print("<!DOCTYPE html>")
 
 
 
-sm = '''<div class="mod-sitemap">
+sm = '''
+<div id="main">
+<div class="mod-sitemap">
     <div>
         <h2><a href="/about/" title="О компании">О компании</a></h2>
         <ul>
@@ -145,7 +147,9 @@ sm = '''<div class="mod-sitemap">
     </div>
     <div class="clear">&nbsp;</div>
 </div>
-</div>'''
+</div>
+</div>
+'''
 
 def makecontent(path=None):
     # print path
