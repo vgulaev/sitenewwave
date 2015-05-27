@@ -51,7 +51,7 @@ def writeItemsToFile(row):
 
     # addRow = addRow + '</urlset>'
 
-    addRow = ""
+    addRow = "</urlset>"
 
     _PATH = os.path.abspath(os.path.dirname(__file__))
 

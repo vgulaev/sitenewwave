@@ -52,7 +52,7 @@ def makecontent(path=None):
         tag_tr.append(tag_td)
         tag_td = soupForImport.new_tag("td")
         tag_a = soupForImport.new_tag("a", href=el.loc.string)
-        tag_a.append(str(counter))
+        tag_a.append(str(el.loc.string))
         tag_td.append(tag_a)
         tag_tr.append(tag_td)
         tag_td = soupForImport.new_tag("td")
