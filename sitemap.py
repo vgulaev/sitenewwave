@@ -25,6 +25,7 @@ print("<!DOCTYPE html>")
 
 
 sm = '''
+<link rel="stylesheet" type="text/css" href="/index.css" media="all" />
 <div id="main">
 <div class="mod-sitemap">
     <div>
