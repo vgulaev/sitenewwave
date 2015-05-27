@@ -44,13 +44,11 @@ print """
             margin: 0px auto;
         }
     </style>
-    
+
     <h2>Упс, похоже вы обратились к несуществующей странице. Быть может вы ищете что-то из списка ниже?</h2>\n
 
     """
-print '''
-<div class="main">
-<div class="mod-sitemap">
+print '''<div class="mod-sitemap">
     <div>
         <h2><a href="/about/" title="О компании">О компании</a></h2>
         <ul>
@@ -89,7 +87,7 @@ print '''
             <li>
                 <h3><a href="/services/delivery/" title="Доставка">Доставка</a></h3>
             </li>
-            <li>    
+            <li>
                 <h3><a href="/services/weighing/" title="Взвешивание авто">Взвешивание авто</a></h3>
             </li>
             <li>
@@ -108,6 +106,26 @@ print '''
                 </li>
                 <li>
                     <h3><a href="/products/krovl/" title="Кровля и фасад">Кровля и фасад</a></h3>
+                    <ul>
+                        <li>
+                            <h4><a href="/products/krovl/profnastil/" title="Профнастил" >Профнастил</a></h4>
+                        </li>
+                        <li>
+                            <h4><a href="/products/krovl/metallocherepica/" title="Металлочерепица" >Металлочерепица</a></h4>
+                        </li>
+                        <li>
+                            <h4><a href="/products/krovl/metallosajding/" title="Металлосайдинг" >Металлосайдинг</a></h4>
+                        </li>
+                        <li>
+                            <h4><a href="/products/krovl/dobornye-jelementy/" title="Доборные элементы" >Доборные элементы</a></h4>
+                        </li>
+                        <li>
+                            <h4><a href="/products/krovl/vodostochnye_sistemy/" title="Водосточные системы" >Водосточные системы</a></h4>
+                        </li>
+                        <li>
+                            <h4><a href="/products/krovl/metalloshtaketnik/" title="Металлоштакетник" >Металлоштакетник</a></h4>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <h3><a href="/products/gost/" title="ГОСТы">ГОСТы</a></h3>
@@ -116,7 +134,7 @@ print '''
                     <h3><a href="/products/faq/" title="Вопросы и ответы">Вопросы и ответы</a></h3>
                 </li>
                 <li>
-                    <h3><a href="/products/special/" title="Спецпредложение">Спецпредложение</a></h3>
+                    <h3><a href="/products/fence/" title="Заборные секции">Заборные секции</a></h3>
                 </li>
                 <li>
                     <h3><a href="/products/request/" title="Оформить заявку">Оформить заявку</a></h3>
@@ -145,6 +163,9 @@ print '''
     </div>
     <div>
             <h2><a href="/1cengine/site/" title="Купить Online">Купить Online</a></h2>
+    </div>
+    <div>
+            <h2><a href="/1cengine/kabinet/" title="Войти">Войти</a></h2>
     </div>
     <div class="clear">&nbsp;</div>
 </div>
