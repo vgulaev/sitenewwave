@@ -3,7 +3,7 @@
 /* DEPRECATED START!!!! */
 
 (function() {
-  var check_user, createOrder, getOrderFomat, isValidEmail, loginUser, mail_to_client, openLink, save_to_db, sendOrder, show_login_user, submit_form;
+  var block_order, check_user, createOrder, getOrderFomat, isValidEmail, loginUser, mail_to_client, openLink, save_to_db, sendOrder, show_login_user, submit_form;
 
   isValidEmail = function(str) {
     return (str.indexOf(".") > 2) && (str.indexOf("@") > 0);
@@ -71,6 +71,7 @@
         $("#switchOrderDiv").click();
         mail_to_client(oA[1], oA[2], email, main_phone + ", " + other_phone, name_surname + " " + last_name, oA[3], oA[4], oA[0]);
         save_to_db(oA[0], email, main_phone + ", " + other_phone, name_surname + " " + last_name);
+        block_order();
         return ret;
       }
     });
@@ -196,6 +197,15 @@
 
 
   /* DEPRECATED END!!!! */
+
+  block_order = function() {
+    $(".next_step").hide();
+    $(".return_to_catalog").hide();
+    $("#switchDiv").hide();
+    $("#tabPrice").attr("href", "/1cengine/site/");
+    $("#tabPrice").html("Новый заказ");
+    return $("#tabPrice").attr("onClick", "");
+  };
 
 
   /* LOGIN USER START */

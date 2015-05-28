@@ -71,6 +71,7 @@ sendOrder = (orderString, is_async) ->
             $("#switchOrderDiv").click()
             mail_to_client(oA[1], oA[2], email, main_phone+", "+other_phone, name_surname+" "+last_name, oA[3], oA[4], oA[0])
             save_to_db(oA[0], email, main_phone+", "+other_phone, name_surname+" "+last_name)
+            block_order()
             ret
 
     #alert(ret)
@@ -203,6 +204,14 @@ getOrderFomat = (format) ->
     return
 
 ### DEPRECATED END!!!! ###
+
+block_order = () ->
+    $(".next_step").hide()
+    $(".return_to_catalog").hide()
+    $("#switchDiv").hide()
+    $("#tabPrice").attr("href","/1cengine/site/")
+    $("#tabPrice").html("Новый заказ")
+    $("#tabPrice").attr("onClick", "")
 
 ### LOGIN USER START ###
 
