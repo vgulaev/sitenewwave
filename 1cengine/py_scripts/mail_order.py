@@ -76,7 +76,15 @@ def mail_order_to_client(mail, onumber, uid, accepted, regresult, pwd):
         pwd_link = ""
 
     if accepted:
-        payment_link = "<p>Вы можете оплатить свой заказ онлайн по <a href='https://trimet.ru/payment/{0}'>ссылке</a></p>".format(uid)
+        payment_link = """
+            <p>Вы можете оплатить свой заказ одним из следующих способов:
+                <ul>
+                    <li>Перейдя по <a href='https://trimet.ru/payment/{0}'>ссылке</a> и оплатить онлайн</li>
+                    <li>Распечатать счет на оплату и оплатить в любом удобном для вас банке</li>
+                    <li>Оплатить в офисе  наличным или безналичным расчетом</li>
+                </ul>
+            </p>
+        """.format(uid)
     else:
         payment_link = ""
 

@@ -48,7 +48,9 @@ print """
     <h2>Упс, похоже вы обратились к несуществующей странице. Быть может вы ищете что-то из списка ниже?</h2>\n
 
     """
-print '''<div class="mod-sitemap">
+print '''
+<link rel="stylesheet" type="text/css" href="/index.css" media="all" />
+<div class="mod-sitemap">
     <div>
         <h2><a href="/about/" title="О компании">О компании</a></h2>
         <ul>
