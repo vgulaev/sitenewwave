@@ -4,6 +4,14 @@ Crawl-delay: 2
 
 User-agent: *
 Disallow: /1cengine/site/?ref=
+Disallow: /products/faq/915/
+Disallow: /products/faq/924/
+Disallow: /products/faq/926/
+Disallow: /products/faq/929/
+Disallow: /products/faq/931/
+Disallow: /products/faq/935/
+Disallow: /products/faq/937/
+
 
 Sitemap: https://trimet.ru/sitemap.xml
 Host: https://trimet.ru
