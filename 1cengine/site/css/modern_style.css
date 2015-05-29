@@ -2825,3 +2825,11 @@ hr{
     font-size: 14pt;
     width: 300px;
 }
+
+.hide_opt{
+    color:rgba(255,255,255,0);
+}
+
+.hide_opt input{
+    display:none;
+}

@@ -82,6 +82,11 @@ class App.Item
         else
             @is_kis = false
 
+        if @ed_izm is "шт"
+            @pi_flag = true
+        else
+            @pi_flag = false
+
         # alert(i_class)
         # alert(@is_kis)
         @prices = []
@@ -253,6 +258,7 @@ class App.Item
             @change_buy_weight($(".buy_weight").val())
 
         $(".buy_weight").bind 'keyup', (event) =>
+
             $(".buy_count").addClass("preloading")
             window.clearTimeout(time_out_handle)
             time_out_handle = window.setTimeout (=> @change_buy_weight($(".buy_weight").val())), 1000
@@ -327,9 +333,14 @@ class App.Item
         else
             set_length = ""
 
+        if @pi_flag
+            hide_opt = "hide_opt"
+        else
+            hide_opt = ""
+
         edizm_dict = {
             "т":"Тонны",
-            "шт":"Метры пог.",
+            "шт":"Штуки",
             "м2":"Метры кв.",
             "кв.м.":"Метры кв.",
             "кв. м.":"Метры кв.",
@@ -352,13 +363,13 @@ class App.Item
         <tr class="buy_item_head">
         <th></th>
 
-        <th>Штуки</th>
+        <th class="#{hide_opt}">Штуки</th>
         <th>#{c_izm}</th>
         </tr>
         <tr class="buy_item_count">
         <td>Количество</td>
 
-        <td>
+        <td class="#{hide_opt}">
             #{c_input}
         </td>
         <td>
@@ -367,7 +378,7 @@ class App.Item
         </tr>
         <tr class="buy_item_price">
         <td>Стоимость за ед.</td>
-        <td class="price_count">0</td>
+        <td class="price_count #{hide_opt}">0</td>
         <td class="price_weight">0</td>
         </tr>
 

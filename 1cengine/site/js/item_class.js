@@ -82,6 +82,11 @@
       } else {
         this.is_kis = false;
       }
+      if (this.ed_izm === "шт") {
+        this.pi_flag = true;
+      } else {
+        this.pi_flag = false;
+      }
       this.prices = [];
       obj = $("tr[lolid='" + i_class + "']");
       this.name = $(obj).find("span.billet_item_name").text();
@@ -287,7 +292,7 @@
     };
 
     Item.prototype.get_modal = function() {
-      var buy_square, c_input, c_izm, ch_arr, cl_input, edizm_dict, l_input, message, modal_link, set_length, unit_square, w_input;
+      var buy_square, c_input, c_izm, ch_arr, cl_input, edizm_dict, hide_opt, l_input, message, modal_link, set_length, unit_square, w_input;
       if (App.MyBasket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
       } else {
@@ -326,9 +331,14 @@
       } else {
         set_length = "";
       }
+      if (this.pi_flag) {
+        hide_opt = "hide_opt";
+      } else {
+        hide_opt = "";
+      }
       edizm_dict = {
         "т": "Тонны",
-        "шт": "Метры пог.",
+        "шт": "Штуки",
         "м2": "Метры кв.",
         "кв.м.": "Метры кв.",
         "кв. м.": "Метры кв.",
@@ -336,7 +346,7 @@
         "пог. м": "Метры пог."
       };
       c_izm = edizm_dict["" + this.ed_izm];
-      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th>Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td>\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th class=\"" + hide_opt + "\">Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td class=\"" + hide_opt + "\">\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count " + hide_opt + "\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
       return message;
     };
 
