@@ -36,6 +36,16 @@ groups_params = {
         "Ширина",
         "l"
     ],
+    "Водосточная система": [
+        "/1cengine/site/images/eye_pic/default.png",
+        0,
+        0,
+        0,
+        "Высота",
+        "Толщина",
+        "Ширина",
+        "s"
+    ],
     "Квадрат": [
         "/1cengine/site/images/eye_pic/kvadratu.png",
         1,
@@ -127,10 +137,10 @@ groups_params = {
         "s"
     ],
     "Металлоштакетник": [
-        "/1cengine/site/images/eye_pic/cherepica.png",
-        1,
-        1,
-        1,
+        "/1cengine/site/images/eye_pic/default.png",
+        0,
+        0,
+        0,
         "Высота",
         "Толщина",
         "Ширина",
