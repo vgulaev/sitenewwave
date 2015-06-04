@@ -56,6 +56,12 @@ class Item:
 
 
         self.optional_length = False
+        self.not_char = False
+
+        if self.item_char == "" and self.item_char_hash == "0":
+            self.item_char = "—"
+            self.item_char_hash = self.item_hash
+            # self.not_char = True
 
         if self.item_min_length is not "" or self.item_max_length is not "":
             self.optional_length = True
@@ -68,7 +74,7 @@ class Item:
         """.format(self.item_group)
         self.cursor.execute(check_existance)
 
-        if self.optional_length:
+        if self.optional_length or self.not_char:
             char_price = 0
         else:
             char_price = 1

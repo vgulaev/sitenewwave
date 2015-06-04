@@ -56,6 +56,16 @@ groups_params = {
         "Ширина",
         "l"
     ],
+    "Комплектующие": [
+        "/1cengine/site/images/eye_pic/default.png",
+        0,
+        0,
+        0,
+        "Высота",
+        "Толщина",
+        "Диаметр",
+        "s"
+    ],
     "Круг": [
         "/1cengine/site/images/eye_pic/krugi.png",
         1,
@@ -171,6 +181,16 @@ groups_params = {
         1,
         1,
         1,
+        "Высота гофры",
+        "Толщина",
+        "Ширина",
+        "s"
+    ],
+    "Саморез": [
+        "/1cengine/site/images/eye_pic/profnastil.png",
+        0,
+        0,
+        0,
         "Высота гофры",
         "Толщина",
         "Ширина",
