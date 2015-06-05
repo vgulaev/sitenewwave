@@ -280,7 +280,7 @@ class ResultTable():
             """.format(self.group_name, offset, limit)
 
 
-        print query
+        # print query
 
         r = connector.dbExecute(query)
 
