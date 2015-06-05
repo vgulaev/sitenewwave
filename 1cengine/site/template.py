@@ -115,14 +115,15 @@ def set_search_results():
     if "ref" in form:
         # form["term"] = form["ref"].value.decode("utf-8")
 
-        result_table = get_items_bs.compose_table(form["ref"].value)
+        result_table = get_items_bs.compose_table(form["ref"].value.decode("utf-8"), search_flag=True)
 
         return result_table
         # r = python_lib.__main__(python_method_name)
 
     elif "catalog" in form:
-        catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
-        result_table = get_items_bs.compose_table(catalog)
+        # catalog = urllib2.unquote(form["catalog"].value).decode("utf-8")
+        # result_table = get_items_bs.compose_table(catalog)
+        result_table = get_items_bs.compose_table(form["catalog"].value.decode("utf-8"), search_flag=True)
 
         return result_table
 
@@ -242,28 +243,30 @@ def set_groups():
 
                 tag_div_parents_header = soup.new_tag("span")
                 tag_div_parents_header["class"] = "choice_header"
-                tag_div_parents_header.append(u"Марка стали")
+                tag_div_parents_header.append(u"Подгруппа")
                 tag_div_parents.append(tag_div_parents_header)
 
-                for parent in subgroups["parents"]:
-                    tag_choice_container = soup.new_tag("span")
-                    tag_choice_container["class"] = "choice_container"
+                if subgroups["parents"].__len__() > 1:
+                    for parent in subgroups["parents"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
 
-                    tag_checkbox = soup.new_tag("input")
-                    tag_checkbox["type"] = "checkbox"
-                    tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
-                    tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["class"] = "sidebar_checkbox"
+                        tag_checkbox["name"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                        tag_checkbox["id"] = u"pa_{0}".format(parent[0].decode("utf-8"))
 
-                    tag_checkbox_label = soup.new_tag("label")
-                    tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
-                    tag_checkbox_label.append(parent[0].decode("utf-8"))
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = u"pa_{0}".format(parent[0].decode("utf-8"))
+                        tag_checkbox_label.append(parent[0].decode("utf-8"))
 
-                    tag_choice_container.append(tag_checkbox)
-                    tag_choice_container.append(tag_checkbox_label)
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
 
-                    tag_div_parents.append(tag_choice_container)
+                        tag_div_parents.append(tag_choice_container)
 
-                tag_div_sg.append(tag_div_parents)
+                    tag_div_sg.append(tag_div_parents)
 
                 if "thickness" in subgroups:
 
@@ -271,7 +274,7 @@ def set_groups():
                     tag_div_thickness["class"] = "thickness_choice"
                     tag_div_thickness_header = soup.new_tag("span")
                     tag_div_thickness_header["class"] = "choice_header"
-                    tag_div_thickness_header.append(u"Толщина стали")
+                    tag_div_thickness_header.append(subgroups["names"][0])
                     tag_div_thickness.append(tag_div_thickness_header)
 
                     for thickness in subgroups["thickness"]:
@@ -279,12 +282,13 @@ def set_groups():
                         tag_choice_container["class"] = "choice_container"
 
                         tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["class"] = "sidebar_checkbox"
                         tag_checkbox["type"] = "checkbox"
-                        tag_checkbox["name"] = "th_{0}".format(thickness.decode("utf-8"))
-                        tag_checkbox["id"] = "th_{0}".format(thickness.decode("utf-8"))
+                        tag_checkbox["name"] = u"th_{0}".format(thickness.decode("utf-8"))
+                        tag_checkbox["id"] = u"th_{0}".format(thickness.decode("utf-8"))
 
                         tag_checkbox_label = soup.new_tag("label")
-                        tag_checkbox_label["for"] = "th_{0}".format(thickness.decode("utf-8"))
+                        tag_checkbox_label["for"] = u"th_{0}".format(thickness.decode("utf-8"))
                         tag_checkbox_label.append(thickness.decode("utf-8"))
 
                         tag_choice_container.append(tag_checkbox)
@@ -301,7 +305,7 @@ def set_groups():
 
                     tag_div_diameter_header = soup.new_tag("span")
                     tag_div_diameter_header["class"] = "choice_header"
-                    tag_div_diameter_header.append(u"Внешний диаметр")
+                    tag_div_diameter_header.append(subgroups["names"][1])
                     tag_div_diameter.append(tag_div_diameter_header)
 
                     for diameter in subgroups["diameter"]:
@@ -309,12 +313,13 @@ def set_groups():
                         tag_choice_container["class"] = "choice_container"
 
                         tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["class"] = "sidebar_checkbox"
                         tag_checkbox["type"] = "checkbox"
-                        tag_checkbox["name"] = "di_{0}".format(diameter.decode("utf-8"))
-                        tag_checkbox["id"] = "di_{0}".format(diameter.decode("utf-8"))
+                        tag_checkbox["name"] = u"di_{0}".format(diameter.decode("utf-8"))
+                        tag_checkbox["id"] = u"di_{0}".format(diameter.decode("utf-8"))
 
                         tag_checkbox_label = soup.new_tag("label")
-                        tag_checkbox_label["for"] = "di_{0}".format(diameter.decode("utf-8"))
+                        tag_checkbox_label["for"] = u"di_{0}".format(diameter.decode("utf-8"))
                         tag_checkbox_label.append(diameter.decode("utf-8"))
 
                         tag_choice_container.append(tag_checkbox)
@@ -323,6 +328,37 @@ def set_groups():
                         tag_div_diameter.append(tag_choice_container)
 
                     tag_div_sg.append(tag_div_diameter)
+
+                if "height" in subgroups:
+
+                    tag_div_height = soup.new_tag("div")
+                    tag_div_height["class"] = "height_choice"
+
+                    tag_div_height_header = soup.new_tag("span")
+                    tag_div_height_header["class"] = "choice_header"
+                    tag_div_height_header.append(subgroups["names"][2])
+                    tag_div_height.append(tag_div_height_header)
+
+                    for height in subgroups["height"]:
+                        tag_choice_container = soup.new_tag("span")
+                        tag_choice_container["class"] = "choice_container"
+
+                        tag_checkbox = soup.new_tag("input")
+                        tag_checkbox["class"] = "sidebar_checkbox"
+                        tag_checkbox["type"] = "checkbox"
+                        tag_checkbox["name"] = u"he_{0}".format(height.decode("utf-8"))
+                        tag_checkbox["id"] = u"he_{0}".format(height.decode("utf-8"))
+
+                        tag_checkbox_label = soup.new_tag("label")
+                        tag_checkbox_label["for"] = u"he_{0}".format(height.decode("utf-8"))
+                        tag_checkbox_label.append(height.decode("utf-8"))
+
+                        tag_choice_container.append(tag_checkbox)
+                        tag_choice_container.append(tag_checkbox_label)
+
+                        tag_div_height.append(tag_choice_container)
+
+                    tag_div_sg.append(tag_div_height)
 
                 show_button = soup.new_tag("span")
                 show_button["class"] = "sungroup_show_button"

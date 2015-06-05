@@ -76,7 +76,7 @@ groups_params = {
         "Диаметр",
         "l"
     ],
-    "Лист горячекатанный": [
+    "Лист горячекатаный": [
         "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
@@ -106,7 +106,7 @@ groups_params = {
         "Ширина",
         "s"
     ],
-    "Лист рифлённый": [
+    "Лист рифлёный": [
         "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,
@@ -116,7 +116,7 @@ groups_params = {
         "Ширина",
         "s"
     ],
-    "Лист холоднокатанный": [
+    "Лист холоднокатаный": [
         "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
         1,

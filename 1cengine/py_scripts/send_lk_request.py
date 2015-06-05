@@ -44,7 +44,7 @@ msg = MIMEMultipart(
     Date=formatdate(localtime=True)
 )
 
-msg['Subject'] = Header("Зпрос на получение доступа к ЛК trimet.ru", "utf-8")
+msg['Subject'] = Header("Запрос на получение доступа к ЛК trimet.ru", "utf-8")
 
 # msg.set_charset("utf-8")
 
