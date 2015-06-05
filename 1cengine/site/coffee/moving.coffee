@@ -458,6 +458,7 @@ $(document).ready ->
                 get_item_table(html)
 
 
+
         # $.ajax
         #     type: "GET"
         #     url: "/1cengine/py_scripts/get_ncatalog_count_items.py"
@@ -625,3 +626,17 @@ $(document).ready ->
 
     $(".sidebar_checkbox").click ->
         exclude_parameters()
+
+    my_content = $('<a href=# onClick="$(\'.sungroup_show_button\').click(); return false">Выбрать</a>')
+
+    $(".sidebar_checkbox").tooltipster({
+        content: my_content,
+        interactive: true,
+        animation: 'fade',
+        delay: 200,
+        position: 'right',
+        offsetX: 100,
+        timer: 3000,
+        trigger: "click",
+        theme: "tooltipster-my"
+    })

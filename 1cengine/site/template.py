@@ -224,7 +224,7 @@ def set_groups():
         tag_span_name.append(group[0].decode("utf-8"))
         tag_li.append(tag_span_name)
 
-        if c_catalog is not None and c_catalog in group[0].decode("utf-8"):
+        if c_catalog is not None and c_catalog == group[0].decode("utf-8"):
             tag_li["class"] = "main_group active_group"
 
             subgroups = get_item_group.get_subgroups(group[1].decode("utf-8"))
@@ -368,6 +368,9 @@ def set_groups():
 
                 tag_li.append(tag_div_sg)
 
+        elif c_catalog is not None:
+            tag_li["class"] = "main_group"
+            tag_li["style"] = "display:none"
         else:
             tag_li["class"] = "main_group"
 

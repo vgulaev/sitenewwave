@@ -207,6 +207,113 @@ class ResultTable():
         return self.items_list
 
 
+    def get_items_by_group_name(self, offset=0, limit=20, params={}):
+
+        connector = myDBC("catalog")
+        connector.dbConnect()
+
+        is_optional_length_query = """
+            SELECT `char_price`
+            FROM `site_group`
+            WHERE `name`='{0}'
+        """.format(self.group_name)
+
+        r = connector.dbExecute(is_optional_length_query)
+        opt_len = False
+        for line in r:
+            if line[0] == 0:
+                opt_len = True
+
+        if opt_len:
+            query = """
+                SELECT `item`.`name`, `item`.`name`, `item`.`ed_izm`,
+                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `item`.`hash`,
+                    `item_price`.`in_stock`, `site_group`.`img_url`
+                FROM `item`, `item_price`, `price_type`,
+                    `item_parent`, `site_group`
+                WHERE `site_group`.`name`='{0}'
+                    AND `item`.`id` IN (
+                        SELECT * FROM (
+                            SELECT DISTINCT `item`.`id`
+                            FROM `item`, `item_parent`, `site_group`
+                            WHERE `site_group`.`name`='{0}'
+                                AND `item`.`item_parent_ref`=`item_parent`.`id`
+                                AND `site_group`.`id`=`item`.`site_group_ref`
+                                ORDER BY `item_parent`.`name`, `item`.`name` limit {1},{2}
+                        ) as `id`
+                    )
+                    AND `item_price`.`item_ref`=`item`.`id`
+                    AND `item_price`.`is_char`='0'
+                    AND `item_price`.`price_type_ref`=`price_type`.`id`
+                    AND `item_parent`.`id` = `item`.`item_parent_ref`
+                    AND `site_group`.`id`=`item`.`site_group_ref`
+                    ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
+            """.format(self.group_name, offset, limit)
+        else:
+            query = """
+                SELECT `item`.`name`, `char`.`name`, `item`.`ed_izm`,
+                    `item_price`.`price`, `price_type`.`name`, `item`.`hash`,
+                    `item_parent`.`name`, `item_price`.`is_char`, `char`.`hash`,
+                    `item_price`.`in_stock`, `site_group`.`img_url`,
+                    `price_type`.`id`
+                FROM `item`, `char`, `item_price`, `price_type`,
+                    `item_parent`, `site_group`
+                WHERE `site_group`.`name`='{0}'
+                    AND `item`.`id` IN (
+                        SELECT * FROM (
+                            SELECT DISTINCT `item`.`id`
+                            FROM `item`, `item_parent`, `site_group`
+                            WHERE `site_group`.`name`='{0}'
+                                AND `item`.`item_parent_ref`=`item_parent`.`id`
+                                AND `site_group`.`id`=`item`.`site_group_ref`
+                                ORDER BY `item_parent`.`name`, `item`.`name` LIMIT {1},{2}
+                        ) as `id`
+                    )
+                    AND `char`.`item_ref`=`item`.`id`
+                    AND `item_price`.`item_ref`=`char`.`id`
+                    AND `item_price`.`is_char`='1'
+                    AND `item_price`.`price_type_ref`=`price_type`.`id`
+                    AND `item_parent`.`id` = `item`.`item_parent_ref`
+                    AND `site_group`.`id`=`item`.`site_group_ref`
+                    ORDER BY `item_parent`.`name`, `item`.`name`, `item_price`.`price` DESC
+            """.format(self.group_name, offset, limit)
+
+
+        print query
+
+        r = connector.dbExecute(query)
+
+
+        for line in r:
+
+            if line[6] in self.items_list:
+                _item_list = self.items_list[line[6]]
+            else:
+                _item_list = self.items_list[line[6]] = {}
+
+            if line[0] in _item_list:
+                item = _item_list[line[0]]
+            else:
+                item = Item(line[0])
+                item.unit = line[2]
+                item.hash = line[5]
+                item.img_url = line[10]
+
+                _item_list[line[0]] = item
+
+            if line[7] == 1:
+                item.is_char_price = True
+                char = Char(line[1])
+                char.hash = line[8]
+                item.add_char(line[1], char)
+                item.add_price(line[4], line[3], line[9], line[1])
+            elif line[7] == 0:
+                item.is_char_price = False
+                item.add_price(line[4], line[3], line[9])
+
+        return self.items_list
+
 
     def get_items(self, offset=0, limit=20, params={}):
 
@@ -358,7 +465,7 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
     rt = ResultTable(term.encode("utf-8"))
 
     if search_flag:
-        groups = rt.get_search_items(offset, limit)
+        groups = rt.get_items_by_group_name(offset, limit)
     else:
         groups = rt.get_items(offset, limit, params)
 

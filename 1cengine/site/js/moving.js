@@ -423,7 +423,7 @@
   };
 
   $(document).ready(function() {
-    var c_url, is_empty, item, name, things;
+    var c_url, is_empty, item, my_content, name, things;
     $.blockUI.defaults.css.borderRadius = '10px';
     $.blockUI.defaults.fadeIn = 100;
     $.blockUI.defaults.fadeOut = 100;
@@ -614,8 +614,20 @@
     $(".sungroup_show_button").click(function() {
       return get_parameters();
     });
-    return $(".sidebar_checkbox").click(function() {
+    $(".sidebar_checkbox").click(function() {
       return exclude_parameters();
+    });
+    my_content = $('<a href=# onClick="$(\'.sungroup_show_button\').click(); return false">Выбрать</a>');
+    return $(".sidebar_checkbox").tooltipster({
+      content: my_content,
+      interactive: true,
+      animation: 'fade',
+      delay: 200,
+      position: 'right',
+      offsetX: 100,
+      timer: 3000,
+      trigger: "click",
+      theme: "tooltipster-my"
     });
   });
 
