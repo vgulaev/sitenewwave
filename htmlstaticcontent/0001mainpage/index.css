@@ -45,7 +45,7 @@ input, select, textarea, table, form { font: 1em Arial,Helvetica,sans-serif; }
 #cont1 .obj-catalog3 li { font-size: 0.96em; line-height: 1.7; }
 #main .obj-ulinks p { font-size: 0.85em; line-height: 1.7em; }
 #main .obj-ulinks h2 { font-size: 156%; }
-#main .obj-ulinks2 { font-size: 0.9em; line-height: 1.6; }
+#main .obj-ulinks2 { font-size: 10pt; line-height: 1.6; margin-bottom: 15px; }
 .input-field { font-size: 0.8em; }
 .input-field textarea, .input-field select, .input-field input { font-size: 1.1em; line-height: 1.2; }
 .fleft { float: left; }
