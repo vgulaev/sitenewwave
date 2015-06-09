@@ -56,7 +56,7 @@ groups_params = {
         "Ширина",
         "l"
     ],
-    "Комплектующие": [
+    "Комплектующие для кровли и фасада": [
         "/1cengine/site/images/eye_pic/default.png",
         0,
         0,
@@ -106,6 +106,16 @@ groups_params = {
         "Ширина",
         "s"
     ],
+    "Лист оцинкованный": [
+        "/1cengine/site/images/eye_pic/list_stalnoy.png",
+        0,
+        1,
+        0,
+        "Высота",
+        "Толщина",
+        "Ширина",
+        "s"
+    ],
     "Лист рифлёный": [
         "/1cengine/site/images/eye_pic/list_stalnoy.png",
         1,
@@ -128,9 +138,9 @@ groups_params = {
     ],
     "Металлосайдинг": [
         "/1cengine/site/images/eye_pic/metallosajding.png",
-        1,
-        1,
-        1,
+        0,
+        0,
+        0,
         "Высота",
         "Толщина",
         "Ширина",

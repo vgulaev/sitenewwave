@@ -54,6 +54,8 @@ class Item:
         if self.item_parent_short != "":
             self.item_parent = self.item_parent_short
 
+        if self.item_unit == "рул":
+            self.item_unit = "шт"
 
         self.optional_length = False
         self.not_char = False
