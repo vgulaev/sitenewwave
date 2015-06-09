@@ -51,7 +51,9 @@
       if (index === -1) {
         this._item_list.push(item);
         this._sum = ((+item.final_price) + (+this._sum)).toFixed(2);
+        console.log(item.ed_izm);
         if (item.ed_izm === "т") {
+          console.log(1);
           this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
         }
         if (item.ed_izm === "пог. м") {
@@ -81,12 +83,22 @@
       if (index > -1) {
         this._sum = 0;
         this._total_weight = 0;
+        this._total_running_meter = 0;
         ref = this._item_list;
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           elem = ref[i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
-          results.push(this._total_weight = ((+elem.buy_weight) + (+this._total_weight)).toFixed(3));
+          console.log(elem.ed_izm);
+          if (elem.ed_izm === "т") {
+            console.log(2);
+            this._total_weight = (parseFloat(+elem.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
+          }
+          if (elem.ed_izm === "пог. м") {
+            results.push(this._total_running_meter = (parseFloat(elem.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3));
+          } else {
+            results.push(void 0);
+          }
         }
         return results;
       }
@@ -108,12 +120,14 @@
         for (i = 0, len = ref.length; i < len; i++) {
           elem = ref[i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
-        }
-        if (item.ed_izm === "т") {
-          this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
-        }
-        if (item.ed_izm === "пог. м") {
-          this._total_running_meter = (parseFloat(item.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3);
+          console.log(item.ed_izm);
+          if (item.ed_izm === "т") {
+            console.log(3);
+            this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
+          }
+          if (item.ed_izm === "пог. м") {
+            this._total_running_meter = (parseFloat(item.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3);
+          }
           this.on_weight_change_handler(this._total_weight);
           this.on_running_meter_change_handler(this._total_running_meter);
           this.on_active_price_measured_change_handler();
@@ -150,7 +164,7 @@
           };
         })(this));
       }
-      nds = ((this._sum / 100) * 18).toFixed(2);
+      nds = ((this._sum * 18) / 118).toFixed(2);
       $("#SumGoods").html(this._sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
       $("#CountAll").html(this._total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
       $("#NDSAll").html(nds);
@@ -161,7 +175,7 @@
 
     MyBasket.create_row = function(item) {
       var count_td, count_unit_td, nds, price_td, row, sum_td;
-      nds = ((item.final_price / 100) * 18).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
+      nds = ((item.final_price * 18) / 118).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");
       count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ",");

@@ -31,7 +31,9 @@ class App.MyBasket
         if index is -1
             @_item_list.push item
             @_sum = ( (+item.final_price) + (+@_sum) ).toFixed(2)
+            console.log(item.ed_izm)
             if item.ed_izm is "т"
+                console.log(1)
                 @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
             if item.ed_izm is "пог. м"
                 @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
@@ -87,9 +89,16 @@ class App.MyBasket
         if index > -1
             @_sum = 0
             @_total_weight = 0
+            @_total_running_meter = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
-                @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
+                console.log(elem.ed_izm)
+                if elem.ed_izm is "т"
+                    console.log(2)
+                    @_total_weight = ( parseFloat(+elem.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
+                if elem.ed_izm is "пог. м"
+                    @_total_running_meter = ( parseFloat(elem.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
+                # @_total_weight = ( (+elem.buy_weight) + (+@_total_weight) ).toFixed(3)
 
             # @on_weight_change_handler(@_total_weight)
             # @change_basket()
@@ -115,10 +124,12 @@ class App.MyBasket
             @_total_running_meter = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
-            if item.ed_izm is "т"
-                @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
-            if item.ed_izm is "пог. м"
-                @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
+                console.log(item.ed_izm)
+                if item.ed_izm is "т"
+                    console.log(3)
+                    @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
+                if item.ed_izm is "пог. м"
+                    @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
 
 
                 # @change_basket()
@@ -151,7 +162,7 @@ class App.MyBasket
 
                 # @change_basket()
 
-        nds = ( ( @_sum / 100 ) * 18 ).toFixed(2)
+        nds = ( ( @_sum * 18 ) / 118 ).toFixed(2)
         $("#SumGoods").html(@_sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",","))
         $("#CountAll").html(@_total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","))
         $("#NDSAll").html(nds)
@@ -163,7 +174,7 @@ class App.MyBasket
 
 
     @create_row: (item) ->
-        nds = ( ( item.final_price / 100 ) * 18 ).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
+        nds = ( ( item.final_price * 18 ) / 118 ).toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         price_td = item.price_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         sum_td = item.final_price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")
         count_td = item.buy_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",",")

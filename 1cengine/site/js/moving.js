@@ -474,7 +474,8 @@
         async: true,
         data: "term=" + encodeURIComponent(value) + "",
         success: function(html) {
-          return get_item_table(html);
+          get_item_table(html);
+          return $(".menu_back_button").click();
         }
       });
     });

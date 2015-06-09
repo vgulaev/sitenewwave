@@ -456,6 +456,7 @@ $(document).ready ->
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 get_item_table(html)
+                $(".menu_back_button").click()
 
 
 
