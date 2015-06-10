@@ -109,7 +109,11 @@
     Item.prototype.change_buy_count = function(count) {
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
-      this.buy_weight = ((this.buy_length * this.weight * this.kf) / 1000).toFixed(3);
+      if (this.ed_izm === "пог. м" || this.ed_izm === "пог.м") {
+        this.buy_weight = (this.buy_length * this.weight * this.kf).toFixed(3);
+      } else {
+        this.buy_weight = ((this.buy_length * this.weight * this.kf) / 1000).toFixed(3);
+      }
       $(".buy_weight").removeClass("preloading");
       $(".buy_count").removeClass("preloading");
       return this.change_modal();
@@ -125,9 +129,15 @@
     Item.prototype.change_buy_weight = function(weight) {
       this.buy_weight = weight.replace(/,+/g, ".");
       if (this.is_measureable()) {
-        this.buy_length = ((this.buy_weight * 1000) / this.weight) / this.kf;
-        this.change_modal();
+        if (this.ed_izm === "пог. м" || this.ed_izm === "пог.м") {
+          this.buy_length = (this.buy_weight / this.weight) / this.kf;
+        } else {
+          this.buy_length = ((this.buy_weight * 1000) / this.weight) / this.kf;
+        }
         $(".buy_length").change();
+        if (this.ai_flag) {
+          this.change_buy_length(this.buy_length.toString());
+        }
       }
       return this.change_modal();
     };
@@ -145,6 +155,10 @@
               buy_square = (unit_square * this.buy_count).toFixed(3);
               $(".buy_square").html(buy_square);
             }
+          } else {
+            unit_square = parseFloat(this.char.replace(/,+/g, ".")) * parseFloat(this.width.replace(/,+/g, "."));
+            buy_square = (unit_square * this.buy_count).toFixed(3);
+            $(".buy_square").html(buy_square);
           }
         }
       }
@@ -177,7 +191,7 @@
       if (this.ed_izm === "т") {
         price_index = App.MyBasket._active_price_measured;
       }
-      if (this.ed_izm === "пог. м") {
+      if (this.ed_izm === "пог. м" || this.ed_izm === "пог.м") {
         price_index = App.MyBasket._active_rm_price_measured;
       } else {
         price_index = 0;
@@ -250,12 +264,7 @@
           };
         })(this));
       }
-      $(".buy_weight").bind('change', (function(_this) {
-        return function(event) {
-          return _this.change_buy_weight($(".buy_weight").val());
-        };
-      })(this));
-      $(".buy_weight").bind('keyup', (function(_this) {
+      $(".buy_weight").bind('change keyup', (function(_this) {
         return function(event) {
           $(".buy_count").addClass("preloading");
           window.clearTimeout(time_out_handle);
@@ -310,6 +319,11 @@
               buy_square = (unit_square * this.buy_count).toFixed(3);
               l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
             }
+          } else {
+            unit_square = parseFloat(this.char.replace(/,+/g, ".")) * parseFloat(this.width.replace(/,+/g, "."));
+            buy_square = (unit_square * this.buy_count).toFixed(3);
+            $(".buy_square").html(buy_square);
+            l_input = "<div class=\"length_item_overall\">Общая площадь: <span class=\"buy_square\">" + buy_square + "</span></div>";
           }
         } else {
           l_input = "";

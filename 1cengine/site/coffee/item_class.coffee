@@ -119,7 +119,14 @@ class App.Item
         @buy_count = Math.ceil(count)
         @buy_length = (@buy_count * @length).toFixed(2)
 
-        @buy_weight = (( @buy_length * @weight * @kf ) / 1000 ).toFixed(3)
+        if @ed_izm is "пог. м" or @ed_izm is "пог.м"
+
+            @buy_weight = (( @buy_length * @weight * @kf )).toFixed(3)
+
+        else
+
+            @buy_weight = (( @buy_length * @weight * @kf ) / 1000 ).toFixed(3)
+
         $(".buy_weight").removeClass("preloading")
         $(".buy_count").removeClass("preloading")
         @change_modal()
@@ -131,19 +138,31 @@ class App.Item
         @change_modal()
         $(".buy_count").change()
 
+
     change_buy_weight: (weight) ->
         @buy_weight = weight.replace /,+/g, "."
 
-        if @is_measureable()
-            @buy_length = ( ( @buy_weight * 1000 ) / @weight ) / @kf
 
-            @change_modal()
+        if @is_measureable()
+
+            if @ed_izm is "пог. м" or @ed_izm is "пог.м"
+
+                @buy_length = ( ( @buy_weight ) / @weight ) / @kf
+
+            else
+
+                @buy_length = ( ( @buy_weight * 1000 ) / @weight ) / @kf
+
+            # @change_modal()
             $(".buy_length").change()
 
+            if @ai_flag
+                @change_buy_length(@buy_length.toString())
 
         @change_modal()
 
     change_modal: ->
+        # console.log(@ai_flag)
         if @is_measureable()
             $(".buy_count").val(@buy_count)
 
@@ -156,6 +175,11 @@ class App.Item
                         # alert(unit_square)
                         buy_square = (unit_square * @buy_count).toFixed(3)
                         $(".buy_square").html(buy_square)
+
+                else
+                    unit_square = parseFloat(@char.replace /,+/g, ".") * parseFloat(@width.replace /,+/g, ".")
+                    buy_square = (unit_square * @buy_count).toFixed(3)
+                    $(".buy_square").html(buy_square)
 
 
         if @is_kis
@@ -190,7 +214,7 @@ class App.Item
     set_price_weight: ->
         if @ed_izm is "т"
             price_index = App.MyBasket._active_price_measured
-        if @ed_izm is "пог. м"
+        if @ed_izm is "пог. м" or @ed_izm is "пог.м"
             price_index = App.MyBasket._active_rm_price_measured
         else
             price_index = 0
@@ -254,10 +278,10 @@ class App.Item
                 window.clearTimeout(time_out_handle)
                 time_out_handle = window.setTimeout (=> @change_buy_length($(".buy_length").html())), 1000
 
-        $(".buy_weight").bind 'change', (event) =>
-            @change_buy_weight($(".buy_weight").val())
+        # $(".buy_weight").bind 'change', (event) =>
+        #     @change_buy_weight($(".buy_weight").val())
 
-        $(".buy_weight").bind 'keyup', (event) =>
+        $(".buy_weight").bind 'change keyup', (event) =>
 
             $(".buy_count").addClass("preloading")
             window.clearTimeout(time_out_handle)
@@ -309,6 +333,12 @@ class App.Item
                         buy_square = (unit_square * @buy_count).toFixed(3)
 
                         l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
+                else
+                    unit_square = parseFloat(@char.replace /,+/g, ".") * parseFloat(@width.replace /,+/g, ".")
+                    buy_square = (unit_square * @buy_count).toFixed(3)
+                    $(".buy_square").html(buy_square)
+
+                    l_input = """<div class="length_item_overall">Общая площадь: <span class="buy_square">#{buy_square}</span></div>"""
             else
                 l_input = ""
         else

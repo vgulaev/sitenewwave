@@ -106,7 +106,7 @@ groups_params = {
         "Ширина",
         "s"
     ],
-    "Лист оцинкованный": [
+    "Лист плоский с полимерным покрытием": [
         "/1cengine/site/images/eye_pic/list_stalnoy.png",
         0,
         1,
