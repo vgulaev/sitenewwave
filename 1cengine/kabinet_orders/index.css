@@ -1277,7 +1277,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     display:none;
 }
 
-.my-info-theme {
+.my-info-theme, .my-info-theme-2 {
     border:1px solid #000;
     border-radius: 3px;
     width:130px;
@@ -1288,14 +1288,30 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
 
 }
 
-.my-info-theme .tooltipster-content{
+.my-info-theme .tooltipster-content, .my-info-theme-2 .tooltipster-content{
     padding:10px;
     text-align: center;
     font-size:9pt;
     line-height:12px;
 }
-.my-info-theme .tooltipster-content p{
+.my-info-theme .tooltipster-content p, .my-info-theme-2 .tooltipster-content p{
     margin-top:5px;
+}
+
+.my-info-theme-2 .tooltipster-content{
+    text-align: left;
+    line-height: 30px;
+    font-size:9pt;
+}
+
+.my-info-theme-2 .tooltipster-content a{
+    /*font-weight: 600;*/
+    text-decoration: none;
+    border-bottom: 1px dashed rgb(45, 54, 148);
+}
+
+.my-info-theme-2 .tooltipster-content a:hover{
+    border-bottom: none;
 }
 
 .manager_show{

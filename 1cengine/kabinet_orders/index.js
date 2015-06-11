@@ -45,7 +45,7 @@ function after_get_list(){
             delay: 200,
             position: 'right',
             trigger: "hover",
-            theme: "my-info-theme",
+            theme: "my-info-theme-2",
             interactive: true
         })
     })

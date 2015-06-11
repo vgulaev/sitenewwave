@@ -374,24 +374,28 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
 
         if order[7] is not None:
             download_links = """
-                Скачать:
+                 Скачать:
                     <a href='javascript:openLink(
                         \"""" + str(order[0]) + """\","pdf", "order")'
                         title="Скачать заказ в формате pdf"> заказ </a> 
                     <a href='javascript:openLink(
                         \"""" + str(order[7]) + """\","pdf", "rezka")'
-                        title="Скачать бланк резки в формате pdf"> бланк резки </a> 
-                    <a href='javascript:showTabPart(
-                        \"""" + str(order[0]) + """\")'> Показать список товаров </a>
+                        title="Скачать бланк резки в формате pdf"> бланк резки </a><br />
+                 <a href='javascript:showTabPart(
+                        \"""" + str(order[0]) + """\")'>Показать список товаров </a><br />
+                 <a href='https://trimet.ru/payment/"""+str(order[0])+"""' target='_blank'>Оплатить банковской картой </a>
             """
         else:
             download_links = """
-                Скачать:
+                 Скачать:
                     <a href='javascript:openLink(
                         \"""" + str(order[0]) + """\","pdf", "order")'
-                        title="Скачать заказ в формате pdf"> заказ </a> 
-                    <a href='javascript:showTabPart(
-                        \"""" + str(order[0]) + """\")'> Показать список товаров </a>
+                        title="Скачать заказ в формате pdf"> заказ </a>
+                <br />
+                 <a href='javascript:showTabPart(
+                        \"""" + str(order[0]) + """\")'>Показать список товаров </a>
+                <br />
+                 <a href='https://trimet.ru/payment/"""+str(order[0])+""" ' target='_blank'>Оплатить банковской картой </a>
             """
 
         orders = orders + """
