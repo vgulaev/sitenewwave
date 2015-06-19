@@ -71,6 +71,8 @@
       this.width = char_array[5];
       this.work_width = parseInt(char_array[6], 10) / 1000;
       this.ai_flag = char_array[7];
+      this.min_length = char_array[8];
+      this.max_length = char_array[9];
       i_hash = this.id.slice(0, this.id.indexOf(":"));
       i_class = this.id.slice(this.id.indexOf(":") + 1);
       if (i_hash === "0") {
@@ -242,10 +244,10 @@
 
     Item.prototype.change_char_length = function(n_length) {
       n_length = n_length.replace(/,+/g, ".");
-      if (n_length < 0.2) {
-        n_length = 0.2;
-      } else if (n_length > 6) {
-        n_length = 6;
+      if (n_length < this.min_length) {
+        n_length = this.min_length;
+      } else if (n_length > this.max_length) {
+        n_length = this.max_length;
       }
       this.weight = n_length;
       this.char = this.weight;

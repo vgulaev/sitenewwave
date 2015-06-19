@@ -33,7 +33,8 @@ def get_item_char(char_hash, item_hash, is_kis):
         query = """
             SELECT DISTINCT 0, 0, 0,
                 `item`.`ed_izm`,`item_price`.`in_stock`, `item`.`diameter`,
-                `item`.`work_width`, `site_group`.`ai_flag`
+                `item`.`work_width`, `site_group`.`ai_flag`,
+                `item`.`min_length`, `item`.`max_length`
             FROM `char`, `item`, `item_price`, `site_group`
             WHERE
                 `item`.`hash`='{1}'
@@ -47,7 +48,8 @@ def get_item_char(char_hash, item_hash, is_kis):
         query = """
             SELECT DISTINCT `char`.`length`, `char`.`weight`, `char`.`kf`,
                 `item`.`ed_izm`,`item_price`.`in_stock`, `item`.`diameter`,
-                `item`.`work_width`, `site_group`.`ai_flag`
+                `item`.`work_width`, `site_group`.`ai_flag`,
+                `item`.`min_length`, `item`.`max_length`
             FROM `char`, `item`, `item_price`, `site_group`
             WHERE
                 `char`.`hash`='{0}' AND `item`.`hash`='{1}'
@@ -74,7 +76,8 @@ def get_item_char(char_hash, item_hash, is_kis):
     for row in r:
         r_string = str(row[0]) + "|" + str(row[1]) + "|" + str(row[2]) +\
             "|" + str(row[3]) + "|" + str(row[4]) + "|" + str(row[5]) +\
-            "|" + str(row[6]) + "|" + str(row[7])
+            "|" + str(row[6]) + "|" + str(row[7]) + "|" + str(row[8]) +\
+            "|" + str(row[9])
         print r_string
 
     return r_string

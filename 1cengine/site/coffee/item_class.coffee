@@ -68,6 +68,8 @@ class App.Item
         @width  = char_array[5]
         @work_width = parseInt(char_array[6], 10) / 1000
         @ai_flag = char_array[7]
+        @min_length = char_array[8]
+        @max_length = char_array[9]
         # alert(@work_width)
 
         i_hash = @id.slice 0, @id.indexOf(":")
@@ -269,10 +271,10 @@ class App.Item
 
     change_char_length: (n_length) ->
         n_length = n_length.replace /,+/g, "."
-        if n_length < 0.2
-            n_length = 0.2
-        else if n_length > 6
-            n_length = 6
+        if n_length < @min_length
+            n_length = @min_length
+        else if n_length > @max_length
+            n_length = @max_length
 
         @weight = n_length
         @char = @weight
