@@ -1779,6 +1779,63 @@ tr.iHeader{
     margin:10px;
 }
 
+.pm_choice_cont{
+    height: 80px;
+    width: 200px;
+    float: left;
+    /*border:1px dotted #21f7f0;*/
+    background-image: url("../images/pm_choice_arrows_l.png");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    font-size: 10pt;
+    padding-left: 30px;
+    padding-top:10px;
+}
+
+.set_cont{
+    border:1px solid #999999;
+    border-radius: 10px;
+    white-space: nowrap;
+    display: inline-block;
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+    line-height: 20px;
+}
+
+.set_cont span{
+    border:none;
+    background-color: rgba(255,255,255,0);
+    cursor: default;
+    color:#2D3694;
+    cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+.set_cont span:hover{
+    font-weight: 700;
+}
+
+.set_to_l.sc_active{
+    background-color: #2D3694;
+    border-right: 1px solid #999999;
+    border-radius: 8px;
+    color: #fff;
+    margin:1px;
+    text-decoration: none;
+    font-weight: 700;
+}
+.set_to_w.sc_active{
+    background-color: #2D3694;
+    border-left: 1px solid #999999;
+    border-radius: 8px;
+    color: #fff;
+    margin:1px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
 li.special_nav{
     background-color: #ccff00 !important;
     height: 100%;

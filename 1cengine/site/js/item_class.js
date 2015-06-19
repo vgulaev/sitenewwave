@@ -87,6 +87,12 @@
       } else {
         this.pi_flag = false;
       }
+      this.pm_select_flag = false;
+      if (this.ed_izm === "пог. м" || this.ed_izm === "пог.м") {
+        if (this.width !== "" && this.width !== 0) {
+          this.pm_select_flag = true;
+        }
+      }
       this.prices = [];
       obj = $("tr[lolid='" + i_class + "']");
       this.name = $(obj).find("span.billet_item_name").text();
@@ -109,13 +115,16 @@
     Item.prototype.change_buy_count = function(count) {
       this.buy_count = Math.ceil(count);
       this.buy_length = (this.buy_count * this.length).toFixed(2);
-      if (this.ed_izm === "пог. м" || this.ed_izm === "пог.м") {
+      if ((this.ed_izm === "пог. м" || this.ed_izm === "пог.м") && this.is_kis === false) {
         this.buy_weight = (this.buy_length * this.weight * this.kf).toFixed(3);
       } else {
         this.buy_weight = ((this.buy_length * this.weight * this.kf) / 1000).toFixed(3);
       }
       $(".buy_weight").removeClass("preloading");
       $(".buy_count").removeClass("preloading");
+      if (this.pm_select_flag) {
+        $(".wpm").removeClass("preloading");
+      }
       return this.change_modal();
     };
 
@@ -140,6 +149,17 @@
         }
       }
       return this.change_modal();
+    };
+
+    Item.prototype.change_wpm = function(wpm) {
+      this.buy_wpm = wpm.replace(/,+/g, ".");
+      if (this.work_width !== "") {
+        this.buy_count = Math.ceil(this.buy_wpm / this.work_width);
+      } else {
+        this.buy_count = Math.ceil(this.buy_wpm / this.width);
+      }
+      $(".buy_count").val(this.buy_count);
+      return $(".buy_count").change();
     };
 
     Item.prototype.change_modal = function() {
@@ -172,15 +192,30 @@
         $(".buy_square").html(buy_square);
       }
       $(".buy_weight").val(this.buy_weight);
+      if (this.pm_select_flag) {
+        if (this.work_width !== "") {
+          this.buy_wpm = (this.buy_count * this.work_width).toFixed(3);
+        } else {
+          this.buy_wpm = (this.buy_count * this.width).toFixed(3);
+        }
+        $(".wpm").val(this.buy_wpm);
+      }
       return this.change_modal_price();
     };
 
     Item.prototype.change_modal_price = function() {
+      var price_pm;
       this.set_price_weight();
       if (this.is_measureable()) {
         this.price_length = ((this.price_weight / 1000) * this.weight).toFixed(2);
         this.price_count = ((this.price_weight * this.buy_weight) / this.buy_count).toFixed(2);
         $(".price_count").html(this.price_count);
+        if (this.work_width !== "") {
+          price_pm = (1 / this.work_width * this.price_count).toFixed(2);
+        } else {
+          price_pm = (1 / this.width * this.price_count).toFixed(2);
+        }
+        $(".price_pm").html(price_pm);
       }
       $(".price_weight").html(this.price_weight);
       return this.set_final_price();
@@ -249,6 +284,9 @@
         $(".buy_count").bind('keyup', (function(_this) {
           return function(event) {
             $(".buy_weight").addClass("preloading");
+            if (_this.pm_select_flag) {
+              $(".wpm").addClass("preloading");
+            }
             window.clearTimeout(time_out_handle);
             return time_out_handle = window.setTimeout((function() {
               return _this.change_buy_count($(".buy_count").val());
@@ -284,6 +322,17 @@
           };
         })(this));
       }
+      if (this.pm_select_flag) {
+        $(".wpm").bind('change keyup', (function(_this) {
+          return function(event) {
+            $(".buy_count").addClass("preloading");
+            window.clearTimeout(time_out_handle);
+            return time_out_handle = window.setTimeout((function() {
+              return _this.change_wpm($(".wpm").val());
+            }), 1000);
+          };
+        })(this));
+      }
       this.change_modal_price();
       $(".add_to_basket").bind('click', (function(_this) {
         return function(event) {
@@ -297,11 +346,33 @@
           return $.unblockUI();
         };
       })(this));
-      return yaCounter23067595.reachGoal('OpenItem');
+      yaCounter23067595.reachGoal('OpenItem');
+      $(".set_to_w").bind('click', (function(_this) {
+        return function(event) {
+          $(".buy_weight").parent().hide();
+          $(".price_weight").hide();
+          $(".wpm").parent().show();
+          $(".price_pm").show();
+          $(".pm_choice_cont").css("background-image", "url('images/pm_choice_arrows_w.png')");
+          $(".set_to_w").addClass("sc_active");
+          return $(".set_to_l").removeClass("sc_active");
+        };
+      })(this));
+      return $(".set_to_l").bind('click', (function(_this) {
+        return function(event) {
+          $(".wpm").parent().hide();
+          $(".price_pm").hide();
+          $(".buy_weight").parent().show();
+          $(".price_weight").show();
+          $(".pm_choice_cont").css("background-image", "url('images/pm_choice_arrows_l.png')");
+          $(".set_to_l").addClass("sc_active");
+          return $(".set_to_w").removeClass("sc_active");
+        };
+      })(this));
     };
 
     Item.prototype.get_modal = function() {
-      var buy_square, c_input, c_izm, ch_arr, cl_input, edizm_dict, hide_opt, l_input, message, modal_link, set_length, unit_square, w_input;
+      var buy_square, c_input, c_izm, ch_arr, cl_input, edizm_dict, hide_opt, l_input, message, modal_link, pmcc, ppm, set_length, unit_square, w_input, wpm;
       if (App.MyBasket.is_in_basket(this)) {
         modal_link = '<a class="change_in_basket" href="javascript:void(0)">Изменить</a>';
       } else {
@@ -360,7 +431,16 @@
         "пог. м": "Метры пог."
       };
       c_izm = edizm_dict["" + this.ed_izm];
-      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th class=\"" + hide_opt + "\">Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td class=\"" + hide_opt + "\">\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count " + hide_opt + "\">0</td>\n<td class=\"price_weight\">0</td>\n</tr>\n\n</table>\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n<span class=\"popUpContinue\">" + modal_link + "</span>\n</div>";
+      if (this.pm_select_flag) {
+        wpm = "<td class=\"wpm_td\" style=\"display:none;\">\n    <input class=\"wpm\" patter=\"[0-9,\\.]+\" value=\"" + this.buy_wpm + "\" />\n</td>";
+        ppm = "<td class=\"price_pm\" style=\"display:none;\">0</td>";
+        pmcc = "<div class=\"pm_choice_cont\">\n    Расчет пог. метров по\n    <span class=\"set_cont\">\n        <span class=\"set_to_l sc_active\">длине</span>\n        <span class=\"set_to_w\">ширине</span>\n    </span>\n</div>";
+      } else {
+        wpm = "";
+        ppm = "";
+        pmcc = "";
+      }
+      message = "<div class=\"buy_item_div\">\n<span class=\"close_button\">x</span>\n<span class=\"buy_item_name\">" + this.name + "</span> <br />\n<span class=\"buy_item_name\">Длина: " + this.char + "</span>\n" + set_length + "\n<table class=\"buy_item_table\">\n<tr class=\"buy_item_head\">\n<th></th>\n\n<th class=\"" + hide_opt + "\">Штуки</th>\n<th>" + c_izm + "</th>\n</tr>\n<tr class=\"buy_item_count\">\n<td>Количество</td>\n\n<td class=\"" + hide_opt + "\">\n    " + c_input + "\n</td>\n<td>\n    " + w_input + "\n</td>\n" + wpm + "\n</tr>\n<tr class=\"buy_item_price\">\n<td>Стоимость за ед.</td>\n<td class=\"price_count " + hide_opt + "\">0</td>\n<td class=\"price_weight\">0</td>\n" + ppm + "\n</tr>\n\n</table>\n\n\n" + pmcc + "\n<div class=\"buy_item_overall\">Итого: <span class=\"final_price\"></span></div>\n" + l_input + "\n<div class=\"basket_item_overall\">*В корзине товар на: <span class=\"basket_price\">" + App.MyBasket._sum + "</span></div>\n\n<span class=\"popUpContinue\">" + modal_link + "</span>\n        </div>";
       return message;
     };
 

@@ -87,6 +87,14 @@ class App.Item
         else
             @pi_flag = false
 
+        @pm_select_flag = false
+
+        if @ed_izm is "пог. м" or @ed_izm is "пог.м"
+            if @width != "" and @width != 0
+                @pm_select_flag = true
+                # console.log (@pm_select_flag)
+                # console.log (@width)
+
         # alert(i_class)
         # alert(@is_kis)
         @prices = []
@@ -119,7 +127,7 @@ class App.Item
         @buy_count = Math.ceil(count)
         @buy_length = (@buy_count * @length).toFixed(2)
 
-        if @ed_izm is "пог. м" or @ed_izm is "пог.м"
+        if ( @ed_izm is "пог. м" or @ed_izm is "пог.м" ) and @is_kis is false
 
             @buy_weight = (( @buy_length * @weight * @kf )).toFixed(3)
 
@@ -127,8 +135,11 @@ class App.Item
 
             @buy_weight = (( @buy_length * @weight * @kf ) / 1000 ).toFixed(3)
 
+
         $(".buy_weight").removeClass("preloading")
         $(".buy_count").removeClass("preloading")
+        if @pm_select_flag
+            $(".wpm").removeClass("preloading")
         @change_modal()
 
     change_buy_length: (length) ->
@@ -160,6 +171,18 @@ class App.Item
                 @change_buy_length(@buy_length.toString())
 
         @change_modal()
+
+    change_wpm: (wpm) ->
+
+        @buy_wpm = wpm.replace /,+/g, "."
+
+        if @work_width != ""
+            @buy_count = Math.ceil(@buy_wpm / @work_width)
+        else
+            @buy_count = Math.ceil(@buy_wpm / @width)
+
+        $(".buy_count").val(@buy_count)
+        $(".buy_count").change()
 
     change_modal: ->
         # console.log(@ai_flag)
@@ -194,6 +217,16 @@ class App.Item
 
         $(".buy_weight").val(@buy_weight)
 
+        if @pm_select_flag
+            # console.log @work_width
+            if @work_width != ""
+                @buy_wpm = (@buy_count * @work_width).toFixed(3)
+                # console.log @buy_count+", "+@work_width
+            else
+                @buy_wpm = (@buy_count * @width).toFixed(3)
+
+            $(".wpm").val(@buy_wpm)
+
 
         @change_modal_price()
 
@@ -206,6 +239,13 @@ class App.Item
 
             # $(".price_length").html(@price_length)
             $(".price_count").html(@price_count)
+
+            if @work_width != ""
+                price_pm = (1 / @work_width * @price_count).toFixed(2)
+            else
+                price_pm = (1 / @width * @price_count).toFixed(2)
+
+            $(".price_pm").html(price_pm)
 
         $(".price_weight").html(@price_weight)
 
@@ -270,6 +310,8 @@ class App.Item
 
             $(".buy_count").bind 'keyup', (event) =>
                 $(".buy_weight").addClass("preloading")
+                if @pm_select_flag
+                    $(".wpm").addClass("preloading")
                 window.clearTimeout(time_out_handle)
                 time_out_handle = window.setTimeout (=> @change_buy_count($(".buy_count").val())), 1000
 
@@ -294,6 +336,12 @@ class App.Item
                 time_out_handle = window.setTimeout (=> @change_char_length($(".char_length").val())), 1000
                 # @change_char_length($(".char_length").val())
 
+        if @pm_select_flag
+            $(".wpm").bind 'change keyup', (event) =>
+                $(".buy_count").addClass("preloading")
+                window.clearTimeout(time_out_handle)
+                time_out_handle = window.setTimeout (=> @change_wpm($(".wpm").val())), 1000
+
         @change_modal_price()
 
         $(".add_to_basket").bind 'click', (event) =>
@@ -310,6 +358,28 @@ class App.Item
 
 
         yaCounter23067595.reachGoal('OpenItem');
+
+        $(".set_to_w").bind 'click', (event) =>
+            $(".buy_weight").parent().hide()
+            $(".price_weight").hide()
+
+            $(".wpm").parent().show()
+            $(".price_pm").show()
+
+            $(".pm_choice_cont").css("background-image", "url('images/pm_choice_arrows_w.png')")
+            $(".set_to_w").addClass("sc_active")
+            $(".set_to_l").removeClass("sc_active")
+
+        $(".set_to_l").bind 'click', (event) =>
+            $(".wpm").parent().hide()
+            $(".price_pm").hide()
+
+            $(".buy_weight").parent().show()
+            $(".price_weight").show()
+
+            $(".pm_choice_cont").css("background-image", "url('images/pm_choice_arrows_l.png')")
+            $(".set_to_l").addClass("sc_active")
+            $(".set_to_w").removeClass("sc_active")
 
 
     get_modal: ->
@@ -381,6 +451,28 @@ class App.Item
         c_izm = edizm_dict["#{@ed_izm}"]
 
 
+        if @pm_select_flag
+            wpm = """
+                <td class="wpm_td" style="display:none;">
+                    <input class="wpm" patter="[0-9,\\.]+" value="#{@buy_wpm}" />
+                </td>
+            """
+            ppm ="""
+                <td class="price_pm" style="display:none;">0</td>
+            """
+            pmcc = """
+                <div class="pm_choice_cont">
+                    Расчет пог. метров по
+                    <span class="set_cont">
+                        <span class="set_to_l sc_active">длине</span>
+                        <span class="set_to_w">ширине</span>
+                    </span>
+                </div>
+            """
+        else
+            wpm = ""
+            ppm = ""
+            pmcc = ""
 
 
         message = """
@@ -405,18 +497,24 @@ class App.Item
         <td>
             #{w_input}
         </td>
+        #{wpm}
         </tr>
         <tr class="buy_item_price">
         <td>Стоимость за ед.</td>
         <td class="price_count #{hide_opt}">0</td>
         <td class="price_weight">0</td>
+        #{ppm}
         </tr>
 
         </table>
+
+
+        #{pmcc}
         <div class="buy_item_overall">Итого: <span class="final_price"></span></div>
         #{l_input}
         <div class="basket_item_overall">*В корзине товар на: <span class="basket_price">#{App.MyBasket._sum}</span></div>
+
         <span class="popUpContinue">#{modal_link}</span>
-        </div>""";
+                </div>""";
 
         message
