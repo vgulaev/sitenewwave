@@ -697,6 +697,42 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
 
             item_billet_table_upper_img_td.append(item_billet_table_upper_img)
 
+            if "RAL" in item.name:
+
+                ral_lib_name = "ral_dict"
+                ral_lib_path = "structures/ral_dict.py"
+                ral = imp.load_source(
+                    ral_lib_name,
+                    _PATH_ + "/" + ral_lib_path
+                )
+
+                rd = ral.ral
+
+                import re
+
+                r = re.search('(?<=RAL )\d\d\d\d', item.name)
+                rn = r.group(0)
+
+
+                drop = soup.new_tag("div")
+                drop["class"] = "drop"
+                drop["ral"] = rn
+                drop["style"] = "box-shadow: inset -3px -3px 4px 12px #" + rd[rn]
+
+                glow = soup.new_tag("div")
+                glow["class"] = "glow"
+                glow2 = soup.new_tag("div")
+                glow2["class"] = "glow2"
+                glow3 = soup.new_tag("div")
+                glow3["class"] = "glow3"
+
+                drop.append(glow)
+                drop.append(glow2)
+                drop.append(glow3)
+
+                item_billet_table_upper_img_td.append(drop)
+
+
             item_billet_table_upper_name_td = soup.new_tag("td")
             item_billet_table_upper_name_td["class"] = "billet_item_name_td"
             item_billet_table_upper_name_td.append(item_billet_name_span)
