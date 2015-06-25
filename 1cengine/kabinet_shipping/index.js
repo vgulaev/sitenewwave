@@ -62,6 +62,7 @@ function pass(){
     // alert(elements)
     $("#shippingsContainer").empty()
     $("#shippingsContainer").append(elements)
+    after_get_list()
 
     if( $(".date_arrow").attr("way") == "down" ){
         $(".date_arrow").attr("way", "up")
