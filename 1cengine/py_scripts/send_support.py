@@ -6,6 +6,7 @@ import smtplib
 import cgi
 import cgitb; cgitb.enable()
 import os
+import Cookie
 
 # from mail_addresses import *
 
