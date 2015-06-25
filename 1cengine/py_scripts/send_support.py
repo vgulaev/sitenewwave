@@ -50,23 +50,29 @@ from email.mime.text import MIMEText
 form = cgi.FieldStorage()
 
 if form.has_key("text"):
-    from_sender = form["text"].value
+    msg = form["text"].value
 else:
-    from_sender = ""
+    msg = ""
+
+if form.has_key("href"):
+    href = form["href"].value
+else:
+    href = ""
 
 
 user = get_user_info()
 
 text = """Пришло обращение в техподдержку с сайта trimet.ru\n
-Текст сообщение: \n --- \n"""+from_sender+""" \n --- \n
-Информация по пользователю: \n""" + user + """
+Текст сообщение: \n --- \n"""+msg+""" \n --- \n
+Запрос пришёл со страницы: """ + href + """\n
+Информация по пользователю: \n""" + str(user) + """
 """
 
 msg = MIMEText(text, "plain", "utf-8")
 
 sender = "webmaster@trimet.ru"
 # receiver = [main_mail, market_mail, admin_mail1, admin_mail2]
-receiver = ["fedorov@trimet.ru"]
+receiver = ["fedorov@trimet.ru", "parshin@trimet.ru", "webmaster@trimet.ru"]
 msg['Subject'] = 'Запрос в техподдрежку из личного кабинета сайта trimet.ru'
 msg['From'] = sender
 msg['To'] =  ', '.join( receiver )

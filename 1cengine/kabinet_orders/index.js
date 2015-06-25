@@ -221,7 +221,7 @@ function send_support(){
             type: "POST",
             url: "/1cengine/py_scripts/send_support.py",
             async: true,
-            data: "text=" + $(".ss_textarea").html(),
+            data: "text=" + $(".ss_textarea").html()+"&href="+window.location.pathname,
             success: function(html){
                 console.log(html)
                 $.unblockUI();
