@@ -5,6 +5,7 @@
 import smtplib
 import cgi
 import cgitb; cgitb.enable()
+import os
 
 # from mail_addresses import *
 

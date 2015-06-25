@@ -223,7 +223,7 @@ function send_support(){
             async: true,
             data: "text=" + $(".ss_textarea").html(),
             success: function(html){
-                console.log("sent")
+                console.log(html)
                 $.unblockUI();
             }
         })
