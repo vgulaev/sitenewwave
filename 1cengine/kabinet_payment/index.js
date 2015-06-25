@@ -148,7 +148,7 @@ function send_support(){
 
     $.blockUI({
         message: "\
-        <span class='close_button'>x</span>\
+        <span class='p_close_button'>x</span>\
         <div>\
             <textarea class='ss_textarea' placeholder='Введите ваше сообщение здесь'></textarea>\
             <span class='send_support_button'>Отправить сообщение в тех.поддержку</span>\
@@ -175,7 +175,7 @@ function send_support(){
         }
     });
 
-    $(".close_button").click(function() {
+    $(".p_close_button").click(function() {
         $.unblockUI();
     });
 

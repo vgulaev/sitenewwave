@@ -1453,7 +1453,7 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     background: transparent -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0%;
 }
 
-.close_button{
+.p_close_button{
     float:right;
     /*color:#a23;*/
     color:#585858;
@@ -1474,6 +1474,6 @@ form,.more,.back,#sm,#bottom,#top,#header,#footer,#col1,#main2 #col3,#main3 #col
     box-shadow: inset 1px 1px 3px 2px rgba(215,215,215,0.9), inset -1px -1px 3px -1px rgba(0,0,0,0.7);
 }
 
-.close_button:hover{
+.p_close_button:hover{
     color:#a23;
 }

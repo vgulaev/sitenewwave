@@ -1220,3 +1220,57 @@ fieldset legend{
 	padding:0;
 	background: none;
 }
+
+.ss_textarea {
+    width: 430px;
+    padding: 10px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border: none;
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9);
+    height: 150px;
+    font-size: 9pt;
+    text-indent: 10px;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.send_support_button{
+    display: block;
+    height: 50px;
+    background-color: yellow;
+    margin-top: -3px;
+    line-height: 50px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+    font-size: 10pt;
+    font-weight: 700;
+    color:white;
+    background: transparent -moz-linear-gradient(center top , #2D3694 0%, #2D3694 47%, #2C337F 100%) repeat scroll 0% 0%;
+}
+
+.p_close_button{
+    float:right;
+    /*color:#a23;*/
+    color:#585858;
+    cursor: pointer;
+    /*padding-right:30px;*/
+    margin-right:-50px;
+    margin-top:-55px;
+    font-weight: 900;
+    font-size:10pt;
+    background-color:#bdbdbd;
+    border-radius:15px;
+    padding:5px;
+    width:15px;
+    height:15px;
+    line-height:14px;
+    text-align:center;
+    text-shadow: 1px 1px 2px white;
+    box-shadow: inset 1px 1px 3px 2px rgba(215,215,215,0.9), inset -1px -1px 3px -1px rgba(0,0,0,0.7);
+}
+
+.p_close_button:hover{
+    color:#a23;
+}
