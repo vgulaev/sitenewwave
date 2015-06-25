@@ -20,7 +20,7 @@ def get_user_info():
 
     python_lib_name = "user"
     user_lib = imp.load_source(
-        python_lib_name, lib_path + "/" + python_lib_name + ".py")
+        python_lib_name, _PATH_ + "/" + python_lib_name + ".py")
 
     if user_lib.__main__("check_SID()") is True:
         cookie = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
