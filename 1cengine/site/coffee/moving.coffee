@@ -329,6 +329,30 @@ get_item_table = (html) ->
             contentAsHTML: true
         })
 
+    $(".more_colors").each (index, element) =>
+        colors = $("#"+$(element).attr("ralid")).find(".r_c")
+        $(element).tooltipster({
+            content: colors,
+            animation: 'fade',
+            position: 'top',
+            trigger: "click",
+            theme: "tooltipster-my",
+            contentAsHTML: true,
+            interactive: true,
+            functionReady: ->
+                # console.log("span[ralid='"+$(element).attr("ralid")+"']")
+                c_ral = $(".tooltipster-content").find("span[ralid='"+$(element).attr("ralid")+"']")
+                c_ral.addClass("active_ral")
+
+                $(".tooltipster-content").find("span").click ->
+                    name = $(this).attr("ralid")
+                    o_ral = $(c_ral).attr("ralid")
+                    $(".#{o_ral}").hide()
+                    $(".#{name}").show()
+                    $(element).tooltipster('hide')
+
+        })
+
     $(".item_billet_select_char").change ->
         char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name")
         stock = $(this).parent().find($(".item_billet_select_char option:selected")).attr("stock")

@@ -349,6 +349,34 @@
         });
       };
     })(this));
+    $(".more_colors").each((function(_this) {
+      return function(index, element) {
+        var colors;
+        colors = $("#" + $(element).attr("ralid")).find(".r_c");
+        return $(element).tooltipster({
+          content: colors,
+          animation: 'fade',
+          position: 'top',
+          trigger: "click",
+          theme: "tooltipster-my",
+          contentAsHTML: true,
+          interactive: true,
+          functionReady: function() {
+            var c_ral;
+            c_ral = $(".tooltipster-content").find("span[ralid='" + $(element).attr("ralid") + "']");
+            c_ral.addClass("active_ral");
+            return $(".tooltipster-content").find("span").click(function() {
+              var name, o_ral;
+              name = $(this).attr("ralid");
+              o_ral = $(c_ral).attr("ralid");
+              $("." + o_ral).hide();
+              $("." + name).show();
+              return $(element).tooltipster('hide');
+            });
+          }
+        });
+      };
+    })(this));
     $(".item_billet_select_char").change(function() {
       var c_button, char, stock;
       char = $(this).parent().find($(".item_billet_select_char option:selected")).attr("name");

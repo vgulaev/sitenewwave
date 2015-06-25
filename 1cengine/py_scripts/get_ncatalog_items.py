@@ -385,7 +385,7 @@ class ResultTable():
                     {2}
                     {3}
                     {4}
-                    ORDER BY `item_parent`.`name`, `item`.`name` limit {5},{6}) as `id`
+                    ORDER BY `item_parent`.`name`, `item`.`name`) as `id`
                     )
                     AND `item_price`.`item_ref`=`item`.`id`
                     AND `item_price`.`is_char`='0'
@@ -475,6 +475,8 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
     result_table_tbody = soup.new_tag("tbody")
 
     result_table.append(result_table_tbody)
+
+    ral_items = {}
 
     odd=False
 
@@ -732,6 +734,39 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
 
                 item_billet_table_upper_img_td.append(drop)
 
+                ri_key = (item.name.replace(rn, ""), min_price)
+                if ri_key in ral_items:
+                    ral_span = soup.new_tag("span")
+                    ral_span["style"] = "background-color:#{0};".format(rd[rn])
+                    ral_span["ralid"] = item.hash
+                    ral_items[ri_key]["il"].append((rn, item.hash, item_billet_tr, item_list_tr))
+                    ral_items[ri_key]["rl"].append(ral_span)
+                    item_list_tr["style"] = "display:none;"
+
+                    more_colors = soup.new_tag("span")
+                    more_colors["class"] = "more_colors"
+                    more_colors["ralid"] = item.hash
+                    more_colors.append(u"Выбрать другой цвет ➚")
+                    item_billet_table_upper_img_td.append(more_colors)
+                else:
+                    ral_div = soup.new_tag("div")
+                    ral_div["class"] = "r_c"
+                    ral_span = soup.new_tag("span")
+                    ral_span["style"] = "background-color:#{0};".format(rd[rn])
+                    ral_span["ralid"] = item.hash
+                    ral_div.append(ral_span)
+
+                    ral_items[ri_key] = {
+                        "il": [(rn, item.hash, item_billet_tr, item_list_tr)],
+                        "rl": ral_div
+                    }
+
+                    more_colors = soup.new_tag("span")
+                    more_colors["class"] = "more_colors"
+                    more_colors["ralid"] = item.hash
+                    more_colors.append(u"Выбрать другой цвет ➚")
+                    item_billet_table_upper_img_td.append(more_colors)
+
 
             item_billet_table_upper_name_td = soup.new_tag("td")
             item_billet_table_upper_name_td["class"] = "billet_item_name_td"
@@ -812,6 +847,21 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
     # </table>
     # """
 
+    # print ral_items
+
+    if ral_items.__len__() > 0:
+
+        for key in ral_items:
+            if ral_items[key]["il"].__len__() > 1:
+                for i in ral_items[key]["il"]:
+                    itn = i[3].find(class_="itemName")
+                    n_str = itn.contents[0].replace(i[0], "")
+                    itn.contents[0].replace_with(n_str)
+                    itn.contents.append(ral_items[key]["rl"])
+            else:
+                for i in ral_items[key]["il"]:
+                    mc = i[2].find(class_="more_colors")
+                    mc.extract()
     return result_table
 
 form = cgi.FieldStorage()
