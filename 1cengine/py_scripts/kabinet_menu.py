@@ -24,7 +24,8 @@ menu_list = {
         2: ["/kabinet/shipping", "Мои отгрузки"],
         3: ["/kabinet/settlement", "Мои взаиморасчеты"],
         4: ["/1cengine/site/", "Создать новый заказ"],
-        5: ["/kabinet/personal", "Мои настройки"]
+        5: ["javascript:send_support()", "Написать в техподдержку"],
+        6: ["/kabinet/personal", "Мои настройки"]
     },
     "not-authorized": {
         0: ["authorization", "Авторизация"]
