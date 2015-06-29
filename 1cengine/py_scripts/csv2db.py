@@ -340,11 +340,11 @@ class Item:
 
         if self.char_price:
             if self.char_id != None:
-            self.cursor = conn.cursor()
-            self.cursor.execute('SET NAMES utf8;')
-            self.cursor.connection.autocommit(True)
-            self.insert_price()
-            self.cursor.close()
+                self.cursor = conn.cursor()
+                self.cursor.execute('SET NAMES utf8;')
+                self.cursor.connection.autocommit(True)
+                self.insert_price()
+                self.cursor.close()
         else:
             self.cursor = conn.cursor()
             self.cursor.execute('SET NAMES utf8;')
