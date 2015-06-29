@@ -232,9 +232,17 @@ class Item:
                 self.char_length
             )
 
-            self.cursor.execute(insert_text)
-            r = self.cursor.fetchall()
-            conn.commit()
+            try:
+                self.cursor.execute(insert_text)
+                r = self.cursor.fetchall()
+                conn.commit()
+            except:
+                print(
+                    u"Problems with char: {0}; item_ref: {1}".format(
+                        self.item_char.decode("utf-8-sig"),
+                        self.item_name.decode("utf-8-sig")
+                    )
+                )
 
             return self.cursor.lastrowid
 
@@ -330,11 +338,19 @@ class Item:
             self.char_price = True
             self.cursor.close()
 
-        self.cursor = conn.cursor()
-        self.cursor.execute('SET NAMES utf8;')
-        self.cursor.connection.autocommit(True)
-        self.insert_price()
-        self.cursor.close()
+        if self.char_price:
+            if self.char_id != None:
+            self.cursor = conn.cursor()
+            self.cursor.execute('SET NAMES utf8;')
+            self.cursor.connection.autocommit(True)
+            self.insert_price()
+            self.cursor.close()
+        else:
+            self.cursor = conn.cursor()
+            self.cursor.execute('SET NAMES utf8;')
+            self.cursor.connection.autocommit(True)
+            self.insert_price()
+            self.cursor.close()
 
 conn = MySQLdb.connect(host=database["host"],
                        user=database["user"],
