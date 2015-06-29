@@ -236,6 +236,7 @@ class Item:
                 self.cursor.execute(insert_text)
                 r = self.cursor.fetchall()
                 conn.commit()
+                return self.cursor.lastrowid
             except:
                 print(
                     u"Problems with char: {0}; item_ref: {1}".format(
@@ -243,8 +244,7 @@ class Item:
                         self.item_name.decode("utf-8-sig")
                     )
                 )
-
-            return self.cursor.lastrowid
+                return None
 
     def insert_price(self):
         if self.char_price:
