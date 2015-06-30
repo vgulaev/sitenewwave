@@ -31,9 +31,9 @@ class App.MyBasket
         if index is -1
             @_item_list.push item
             @_sum = ( (+item.final_price) + (+@_sum) ).toFixed(2)
-            console.log(item.ed_izm)
+            # console.log(item.ed_izm)
             if item.ed_izm is "т"
-                console.log(1)
+                # console.log(1)
                 @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
             if item.ed_izm is "пог. м"
                 @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
@@ -92,9 +92,9 @@ class App.MyBasket
             @_total_running_meter = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
-                console.log(elem.ed_izm)
+                # console.log(elem.ed_izm)
                 if elem.ed_izm is "т"
-                    console.log(2)
+                    # console.log(2)
                     @_total_weight = ( parseFloat(+elem.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
                 if elem.ed_izm is "пог. м"
                     @_total_running_meter = ( parseFloat(elem.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)
@@ -124,9 +124,9 @@ class App.MyBasket
             @_total_running_meter = 0
             for elem in @_item_list
                 @_sum = ( (+elem.final_price) + (+@_sum) ).toFixed(2)
-                console.log(item.ed_izm)
+                # console.log(item.ed_izm)
                 if item.ed_izm is "т"
-                    console.log(3)
+                    # console.log(3)
                     @_total_weight = ( parseFloat(item.buy_weight) + parseFloat(@_total_weight) ).toFixed(3)
                 if item.ed_izm is "пог. м"
                     @_total_running_meter = ( parseFloat(item.buy_weight) + parseFloat(@_total_running_meter) ).toFixed(3)

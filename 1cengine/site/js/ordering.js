@@ -312,6 +312,64 @@
 
   /* LOGIN USER END */
 
+
+  /* Print DA OЯDER */
+
+  this.printOrder = function() {
+    var carry, delivery_cost, delivery_info, destination, line_json, order_json, total;
+    order_json = {
+      "order": [],
+      "total": "0"
+    };
+    $("#basketTab").find("tr.itemTr").each((function(_this) {
+      return function(i, el) {
+        var line_json;
+        line_json = [];
+        line_json.push($(el).find(".itemNameTd")[0].innerHTML);
+        line_json.push($(el).find(".itemCharTd")[0].innerHTML);
+        line_json.push($(el).find(".itemCountTd")[0].innerHTML);
+        line_json.push($(el).find(".itemEdIzmTd")[0].innerHTML);
+        line_json.push($(el).find(".itemPriceTd")[0].innerHTML);
+        line_json.push($(el).find(".itemSumTd")[0].innerHTML);
+        return order_json["order"].push(line_json);
+      };
+    })(this));
+    console.log(JSON.stringify(order_json));
+    total = $("#SumGoods")[0].innerHTML;
+    order_json["total"] = total;
+    if ($("#i_want_delivery").prop("checked")) {
+      line_json = [];
+      destination = "Доставка: " + $(".city_select option:selected").html() + " - " + $(".street_select").val();
+      carry = $(".delivery_car").html();
+      delivery_info = $(".active_city").attr("name");
+      delivery_cost = $(".delivery_cost").html().replace("&nbsp;", "");
+      line_json.push(destination);
+      line_json.push("");
+      line_json.push("1");
+      line_json.push('услуга');
+      line_json.push(delivery_cost);
+      line_json.push(delivery_cost);
+      order_json["order"].push(line_json);
+    }
+    $.ajax({
+      type: "POST",
+      url: "/1cengine/py_scripts/return_print_form.py",
+      async: false,
+      data: "order_json=" + JSON.stringify(order_json) + "",
+      success: function(html) {
+        var params, x;
+        params = "toolbar=no";
+        x = window.open("", "Печать заказа Тримет", params);
+        x.document.open();
+        x.document.write(html);
+        x.document.close();
+      }
+    });
+  };
+
+
+  /* Print DA OЯDER END */
+
   $(document).ready(function() {
     var GET, curr, i, parts, squery;
     check_user();

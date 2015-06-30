@@ -240,8 +240,8 @@ class Item:
             except:
                 print(
                     u"Problems with char: {0}; item_ref: {1}".format(
-                        self.item_char.decode("utf-8-sig"),
-                        self.item_name.decode("utf-8-sig")
+                        self.item_char.encode("utf-8").decode("utf-8"),
+                        self.item_name.encode("utf-8").decode("utf-8")
                     )
                 )
                 return None

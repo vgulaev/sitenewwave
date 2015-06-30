@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html">
+        <meta charset="utf-8">
+        <title></title>
+        <style type="text/css">
+        table.pheader{
+            width:100%;
+            border-bottom:1px solid black;
+            font-weight: 700;
+            font-size: 8pt;
+        }
+        .pheader td:last-child{
+            text-align: right;
+        }
+        .pheader td:first-child{
+            font-size: 10pt;
+            line-height: 30px;
+        }
+        .company_name{
+            font-size: 10pt;
+            line-height: 30px;
+        }
+        .tel{
+            font-size: 10pt;
+            line-height: 30px;
+        }
+        .order_table{
+            margin-top: 30px;
+            font-size: 8pt;
+            width: 100%;
+            border-top:1px solid black;
+            border-left:1px solid black;
+        }
+        .order_table td, .order_table th{
+            border-bottom:1px solid black;
+            border-right:1px solid black;
+            padding:2px;
+        }
+        .order_table caption{
+            font-weight: 700;
+            font-size: 10pt;
+        }
+        .digits{
+            text-align: right;
+        }
+        .overall{
+            font-weight: 700;
+            text-align: right;
+        }
+        </style>
+    </head>
+    <body>
+        <table class="pheader">
+            <tr>
+                <td>
+                    <img src="../../../img/logo.png" /><br />
+                    https://trimet.ru/
+                </td>
+                <td>
+                    <span class='company_name'>ООО "Тримет"</span><br />
+                    625014, г. Тюмень,<br /> ул. Республики, 278 а, строение 1<br />
+                    <span class='tel'>Тел.: +7 (3452) 520-670</span>
+                </td>
+            </tr>
+        </table>
+        <table class="order_table" cellpadding="0" cellspacing="0">
+            <caption>Заказ покупателя от <span id="today"></span></caption>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>Кол-во</th>
+                    <th>Ед. изм.</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody id="item_list">
+
+            </tbody>
+        </table>
+    </body>
+</html>

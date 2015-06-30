@@ -51,9 +51,7 @@
       if (index === -1) {
         this._item_list.push(item);
         this._sum = ((+item.final_price) + (+this._sum)).toFixed(2);
-        console.log(item.ed_izm);
         if (item.ed_izm === "т") {
-          console.log(1);
           this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
         }
         if (item.ed_izm === "пог. м") {
@@ -89,9 +87,7 @@
         for (i = 0, len = ref.length; i < len; i++) {
           elem = ref[i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
-          console.log(elem.ed_izm);
           if (elem.ed_izm === "т") {
-            console.log(2);
             this._total_weight = (parseFloat(+elem.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
           }
           if (elem.ed_izm === "пог. м") {
@@ -120,9 +116,7 @@
         for (i = 0, len = ref.length; i < len; i++) {
           elem = ref[i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
-          console.log(item.ed_izm);
           if (item.ed_izm === "т") {
-            console.log(3);
             this._total_weight = (parseFloat(item.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
           }
           if (item.ed_izm === "пог. м") {
