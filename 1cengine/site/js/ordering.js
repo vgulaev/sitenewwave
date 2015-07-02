@@ -316,7 +316,7 @@
   /* Print DA OЯDER */
 
   this.printOrder = function() {
-    var carry, delivery_cost, delivery_info, destination, line_json, order_json, total;
+    var carry, delivery_cost, delivery_info, destination, line_json, order_json, s1, s2, total;
     order_json = {
       "order": [],
       "total": "0"
@@ -334,7 +334,6 @@
         return order_json["order"].push(line_json);
       };
     })(this));
-    console.log(JSON.stringify(order_json));
     total = $("#SumGoods")[0].innerHTML;
     order_json["total"] = total;
     if ($("#i_want_delivery").prop("checked")) {
@@ -347,10 +346,15 @@
       line_json.push("");
       line_json.push("1");
       line_json.push('услуга');
-      line_json.push(delivery_cost);
-      line_json.push(delivery_cost);
+      line_json.push(delivery_cost.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(".", ","));
+      line_json.push(delivery_cost.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(".", ","));
       order_json["order"].push(line_json);
+      s1 = parseFloat(App.MyBasket._sum);
+      s2 = parseFloat(delivery_cost);
+      console.log(s1 + " + " + s2);
+      order_json["total"] = String((s1 + s2).toFixed(2)).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(".", ",");
     }
+    console.log(JSON.stringify(order_json));
     $.ajax({
       type: "POST",
       url: "/1cengine/py_scripts/return_print_form.py",
