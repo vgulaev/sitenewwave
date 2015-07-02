@@ -781,9 +781,7 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
                     ral_span = soup.new_tag("span")
                     ral_span["style"] = "background-color:#{0};".format(rd[rn])
                     ral_span["ralid"] = item.hash
-                    ral_items[ri_key]["il"].append(
-                        rn, item.hash, item_billet_tr, item_list_tr
-                    )
+                    ral_items[ri_key]["il"].append((rn, item.hash, item_billet_tr, item_list_tr))
                     ral_items[ri_key]["rl"].append(ral_span)
                     item_list_tr["style"] = "display:none;"
 
@@ -916,7 +914,15 @@ if "page" in form:
 
 if "term" in form:
     print "Content-Type: text/html; charset=utf-8\n"
-    print str(compose_table(form["term"].value.decode("utf-8"), offset, limit, {}, True))
+    print str(
+        compose_table(
+            form["term"].value.decode("utf-8"),
+            offset,
+            limit,
+            {},
+            True
+        )
+    )
     # print form["term"].value
     # result_table = compose_table(form["term"].value.decode("utf-8"))
 
@@ -966,7 +972,20 @@ if "hash" in form:
                     params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
 
         # print param_string
-        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit, params))
+        print str(
+            compose_table(
+                form["hash"].value.decode("utf-8"),
+                offset,
+                limit,
+                params
+            )
+        )
 
     else:
-        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit))
+        print str(
+            compose_table(
+                form["hash"].value.decode("utf-8"),
+                offset,
+                limit
+            )
+        )
