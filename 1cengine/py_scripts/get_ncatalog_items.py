@@ -916,15 +916,7 @@ if "page" in form:
 
 if "term" in form:
     print "Content-Type: text/html; charset=utf-8\n"
-    print str(
-        compose_table(
-            form["term"].value.decode("utf-8"),
-            offset,
-            limit,
-            {},
-            True
-        )
-    )
+    print str(compose_table(form["term"].value.decode("utf-8"), offset, limit, {}, True))
     # print form["term"].value
     # result_table = compose_table(form["term"].value.decode("utf-8"))
 
@@ -974,20 +966,7 @@ if "hash" in form:
                     params["he"].append("`item`.`height`='"+param.replace("he_", "", 1)+"'")
 
         # print param_string
-        print str(
-            compose_table(
-                form["hash"].value.decode("utf-8"),
-                offset,
-                limit,
-                params
-            )
-        )
+        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit, params))
 
     else:
-        print str(
-            compose_table(
-                form["hash"].value.decode("utf-8"),
-                offset,
-                limit
-            )
-        )
+        print str(compose_table(form["hash"].value.decode("utf-8"), offset, limit))
