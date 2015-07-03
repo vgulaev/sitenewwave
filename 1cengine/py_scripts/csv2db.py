@@ -238,12 +238,12 @@ class Item:
                 conn.commit()
                 return self.cursor.lastrowid
             except:
-                print(
-                    u"Problems with char: {0}; item_ref: {1}".format(
-                        self.item_char.encode("utf-8").decode("utf-8"),
-                        self.item_name.encode("utf-8").decode("utf-8")
-                    )
-                )
+                # print(
+                #     u"Problems with char: {0}; item_ref: {1}".format(
+                #         self.item_char.encode("utf-8").decode("utf-8"),
+                #         self.item_name.encode("utf-8").decode("utf-8")
+                #     )
+                # )
                 return None
 
     def insert_price(self):

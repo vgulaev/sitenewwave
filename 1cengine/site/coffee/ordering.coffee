@@ -99,11 +99,13 @@ save_to_db = (onumber, mail, phones, fname) ->
 
 $("#sendOrderButton").click ->
     createOrder()
-    yaCounter23067595.reachGoal('FinishOrder');
     return
 
 
 createOrder = () ->
+
+    yaCounter23067595.reachGoal('FinishOrder');
+
     accept_flag = true
 
     if $("#mainPhoneInput").val() is ""
@@ -341,6 +343,8 @@ check_user = () ->
 @printOrder = () ->
     # console.log "ok =)"
 
+    yaCounter23067595.reachGoal('PrintOrder');
+
     order_json = { "order": [], "total": "0" }
 
     $("#basketTab").find("tr.itemTr").each (i, el) =>
@@ -442,9 +446,9 @@ $(document).ready ->
             item.show_modal()
 
     $("#sendOrderButton").click ->
+
         createOrder()
 
-        yaCounter23067595.reachGoal('FinishOrder');
 
     ### DEPRECATED ###
 
