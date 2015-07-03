@@ -41,6 +41,7 @@ $(document).ready( function(){
     // $("dateFrom").change( function(){ shippingDate("up") })
 
     $(".datePickButton").click( function(){
+        yaCounter23067595.reachGoal('SettlementListUpdate');
         $("#dateForm").submit()
     })
 })
@@ -96,8 +97,10 @@ function getRandomInt(min, max) {
 
 function openLink(linkUID, type) {
 
+    yaCounter23067595.reachGoal('KabinetSettlementDownload');
+
     downloader_array = new Array("285","365","377","379","382","385")
-    
+
     $.blockUI.defaults.css.bshippingRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100; //ускоряем появление
     $.blockUI.defaults.fadeOut = 100; //и исчезновение

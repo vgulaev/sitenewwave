@@ -25,6 +25,7 @@ $(document).ready( function(){
     // $("dateFrom").change( function(){ shippingDate("up") })
 
     $(".datePickButton").click( function(){
+        yaCounter23067595.reachGoal('ShippingListUpdate');
         $("#dateForm").submit()
     })
 })
@@ -85,6 +86,8 @@ function getRandomInt(min, max) {
 
 function showTabPart(UID){
 
+    yaCounter23067595.reachGoal('KabinetShippingShow');
+
     if( $(".close_button[goal='"+UID+"']").length ){
 
         $(".close_button[goal='"+UID+"']").parent().show()
@@ -118,8 +121,10 @@ function showTabPart(UID){
 
 function openLink(linkUID, type) {
 
+    yaCounter23067595.reachGoal('KabinetShippingDownload');
+
     downloader_array = new Array("285","365","377","379","382","385")
-    
+
     $.blockUI.defaults.css.bshippingRadius = '10px'; //убираем серую границу
     $.blockUI.defaults.fadeIn = 100; //ускоряем появление
     $.blockUI.defaults.fadeOut = 100; //и исчезновение

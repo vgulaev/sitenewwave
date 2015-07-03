@@ -26,9 +26,9 @@ $(document).ready( function(){
     // $("dateFrom").change( function(){ orderDate("up") })
 
     $(".datePickButton").click( function(){
+        yaCounter23067595.reachGoal('OrdersListUpdate');
         $("#dateForm").submit()
     })
-
 
 })
 
@@ -108,6 +108,8 @@ function getRandomInt(min, max) {
 
 function showTabPart(UID){
 
+    yaCounter23067595.reachGoal('KabinetOrderShow');
+
     if( $(".close_button[goal='"+UID+"']").length ){
 
         $(".close_button[goal='"+UID+"']").parent().show()
@@ -141,6 +143,8 @@ function showTabPart(UID){
 /// функция получения ссылки для скачивания. Скоммунизжена из modern_uiJS ж))) ///
 
 function openLink(linkUID, type, what) {
+
+    yaCounter23067595.reachGoal('KabinetOrderDownload');
 
     downloader_array = new Array("285","365","377","379","382","385")
 

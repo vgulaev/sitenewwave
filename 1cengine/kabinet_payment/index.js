@@ -41,6 +41,7 @@ $(document).ready( function(){
     // $("dateFrom").change( function(){ orderDate("up") })
 
     $(".datePickButton").click( function(){
+        yaCounter23067595.reachGoal('PaymentListUpdate');
         $("#dateForm").submit()
     })
 })

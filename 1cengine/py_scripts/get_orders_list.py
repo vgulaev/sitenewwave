@@ -153,15 +153,6 @@ def get_orders_list(UID):
 
 def get_order_list_ajax(UID, date_from, date_to, counterparty):
 
-    olol = """
-        А эта у а рустекст
-        воть
-        oO0 ~!@#$%^&*()[]{}""''
-        1IilLTtJ
-        kKcCsS
-        чшщяЯёЁ
-    """
-
     if date_from != "":
         date_from_par = "&date_from=" + date_from
     else:
@@ -383,7 +374,7 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
                         title="Скачать бланк резки в формате pdf"> бланк резки </a><br />
                  <a href='javascript:showTabPart(
                         \"""" + str(order[0]) + """\")'>Показать список товаров </a><br />
-                 <a href='https://trimet.ru/payment/"""+str(order[0])+"""' target='_blank'>Оплатить банковской картой </a>
+                 <a href='https://trimet.ru/payment/"""+str(order[0])+"""' target='_blank' onclick="yaCounter23067595.reachGoal('KabinetOrderPay')">Оплатить банковской картой </a>
             """
         else:
             download_links = """
@@ -395,7 +386,7 @@ def get_order_list_html(UID, date_from, date_to, counterparty):
                  <a href='javascript:showTabPart(
                         \"""" + str(order[0]) + """\")'>Показать список товаров </a>
                 <br />
-                 <a href='https://trimet.ru/payment/"""+str(order[0])+""" ' target='_blank'>Оплатить банковской картой </a>
+                 <a href='https://trimet.ru/payment/"""+str(order[0])+""" ' target='_blank' onclick="yaCounter23067595.reachGoal('KabinetOrderPay')">Оплатить банковской картой </a>
             """
 
         orders = orders + """
