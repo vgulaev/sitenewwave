@@ -400,6 +400,15 @@
                     $(this).hide()
                 }
             })
+            $(parents).find("a").each( function(i, el){
+                oc = $(el).attr("onclick")
+                if(oc != undefined){
+                    mail = oc.replace("showEmail('","")
+                    mail = mail.slice(0,mail.indexOf("'"))
+                    $(el).html(mail+"@trimet.ru")
+                    // console.log(mail)
+                }
+            })
             return false;
         })
     </script>
