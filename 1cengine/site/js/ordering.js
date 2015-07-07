@@ -106,11 +106,11 @@
 
   $("#sendOrderButton").click(function() {
     createOrder();
-    yaCounter23067595.reachGoal('FinishOrder');
   });
 
   createOrder = function() {
     var accept_flag, order, sendRow;
+    yaCounter23067595.reachGoal('FinishOrder');
     accept_flag = true;
     if ($("#mainPhoneInput").val() === "") {
       $("#switchNotificationDiv").click();
@@ -285,13 +285,13 @@
         var c_select, user;
         user = html;
         $("#emailInput").val(user["Email"]);
-        c_select = "<select id=\"counterpartySelect\">\n    <option value=\"Розничный покупатель\">Без контрагента</option>";
+        c_select = "<select id=\"counterpartySelect\">";
         $(user["Counterparty"]).each((function(_this) {
           return function(index, element) {
             return c_select += "<option value='" + element + "'>" + element + "</option>";
           };
         })(this));
-        c_select += "</select>";
+        c_select += "    <option value=\"Розничный покупатель\">Без контрагента</option>\n</select>";
         $(".counterpartySelectContainer").empty();
         $(".counterpartySelectContainer").append(c_select);
         $(".counterpartyRow").show();
@@ -317,6 +317,7 @@
 
   this.printOrder = function() {
     var carry, delivery_cost, delivery_info, destination, line_json, order_json, s1, s2, total;
+    yaCounter23067595.reachGoal('PrintOrder');
     order_json = {
       "order": [],
       "total": "0"
@@ -398,8 +399,7 @@
       }
     });
     $("#sendOrderButton").click(function() {
-      createOrder();
-      return yaCounter23067595.reachGoal('FinishOrder');
+      return createOrder();
     });
 
     /* DEPRECATED */

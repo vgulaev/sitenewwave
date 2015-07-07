@@ -316,11 +316,13 @@ check_user = () ->
             # alert( user["Counterparty"][0] )
             c_select = """
                 <select id="counterpartySelect">
-                    <option value="Розничный покупатель">Без контрагента</option>
             """
             $(user["Counterparty"]).each (index, element) =>
                 c_select += "<option value='" + element + "'>" + element + "</option>"
-            c_select += "</select>"
+            c_select += """
+                    <option value="Розничный покупатель">Без контрагента</option>
+                </select>
+            """
             $(".counterpartySelectContainer").empty()
             $(".counterpartySelectContainer").append(c_select)
             $(".counterpartyRow").show()
