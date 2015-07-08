@@ -439,6 +439,15 @@ App.getCookie = (name) ->
         i++
     null
 
+App.loadBasket = () ->
+    il = App.getCookie('saved_basket')
+    if il != null
+        il = $.parseJSON(il)
+        # console.log(il);
+        for i in il
+            # console.log(i);
+            new_item = new (App.Item)(i.id, true, i)
+            App.MyBasket.add_item new_item
 
 $(document).ready ->
 

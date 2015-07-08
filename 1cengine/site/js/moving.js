@@ -480,6 +480,21 @@
     return null;
   };
 
+  App.loadBasket = function() {
+    var i, il, j, len, new_item, results;
+    il = App.getCookie('saved_basket');
+    if (il !== null) {
+      il = $.parseJSON(il);
+      results = [];
+      for (j = 0, len = il.length; j < len; j++) {
+        i = il[j];
+        new_item = new App.Item(i.id, true, i);
+        results.push(App.MyBasket.add_item(new_item));
+      }
+      return results;
+    }
+  };
+
   $(document).ready(function() {
     var c_url, is_empty, item, my_content, name, things;
     $.blockUI.defaults.css.borderRadius = '10px';
