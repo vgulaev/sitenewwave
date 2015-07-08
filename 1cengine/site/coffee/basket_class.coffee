@@ -72,9 +72,15 @@ class App.MyBasket
             # $( "#tabBasket" ).tooltip( "enable" )
             # $( "#tabBasket" ).tooltip( "open" )
 
+            App.setCookie("saved_basket", JSON.stringify(@_item_list), 3)
+
             $("#tabBasket").tooltipster("show")
 
-            yaCounter23067595.reachGoal('AddItem');
+            try
+                yaCounter23067595.reachGoal('AddItem');
+            catch err
+                console.log "catched: " + err
+
 
     @change_item_from_modal: (item) ->
         @change_item(item)
@@ -103,6 +109,8 @@ class App.MyBasket
             # @on_weight_change_handler(@_total_weight)
             # @change_basket()
         # @on_active_price_measured_change_handler()
+
+        App.setCookie("saved_basket", JSON.stringify(@_item_list), 3)
 
     @delete_item: (id) ->
 
@@ -139,6 +147,8 @@ class App.MyBasket
                 @on_active_price_measured_change_handler()
 
         @change_basket()
+        # console.log @_item_list
+        App.setCookie("saved_basket", JSON.stringify(@_item_list), 3)
 
     @get_count: ->
         @_count
@@ -163,12 +173,16 @@ class App.MyBasket
                 # @change_basket()
 
         nds = ( ( @_sum * 18 ) / 118 ).toFixed(2)
-        $("#SumGoods").html(@_sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",","))
-        $("#CountAll").html(@_total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","))
+        # console.log @_sum
+        $("#SumGoods").html(String(@_sum).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".",","))
+        $("#CountAll").html(String(@_total_weight).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","))
         $("#NDSAll").html(nds)
 
         App.load_delivery_cost()
         # alert("changed")
+
+        App.setCookie("saved_basket", JSON.stringify(@_item_list), 3)
+        # App.setCookie("saved_basket", JSON.stringify(App.MyBasket), 3)
 
     @rebuild_basket: ->
 
@@ -245,6 +259,7 @@ class App.MyBasket
 
     @update_price: ->
         for item in @_item_list
+            # console.log item
             item.set_price_weight()
             item.set_final_price()
 

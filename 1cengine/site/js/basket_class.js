@@ -46,7 +46,7 @@
     };
 
     MyBasket.add_item = function(item) {
-      var i_id, index;
+      var err, i_id, index;
       index = this._item_list.indexOf(item);
       if (index === -1) {
         this._item_list.push(item);
@@ -63,8 +63,14 @@
         this.on_active_price_measured_change_handler();
         i_id = ("#" + item.id).replace(":", "\\:");
         $("" + i_id).addClass("in_basket");
+        App.setCookie("saved_basket", JSON.stringify(this._item_list), 3);
         $("#tabBasket").tooltipster("show");
-        return yaCounter23067595.reachGoal('AddItem');
+        try {
+          return yaCounter23067595.reachGoal('AddItem');
+        } catch (_error) {
+          err = _error;
+          return console.log("catched: " + err);
+        }
       }
     };
 
@@ -76,14 +82,13 @@
     };
 
     MyBasket.change_item = function(item) {
-      var elem, i, index, len, ref, results;
+      var elem, i, index, len, ref;
       index = this._item_list.indexOf(item);
       if (index > -1) {
         this._sum = 0;
         this._total_weight = 0;
         this._total_running_meter = 0;
         ref = this._item_list;
-        results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           elem = ref[i];
           this._sum = ((+elem.final_price) + (+this._sum)).toFixed(2);
@@ -91,13 +96,11 @@
             this._total_weight = (parseFloat(+elem.buy_weight) + parseFloat(this._total_weight)).toFixed(3);
           }
           if (elem.ed_izm === "пог. м") {
-            results.push(this._total_running_meter = (parseFloat(elem.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3));
-          } else {
-            results.push(void 0);
+            this._total_running_meter = (parseFloat(elem.buy_weight) + parseFloat(this._total_running_meter)).toFixed(3);
           }
         }
-        return results;
       }
+      return App.setCookie("saved_basket", JSON.stringify(this._item_list), 3);
     };
 
     MyBasket.delete_item = function(id) {
@@ -127,7 +130,8 @@
           this.on_active_price_measured_change_handler();
         }
       }
-      return this.change_basket();
+      this.change_basket();
+      return App.setCookie("saved_basket", JSON.stringify(this._item_list), 3);
     };
 
     MyBasket.get_count = function() {
@@ -159,10 +163,11 @@
         })(this));
       }
       nds = ((this._sum * 18) / 118).toFixed(2);
-      $("#SumGoods").html(this._sum.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
-      $("#CountAll").html(this._total_weight.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
+      $("#SumGoods").html(String(this._sum).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
+      $("#CountAll").html(String(this._total_weight).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1&thinsp;').replace(".", ","));
       $("#NDSAll").html(nds);
-      return App.load_delivery_cost();
+      App.load_delivery_cost();
+      return App.setCookie("saved_basket", JSON.stringify(this._item_list), 3);
     };
 
     MyBasket.rebuild_basket = function() {};

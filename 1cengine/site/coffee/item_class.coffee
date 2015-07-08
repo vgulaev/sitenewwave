@@ -12,10 +12,9 @@ class App.Item
         else
             false
 
-    constructor: (@id) ->
+    constructor: (@id, silent = false, i_obj = null) ->
         # alert(@id)
-        @set_chars()
-
+        # console.log silent
         # console.log @name
         # console.log @char
         # console.log @length
@@ -24,6 +23,14 @@ class App.Item
         # for price in @prices
         #     console.log price
 
+        if silent != true
+            @set_chars()
+
+        if i_obj != null
+            # console.log i_obj
+            for key, val of i_obj
+                this[key] = val
+
         if @is_measureable()
             @count = 1
             @change_buy_count(@count)
@@ -31,7 +38,10 @@ class App.Item
             @buy_weight = "1"
             @change_buy_weight(@buy_weight)
 
-        @show_modal()
+        if silent != true
+            @show_modal()
+
+            # console.log this
 
         App.Item._existing.push this
 
@@ -52,6 +62,7 @@ class App.Item
             data: "item_hash=" + @id
             success: (html) ->
                 response = html
+                # console.log response
                 # alert(response)
                 response
 

@@ -21,9 +21,24 @@
       }
     };
 
-    function Item(id1) {
+    function Item(id1, silent, i_obj) {
+      var key, val;
       this.id = id1;
-      this.set_chars();
+      if (silent == null) {
+        silent = false;
+      }
+      if (i_obj == null) {
+        i_obj = null;
+      }
+      if (silent !== true) {
+        this.set_chars();
+      }
+      if (i_obj !== null) {
+        for (key in i_obj) {
+          val = i_obj[key];
+          this[key] = val;
+        }
+      }
       if (this.is_measureable()) {
         this.count = 1;
         this.change_buy_count(this.count);
@@ -31,7 +46,9 @@
         this.buy_weight = "1";
         this.change_buy_weight(this.buy_weight);
       }
-      this.show_modal();
+      if (silent !== true) {
+        this.show_modal();
+      }
       App.Item._existing.push(this);
     }
 

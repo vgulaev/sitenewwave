@@ -450,6 +450,36 @@
     });
   };
 
+  App.setCookie = function(name, value, days) {
+    var date, expires;
+    if (days) {
+      date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toGMTString();
+    } else {
+      expires = "";
+    }
+    return document.cookie = name + "=" + value + expires + "; path=/";
+  };
+
+  App.getCookie = function(name) {
+    var c, ca, i, nameEQ;
+    nameEQ = name + "=";
+    ca = document.cookie.split(";");
+    i = 0;
+    while (i < ca.length) {
+      c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) === 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+      i++;
+    }
+    return null;
+  };
+
   $(document).ready(function() {
     var c_url, is_empty, item, my_content, name, things;
     $.blockUI.defaults.css.borderRadius = '10px';
