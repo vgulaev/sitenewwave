@@ -9,6 +9,15 @@
 </head>
 <body>
 
+<script type="text/javascript">
+    $(document).ready( function(){
+        $(".history-link").click( function(){
+            $(".history-detail").hide()
+            $(this).closest("li").find(".history-detail").show()
+        })
+    })
+</script>
+
 <!-- print info -->
 <div class="print">
     <img id="logo" src="/img/p5.png" alt="Тримет" height="47" width="184" />
