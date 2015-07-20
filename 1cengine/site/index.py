@@ -190,6 +190,7 @@ class Index_Page():
             "/lib/frameworks/jqrequired/tooltipster-master/js/jquery.tooltipster.min.js",
             "/lib/frameworks/jqrequired/jquery.blockUI.js",
             "/lib/frameworks/jqrequired/jquery.cookie.js",
+            "/lib/frameworks/fuzzy.js",
             "/1cengine/site/js/global.js",
             "/1cengine/site/js/moving.js",
             # "/1cengine/site/js/modern_uiJs.js.js",

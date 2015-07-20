@@ -462,6 +462,11 @@ tr.iHeader{
     font-size:12px;
     text-align:center;
 }
+.itemName ins{
+    text-decoration: none;
+    font-weight: 700;
+    color:#2D3694;
+}
 #main2{
     background:none !important;
     width: 972px;

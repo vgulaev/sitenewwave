@@ -41,7 +41,11 @@ $(document).ready( function(){
     // $("dateFrom").change( function(){ orderDate("up") })
 
     $(".datePickButton").click( function(){
-        yaCounter23067595.reachGoal('PaymentListUpdate');
+        try{
+            yaCounter23067595.reachGoal('PaymentListUpdate');
+        } catch (err) {
+            console.log(err)
+        }
         $("#dateForm").submit()
     })
 })
@@ -163,7 +167,7 @@ function send_support(){
             async: true,
             data: "text=" + $(".ss_textarea").val()+"&href="+window.location.pathname,
             success: function(html){
-                console.log(html)
+                // console.log(html)
                 $.unblockUI();
             }
         })

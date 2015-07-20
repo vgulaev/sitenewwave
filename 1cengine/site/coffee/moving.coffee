@@ -449,6 +449,42 @@ App.loadBasket = () ->
             new_item = new (App.Item)(i.id, true, i)
             App.MyBasket.add_item new_item
 
+highlight_me = () ->
+    term =  ($("#itemName").val()).toString()
+    $(".itemName").each (i, el) =>
+        qarr = ($(el).html()).split("<span")
+        query = qarr[0]
+        # alert(query)
+        match = fuzzy([query], term, false, '<ins>', '</ins>')
+
+        if match[0] != undefined
+            if qarr[1] != undefined
+                $(el).html(match[0]+"<span"+qarr[1])
+            else
+                $(el).html(match[0])
+        else
+            tarr = term.split(" ")
+            match = fuzzy([query], tarr[0], false, '<ins>', '</ins>')
+            i = 1
+            while i < tarr.length
+                if match[0] != undefined
+                    match2 = fuzzy([match[0]], tarr[i], false, '<ins>', '</ins>')
+                    # console.log match2[0]
+                    if match2[0] != undefined
+                        match[0] = match2[0]
+                else
+                    match[0] = query
+
+                i = i + 1
+
+            if match[0] != undefined
+                if qarr[1] != undefined
+                    $(el).html(match[0]+"<span"+qarr[1])
+                else
+                    $(el).html(match[0])
+
+        # console.log match[0]
+
 $(document).ready ->
 
     $.blockUI.defaults.css.borderRadius = '10px'
@@ -505,12 +541,18 @@ $(document).ready ->
 
         $.ajax
             type: "GET"
-            url: "/1cengine/py_scripts/get_ncatalog_items.py"
+            url: "/1cengine/py_scripts/get_ncatalog_clever_search.py"
             async: true
             data: "term=" + encodeURIComponent(value) + ""
             success: (html) ->
                 get_item_table(html)
                 $(".menu_back_button").click()
+                $("#show_next_prev").hide()
+                highlight_me()
+
+
+    $("#searchButton").click ->
+        $("#itemName").change
 
 
 
