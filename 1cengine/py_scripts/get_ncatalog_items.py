@@ -566,10 +566,9 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
                 char_select = soup.new_tag("select")
                 char_select["class"] = "item_billet_select_char"
 
-                is_first = " selected_price"
+                # is_first = " selected_price"
                 # char_list = "<select>"
 
-                rebuilt_achar_array = []
                 _IN_STOCK = False
 
                 for char in item.char_array:
@@ -580,9 +579,10 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
                     char_option["stock"] = in_stock
                     char_option.append(char)
                     if in_stock > 0:
-                        if is_first != "":
-                            char_option["selected"] = "selected"
-                            char_option["leftovers"] = str(in_stock)
+                        # if is_first != "":
+                        #     char_option["selected"] = "selected"
+                        char_option["leftovers"] = str(in_stock)
+                        # endif
                         char_select.insert(0, char_option)
                         _IN_STOCK = True
                     else:
@@ -593,11 +593,12 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
                     else:
                         stock_class = ""
 
+                    # print char, " : ", char_hash, " : ", is_first, "<br />"
+
                     price_ul = soup.new_tag("ul")
-                    price_ul["class"] = "item_billet_select_price{0}{1}".format(
-                        is_first, stock_class
+                    price_ul["class"] = "item_billet_select_price{0}".format(
+                        stock_class
                     )
-                    is_first = ""
                     price_ul["for"] = char_hash.decode("utf-8")
 
                     for price in item.char_array[char].price_array:
@@ -622,7 +623,10 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
                         else:
                             pass
 
-                    prices_container.append(price_ul)
+                    if in_stock > 0:
+                        prices_container.insert(0, price_ul)
+                    else:
+                        prices_container.append(price_ul)
                 # print min_price
                 min_price = (
                     locale.format(
@@ -671,6 +675,7 @@ def compose_table(term, offset=0, limit=20, params={}, search_flag=False):
 
                 prices_container.append(price_ul)
 
+            prices_container.contents[0]["class"] = prices_container.contents[0]["class"] + " selected_price"
             # char_list = char_list + "</select>"
 
             if odd:
