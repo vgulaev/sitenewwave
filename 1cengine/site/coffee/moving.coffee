@@ -675,12 +675,13 @@ $(document).ready ->
         subgroup_click(sgroup)
 
     c_url = window.location.pathname
-    # alert(c_url)
-    is_empty = c_url.replace "/1cengine/site/", ""
-    # alert($(things[Math.floor(Math.random()*things.length)]).attr("name"))
-    if is_empty.length < 3
-        things = $("li.main_group")
-        $(things[Math.floor(Math.random()*things.length)]).click()
+
+    if c_url.indexOf("catalog/") >= 0
+        # console.log "nya"
+        el = $(".active_group").find(".click_name")[0]
+        g_hash = $(el).parent().attr("inid")
+        get_item_list(g_hash)
+
 
     $("#i_want_delivery").change ->
         show_dop_uslugi(this)

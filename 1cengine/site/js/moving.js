@@ -538,7 +538,7 @@
   };
 
   $(document).ready(function() {
-    var c_url, is_empty, item, my_content, name, things;
+    var c_url, el, g_hash, item, my_content, name;
     $.blockUI.defaults.css.borderRadius = '10px';
     $.blockUI.defaults.fadeIn = 100;
     $.blockUI.defaults.fadeOut = 100;
@@ -694,10 +694,10 @@
       };
     })(this));
     c_url = window.location.pathname;
-    is_empty = c_url.replace("/1cengine/site/", "");
-    if (is_empty.length < 3) {
-      things = $("li.main_group");
-      $(things[Math.floor(Math.random() * things.length)]).click();
+    if (c_url.indexOf("catalog/") >= 0) {
+      el = $(".active_group").find(".click_name")[0];
+      g_hash = $(el).parent().attr("inid");
+      get_item_list(g_hash);
     }
     $("#i_want_delivery").change(function() {
       return show_dop_uslugi(this);
