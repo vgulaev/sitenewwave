@@ -13,6 +13,7 @@ fclose($fp);
 
 <script type="text/javascript"> 
 $(document).ready(function(){ 
+    file_download();
     $(".FileTypeInputClass").change(function(){ 
         if($(this).is(":checked")){
             $('.file_label').removeClass("LabelSelected");
@@ -61,23 +62,11 @@ function send(){
 
         <div style="margin-left: 200px"> <h2 style="font-size:24px">Скачать интересующий вас формат:</h2> <br />  
         <form method='POST' action='mail.php'> 
-            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[0].'"'; ?> style="display:none;" id="xlsx" />
-                <label class="file_label" id="label_xml" for="xlsx">
-                    <img src='xls.png' />
-                </label>
-            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[1].'"'; ?> style="display:none;" id="ods" />
-                <label class="file_label" id="label_ods" for="ods">
-                    <img src='ods.png' />
-                </label>
-            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[2].'"'; ?> style="display:none;" id="html" />
-                <label class="file_label" id="label_html" for="html">
-                    <img src='html.png' />
-                </label>
-            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[3].'"'; ?> style="display:none;" id="pdf" checked />
-                <label class="file_label LabelSelected" id="label_pdf" for="pdf">
+            <input class="FileTypeInputClass" type="radio" name="file_format" value=<?php echo '"'.$answerArray[0].'"'; ?> style="display:none;" id="pdf" checked />
+                <label class="file_label" id="label_pdf" for="pdf">
                     <img src='pdf.png' />
                 </label>
-        
+
             <p style="margin-top:15px;margin-left:10px;width:425px;margin-bottom:30px">
                 <font style="font-size:22px" > E-mail: </font>
                 <input type="textarea" style="width:340px;height:30px;font-size:20px;margin-bottom:20px;" name="mail_to" /> <br /> 
@@ -91,7 +80,7 @@ function send(){
             </p>
         </div>
 
-<?php 
+<?php
 
 // $fp = fopen("../../mainfooter_template.html","r");
 echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");

@@ -1,7 +1,7 @@
 <?php 
 
-$fp = fopen("../../../locate/ru/templates/mainpage_template.html","r");
-$template_string = fread($fp, filesize("../../../locate/ru/templates/mainpage_template.html"));
+$fp = fopen("../../locate/ru/templates/mainpage_template.html","r");
+$template_string = fread($fp, filesize("../../locate/ru/templates/mainpage_template.html"));
 $qq = '<link rel="stylesheet" type="text/css" href="/mainpage_template.css" media="all" />';
 $titleTamplate = '<title> Главная страница </title>';
 $title = '<title> Тримет мобильный заказ </title>';
@@ -45,7 +45,7 @@ fclose($fp);
         echo "
             <script type='text/javascript'>
                 function jumpToPrice(){
-                    window.location = '../index.php'
+                    window.location = 'index.php'
                 }
                 setTimeout('jumpToPrice()', 5000);        
             </script>
@@ -56,7 +56,7 @@ fclose($fp);
 <?php 
 
 // $fp = fopen("../../mainfooter_template.html","r");
-echo file_get_contents("../../../locate/ru/templates/mainfooter_template.html");
+echo file_get_contents("../../locate/ru/templates/mainfooter_template.html");
 // fclose($fp);
 ?>
 </body>
